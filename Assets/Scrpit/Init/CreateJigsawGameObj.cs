@@ -67,6 +67,7 @@ public class CreateJigsawGameObj : MonoBehaviour
         {
             triangles[i * 3] = 0;
             triangles[i * 3 + 1] = i + 1;
+            //判断是否为最后一个三角索引  是的话就引用第二个索引
             if ((i + 2) > trianglesCount)
                 triangles[i * 3 + 2] = 1;
             else
