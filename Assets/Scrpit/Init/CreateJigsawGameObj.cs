@@ -59,16 +59,19 @@ public class CreateJigsawGameObj : MonoBehaviour
         //获取顶点列表大小
         int listCount = listVertices.Count;
         //三角形个数  
-        int trianglesCount = listCount - 2;
+        int trianglesCount = listCount - 1;
         //三角学顶点数
-        int[] triangles = new int[3*trianglesCount];
-        //根据三角形的个数，来计算绘制三角形的顶点顺序（索引）  
-        //注意顺序，否则可能看不到，（0,1,2）（0，2,3）
+        int[] triangles = new int[3 * trianglesCount];
+        //三角形顶点索引,确保按照顺时针方向设置三角形顶点
         for (int i = 0; i < trianglesCount; i++)
         {
-            triangles[3 * i] = 0;
-            triangles[3 * i + 1] = i + 1;
-            triangles[3 * i + 2] = i + 2;
+            triangles[i * 3] = 0;
+            triangles[i * 3 + 1] = i + 1;
+            if ((i + 2) > trianglesCount)
+                triangles[i * 3 + 2] = 1;
+            else
+                triangles[i * 3 + 2] = i + 2;
+
         }
         return triangles;
     }
