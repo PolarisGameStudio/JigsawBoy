@@ -3,17 +3,70 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateJigsawGameObj : MonoBehaviour
+public class CreateJigsawGameObj
 {
+
+    /// <summary>
+    /// 获取拼图GameObj
+    /// </summary>
+    /// <param name="JigsawBean">需要生成的拼图块数据</param>
+    /// <returns></returns>
+    public static GameObject getJigsawGameObj(JigsawBean jigsawData)
+    {
+        if (jigsawData == null)
+            throw new Exception("没有拼图数据");
+        List<Vector3> listVertices = jigsawData.ListVertices;
+        List<Vector2> listUVPostion = jigsawData.ListUVPostion;
+        Texture2D jigsawPic = jigsawData.SourcePic;
+        Vector2 markLocation = jigsawData.MarkLocation;
+      
+
+        if (listVertices == null)
+            throw new Exception("没有顶点坐标");
+        if (listVertices.Count < 3)
+            throw new Exception("顶点坐标小于3");
+        if (listUVPostion == null)
+            throw new Exception("没有图片UV坐标");
+        if (!listUVPostion.Count.Equals(listVertices.Count))
+            throw new Exception("UV坐标与定点坐标数量不对等");
+        if (markLocation == null)
+            throw new Exception("没有标记坐标");
+        if (jigsawPic == null)
+            throw new Exception("没有生成拼图所需图片");
+
+        //创建拼图的游戏对象
+        String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
+        GameObject jigsawGameObj = createGameObjForJigsaw(gameObjName,jigsawPic);
+        //获取拼图游戏对象的mesh
+        Mesh jigsawMesh = jigsawGameObj.GetComponent<MeshFilter>().mesh;
+        //创建拼图的坐标点
+        Vector3[] jigsawVertices = createJigsawVertices(listVertices);
+        //创建拼图的三角形索引
+        int[] jigsawTriangles = createJigsawTriangles(listVertices);
+        //创建拼图的UV坐标点
+        Vector2[] jigsawUVVertices = createJigsawUVPostion(listUVPostion);
+
+        //将拼图坐标点给拼图mesh赋值
+        if (jigsawVertices != null)
+            jigsawMesh.vertices = jigsawVertices;
+        //将拼图三角形索引给拼图mesh赋值
+        if (jigsawTriangles != null)
+            jigsawMesh.triangles = jigsawTriangles;
+        //将拼图UV坐标点给拼图mesh赋值
+        if (jigsawUVVertices != null)
+            jigsawMesh.uv = jigsawUVVertices;
+
+        return jigsawGameObj;
+    }
 
     /// <summary>
     /// 创建拼图对象
     /// </summary>
     /// <param name="jigsawPic">生成拼图所需图片</param>
     /// <returns></returns>
-    private static GameObject createGameObjForJigsaw(Texture2D jigsawPic)
+    private static GameObject createGameObjForJigsaw(String gameObjName,Texture2D jigsawPic)
     {
-        GameObject jigsawGameObj = new GameObject();
+        GameObject jigsawGameObj = new GameObject(gameObjName);
 
         jigsawGameObj.AddComponent<MeshRenderer>();
         jigsawGameObj.AddComponent<MeshFilter>();
@@ -98,49 +151,6 @@ public class CreateJigsawGameObj : MonoBehaviour
         return uvVertices;
     }
 
-    /// <summary>
-    /// 获取拼图GameObj
-    /// </summary>
-    /// <param name="listVertices">需要生成的拼图块顶点坐标</param>
-    /// <param name="listUVPostion">需要生成的拼图块图片UV坐标</param>
-    /// <param name="jigsawPic">生成所需图片</param>
-    /// <returns></returns>
-    public static GameObject getJigsawGameObj(List<Vector3> listVertices, List<Vector2> listUVPostion, Texture2D jigsawPic)
-    {
-        if (listVertices == null)
-            throw new Exception("没有顶点坐标");
-        if (listVertices.Count < 3)
-            throw new Exception("顶点坐标小于3");
-        if (listUVPostion == null)
-            throw new Exception("没有图片UV坐标");
-        if (!listUVPostion.Count.Equals(listVertices.Count))
-            throw new Exception("UV坐标与定点坐标数量不对等");
-        if (jigsawPic == null)
-            throw new Exception("没有生成拼图所需图片");
 
-
-        //创建拼图的游戏对象
-        GameObject jigsawGameObj = createGameObjForJigsaw(jigsawPic);
-        //获取拼图游戏对象的mesh
-        Mesh jigsawMesh = jigsawGameObj.GetComponent<MeshFilter>().mesh;
-        //创建拼图的坐标点
-        Vector3[] jigsawVertices = createJigsawVertices(listVertices);
-        //创建拼图的三角形索引
-        int[] jigsawTriangles = createJigsawTriangles(listVertices);
-        //创建拼图的UV坐标点
-        Vector2[] jigsawUVVertices = createJigsawUVPostion(listUVPostion);
-
-        //将拼图坐标点给拼图mesh赋值
-        if (jigsawVertices != null)
-            jigsawMesh.vertices = jigsawVertices;
-        //将拼图三角形索引给拼图mesh赋值
-        if (jigsawTriangles != null)
-            jigsawMesh.triangles = jigsawTriangles;
-        //将拼图UV坐标点给拼图mesh赋值
-        if (jigsawUVVertices != null)
-            jigsawMesh.uv = jigsawUVVertices;
-
-        return jigsawGameObj;
-    }
 
 }

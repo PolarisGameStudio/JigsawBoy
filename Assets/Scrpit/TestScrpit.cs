@@ -9,33 +9,18 @@ public class TestScrpit : MonoBehaviour
     void Start()
     {
         Texture2D pic2D = (Texture2D)Resources.Load("text1");
+        Debug.Log("width:"+pic2D.width+" height:"+pic2D.height);
 
-        List<Vector3> listVertices = new List<Vector3>();
-        listVertices.Add(new Vector3(0.5f, 0.5f, 0));
-        listVertices.Add(new Vector3(0.2f, 0, 0));
-        listVertices.Add(new Vector3(0, 0.2f, 0));
-        listVertices.Add(new Vector3(0f, 0.8f, 0));
-        listVertices.Add(new Vector3(0.2f, 1f, 0));
-        listVertices.Add(new Vector3(0.8f, 1f, 0));
-        listVertices.Add(new Vector3(1f, 0.8f, 0));
-        listVertices.Add(new Vector3(1f, 0.2f, 0));
-        listVertices.Add(new Vector3(0.8f, 0f, 0));
-        List<Vector2> listUvPostion = new List<Vector2>();
-        listUvPostion.Add(new Vector2(0.5f, 0.5f));
-        listUvPostion.Add(new Vector2(0.2f, 0));
-        listUvPostion.Add(new Vector2(0, 0.2f));
-        listUvPostion.Add(new Vector2(0f, 0.8f));
-        listUvPostion.Add(new Vector2(0.2f, 1f));
-        listUvPostion.Add(new Vector2(0.8f, 1f));
-        listUvPostion.Add(new Vector2(1f, 0.8f));
-        listUvPostion.Add(new Vector2(1f, 0.2f));
-        listUvPostion.Add(new Vector2(0.8f, 0f));
-        GameObject gameObject = CreateJigsawGameObj.getJigsawGameObj(listVertices, listUvPostion, pic2D);
+       List<JigsawBean> listData= CreateJigsawUtils.createJigsawList(JigsawStyleEnum.Normal,10,5,pic2D);
+        for(int i = 0; i < listData.Count; i++)
+        {
+            JigsawBean item = listData[i];
+            
+            item.JigsawGameObj.transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,30);
+            item.JigsawGameObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 
-        gameObject.AddComponent<Transform>();
-        gameObject.transform.position=new Vector3(0,1,-8);
-        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
- 
+
     }
 
     // Update is called once per frame
