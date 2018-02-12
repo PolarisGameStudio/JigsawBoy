@@ -11,7 +11,7 @@ public class TestScrpit : MonoBehaviour
         Texture2D pic2D = (Texture2D)Resources.Load("text1");
         Debug.Log("width:"+pic2D.width+" height:"+pic2D.height);
 
-       List<JigsawBean> listData= CreateJigsawUtils.createJigsawList(JigsawStyleEnum.Normal,10,5,pic2D);
+       List<JigsawBean> listData= CreateJigsawUtils.createJigsawList(JigsawStyleEnum.Normal,4,2,pic2D);
         for(int i = 0; i < listData.Count; i++)
         {
             JigsawBean item = listData[i];

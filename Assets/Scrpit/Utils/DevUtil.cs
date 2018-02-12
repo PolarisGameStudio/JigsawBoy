@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using  UnityEngine;
 
 public class DevUtil {
 
@@ -12,8 +13,23 @@ public class DevUtil {
     /// <returns>int类型随机数</returns>
 	public static int getRandomInt(int startNumber,int endNumber)
     {
-        Random random = new Random();
+        System.Random random = new System.Random(int.Parse(DateTime.Now.ToString("HHmmssfff")));
         int randomNumber= random.Next(startNumber, endNumber+1);
         return randomNumber;
+    }
+
+    /// <summary>
+    /// Vector3 转化为 Vector2
+    /// </summary>
+    /// <param name="listVector3"></param>
+    /// <returns></returns>
+    public static List<Vector2> Vector3ToVector2(List<Vector3> listVector3) 
+    {
+        List<Vector2> listVector2 = new List<Vector2>();
+        foreach(Vector3 item in listVector3)
+        {
+            listVector2.Add(new Vector2(item.x,item.y));
+        }
+        return listVector2;
     }
 }
