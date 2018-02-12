@@ -36,7 +36,71 @@ public class CreateJigsawGameObj
 
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
-        GameObject jigsawGameObj = createGameObjForJigsaw(gameObjName,jigsawPic);
+        GameObject jigsawGameObj = createGameObjForJigsaw(gameObjName);
+
+        //设置贴图
+        setRenderer(jigsawGameObj, jigsawPic);
+        //设置网格
+        setMeshFilter(jigsawGameObj, listVertices, listUVPostion);
+        //设置刚体
+        setRigidbody2D(jigsawGameObj);
+        //设置2D碰撞器
+        //setCollider2D(jigsawGameObj, listVertices);
+
+
+        return jigsawGameObj;
+    }
+
+    /// <summary>
+    /// 创建拼图对象
+    /// </summary>
+    /// <param name="jigsawPic">生成拼图所需图片</param>
+    /// <returns></returns>
+    private static GameObject createGameObjForJigsaw(String gameObjName)
+    {
+        GameObject jigsawGameObj = new GameObject(gameObjName);
+
+        jigsawGameObj.AddComponent<MeshRenderer>();
+        jigsawGameObj.AddComponent<MeshFilter>();
+        jigsawGameObj.AddComponent<Rigidbody2D>();
+        jigsawGameObj.AddComponent<BoxCollider2D>();
+        //jigsawGameObj.AddComponent<PolygonCollider2D>();
+
+        return jigsawGameObj;
+    }
+
+    /// <summary>
+    /// 设置拼图的图片纹理
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    /// <param name="jigsawPic"></param>
+    private static void setRenderer(GameObject jigsawGameObj, Texture2D jigsawPic)
+    {
+        //获取拼图的render并设置贴图
+        Renderer jigsawRenderer = jigsawGameObj.GetComponent<Renderer>();
+        Material jigsawMaterial = jigsawRenderer.material;
+        jigsawMaterial.mainTexture = jigsawPic;
+    }
+
+    /// <summary>
+    /// 设置刚体
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    private static void setRigidbody2D(GameObject jigsawGameObj)
+    {
+        //获取拼图的刚体并设置
+        Rigidbody2D jigsawRB = jigsawGameObj.GetComponent<Rigidbody2D>();
+        jigsawRB.gravityScale = 0f;
+    }
+
+    /// <summary>
+    /// 设置网格
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    /// <param name="listVertices"></param>
+    /// <param name="listUVPostion"></param>
+    private static void setMeshFilter(GameObject jigsawGameObj, List<Vector3> listVertices, List<Vector2> listUVPostion)
+    {
         //获取拼图游戏对象的mesh
         Mesh jigsawMesh = jigsawGameObj.GetComponent<MeshFilter>().mesh;
         //创建拼图的坐标点
@@ -55,30 +119,26 @@ public class CreateJigsawGameObj
         //将拼图UV坐标点给拼图mesh赋值
         if (jigsawUVVertices != null)
             jigsawMesh.uv = jigsawUVVertices;
-
-        return jigsawGameObj;
     }
 
     /// <summary>
-    /// 创建拼图对象
+    /// 设置2D碰撞器
     /// </summary>
-    /// <param name="jigsawPic">生成拼图所需图片</param>
-    /// <returns></returns>
-    private static GameObject createGameObjForJigsaw(String gameObjName,Texture2D jigsawPic)
-    {
-        GameObject jigsawGameObj = new GameObject(gameObjName);
+    /// <param name="jigsawGameObj"></param>
+    /// <param name="listVertices"></param>
+    private static void setCollider2D(GameObject jigsawGameObj, List<Vector3> listVertices) {
 
-        jigsawGameObj.AddComponent<MeshRenderer>();
-        jigsawGameObj.AddComponent<MeshFilter>();
-
-        //获取拼图的render并设置贴图
-        Renderer jigsawRenderer = jigsawGameObj.GetComponent<Renderer>();
-        Material jigsawMaterial = jigsawRenderer.material;
-        jigsawMaterial.mainTexture = jigsawPic;
-
-        return jigsawGameObj;
+        PolygonCollider2D jigsawCollider= jigsawGameObj.GetComponent<PolygonCollider2D>();
+        int listVerticesCount = listVertices.Count;
+        Vector2[] colliderPath = new Vector2[listVerticesCount];
+        for(int pathPostion=1; pathPostion< listVerticesCount; pathPostion++)
+        {
+            
+            colliderPath[pathPostion] = new Vector2(listVertices[pathPostion].x, listVertices[pathPostion].y);
+        }
+        jigsawCollider.SetPath(0, colliderPath);
     }
-
+ //--------------------------------------------------------------------------------------------------------
     /// <summary>
     /// 创建拼图的坐标点
     /// </summary>
