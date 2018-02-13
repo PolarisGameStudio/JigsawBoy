@@ -92,7 +92,6 @@ public class CreateJigsawGameObj
         Renderer jigsawRenderer = jigsawGameObj.AddComponent<MeshRenderer>();
         Material jigsawMaterial = jigsawRenderer.material;
         jigsawMaterial.mainTexture = jigsawPic;
-        jigsawMaterial.shader = Shader.Find("Custom/JigsawWireFrameShader"); ;
     }
 
     /// <summary>
