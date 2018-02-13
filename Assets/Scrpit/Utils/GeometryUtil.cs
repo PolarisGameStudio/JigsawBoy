@@ -29,9 +29,9 @@ public class GeometryUtil
             startAngle = 0f;
         else if (startVectorEnum == CircleStartVectorEnum.Below)
             startAngle = -90f;
-        for (int trianglePostion = 0; trianglePostion < triangleNumber; trianglePostion++)
+        for (int triangleposition = 0; triangleposition < triangleNumber; triangleposition++)
         {
-            float circleAngleTemp = isClockwise ? (-circleAngleItem * trianglePostion) : (circleAngleItem * trianglePostion);
+            float circleAngleTemp = isClockwise ? (-circleAngleItem * triangleposition) : (circleAngleItem * triangleposition);
             float circleAngle = circleAngleTemp + startAngle;
          
             float coordinateX = centerVector.x + circler * Mathf.Cos(circleAngle * 3.14f / 180f);

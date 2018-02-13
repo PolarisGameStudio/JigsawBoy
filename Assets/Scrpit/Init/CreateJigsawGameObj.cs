@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CreateJigsawGameObj
 {
-
     /// <summary>
     /// 获取拼图GameObj
     /// </summary>
@@ -16,23 +15,31 @@ public class CreateJigsawGameObj
         if (jigsawData == null)
             throw new Exception("没有拼图数据");
         List<Vector3> listVertices = jigsawData.ListVertices;
-        List<Vector2> listUVPostion = jigsawData.ListUVPostion;
+        List<Vector2> listUVposition = jigsawData.ListUVposition;
         Texture2D jigsawPic = jigsawData.SourcePic;
         Vector2 markLocation = jigsawData.MarkLocation;
-      
+        Vector3 centerVector = jigsawData.CenterVector;
+        float jigsawWith = jigsawData.JigsawWith;
+        float jigsawHigh = jigsawData.JigsawHigh;
 
         if (listVertices == null)
             throw new Exception("没有顶点坐标");
         if (listVertices.Count < 3)
             throw new Exception("顶点坐标小于3");
-        if (listUVPostion == null)
+        if (listUVposition == null)
             throw new Exception("没有图片UV坐标");
-        if (!listUVPostion.Count.Equals(listVertices.Count))
+        if (!listUVposition.Count.Equals(listVertices.Count))
             throw new Exception("UV坐标与定点坐标数量不对等");
         if (markLocation == null)
             throw new Exception("没有标记坐标");
         if (jigsawPic == null)
             throw new Exception("没有生成拼图所需图片");
+        if (centerVector == null)
+            throw new Exception("没有拼图中心点");
+        if (jigsawWith == null)
+            throw new Exception("没有拼图宽");
+        if (jigsawHigh == null)
+            throw new Exception("没有拼图高");
 
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
@@ -41,15 +48,18 @@ public class CreateJigsawGameObj
         //设置贴图
         setRenderer(jigsawGameObj, jigsawPic);
         //设置网格
-        setMeshFilter(jigsawGameObj, listVertices, listUVPostion);
+        setMeshFilter(jigsawGameObj, listVertices, listUVposition);
         //设置刚体
         setRigidbody2D(jigsawGameObj);
         //设置2D碰撞器
-        //setCollider2D(jigsawGameObj, listVertices);
-
+        setCollider2D(jigsawGameObj, centerVector, jigsawWith, jigsawHigh);
+        //设置线框
+        //setWireFrame(jigsawGameObj);
 
         return jigsawGameObj;
     }
+
+
 
     /// <summary>
     /// 创建拼图对象
@@ -59,14 +69,16 @@ public class CreateJigsawGameObj
     private static GameObject createGameObjForJigsaw(String gameObjName)
     {
         GameObject jigsawGameObj = new GameObject(gameObjName);
-
-        jigsawGameObj.AddComponent<MeshRenderer>();
-        jigsawGameObj.AddComponent<MeshFilter>();
-        jigsawGameObj.AddComponent<Rigidbody2D>();
-        jigsawGameObj.AddComponent<BoxCollider2D>();
-        //jigsawGameObj.AddComponent<PolygonCollider2D>();
-
         return jigsawGameObj;
+    }
+
+    /// <summary>
+    /// 设置拼图的线框
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    private static void setWireFrame(GameObject jigsawGameObj)
+    {
+        jigsawGameObj.AddComponent<JigsawWireFrame>();
     }
 
     /// <summary>
@@ -77,9 +89,10 @@ public class CreateJigsawGameObj
     private static void setRenderer(GameObject jigsawGameObj, Texture2D jigsawPic)
     {
         //获取拼图的render并设置贴图
-        Renderer jigsawRenderer = jigsawGameObj.GetComponent<Renderer>();
+        Renderer jigsawRenderer = jigsawGameObj.AddComponent<MeshRenderer>();
         Material jigsawMaterial = jigsawRenderer.material;
         jigsawMaterial.mainTexture = jigsawPic;
+        jigsawMaterial.shader = Shader.Find("Custom/JigsawWireFrameShader"); ;
     }
 
     /// <summary>
@@ -89,7 +102,7 @@ public class CreateJigsawGameObj
     private static void setRigidbody2D(GameObject jigsawGameObj)
     {
         //获取拼图的刚体并设置
-        Rigidbody2D jigsawRB = jigsawGameObj.GetComponent<Rigidbody2D>();
+        Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
         jigsawRB.gravityScale = 0f;
     }
 
@@ -98,17 +111,17 @@ public class CreateJigsawGameObj
     /// </summary>
     /// <param name="jigsawGameObj"></param>
     /// <param name="listVertices"></param>
-    /// <param name="listUVPostion"></param>
-    private static void setMeshFilter(GameObject jigsawGameObj, List<Vector3> listVertices, List<Vector2> listUVPostion)
+    /// <param name="listUVposition"></param>
+    private static void setMeshFilter(GameObject jigsawGameObj, List<Vector3> listVertices, List<Vector2> listUVposition)
     {
         //获取拼图游戏对象的mesh
-        Mesh jigsawMesh = jigsawGameObj.GetComponent<MeshFilter>().mesh;
+        Mesh jigsawMesh = jigsawGameObj.AddComponent<MeshFilter>().mesh;
         //创建拼图的坐标点
         Vector3[] jigsawVertices = createJigsawVertices(listVertices);
         //创建拼图的三角形索引
         int[] jigsawTriangles = createJigsawTriangles(listVertices);
         //创建拼图的UV坐标点
-        Vector2[] jigsawUVVertices = createJigsawUVPostion(listUVPostion);
+        Vector2[] jigsawUVVertices = createJigsawUVposition(listUVposition);
 
         //将拼图坐标点给拼图mesh赋值
         if (jigsawVertices != null)
@@ -126,19 +139,15 @@ public class CreateJigsawGameObj
     /// </summary>
     /// <param name="jigsawGameObj"></param>
     /// <param name="listVertices"></param>
-    private static void setCollider2D(GameObject jigsawGameObj, List<Vector3> listVertices) {
-
-        PolygonCollider2D jigsawCollider= jigsawGameObj.GetComponent<PolygonCollider2D>();
-        int listVerticesCount = listVertices.Count;
-        Vector2[] colliderPath = new Vector2[listVerticesCount];
-        for(int pathPostion=1; pathPostion< listVerticesCount; pathPostion++)
-        {
-            
-            colliderPath[pathPostion] = new Vector2(listVertices[pathPostion].x, listVertices[pathPostion].y);
-        }
-        jigsawCollider.SetPath(0, colliderPath);
+    private static void setCollider2D(GameObject jigsawGameObj, Vector3 centerVector, float jigsawWith, float jigsawHigh)
+    {
+        BoxCollider2D jigsawCollider = jigsawGameObj.AddComponent<BoxCollider2D>();
+        jigsawCollider.size = new Vector2(jigsawWith, jigsawHigh);
+        jigsawCollider.offset = new Vector2(centerVector.x, centerVector.y);
     }
- //--------------------------------------------------------------------------------------------------------
+
+    
+    //--------------------------------------------------------------------------------------------------------
     /// <summary>
     /// 创建拼图的坐标点
     /// </summary>
@@ -193,20 +202,20 @@ public class CreateJigsawGameObj
     /// <summary>
     /// 创建拼图UV顶点
     /// </summary>
-    /// <param name="listUVPostion"></param>
+    /// <param name="listUVposition"></param>
     /// <returns></returns>
-    private static Vector2[] createJigsawUVPostion(List<Vector2> listUVPostion)
+    private static Vector2[] createJigsawUVposition(List<Vector2> listUVposition)
     {
-        if (listUVPostion == null)
+        if (listUVposition == null)
             return null;
         //获取UV列表大小
-        int listCount = listUVPostion.Count;
+        int listCount = listUVposition.Count;
         //UV数组  
         Vector2[] uvVertices = new Vector2[listCount];
         //将链表中的UV坐标赋值给vertices  
         for (int i = 0; i < listCount; i++)
         {
-            uvVertices[i] = listUVPostion[i];
+            uvVertices[i] = listUVposition[i];
         }
         return uvVertices;
     }

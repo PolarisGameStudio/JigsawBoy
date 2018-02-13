@@ -32,4 +32,23 @@ public class DevUtil {
         }
         return listVector2;
     }
+
+    /// <summary>
+    /// list转数组
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static  T[] listToArray<T>(List<T> list)
+    {
+        if (list == null)
+            return null;
+        int listCount = list.Count;
+        T[] tempArray = new T[listCount];
+        for (int position=0;position< listCount;position++)
+        {
+            tempArray[position] = list[position];
+        }
+        return tempArray;
+    }
 }
