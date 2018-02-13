@@ -19,3 +19,8 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+ProjectVersion.txt
+db.lock
+storage.ide
+storage.ide-shm
+storage.ide-wal
