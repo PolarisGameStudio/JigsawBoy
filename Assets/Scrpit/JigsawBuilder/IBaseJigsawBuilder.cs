@@ -50,7 +50,7 @@ interface IBaseJigsawBuilder
     /// 设置UV坐标
     /// </summary>
     /// <param name="jigsaw"></param>
-    void setListUVPosition(JigsawBean jigsaw, List<Vector2> listUVPostion);
+    void setListUVPosition(JigsawBean jigsaw, List<Vector2> listUVposition);
 
     /// <summary>
     /// 设置原图片
@@ -58,5 +58,26 @@ interface IBaseJigsawBuilder
     /// <param name="jigsaw"></param>
     /// <param name="sourcePic"></param>
     void setSourcePic(JigsawBean jigsaw,Texture2D sourcePic);
+
+    /// <summary>
+    /// 设置中心点坐标
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="centerVector"></param>
+    void setCenterVector(JigsawBean jigsaw,Vector3 centerVector);
+
+    /// <summary>
+    /// 设置拼图宽
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawWith"></param>
+    void setJigsawWith(JigsawBean jigsaw,float jigsawWith);
+
+    /// <summary>
+    /// 设置拼图高
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawHigh"></param>
+    void setJigsawHigh(JigsawBean jigsaw,float jigsawHigh);
 }
 

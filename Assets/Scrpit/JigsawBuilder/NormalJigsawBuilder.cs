@@ -66,7 +66,9 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
                 setJigsawStyle(jigsawItem);
                 //确认当前拼图碎片相对图片的坐标
                 setMarkLocation(jigsawItem, horizontal, vertical);
-
+                //设置拼图长宽
+                setJigsawHigh(jigsawItem,mJigsawHigh);
+                setJigsawWith(jigsawItem,mJigsawWith);
                 listJigsawBean.Add(jigsawItem);
             }
 
@@ -74,12 +76,12 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
 
         int listJigsawBeanCount = listJigsawBean.Count;
-        for (int jigsawPostion = 0; jigsawPostion < listJigsawBeanCount; jigsawPostion++)
+        for (int jigsawposition = 0; jigsawposition < listJigsawBeanCount; jigsawposition++)
         {
-            JigsawBean jigsawItem = listJigsawBean[jigsawPostion];
+            JigsawBean jigsawItem = listJigsawBean[jigsawposition];
             //确认拼图每个边的凹凸情况
             setBulgeEdgeForItem(listJigsawBean, jigsawItem, horizontalJigsawNumber, verticalJigsawNumber);
-            //确认拼图顶点坐标和UVpostion
+            //确认拼图顶点坐标和UVposition
             setListVerticesForItem(jigsawItem);
             setListUVPositionForItem(jigsawItem);
 
@@ -149,9 +151,9 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         if (markLocation == null)
             return;
 
-        for (int childPostion = 0; childPostion < listJigsawCount; childPostion++)
+        for (int childposition = 0; childposition < listJigsawCount; childposition++)
         {
-            JigsawBean childJigsaw = listJigsaw[childPostion];
+            JigsawBean childJigsaw = listJigsaw[childposition];
             Vector2 childMarkLocation = childJigsaw.MarkLocation;
             if (markLocation == null)
                 continue;
@@ -185,6 +187,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         //添加中心点坐标
         Vector3 centerVector = new Vector3(mJigsawWith / 2f, mJigsawHigh / 2f);
         listVertices.Add(centerVector);
+        setCenterVector(jigsawItem,centerVector);
 
         //根据凹凸属性生成坐标点
         JigsawBulgeEnum leftBulge = listBulge[0];
@@ -208,7 +211,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         List<Vector3> aboveVertices = getCirclePartEdgeVerticesForNormal(aboveCircleVertices, aboveEdgeCenterVector, JigsawStyleNormalEdgeEnum.Above, aboveBulge);
         listVertices.AddRange(aboveVertices);
 
-
         //添加右上角点
         listVertices.Add(new Vector3(mJigsawWith, mJigsawHigh));
         //添加右边凸出部分坐标点
@@ -216,7 +218,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         List<Vector3> rightCircleVertices = getCircleVertices(rightEdgeCenterVector, mJigsawBulgeR, JigsawStyleNormalEdgeEnum.Right, rightBulge);
         List<Vector3> rightVertices = getCirclePartEdgeVerticesForNormal(rightCircleVertices, rightEdgeCenterVector, JigsawStyleNormalEdgeEnum.Right, rightBulge);
         listVertices.AddRange(rightVertices);
-
 
         //添加右下角点
         listVertices.Add(new Vector3(mJigsawWith, 0));
@@ -243,20 +244,20 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         if (markLocation == null)
             throw new Exception("没有标记坐标");
 
-        List<Vector2> listUVPostion = new List<Vector2>();
+        List<Vector2> listUVposition = new List<Vector2>();
 
         float xRatio = mJigsawWith / mJigsawUVWith;
         float yRatio = mJigsawHigh / mJigsawUVHigh;
 
         foreach (Vector3 item in listVertices)
         {
-            float uvXPostion = (item.x / xRatio) + (markLocation.x * mJigsawUVWith);
-            float uvYPostion = (item.y / yRatio) + (markLocation.y * mJigsawUVHigh);
-            listUVPostion.Add(new Vector2(uvXPostion, uvYPostion));
+            float uvXposition = (item.x / xRatio) + (markLocation.x * mJigsawUVWith);
+            float uvYposition = (item.y / yRatio) + (markLocation.y * mJigsawUVHigh);
+            listUVposition.Add(new Vector2(uvXposition, uvYposition));
         }
 
 
-        setListUVPosition(jigsawItem, listUVPostion);
+        setListUVPosition(jigsawItem, listUVposition);
     }
 
     /// <summary>
@@ -279,20 +280,20 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
                 return JigsawBulgeEnum.Sunken;
         }
 
-        int bulgePostion;
+        int bulgeposition;
         if (edgeEnum == JigsawStyleNormalEdgeEnum.Left)
-            bulgePostion = 2;
+            bulgeposition = 2;
         else if (edgeEnum == JigsawStyleNormalEdgeEnum.Above)
-            bulgePostion = 3;
+            bulgeposition = 3;
         else if (edgeEnum == JigsawStyleNormalEdgeEnum.Right)
-            bulgePostion = 0;
+            bulgeposition = 0;
         else if (edgeEnum == JigsawStyleNormalEdgeEnum.Below)
-            bulgePostion = 1;
+            bulgeposition = 1;
         else
             return JigsawBulgeEnum.Smooth;
 
 
-        JigsawBulgeEnum compareBulgeEnum = compareBulgeList[bulgePostion];
+        JigsawBulgeEnum compareBulgeEnum = compareBulgeList[bulgeposition];
         if (compareBulgeEnum == JigsawBulgeEnum.Smooth)
             return JigsawBulgeEnum.Smooth;
         else if (compareBulgeEnum == JigsawBulgeEnum.Bulge)
@@ -483,10 +484,10 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     /// 设置UV坐标
     /// </summary>
     /// <param name="jigsaw"></param>
-    public void setListUVPosition(JigsawBean jigsaw, List<Vector2> listUVPostion)
+    public void setListUVPosition(JigsawBean jigsaw, List<Vector2> listUVposition)
     {
         if (jigsaw == null) { return; }
-        jigsaw.ListUVPostion = listUVPostion;
+        jigsaw.ListUVposition = listUVposition;
     }
 
     /// <summary>
@@ -498,6 +499,39 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     {
         if (jigsaw == null) { return; }
         jigsaw.SourcePic = sourcePic;
+    }
+
+    /// <summary>
+    /// 设置中心点坐标
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="centerVector"></param>
+    public void setCenterVector(JigsawBean jigsaw, Vector3 centerVector)
+    {
+        if (jigsaw == null) { return; }
+        jigsaw.CenterVector = centerVector; 
+    }
+
+    /// <summary>
+    /// 设置拼图宽
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawWith"></param>
+    public void setJigsawWith(JigsawBean jigsaw, float jigsawWith)
+    {
+        if (jigsaw == null) { return; }
+        jigsaw.JigsawWith = jigsawWith;
+    }
+
+    /// <summary>
+    /// 设置拼图高
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawHigh"></param>
+    public void setJigsawHigh(JigsawBean jigsaw, float jigsawHigh)
+    {
+        if (jigsaw == null) { return; }
+        jigsaw.JigsawHigh = jigsawHigh;
     }
 }
 

@@ -18,11 +18,26 @@ public class JigsawBean
     /// 顶点坐标
     /// </summary>
     private List<Vector3> listVertices;
+
+    /// <summary>
+    /// 中心点坐标
+    /// </summary>
+    private Vector3 centerVector;
+
+    /// <summary>
+    /// 拼图宽
+    /// </summary>
+    private float jigsawWith;
+
+    /// <summary>
+    /// 拼图高
+    /// </summary>
+    private float jigsawHigh;
     
     /// <summary>
     /// 图片UV坐标点集合
     /// </summary>
-    private List<Vector2> listUVPostion;
+    private List<Vector2> listUVposition;
 
     /// <summary>
     /// 相对于图片的XY的标记
@@ -38,6 +53,7 @@ public class JigsawBean
     /// 拼图图片
     /// </summary>
     private Texture2D sourcePic;
+
 
     public GameObject JigsawGameObj
     {
@@ -78,16 +94,16 @@ public class JigsawBean
         }
     }
 
-    public List<Vector2> ListUVPostion
+    public List<Vector2> ListUVposition
     {
         get
         {
-            return listUVPostion;
+            return listUVposition;
         }
 
         set
         {
-            listUVPostion = value;
+            listUVposition = value;
         }
     }
 
@@ -127,6 +143,48 @@ public class JigsawBean
         set
         {
             sourcePic = value;
+        }
+    }
+
+ 
+
+
+    public float JigsawWith
+    {
+        get
+        {
+            return jigsawWith;
+        }
+
+        set
+        {
+            jigsawWith = value;
+        }
+    }
+
+    public float JigsawHigh
+    {
+        get
+        {
+            return jigsawHigh;
+        }
+
+        set
+        {
+            jigsawHigh = value;
+        }
+    }
+
+    public Vector3 CenterVector
+    {
+        get
+        {
+            return centerVector;
+        }
+
+        set
+        {
+            centerVector = value;
         }
     }
 }
