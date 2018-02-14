@@ -85,10 +85,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
             setListVerticesForItem(jigsawItem);
             setListUVPositionForItem(jigsawItem);
 
-            setListUVPositionForItem(jigsawItem);
-            // 确认拼图的每个游戏对象
-            GameObject itemObj = CreateJigsawGameObj.getJigsawGameObj(jigsawItem);
-            setJigsawGameObj(jigsawItem, itemObj);
         }
 
         return listJigsawBean;

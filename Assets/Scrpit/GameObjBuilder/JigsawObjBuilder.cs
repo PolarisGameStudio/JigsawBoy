@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateJigsawGameObj
+public class JigsawObjBuilder
 {
     /// <summary>
     /// 获取拼图GameObj
     /// </summary>
     /// <param name="JigsawBean">需要生成的拼图块数据</param>
     /// <returns></returns>
-    public static GameObject getJigsawGameObj(JigsawBean jigsawData)
+    public static GameObject buildJigsawGameObj(JigsawBean jigsawData)
     {
         if (jigsawData == null)
             throw new Exception("没有拼图数据");
