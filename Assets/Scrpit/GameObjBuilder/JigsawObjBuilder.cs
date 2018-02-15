@@ -21,25 +21,53 @@ public class JigsawObjBuilder
         Vector3 centerVector = jigsawData.CenterVector;
         float jigsawWith = jigsawData.JigsawWith;
         float jigsawHigh = jigsawData.JigsawHigh;
+        JigsawStyleEnum jigsawStyleEnum = jigsawData.JigsawStyle;
 
         if (listVertices == null)
-            throw new Exception("没有顶点坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有顶点坐标");
+            return null;
+        }
         if (listVertices.Count < 3)
-            throw new Exception("顶点坐标小于3");
+        {
+            LogUtil.log("生产拼图gameObj失败-顶点坐标小于3");
+            return null;
+        }
         if (listUVposition == null)
-            throw new Exception("没有图片UV坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有图片UV坐标");
+            return null;
+        }
         if (!listUVposition.Count.Equals(listVertices.Count))
-            throw new Exception("UV坐标与定点坐标数量不对等");
+        {
+            LogUtil.log("生产拼图gameObj失败-UV坐标与定点坐标数量不对等");
+            return null;
+        }
         if (markLocation == null)
-            throw new Exception("没有标记坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有标记坐标");
+            return null;
+        }
         if (jigsawPic == null)
-            throw new Exception("没有生成拼图所需图片");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有生成拼图所需图片");
+            return null;
+        }
         if (centerVector == null)
-            throw new Exception("没有拼图中心点");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有拼图中心点");
+            return null;
+        }
         if (jigsawWith == null)
-            throw new Exception("没有拼图宽");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有拼图宽");
+            return null;
+        }
         if (jigsawHigh == null)
-            throw new Exception("没有拼图高");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有拼图高");
+            return null;
+        }
 
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
@@ -50,16 +78,16 @@ public class JigsawObjBuilder
         //设置网格
         setMeshFilter(jigsawGameObj, listVertices, listUVposition);
         //设置刚体
-        setRigidbody2D(jigsawGameObj);
+        // setRigidbody2D(jigsawGameObj);
         //设置2D碰撞器
         setCollider2D(jigsawGameObj, centerVector, jigsawWith, jigsawHigh);
         //设置线框
         //setWireFrame(jigsawGameObj);
+        //设置拼图component
+        setJigsawCpt(jigsawGameObj, jigsawStyleEnum);
 
         return jigsawGameObj;
     }
-
-
 
     /// <summary>
     /// 创建拼图对象
@@ -70,6 +98,16 @@ public class JigsawObjBuilder
     {
         GameObject jigsawGameObj = new GameObject(gameObjName);
         return jigsawGameObj;
+    }
+
+    /// <summary>
+    /// 设置拼图组件
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    private static void setJigsawCpt(GameObject jigsawGameObj,JigsawStyleEnum  jigsawStyle)
+    {
+        if(jigsawStyle==JigsawStyleEnum.Normal)
+        jigsawGameObj.AddComponent<NormalJigsawCpt>();
     }
 
     /// <summary>
@@ -101,7 +139,7 @@ public class JigsawObjBuilder
     private static void setRigidbody2D(GameObject jigsawGameObj)
     {
         //获取拼图的刚体并设置
-        Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
+       Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
         jigsawRB.gravityScale = 0f;
     }
 
@@ -143,6 +181,7 @@ public class JigsawObjBuilder
         BoxCollider2D jigsawCollider = jigsawGameObj.AddComponent<BoxCollider2D>();
         jigsawCollider.size = new Vector2(jigsawWith, jigsawHigh);
         jigsawCollider.offset = new Vector2(centerVector.x, centerVector.y);
+        jigsawCollider.usedByComposite = true;
     }
 
     

@@ -11,14 +11,16 @@ public class TestScrpit : MonoBehaviour
         Texture2D pic2D = (Texture2D)Resources.Load("text1");
         Debug.Log("width:"+pic2D.width+" height:"+pic2D.height);
 
-       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,2,1,pic2D);
+       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,6,3,pic2D);
         CreateJigsawGameObjUtil.createJigsawGameObjList(listData);
+
+       List<GameObject> containerList= CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);
         for(int i = 0; i < listData.Count; i++)
         {
             JigsawBean item = listData[i];
-            
-            item.JigsawGameObj.transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,0);
-            item.JigsawGameObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            containerList[i].transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,0);
+            containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 

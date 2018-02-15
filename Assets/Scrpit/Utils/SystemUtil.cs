@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SystemUtil : MonoBehaviour {
+public class SystemUtil{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    /// <summary>
+    /// 获取唯一ID
+    /// </summary>
+    /// <returns></returns>
+  public static string getUUID()
+    {
+       return System.Guid.NewGuid().ToString("N");
+    }
 }

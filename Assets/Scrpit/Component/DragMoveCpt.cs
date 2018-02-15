@@ -7,14 +7,12 @@ public class DragMoveCpt : MonoBehaviour
 {
 
     //位置差
-    Vector3 vec3Offset;
-
-    bool isSelect;
-
-
-    /// <summary>
-    /// 选中的物体
-    /// </summary>
+    private Vector3 vec3Offset;
+    //是否选中物体
+    private bool isSelect;
+    //选中的拼图容器
+    private JigsawContainerCpt jigsawContainerCpt;
+    //选中的物体
     private RaycastHit2D hitRC;
 
 
@@ -22,6 +20,7 @@ public class DragMoveCpt : MonoBehaviour
     void Start()
     {
         isSelect = false;
+        CommonData.isDargMove = true;
     }
 
     // Update is called once per frame
@@ -29,6 +28,7 @@ public class DragMoveCpt : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            CommonData.isDargMove = true;
             onMouseDown();
         }
 
@@ -37,7 +37,7 @@ public class DragMoveCpt : MonoBehaviour
             onMouseUp();
         }
 
-        if (isSelect)
+        if (isSelect && CommonData.isDargMove)
         {
             onMouseDrag();
         }
@@ -54,17 +54,21 @@ public class DragMoveCpt : MonoBehaviour
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
         hitRC = Physics2D.Raycast(mousePos2D, Vector2.zero);
+        RaycastHit2D[] all = Physics2D.RaycastAll(mousePos2D, Vector2.zero);
         if (hitRC.collider != null)
         {
             isSelect = true;
             Collider2D jigsawCollider = hitRC.collider;
             GameObject jigsawGameObj = jigsawCollider.gameObject;
             Transform jigsawTransform = jigsawGameObj.transform;
-            //获取父对象
-            Transform jigsawContainer = jigsawTransform.parent;
+
             //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差
-            if (jigsawContainer != null)
-                vec3Offset = jigsawContainer.position - new Vector3(mousePos.x, mousePos.y);
+            vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
+            jigsawContainerCpt = jigsawTransform.GetComponent<JigsawContainerCpt>();
+            if (jigsawContainerCpt != null)
+                jigsawContainerCpt.isSelect = true;
+
+
         }
 
     }
@@ -75,6 +79,8 @@ public class DragMoveCpt : MonoBehaviour
     private void onMouseUp()
     {
         isSelect = false;
+        if (jigsawContainerCpt != null)
+            jigsawContainerCpt.isSelect = false;
     }
 
 
@@ -89,10 +95,8 @@ public class DragMoveCpt : MonoBehaviour
         GameObject jigsawGameObj = jigsawCollider.gameObject;
         Transform jigsawTransform = jigsawGameObj.transform;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //获取父对象
-        Transform jigsawContainer = jigsawTransform.parent;
         //物体速度位置是这一帧鼠标在空间的位置加上它们的差值
-        if(jigsawContainer!=null)
-        jigsawContainer.position = new Vector3(mousePos.x, mousePos.y) + vec3Offset;
+        if (jigsawTransform != null)
+            jigsawTransform.position = new Vector3(mousePos.x, mousePos.y) + vec3Offset;
     }
 }
