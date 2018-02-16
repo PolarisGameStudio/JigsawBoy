@@ -52,10 +52,11 @@ public class JigsawContainerGameObjBuilder
     /// 增加碰撞
     /// </summary>
     /// <param name="jigsawContainerObj"></param>
-    private static void setCollider(GameObject jigsawContainerObj)
+    public static void setCollider(GameObject jigsawContainerObj)
     {
         CompositeCollider2D jigsawContainerCollider = jigsawContainerObj.AddComponent<CompositeCollider2D>();
         jigsawContainerCollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
+        jigsawContainerCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
     }
 
 

@@ -20,6 +20,8 @@ public class JigsawContainerCpt : MonoBehaviour
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
     }
+
+
     // Use this for initialization
     void Start()
     {
@@ -49,9 +51,13 @@ public class JigsawContainerCpt : MonoBehaviour
             LogUtil.logError("给拼图容器添加子拼图失败：没有JigsawGameObj");
             return;
         }
-        jigsawData.JigsawGameObj.transform.parent = transform;
+        jigsawGameObj.transform.parent = null;
+        jigsawGameObj.transform.parent = transform;
         listJigsaw.Add(jigsawData);
-
+        //设置质量为拼图数量和
+        Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
+        if(thisRB!=null)
+        thisRB.mass = listJigsaw.Count;
     }
 
     /// <summary>
@@ -91,23 +97,18 @@ public class JigsawContainerCpt : MonoBehaviour
     {
         if (!isOpenMergeCheck)
             return;
-
-        //获取自己的拼图容器对象
-        JigsawContainerCpt thisJCC = this.GetComponent<JigsawContainerCpt>();
-        if (thisJCC == null || !thisJCC.isSelect)
+        if (!isSelect)
             return;
-
 
         //获取被撞物体和其父对象
-        Transform collisionTF = collision.transform;
-        if (collisionTF == null)
-            return;
-        JigsawContainerCpt collisionJCC = collisionTF.GetComponent<JigsawContainerCpt>();
+        JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
         if (collisionJCC == null)
             return;
-
+        //设置不可在拖拽
         CommonData.isDargMove = false;
-        collisionJCC.addJigsawList(thisJCC.getJigsawList());
+
+        collisionJCC.addJigsawList(getJigsawList());
+        // 最后删除当前容器
         Destroy(gameObject);
     }
 
