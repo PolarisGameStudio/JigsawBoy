@@ -110,7 +110,7 @@ public class JigsawContainerCpt : MonoBehaviour
         JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
         if (collisionJCC == null)
             return;
-     
+
         if (checkMerge(collisionJCC))
         {
             //设置不可在拖拽
@@ -136,10 +136,10 @@ public class JigsawContainerCpt : MonoBehaviour
             JigsawBean jigsawData = listJigsaw[jigsawPosition];
             GameObject jigsawObj = jigsawData.JigsawGameObj;
             Transform jigsawTF = jigsawObj.transform;
-            Vector3 jigsawLocation = jigsawTF.localPosition ;
-
+            Vector3 jigsawLocation = jigsawTF.InverseTransformPoint(jigsawTF.position);
+  
             Vector2 leftMarkLocation = new Vector2(jigsawData.MarkLocation.x - 1, jigsawData.MarkLocation.y);
-          //  Vector3 leftVector =  new Vector3(jigsawLocation.x - jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
+            //Vector3 leftVector =  new Vector3(jigsawLocation.x - jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
             Vector3 leftVector = jigsawLocation + Vector3.left * jigsawData.JigsawWith;
 
             Vector2 aboveMarkLocation = new Vector2(jigsawData.MarkLocation.x, jigsawData.MarkLocation.y + 1);
@@ -160,11 +160,11 @@ public class JigsawContainerCpt : MonoBehaviour
             }
             if (!mapMergeList.ContainsKey(aboveMarkLocation))
             {
-                mapMergeList.Add(aboveMarkLocation, jigsawTF.TransformPoint(aboveVector) );
+                mapMergeList.Add(aboveMarkLocation, jigsawTF.TransformPoint(aboveVector));
             }
             if (!mapMergeList.ContainsKey(rightMarkLocation))
             {
-                mapMergeList.Add(rightMarkLocation, jigsawTF.TransformPoint(rightVector) );
+                mapMergeList.Add(rightMarkLocation, jigsawTF.TransformPoint(rightVector));
             }
             if (!mapMergeList.ContainsKey(belowMarkLocation))
             {
@@ -212,7 +212,7 @@ public class JigsawContainerCpt : MonoBehaviour
                 if (jigsawPositionItem.Key.Equals(collisionMergeItem.Key))
                 {
                     float distance = Vector3.Distance(jigsawPositionItem.Value, collisionMergeItem.Value);
-                    if (distance < mergeVectorOffset&& offsetAngles< mergeAnglesOffset)
+                    if (distance < mergeVectorOffset && offsetAngles < mergeAnglesOffset)
                     {
                         return true;
                     }
