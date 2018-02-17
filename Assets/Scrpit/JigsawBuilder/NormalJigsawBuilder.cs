@@ -90,7 +90,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         return listJigsawBean;
     }
 
-
     //-----------------------------------------------------------------------------------------------------------------------
 
     /// <summary>
@@ -167,6 +166,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
         setBulgeEdge(jigsawItem, new JigsawBulgeEnum[4] { leftBulge, aboveBulge, rightBulge, belowBulge });
     }
+
 
     /// <summary>
     /// 设置顶点
@@ -529,6 +529,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         if (jigsaw == null) { return; }
         jigsaw.JigsawHigh = jigsawHigh;
     }
+
 }
 
 

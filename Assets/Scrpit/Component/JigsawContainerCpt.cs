@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class JigsawContainerCpt : MonoBehaviour
@@ -12,6 +13,9 @@ public class JigsawContainerCpt : MonoBehaviour
     //是否开启合并检测
     public bool isOpenMergeCheck;
 
+    //合并的判断间距
+    public float mergeVectorOffset;
+    public float mergeAnglesOffset;
 
 
     public JigsawContainerCpt()
@@ -19,6 +23,8 @@ public class JigsawContainerCpt : MonoBehaviour
         isOpenMergeCheck = true;
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
+        mergeVectorOffset = 1f;
+        mergeAnglesOffset = 10;
     }
 
 
@@ -56,8 +62,8 @@ public class JigsawContainerCpt : MonoBehaviour
         listJigsaw.Add(jigsawData);
         //设置质量为拼图数量和
         Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
-        if(thisRB!=null)
-        thisRB.mass = listJigsaw.Count;
+        if (thisRB != null)
+            thisRB.mass = listJigsaw.Count;
     }
 
     /// <summary>
@@ -104,12 +110,115 @@ public class JigsawContainerCpt : MonoBehaviour
         JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
         if (collisionJCC == null)
             return;
-        //设置不可在拖拽
-        CommonData.isDargMove = false;
-
-        collisionJCC.addJigsawList(getJigsawList());
-        // 最后删除当前容器
-        Destroy(gameObject);
+     
+        if (checkMerge(collisionJCC))
+        {
+            //设置不可在拖拽
+            CommonData.isDargMove = false;
+            // 添加拼图碎片到碰撞容器里
+            collisionJCC.addJigsawList(getJigsawList());
+            // 最后删除当前容器
+            Destroy(gameObject);
+        }
     }
 
+
+
+    /// <summary>
+    /// 获取该拼图附近能合并的点坐标
+    /// </summary>
+    public Dictionary<Vector2, Vector3> getMergeVectorList()
+    {
+        Dictionary<Vector2, Vector3> mapMergeList = new Dictionary<Vector2, Vector3>();
+        int listJigsawCount = listJigsaw.Count;
+        for (int jigsawPosition = 0; jigsawPosition < listJigsawCount; jigsawPosition++)
+        {
+            JigsawBean jigsawData = listJigsaw[jigsawPosition];
+            GameObject jigsawObj = jigsawData.JigsawGameObj;
+            Transform jigsawTF = jigsawObj.transform;
+            Vector3 jigsawLocation = jigsawTF.localPosition ;
+
+            Vector2 leftMarkLocation = new Vector2(jigsawData.MarkLocation.x - 1, jigsawData.MarkLocation.y);
+          //  Vector3 leftVector =  new Vector3(jigsawLocation.x - jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
+            Vector3 leftVector = jigsawLocation + Vector3.left * jigsawData.JigsawWith;
+
+            Vector2 aboveMarkLocation = new Vector2(jigsawData.MarkLocation.x, jigsawData.MarkLocation.y + 1);
+            //Vector3 aboveVector = new Vector3(jigsawLocation.x, jigsawLocation.y + jigsawData.JigsawHigh, jigsawLocation.z);
+            Vector3 aboveVector = jigsawLocation + Vector3.up * jigsawData.JigsawWith;
+
+            Vector2 rightMarkLocation = new Vector2(jigsawData.MarkLocation.x + 1, jigsawData.MarkLocation.y);
+            //Vector3 rightVector = new Vector3(jigsawLocation.x + jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
+            Vector3 rightVector = jigsawLocation + Vector3.right * jigsawData.JigsawWith;
+
+            Vector2 belowMarkLocation = new Vector2(jigsawData.MarkLocation.x, jigsawData.MarkLocation.y - 1);
+            //Vector3 belowVector = new Vector3(jigsawLocation.x, jigsawLocation.y - jigsawData.JigsawHigh, jigsawLocation.z);
+            Vector3 belowVector = jigsawLocation + Vector3.down * jigsawData.JigsawWith;
+
+            if (!mapMergeList.ContainsKey(leftMarkLocation))
+            {
+                mapMergeList.Add(leftMarkLocation, jigsawTF.TransformPoint(leftVector));
+            }
+            if (!mapMergeList.ContainsKey(aboveMarkLocation))
+            {
+                mapMergeList.Add(aboveMarkLocation, jigsawTF.TransformPoint(aboveVector) );
+            }
+            if (!mapMergeList.ContainsKey(rightMarkLocation))
+            {
+                mapMergeList.Add(rightMarkLocation, jigsawTF.TransformPoint(rightVector) );
+            }
+            if (!mapMergeList.ContainsKey(belowMarkLocation))
+            {
+                mapMergeList.Add(belowMarkLocation, jigsawTF.TransformPoint(belowVector));
+            }
+        }
+
+        return mapMergeList;
+    }
+
+    /// <summary>
+    /// 获取所有拼图坐标
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<Vector2, Vector3> getJigsawPositionVectorList()
+    {
+        Dictionary<Vector2, Vector3> mapJigsawPositionVectorList = new Dictionary<Vector2, Vector3>();
+        int listJigsawCount = listJigsaw.Count;
+        for (int jigsawPosition = 0; jigsawPosition < listJigsawCount; jigsawPosition++)
+        {
+            JigsawBean jigsawData = listJigsaw[jigsawPosition];
+            GameObject jigsawObj = jigsawData.JigsawGameObj;
+            Transform jigsawTF = jigsawObj.transform;
+            Vector3 jigsawLocation = jigsawTF.position;
+
+            mapJigsawPositionVectorList.Add(jigsawData.MarkLocation, jigsawLocation);
+        }
+
+        return mapJigsawPositionVectorList;
+    }
+    /// <summary>
+    /// 检测是否能合并
+    /// </summary>
+    public bool checkMerge(JigsawContainerCpt collisionJCC)
+    {
+        Dictionary<Vector2, Vector3> collisionMergeVectorList = collisionJCC.getMergeVectorList();
+        Dictionary<Vector2, Vector3> jigsawPositionVectorList = this.getJigsawPositionVectorList();
+        float thisAngles = transform.eulerAngles.z;
+        float collisionAngles = collisionJCC.transform.eulerAngles.z;
+        float offsetAngles = Mathf.Abs(thisAngles - collisionAngles);
+        foreach (KeyValuePair<Vector2, Vector3> jigsawPositionItem in jigsawPositionVectorList)
+        {
+            foreach (KeyValuePair<Vector2, Vector3> collisionMergeItem in collisionMergeVectorList)
+            {
+                if (jigsawPositionItem.Key.Equals(collisionMergeItem.Key))
+                {
+                    float distance = Vector3.Distance(jigsawPositionItem.Value, collisionMergeItem.Value);
+                    if (distance < mergeVectorOffset&& offsetAngles< mergeAnglesOffset)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

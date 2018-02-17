@@ -49,6 +49,8 @@ public class JigsawBean
     /// </summary>
     private JigsawBulgeEnum[] listBulge;
 
+
+
     /// <summary>
     /// 拼图图片
     /// </summary>
@@ -187,4 +189,5 @@ public class JigsawBean
             centerVector = value;
         }
     }
+
 }

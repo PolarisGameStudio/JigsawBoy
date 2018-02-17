@@ -84,7 +84,7 @@ public class JigsawObjBuilder
         //设置线框
         //setWireFrame(jigsawGameObj);
         //设置拼图component
-        setJigsawCpt(jigsawGameObj, jigsawStyleEnum);
+        setJigsawCpt(jigsawGameObj, jigsawData);
 
         return jigsawGameObj;
     }
@@ -104,10 +104,17 @@ public class JigsawObjBuilder
     /// 设置拼图组件
     /// </summary>
     /// <param name="jigsawGameObj"></param>
-    private static void setJigsawCpt(GameObject jigsawGameObj,JigsawStyleEnum  jigsawStyle)
+    private static void setJigsawCpt(GameObject jigsawGameObj, JigsawBean jigsawData)
     {
-        if(jigsawStyle==JigsawStyleEnum.Normal)
-        jigsawGameObj.AddComponent<NormalJigsawCpt>();
+        JigsawStyleEnum jigsawStyle = jigsawData.JigsawStyle; 
+        if (jigsawStyle == JigsawStyleEnum.Normal) {
+            NormalJigsawCpt jigsawCpt= jigsawGameObj.AddComponent<NormalJigsawCpt>();
+            jigsawCpt.setJigsawData(jigsawData);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Left,JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Above, JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Right, JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Below, JigsawMergeStatusEnum.Unincorporated);
+        }
     }
 
     /// <summary>
@@ -139,7 +146,7 @@ public class JigsawObjBuilder
     private static void setRigidbody2D(GameObject jigsawGameObj)
     {
         //获取拼图的刚体并设置
-       Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
+        Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
         jigsawRB.gravityScale = 0f;
     }
 
@@ -184,7 +191,7 @@ public class JigsawObjBuilder
         jigsawCollider.usedByComposite = true;
     }
 
-    
+
     //--------------------------------------------------------------------------------------------------------
     /// <summary>
     /// 创建拼图的坐标点
