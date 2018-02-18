@@ -54,7 +54,6 @@ public class DragMoveCpt : MonoBehaviour
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
         hitRC = Physics2D.Raycast(mousePos2D, Vector2.zero);
-        RaycastHit2D[] all = Physics2D.RaycastAll(mousePos2D, Vector2.zero);
         if (hitRC.collider != null)
         {
             isSelect = true;

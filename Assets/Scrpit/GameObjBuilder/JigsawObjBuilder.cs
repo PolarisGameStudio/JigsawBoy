@@ -43,11 +43,6 @@ public class JigsawObjBuilder
             LogUtil.log("生产拼图gameObj失败-UV坐标与定点坐标数量不对等");
             return null;
         }
-        if (markLocation == null)
-        {
-            LogUtil.log("生产拼图gameObj失败-没有标记坐标");
-            return null;
-        }
         if (jigsawPic == null)
         {
             LogUtil.log("生产拼图gameObj失败-没有生成拼图所需图片");
@@ -58,16 +53,7 @@ public class JigsawObjBuilder
             LogUtil.log("生产拼图gameObj失败-没有拼图中心点");
             return null;
         }
-        if (jigsawWith == null)
-        {
-            LogUtil.log("生产拼图gameObj失败-没有拼图宽");
-            return null;
-        }
-        if (jigsawHigh == null)
-        {
-            LogUtil.log("生产拼图gameObj失败-没有拼图高");
-            return null;
-        }
+
 
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;

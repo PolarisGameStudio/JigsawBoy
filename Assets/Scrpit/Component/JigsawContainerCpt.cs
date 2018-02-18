@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class JigsawContainerCpt : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class JigsawContainerCpt : MonoBehaviour
     //合并的判断间距
     public float mergeVectorOffset;
     public float mergeAnglesOffset;
+    //合并动画持续时间
+    public float mergeAnimDuration;
 
 
     public JigsawContainerCpt()
@@ -25,6 +28,7 @@ public class JigsawContainerCpt : MonoBehaviour
         isSelect = false;
         mergeVectorOffset = 1f;
         mergeAnglesOffset = 10;
+        mergeAnimDuration = 0.2f;
     }
 
 
@@ -60,6 +64,7 @@ public class JigsawContainerCpt : MonoBehaviour
         jigsawGameObj.transform.parent = null;
         jigsawGameObj.transform.parent = transform;
         listJigsaw.Add(jigsawData);
+        jigsawLocationCorrect();
         //设置质量为拼图数量和
         Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
         if (thisRB != null)
@@ -79,6 +84,52 @@ public class JigsawContainerCpt : MonoBehaviour
     }
 
     /// <summary>
+    /// 位置纠正
+    /// </summary>
+    public void jigsawLocationCorrect()
+    {
+        int jigsawListCount = listJigsaw.Count;
+        if (jigsawListCount == 0)
+            return;
+        JigsawBean baseJigsawItem = listJigsaw[0];
+        Transform baseTF = baseJigsawItem.JigsawGameObj.transform;
+        //获取基准拼图的标记位
+        Vector2 baseMarkLocation = baseJigsawItem.MarkLocation;
+        //获取基准拼图的世界坐标
+        Vector3 basePosition = baseTF.position;
+        //获取基准拼图的本地坐标
+        Vector3 baseLocationPosition = baseTF.InverseTransformPoint(basePosition);
+
+        for (int listPosition = 1; listPosition < jigsawListCount; listPosition++)
+        {
+            //获取其他拼图数据
+            JigsawBean jigsawItem = listJigsaw[listPosition];
+            //获取其他拼图的标记坐标
+            Vector2 itemMarkLocation = jigsawItem.MarkLocation;
+            //获取其他拼图的对象
+            Transform jigsawTF = jigsawItem.JigsawGameObj.transform;
+            //获取相对于基准拼图的标记偏移量
+            Vector2 offsetMarkLocation = baseMarkLocation - itemMarkLocation;
+            //获取相对于基准拼图的本地位置偏移量
+            Vector3 offsetPosition = new Vector2(offsetMarkLocation.x * jigsawItem.JigsawWith, offsetMarkLocation.y * jigsawItem.JigsawHigh);
+            //获取其他拼图的本地位置
+            Vector3 jigsawItemLocationPosition = baseLocationPosition - offsetPosition;
+            //获取其他拼图的世界坐标
+            Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
+
+
+            //设置位置
+            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            //jigsawTF.position = jigsawItemPosition;
+            //设置角度
+            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            //jigsawTF.rotation = transform.rotation;
+
+        }
+    }
+
+
+    /// <summary>
     /// 获取容器下所有拼图对象列表 
     /// </summary>
     public List<JigsawBean> getJigsawList()
@@ -95,11 +146,25 @@ public class JigsawContainerCpt : MonoBehaviour
         isOpenMergeCheck = openStatus;
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collisionCheck(collision);
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        //collisionCheck(collision);
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        collisionCheck(collision);
+    }
+
     /// <summary>
-    /// 碰撞开始
+    /// 碰撞处理
     /// </summary>
     /// <param name="collision"></param>
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void collisionCheck(Collision2D collision)
     {
         if (!isOpenMergeCheck)
             return;
@@ -122,8 +187,6 @@ public class JigsawContainerCpt : MonoBehaviour
         }
     }
 
-
-
     /// <summary>
     /// 获取该拼图附近能合并的点坐标
     /// </summary>
@@ -137,22 +200,18 @@ public class JigsawContainerCpt : MonoBehaviour
             GameObject jigsawObj = jigsawData.JigsawGameObj;
             Transform jigsawTF = jigsawObj.transform;
             Vector3 jigsawLocation = jigsawTF.InverseTransformPoint(jigsawTF.position);
-  
+
             Vector2 leftMarkLocation = new Vector2(jigsawData.MarkLocation.x - 1, jigsawData.MarkLocation.y);
-            //Vector3 leftVector =  new Vector3(jigsawLocation.x - jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
             Vector3 leftVector = jigsawLocation + Vector3.left * jigsawData.JigsawWith;
 
             Vector2 aboveMarkLocation = new Vector2(jigsawData.MarkLocation.x, jigsawData.MarkLocation.y + 1);
-            //Vector3 aboveVector = new Vector3(jigsawLocation.x, jigsawLocation.y + jigsawData.JigsawHigh, jigsawLocation.z);
-            Vector3 aboveVector = jigsawLocation + Vector3.up * jigsawData.JigsawWith;
+            Vector3 aboveVector = jigsawLocation + Vector3.up * jigsawData.JigsawHigh;
 
             Vector2 rightMarkLocation = new Vector2(jigsawData.MarkLocation.x + 1, jigsawData.MarkLocation.y);
-            //Vector3 rightVector = new Vector3(jigsawLocation.x + jigsawData.JigsawWith, jigsawLocation.y, jigsawLocation.z);
             Vector3 rightVector = jigsawLocation + Vector3.right * jigsawData.JigsawWith;
 
             Vector2 belowMarkLocation = new Vector2(jigsawData.MarkLocation.x, jigsawData.MarkLocation.y - 1);
-            //Vector3 belowVector = new Vector3(jigsawLocation.x, jigsawLocation.y - jigsawData.JigsawHigh, jigsawLocation.z);
-            Vector3 belowVector = jigsawLocation + Vector3.down * jigsawData.JigsawWith;
+            Vector3 belowVector = jigsawLocation + Vector3.down * jigsawData.JigsawHigh;
 
             if (!mapMergeList.ContainsKey(leftMarkLocation))
             {
@@ -189,8 +248,11 @@ public class JigsawContainerCpt : MonoBehaviour
             GameObject jigsawObj = jigsawData.JigsawGameObj;
             Transform jigsawTF = jigsawObj.transform;
             Vector3 jigsawLocation = jigsawTF.position;
-
-            mapJigsawPositionVectorList.Add(jigsawData.MarkLocation, jigsawLocation);
+        
+            if (!mapJigsawPositionVectorList.ContainsKey(jigsawData.MarkLocation))
+            {
+                mapJigsawPositionVectorList.Add(jigsawData.MarkLocation, jigsawLocation);
+            }
         }
 
         return mapJigsawPositionVectorList;

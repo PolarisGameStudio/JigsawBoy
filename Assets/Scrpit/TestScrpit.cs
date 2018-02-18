@@ -9,9 +9,8 @@ public class TestScrpit : MonoBehaviour
     void Start()
     {
         Texture2D pic2D = (Texture2D)Resources.Load("text1");
-        Debug.Log("width:"+pic2D.width+" height:"+pic2D.height);
 
-       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,4,2,pic2D);
+       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,10,5,pic2D);
         CreateJigsawGameObjUtil.createJigsawGameObjList(listData);
 
        List<GameObject> containerList= CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);

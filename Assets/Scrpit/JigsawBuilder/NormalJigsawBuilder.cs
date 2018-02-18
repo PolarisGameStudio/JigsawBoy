@@ -23,8 +23,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     private float mJigsawUVWith;
     //拼图UV的高
     private float mJigsawUVHigh;
-    //凸出部分UV直径比例
-    private float mJigsawBulgeUVR;
+
 
 
 
@@ -35,7 +34,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     {
         mJigsawScale = 1f;
         mJigsawUnitSize = 3f * mJigsawScale;
-        mJigsawTriangleNumber = 90;
+        mJigsawTriangleNumber =90;
         mJigsawBulgeR = mJigsawUnitSize / 3f;
     }
 
@@ -112,8 +111,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
             mJigsawHigh = mJigsawUnitSize;
             //拼图的宽
             mJigsawWith = mJigsawHigh * (picItemWith / picItemHigh);
-
-            mJigsawBulgeUVR = mJigsawUVHigh * (mJigsawBulgeR / mJigsawHigh);
         }
         else
         {
@@ -121,8 +118,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
             mJigsawWith = mJigsawUnitSize;
             //拼图的高
             mJigsawHigh = mJigsawWith * (picItemHigh / picItemWith);
-
-            mJigsawBulgeUVR = mJigsawUVWith * (mJigsawBulgeR / mJigsawWith);
         }
     }
 
@@ -236,10 +231,15 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         List<Vector3> listVertices = jigsawItem.ListVertices;
         Vector2 markLocation = jigsawItem.MarkLocation;
         if (listVertices == null)
-            throw new Exception("没有顶点坐标");
+        {
+            LogUtil.log("没有顶点坐标");
+            return;
+        }
         if (markLocation == null)
-            throw new Exception("没有标记坐标");
-
+        {
+            LogUtil.log("没有标记坐标");
+            return;
+        }
         List<Vector2> listUVposition = new List<Vector2>();
 
         float xRatio = mJigsawWith / mJigsawUVWith;
@@ -263,7 +263,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     /// <returns></returns>
     private JigsawBulgeEnum compareBulge(JigsawBean compareJigsaw, JigsawStyleNormalEdgeEnum edgeEnum)
     {
-        if (compareJigsaw == null || edgeEnum == null)
+        if (compareJigsaw == null )
             return JigsawBulgeEnum.Smooth;
         //获取相邻拼图的凹凸情况
         JigsawBulgeEnum[] compareBulgeList = compareJigsaw.ListBulge;
