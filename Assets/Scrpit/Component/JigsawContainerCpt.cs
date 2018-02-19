@@ -64,7 +64,6 @@ public class JigsawContainerCpt : MonoBehaviour
         jigsawGameObj.transform.parent = null;
         jigsawGameObj.transform.parent = transform;
         listJigsaw.Add(jigsawData);
-        jigsawLocationCorrect();
         //设置质量为拼图数量和
         Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
         if (thisRB != null)
@@ -160,12 +159,14 @@ public class JigsawContainerCpt : MonoBehaviour
         collisionCheck(collision);
     }
 
+
     /// <summary>
     /// 碰撞处理
     /// </summary>
     /// <param name="collision"></param>
     private void collisionCheck(Collider2D collision)
     {
+
         if (!isOpenMergeCheck)
             return;
         if (!isSelect)
@@ -175,13 +176,14 @@ public class JigsawContainerCpt : MonoBehaviour
         JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
         if (collisionJCC == null)
             return;
-
         if (checkMerge(collisionJCC))
         {
             //设置不可在拖拽
             CommonData.isDargMove = false;
+            isSelect = false;
             // 添加拼图碎片到碰撞容器里
-            collisionJCC.addJigsawList(getJigsawList());
+            collisionJCC.addJigsawList(listJigsaw);
+            collisionJCC.jigsawLocationCorrect();
             // 最后删除当前容器
             Destroy(gameObject);
         }
@@ -248,7 +250,7 @@ public class JigsawContainerCpt : MonoBehaviour
             GameObject jigsawObj = jigsawData.JigsawGameObj;
             Transform jigsawTF = jigsawObj.transform;
             Vector3 jigsawLocation = jigsawTF.position;
-        
+
             if (!mapJigsawPositionVectorList.ContainsKey(jigsawData.MarkLocation))
             {
                 mapJigsawPositionVectorList.Add(jigsawData.MarkLocation, jigsawLocation);

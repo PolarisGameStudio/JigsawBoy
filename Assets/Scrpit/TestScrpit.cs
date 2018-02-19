@@ -8,9 +8,13 @@ public class TestScrpit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Texture2D pic2D = (Texture2D)Resources.Load("text1");
 
-       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,10,5,pic2D);
+
+        
+
+        Texture2D pic2D = (Texture2D)Resources.Load("Painting/Avignon_Girls");
+
+       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,9,6,pic2D);
         CreateJigsawGameObjUtil.createJigsawGameObjList(listData);
 
        List<GameObject> containerList= CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);

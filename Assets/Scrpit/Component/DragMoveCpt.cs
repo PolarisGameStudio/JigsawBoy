@@ -92,7 +92,6 @@ public class DragMoveCpt : MonoBehaviour
         if (jigsawContainerCpt != null)
         {
             jigsawContainerCpt.isSelect = false;
-            jigsawContainerCpt.jigsawLocationCorrect();
         }
           
     }
