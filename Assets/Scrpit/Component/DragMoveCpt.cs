@@ -60,12 +60,18 @@ public class DragMoveCpt : MonoBehaviour
             Collider2D jigsawCollider = hitRC.collider;
             GameObject jigsawGameObj = jigsawCollider.gameObject;
             Transform jigsawTransform = jigsawGameObj.transform;
+            jigsawCollider.isTrigger = true;
+     
+
 
             //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差
             vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
             jigsawContainerCpt = jigsawTransform.GetComponent<JigsawContainerCpt>();
             if (jigsawContainerCpt != null)
+            {
                 jigsawContainerCpt.isSelect = true;
+            }
+               
 
 
         }
@@ -77,9 +83,18 @@ public class DragMoveCpt : MonoBehaviour
     /// </summary>
     private void onMouseUp()
     {
-        isSelect = false;
+        if (hitRC.collider != null)
+        {
+            Collider2D jigsawCollider = hitRC.collider;
+            jigsawCollider.isTrigger=false;
+        }
+            isSelect = false;
         if (jigsawContainerCpt != null)
+        {
             jigsawContainerCpt.isSelect = false;
+            jigsawContainerCpt.jigsawLocationCorrect();
+        }
+          
     }
 
 
@@ -93,9 +108,11 @@ public class DragMoveCpt : MonoBehaviour
         Collider2D jigsawCollider = hitRC.collider;
         GameObject jigsawGameObj = jigsawCollider.gameObject;
         Transform jigsawTransform = jigsawGameObj.transform;
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //物体速度位置是这一帧鼠标在空间的位置加上它们的差值
         if (jigsawTransform != null)
             jigsawTransform.position = new Vector3(mousePos.x, mousePos.y) + vec3Offset;
+
     }
 }

@@ -146,16 +146,16 @@ public class JigsawContainerCpt : MonoBehaviour
         isOpenMergeCheck = openStatus;
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         collisionCheck(collision);
     }
-    private void OnCollisionStay2D(Collision2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        //collisionCheck(collision);
+        collisionCheck(collision);
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         collisionCheck(collision);
     }
@@ -164,7 +164,7 @@ public class JigsawContainerCpt : MonoBehaviour
     /// 碰撞处理
     /// </summary>
     /// <param name="collision"></param>
-    private void collisionCheck(Collision2D collision)
+    private void collisionCheck(Collider2D collision)
     {
         if (!isOpenMergeCheck)
             return;
