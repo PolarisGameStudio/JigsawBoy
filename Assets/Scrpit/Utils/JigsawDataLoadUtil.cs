@@ -14,9 +14,11 @@ public class JigsawDataLoadUtil
     /// <param name="language"></param>
     /// <param name="resourcesType"></param>
     /// <returns></returns>
-    public static JigsawResourcesBean loadAllJigsawDataByType(GameLanguageEnum language, JigsawResourcesEnum resourcesType)
+    public static JigsawResourcesBean loadAllJigsawDataByType(JigsawResourcesEnum resourcesType)
     {
         JigsawResourcesBean resourcesList = new JigsawResourcesBean();
+        GameLanguageEnum language = CommonData.gameLanguage;
+
         string fileName = "";
         if (resourcesType.Equals(JigsawResourcesEnum.Custom))
             fileName = CustomData;
