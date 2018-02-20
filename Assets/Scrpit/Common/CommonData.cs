@@ -8,4 +8,7 @@ public class CommonData {
     public static bool isDargMove = false;
     //游戏语言
     public static GameLanguageEnum gameLanguage=GameLanguageEnum.Chinese;
+
+    //选择的拼图信息
+    public static JigsawResInfoBean selectJigsawInfo;
 }

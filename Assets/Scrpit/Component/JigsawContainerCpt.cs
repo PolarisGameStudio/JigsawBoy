@@ -23,7 +23,7 @@ public class JigsawContainerCpt : MonoBehaviour
 
     public JigsawContainerCpt()
     {
-        isOpenMergeCheck = true;
+        isOpenMergeCheck = false;
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
         mergeVectorOffset = 1f;
