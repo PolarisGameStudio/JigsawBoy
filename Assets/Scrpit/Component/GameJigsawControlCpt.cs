@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragMoveCpt : MonoBehaviour
+public class GameJigsawControlCpt : MonoBehaviour
 {
 
     //位置差
@@ -15,6 +15,11 @@ public class DragMoveCpt : MonoBehaviour
     //选中的物体
     private RaycastHit2D hitRC;
 
+    //从中心点出发可以移动的高宽最远距离
+    public float moveWithMax=0f;
+    public float moveHighMax=0f;
+
+    private float moveScale = 5f;
 
     // Use this for initialization
     void Start()
@@ -110,8 +115,28 @@ public class DragMoveCpt : MonoBehaviour
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //物体速度位置是这一帧鼠标在空间的位置加上它们的差值
-        if (jigsawTransform != null)
-            jigsawTransform.position = new Vector3(mousePos.x, mousePos.y) + vec3Offset;
+        if (jigsawTransform != null) {
+            Vector3 movePos = new Vector3(jigsawTransform.position.x, jigsawTransform.position.y, jigsawTransform.position.z);
+            Vector3 nowOffset = new Vector3(vec3Offset.x,vec3Offset.y,vec3Offset.z);
+            if (Mathf.Abs(mousePos.x) <= ((moveWithMax/2f) * moveScale))
+            {
+                movePos.x = mousePos.x;
+            }
+            else
+            {
+                nowOffset.x = 0f;
+            }
+            if(Mathf.Abs(mousePos.y) <= ((moveHighMax/2f) * moveScale))
+            {
+                movePos.y = mousePos.y;
+            }
+            else
+            {
+                nowOffset.y = 0f;
+            }
+            jigsawTransform.position = movePos + nowOffset;
+        }
+           
 
     }
 }

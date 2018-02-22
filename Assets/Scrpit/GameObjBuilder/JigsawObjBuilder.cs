@@ -123,6 +123,8 @@ public class JigsawObjBuilder
         Renderer jigsawRenderer = jigsawGameObj.AddComponent<MeshRenderer>();
         Material jigsawMaterial = jigsawRenderer.material;
         jigsawMaterial.mainTexture = jigsawPic;
+        //设置贴图无光照
+        jigsawMaterial.shader = Shader.Find("Unlit/Texture");
     }
 
     /// <summary>
