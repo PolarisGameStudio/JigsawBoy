@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class CreateJigsawUtils
+public class CreateJigsawDataUtils
 {
 
 
@@ -15,30 +15,41 @@ public class CreateJigsawUtils
     /// <param name="verticalJigsawNumber">纵向拼图快速</param>
     /// <param name="jigsawPic">拼图图片</param>
     /// <returns></returns>
-    public static List<JigsawBean> createJigsawList(JigsawStyleEnum jigsawStyle, int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic)
+    public static List<JigsawBean> createJigsawDataList(JigsawStyleEnum jigsawStyle, int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic)
     {
-        if (horizontalJigsawNumber == 0)
-            throw new Exception("横向块数为0");
+        List<JigsawBean> listJigsawBean = new List<JigsawBean>();
+
+        if (horizontalJigsawNumber == 0) {
+            LogUtil.logError("横向块数为0");
+            return listJigsawBean;
+        }
         if (verticalJigsawNumber == 0)
-            throw new Exception("纵向块数为0");
+        {
+            LogUtil.logError("纵向块数为0");
+            return listJigsawBean;
+        }
         if (jigsawPic == null)
-            throw new Exception("没有图片");
+        {
+            LogUtil.logError("没有图片");
+            return listJigsawBean;
+        }
 
-        List<JigsawBean> listJigsawBean = null;
-
-        IBaseJigsawBuilder jigsawBuilder;
         //按样式生成不同的拼图碎片
+        IBaseJigsawBuilder jigsawBuilder;
         if (jigsawStyle == JigsawStyleEnum.Normal)
             jigsawBuilder = new NomralJigsawBuilder();
         else
-            throw new Exception("没有相对于样式的拼图");
-
+        {
+            LogUtil.logError("没有相对于样式的拼图");
+            return listJigsawBean;
+        }
 
         listJigsawBean = jigsawBuilder.buildJigsawList(horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
 
         if (listJigsawBean == null)
-            throw new Exception("生成拼图碎片失败");
-        else
+        {
+            LogUtil.logError("生成拼图碎片数据失败");
+        }
             return listJigsawBean;
 
     }

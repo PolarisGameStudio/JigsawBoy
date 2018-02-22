@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GeometryUtil
 {
@@ -33,12 +34,15 @@ public class GeometryUtil
         {
             float circleAngleTemp = isClockwise ? (-circleAngleItem * triangleposition) : (circleAngleItem * triangleposition);
             float circleAngle = circleAngleTemp + startAngle;
-         
+
             float coordinateX = centerVector.x + circler * Mathf.Cos(circleAngle * 3.14f / 180f);
             float coordinateY = centerVector.y + circler * Mathf.Sin(circleAngle * 3.14f / 180f);
-            circleVertices.Add(new Vector3(coordinateX, coordinateY, 0));
+            float coordinateXcpt = (float)Math.Round(coordinateX, 2);
+            float coordinateYcpt = (float)Math.Round(coordinateY, 2);
+            circleVertices.Add(new Vector3(coordinateXcpt, coordinateYcpt, 0));
         }
 
         return circleVertices;
     }
+
 }

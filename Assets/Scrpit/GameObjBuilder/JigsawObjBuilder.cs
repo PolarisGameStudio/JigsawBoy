@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateJigsawGameObj
+public class JigsawObjBuilder
 {
     /// <summary>
     /// 获取拼图GameObj
     /// </summary>
     /// <param name="JigsawBean">需要生成的拼图块数据</param>
     /// <returns></returns>
-    public static GameObject getJigsawGameObj(JigsawBean jigsawData)
+    public static GameObject buildJigsawGameObj(JigsawBean jigsawData)
     {
         if (jigsawData == null)
             throw new Exception("没有拼图数据");
@@ -21,25 +21,39 @@ public class CreateJigsawGameObj
         Vector3 centerVector = jigsawData.CenterVector;
         float jigsawWith = jigsawData.JigsawWith;
         float jigsawHigh = jigsawData.JigsawHigh;
+        JigsawStyleEnum jigsawStyleEnum = jigsawData.JigsawStyle;
 
         if (listVertices == null)
-            throw new Exception("没有顶点坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有顶点坐标");
+            return null;
+        }
         if (listVertices.Count < 3)
-            throw new Exception("顶点坐标小于3");
+        {
+            LogUtil.log("生产拼图gameObj失败-顶点坐标小于3");
+            return null;
+        }
         if (listUVposition == null)
-            throw new Exception("没有图片UV坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有图片UV坐标");
+            return null;
+        }
         if (!listUVposition.Count.Equals(listVertices.Count))
-            throw new Exception("UV坐标与定点坐标数量不对等");
-        if (markLocation == null)
-            throw new Exception("没有标记坐标");
+        {
+            LogUtil.log("生产拼图gameObj失败-UV坐标与定点坐标数量不对等");
+            return null;
+        }
         if (jigsawPic == null)
-            throw new Exception("没有生成拼图所需图片");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有生成拼图所需图片");
+            return null;
+        }
         if (centerVector == null)
-            throw new Exception("没有拼图中心点");
-        if (jigsawWith == null)
-            throw new Exception("没有拼图宽");
-        if (jigsawHigh == null)
-            throw new Exception("没有拼图高");
+        {
+            LogUtil.log("生产拼图gameObj失败-没有拼图中心点");
+            return null;
+        }
+
 
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
@@ -50,16 +64,16 @@ public class CreateJigsawGameObj
         //设置网格
         setMeshFilter(jigsawGameObj, listVertices, listUVposition);
         //设置刚体
-        setRigidbody2D(jigsawGameObj);
+        // setRigidbody2D(jigsawGameObj);
         //设置2D碰撞器
         setCollider2D(jigsawGameObj, centerVector, jigsawWith, jigsawHigh);
         //设置线框
         //setWireFrame(jigsawGameObj);
+        //设置拼图component
+        setJigsawCpt(jigsawGameObj, jigsawData);
 
         return jigsawGameObj;
     }
-
-
 
     /// <summary>
     /// 创建拼图对象
@@ -70,6 +84,23 @@ public class CreateJigsawGameObj
     {
         GameObject jigsawGameObj = new GameObject(gameObjName);
         return jigsawGameObj;
+    }
+
+    /// <summary>
+    /// 设置拼图组件
+    /// </summary>
+    /// <param name="jigsawGameObj"></param>
+    private static void setJigsawCpt(GameObject jigsawGameObj, JigsawBean jigsawData)
+    {
+        JigsawStyleEnum jigsawStyle = jigsawData.JigsawStyle; 
+        if (jigsawStyle == JigsawStyleEnum.Normal) {
+            NormalJigsawCpt jigsawCpt= jigsawGameObj.AddComponent<NormalJigsawCpt>();
+            jigsawCpt.setJigsawData(jigsawData);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Left,JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Above, JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Right, JigsawMergeStatusEnum.Unincorporated);
+            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Below, JigsawMergeStatusEnum.Unincorporated);
+        }
     }
 
     /// <summary>
@@ -92,7 +123,6 @@ public class CreateJigsawGameObj
         Renderer jigsawRenderer = jigsawGameObj.AddComponent<MeshRenderer>();
         Material jigsawMaterial = jigsawRenderer.material;
         jigsawMaterial.mainTexture = jigsawPic;
-        jigsawMaterial.shader = Shader.Find("Custom/JigsawWireFrameShader"); ;
     }
 
     /// <summary>
@@ -144,9 +174,10 @@ public class CreateJigsawGameObj
         BoxCollider2D jigsawCollider = jigsawGameObj.AddComponent<BoxCollider2D>();
         jigsawCollider.size = new Vector2(jigsawWith, jigsawHigh);
         jigsawCollider.offset = new Vector2(centerVector.x, centerVector.y);
+        jigsawCollider.usedByComposite = true;
     }
 
-    
+
     //--------------------------------------------------------------------------------------------------------
     /// <summary>
     /// 创建拼图的坐标点

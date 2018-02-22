@@ -8,19 +8,23 @@ public class TestScrpit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Texture2D pic2D = (Texture2D)Resources.Load("text1");
-        Debug.Log("width:"+pic2D.width+" height:"+pic2D.height);
 
-       List<JigsawBean> listData= CreateJigsawUtils.createJigsawList(JigsawStyleEnum.Normal,2,1,pic2D);
+
+        
+
+        Texture2D pic2D = (Texture2D)Resources.Load("Painting/Avignon_Girls");
+
+       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,9,6,pic2D);
+        CreateJigsawGameObjUtil.createJigsawGameObjList(listData);
+
+       List<GameObject> containerList= CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);
         for(int i = 0; i < listData.Count; i++)
         {
             JigsawBean item = listData[i];
-            
-            item.JigsawGameObj.transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,30);
-            item.JigsawGameObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            containerList[i].transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,0);
+            containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-
-
     }
 
     // Update is called once per frame
