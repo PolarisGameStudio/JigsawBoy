@@ -1,8 +1,8 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Custom/WaterBlurGaussian" {
-    Properties {
-	_blurSizeXY("BlurSizeXY", Range(0,20)) = 20
+	Properties{
+	_blurSizeXY("BlurSizeXY", Range(0,20)) = 20 }
     SubShader {
 
         // Draw ourselves after all opaque geometry

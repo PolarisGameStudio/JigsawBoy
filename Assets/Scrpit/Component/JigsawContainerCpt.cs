@@ -23,7 +23,7 @@ public class JigsawContainerCpt : MonoBehaviour
 
     public JigsawContainerCpt()
     {
-        isOpenMergeCheck = false;
+        isOpenMergeCheck = true;
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
         mergeVectorOffset = 1f;
@@ -118,15 +118,13 @@ public class JigsawContainerCpt : MonoBehaviour
 
 
             //设置位置
-            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            //jigsawTF.position = jigsawItemPosition;
-            //设置角度
-            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            //jigsawTF.rotation = transform.rotation;
+           // jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+           // jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            jigsawTF.position = jigsawItemPosition;
+            jigsawTF.rotation = transform.rotation;
 
         }
     }
-
 
     /// <summary>
     /// 获取容器下所有拼图对象列表 

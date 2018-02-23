@@ -60,19 +60,19 @@ public class GameCameraControlCpt : MonoBehaviour
         //CameraMove
         if (Input.GetKey(KeyCode.A))
         {
-            moveCamera(new Vector2(-cameraMoveAdd, 0));
+            moveCamera(new Vector2(-cameraMoveAdd * Time.deltaTime, 0));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveCamera(new Vector2(cameraMoveAdd, 0));
+            moveCamera(new Vector2(cameraMoveAdd * Time.deltaTime, 0));
         }
         if (Input.GetKey(KeyCode.W))
         {
-            moveCamera(new Vector2(0, cameraMoveAdd));
+            moveCamera(new Vector2(0, cameraMoveAdd * Time.deltaTime));
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveCamera(new Vector2(0, -cameraMoveAdd));
+            moveCamera(new Vector2(0, -cameraMoveAdd * Time.deltaTime));
         }
     }
 

@@ -16,10 +16,13 @@ public class GameJigsawControlCpt : MonoBehaviour
     private RaycastHit2D hitRC;
 
     //从中心点出发可以移动的高宽最远距离
-    public float moveWithMax=0f;
-    public float moveHighMax=0f;
+    public float moveWithMax = 0f;
+    public float moveHighMax = 0f;
 
     private float moveScale = 5f;
+
+    //选择物体增量
+    public float rotateObjAngleAdd = 10;
 
     // Use this for initialization
     void Start()
@@ -46,6 +49,15 @@ public class GameJigsawControlCpt : MonoBehaviour
         {
             onMouseDrag();
         }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotateObject(RotationDirectionEnum.Anticlockwise);
+        }
+        if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Space))
+        {
+            rotateObject(RotationDirectionEnum.Clockwise);
+        }
+
     }
 
 
@@ -66,8 +78,6 @@ public class GameJigsawControlCpt : MonoBehaviour
             GameObject jigsawGameObj = jigsawCollider.gameObject;
             Transform jigsawTransform = jigsawGameObj.transform;
             jigsawCollider.isTrigger = true;
-     
-
 
             //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差
             vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
@@ -76,11 +86,7 @@ public class GameJigsawControlCpt : MonoBehaviour
             {
                 jigsawContainerCpt.isSelect = true;
             }
-               
-
-
         }
-
     }
 
     /// <summary>
@@ -91,14 +97,14 @@ public class GameJigsawControlCpt : MonoBehaviour
         if (hitRC.collider != null)
         {
             Collider2D jigsawCollider = hitRC.collider;
-            jigsawCollider.isTrigger=false;
+            jigsawCollider.isTrigger = false;
         }
-            isSelect = false;
+        isSelect = false;
         if (jigsawContainerCpt != null)
         {
             jigsawContainerCpt.isSelect = false;
         }
-          
+
     }
 
 
@@ -107,7 +113,7 @@ public class GameJigsawControlCpt : MonoBehaviour
     /// </summary>
     private void onMouseDrag()
     {
-        if (hitRC == null)
+        if (hitRC == false)
             return;
         Collider2D jigsawCollider = hitRC.collider;
         GameObject jigsawGameObj = jigsawCollider.gameObject;
@@ -115,10 +121,11 @@ public class GameJigsawControlCpt : MonoBehaviour
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //物体速度位置是这一帧鼠标在空间的位置加上它们的差值
-        if (jigsawTransform != null) {
+        if (jigsawTransform != null)
+        {
             Vector3 movePos = new Vector3(jigsawTransform.position.x, jigsawTransform.position.y, jigsawTransform.position.z);
-            Vector3 nowOffset = new Vector3(vec3Offset.x,vec3Offset.y,vec3Offset.z);
-            if (Mathf.Abs(mousePos.x) <= ((moveWithMax/2f) * moveScale))
+            Vector3 nowOffset = new Vector3(vec3Offset.x, vec3Offset.y, vec3Offset.z);
+            if (Mathf.Abs(mousePos.x) <= ((moveWithMax / 2f) * moveScale))
             {
                 movePos.x = mousePos.x;
             }
@@ -126,7 +133,7 @@ public class GameJigsawControlCpt : MonoBehaviour
             {
                 nowOffset.x = 0f;
             }
-            if(Mathf.Abs(mousePos.y) <= ((moveHighMax/2f) * moveScale))
+            if (Mathf.Abs(mousePos.y) <= ((moveHighMax / 2f) * moveScale))
             {
                 movePos.y = mousePos.y;
             }
@@ -136,7 +143,49 @@ public class GameJigsawControlCpt : MonoBehaviour
             }
             jigsawTransform.position = movePos + nowOffset;
         }
-           
+    }
+
+    /// <summary>
+    /// 选择物体
+    /// </summary>
+    /// <param name="rotationDirection"></param>
+    private void rotateObject(RotationDirectionEnum rotationDirection)
+    {
+        if (!isSelect)
+            return;
+        if (hitRC == false)
+            return;
+
+        Collider2D jigsawCollider = hitRC.collider;
+        GameObject jigsawGameObj = jigsawCollider.gameObject;
+        Transform jigsawTransform = jigsawGameObj.transform;
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Transform[] childTF = jigsawTransform.GetComponentsInChildren<Transform>();
+
+        if (childTF != null && childTF.Length > 0)
+        {
+            Vector3 centerVec;
+            int childCount = childTF.Length;
+            float centerXAll = 0;
+            float centerYAll = 0;
+            for (int childPosition = 1; childPosition < childCount; childPosition++)
+            {
+                Transform childItemTF = childTF[childPosition];
+                centerXAll += childItemTF.position.x;
+                centerYAll += childItemTF.position.y;
+            }
+            centerVec = new Vector3(centerXAll / (childCount - 1), centerYAll / (childCount - 1));
+            if (rotationDirection.Equals(RotationDirectionEnum.Clockwise))
+            {
+                jigsawTransform.RotateAround(centerVec, new Vector3(0, 0, 1), -rotateObjAngleAdd );
+            }
+            else if (rotationDirection.Equals(RotationDirectionEnum.Anticlockwise))
+            {
+                jigsawTransform.RotateAround(centerVec, new Vector3(0, 0, 1), rotateObjAngleAdd );
+            }
+        }
 
     }
 }
