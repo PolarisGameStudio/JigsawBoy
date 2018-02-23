@@ -6,7 +6,7 @@ public class CreateGameWallUtil : MonoBehaviour
 {
     public static Vector3 wallCenter = new Vector3(0, 0, 0);
     //墙厚度
-    public static float wallThick = 20f;
+    public static float wallThick = 1000f;
     //墙缩放大小
     public static float wallScale = 5f;
 

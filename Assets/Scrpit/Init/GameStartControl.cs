@@ -9,6 +9,10 @@ public class GameStartControl : MonoBehaviour
     //所有拼图信息
     private List<JigsawBean> listJigsawBean;
 
+    //图片的宽和高
+    private float picAllWith;
+    private float picAllHigh;
+
     // Use this for initialization
     void Start()
     {
@@ -48,21 +52,37 @@ public class GameStartControl : MonoBehaviour
             return;
         }
         Texture2D pic2D = (Texture2D)Resources.Load(jigsawInfoData.resFilePath);
-        if (pic2D==null)
+        if (pic2D == null)
         {
             LogUtil.log("没有源图片");
             return;
         }
 
+        //生成拼图
         createJigsaw(pic2D, horizontalNumber, verticalJigsawNumber);
-        createWall(horizontalNumber, verticalJigsawNumber);
+
+        //获取图片的高和宽
+        if (listJigsawBean != null && listJigsawBean.Count > 0)
+        {
+            JigsawBean itemJigsawBean = listJigsawBean[0];
+            picAllWith = itemJigsawBean.JigsawWith * horizontalNumber;
+            picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
+        }
+        //生成围墙
+        createWall(picAllWith, picAllHigh);
+        //生成背景
+        createBackground(picAllWith, picAllHigh);
+        //增加镜头控制
+        addCameraControl(picAllWith, picAllHigh);
+        //增加拼图控制
+        addJigsawControl(picAllWith, picAllHigh);
     }
 
     /// <summary>
     /// 创建拼图
     /// </summary>
     /// <param name="jigsawInfoData"></param>
-    private void createJigsaw(Texture2D pic2D,int horizontalNumber,int verticalJigsawNumber)
+    private void createJigsaw(Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
     {
         listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, horizontalNumber, verticalJigsawNumber, pic2D);
         CreateJigsawGameObjUtil.createJigsawGameObjList(listJigsawBean);
@@ -81,15 +101,60 @@ public class GameStartControl : MonoBehaviour
     /// </summary>
     /// <param name="wallWith"></param>
     /// <param name="wallHigh"></param>
-    private void createWall(int horizontalNumber, int verticalJigsawNumber)
+    private void createWall(float picAllWith, float picAllHigh)
     {
-        if(listJigsawBean!=null&& listJigsawBean.Count > 0)
+        if (picAllWith == 0 || picAllHigh == 0)
         {
-           JigsawBean itemJigsawBean= listJigsawBean[0];
-            float picAllWith = itemJigsawBean.JigsawWith * horizontalNumber;
-            float picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
-            CreateGameWallUtil.createWall(picAllWith, picAllHigh);
+            LogUtil.log("无法生成围墙，缺少高和宽");
+            return;
         }
-    
+        CreateGameWallUtil.createWall(picAllWith, picAllHigh);
+    }
+
+    /// <summary>
+    /// 创建背景
+    /// </summary>
+    /// <param name="picAllWith"></param>
+    /// <param name="picAllHigh"></param>
+    private void createBackground(float picAllWith, float picAllHigh)
+    {
+        if (picAllWith == 0 || picAllHigh == 0)
+        {
+            LogUtil.log("无法生成背景，缺少高和宽");
+            return;
+        }
+        CreateGameBackgroundUtil.createBackground(picAllWith, picAllHigh);
+    }
+
+    /// <summary>
+    /// 增加镜头控制
+    /// </summary>
+    private void addCameraControl(float picAllWith, float picAllHigh)
+    {
+        GameCameraControlCpt cameraControl = gameObject.AddComponent<GameCameraControlCpt>();
+        //设置镜头缩放大小
+        if (picAllWith > picAllHigh)
+        {
+            cameraControl.setCameraOrthographicSize(picAllWith * 2f);
+            cameraControl.zoomOutMax=picAllWith * 2f;
+        }
+        else
+        {
+            cameraControl.setCameraOrthographicSize(picAllHigh * 2f);
+            cameraControl.zoomOutMax = picAllWith * 2f;
+        }
+        cameraControl.cameraMoveWithMax = picAllWith;
+        cameraControl.cameraMoveHighMax = picAllHigh;
+    }
+
+
+    /// <summary>
+    /// 增加拼图控制
+    /// </summary>
+    private void addJigsawControl(float picAllWith, float picAllHigh)
+    {
+        GameJigsawControlCpt jigsawControl = gameObject.AddComponent<GameJigsawControlCpt>();
+        jigsawControl.moveWithMax = picAllWith;
+        jigsawControl.moveHighMax = picAllHigh;
     }
 }

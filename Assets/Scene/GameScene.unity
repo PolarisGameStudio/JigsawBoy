@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.49641287, b: 0.5748173, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -88,8 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000002, guid: 7e6bd791ee178e04b964606468930dc7,
+  m_LightingDataAsset: {fileID: 112000002, guid: 54b241b649f0813458750b96302727c5,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -139,7 +138,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -191,7 +190,6 @@ GameObject:
   - component: {fileID: 1690610168}
   - component: {fileID: 1690610167}
   - component: {fileID: 1690610171}
-  - component: {fileID: 1690610172}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -222,7 +220,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.9632353, g: 0.84991354, b: 0.84991354, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -233,7 +231,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -244,7 +242,6 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -270,7 +267,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1690610166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f346fbdb9cdb20243b508d9abc59a977, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ca1a50e36fc34e459c5cf764d5da757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jigsawInfoData:
@@ -286,14 +283,3 @@ MonoBehaviour:
       timeOfCreation: 
       introductionContent: 
     resFilePath: 
---- !u!114 &1690610172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1690610166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf2e7eea33a57a14284bf837255fd9d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

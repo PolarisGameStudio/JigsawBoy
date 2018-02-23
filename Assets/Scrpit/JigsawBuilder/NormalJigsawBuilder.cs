@@ -176,7 +176,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
         List<Vector3> listVertices = new List<Vector3>();
         //添加中心点坐标
-        Vector3 centerVector = new Vector3(mJigsawWith / 2f, mJigsawHigh / 2f);
+        Vector3 centerVector = new Vector3(0, 0);
         listVertices.Add(centerVector);
         setCenterVector(jigsawItem,centerVector);
 
@@ -187,33 +187,33 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         JigsawBulgeEnum belowBulge = listBulge[3];
 
         //添加左下角点
-        listVertices.Add(new Vector3(0, 0));
+        listVertices.Add(new Vector3(-mJigsawWith/2f, -mJigsawHigh / 2f));
         //添加左边凸出部分坐标点
-        Vector3 lefgEdgeCenterVector = new Vector3(0f, mJigsawHigh / 2f);
+        Vector3 lefgEdgeCenterVector = new Vector3(-mJigsawWith / 2f, 0);
         List<Vector3> leftCircleVertices = getCircleVertices(lefgEdgeCenterVector, mJigsawBulgeR, JigsawStyleNormalEdgeEnum.Left, leftBulge);
         List<Vector3> leftVertices = getCirclePartEdgeVerticesForNormal(leftCircleVertices, lefgEdgeCenterVector, JigsawStyleNormalEdgeEnum.Left, leftBulge);
         listVertices.AddRange(leftVertices);
 
         //添加左上角点
-        listVertices.Add(new Vector3(0, mJigsawHigh));
+        listVertices.Add(new Vector3(-mJigsawWith / 2f, mJigsawHigh/2f));
         //添加上边凸出部分坐标点
-        Vector3 aboveEdgeCenterVector = new Vector3(mJigsawWith / 2f, mJigsawHigh);
+        Vector3 aboveEdgeCenterVector = new Vector3(0, mJigsawHigh/2f);
         List<Vector3> aboveCircleVertices = getCircleVertices(aboveEdgeCenterVector, mJigsawBulgeR, JigsawStyleNormalEdgeEnum.Above, aboveBulge);
         List<Vector3> aboveVertices = getCirclePartEdgeVerticesForNormal(aboveCircleVertices, aboveEdgeCenterVector, JigsawStyleNormalEdgeEnum.Above, aboveBulge);
         listVertices.AddRange(aboveVertices);
 
         //添加右上角点
-        listVertices.Add(new Vector3(mJigsawWith, mJigsawHigh));
+        listVertices.Add(new Vector3(mJigsawWith/2f, mJigsawHigh/2f));
         //添加右边凸出部分坐标点
-        Vector3 rightEdgeCenterVector = new Vector3(mJigsawWith, mJigsawHigh / 2f);
+        Vector3 rightEdgeCenterVector = new Vector3(mJigsawWith/2f, 0);
         List<Vector3> rightCircleVertices = getCircleVertices(rightEdgeCenterVector, mJigsawBulgeR, JigsawStyleNormalEdgeEnum.Right, rightBulge);
         List<Vector3> rightVertices = getCirclePartEdgeVerticesForNormal(rightCircleVertices, rightEdgeCenterVector, JigsawStyleNormalEdgeEnum.Right, rightBulge);
         listVertices.AddRange(rightVertices);
 
         //添加右下角点
-        listVertices.Add(new Vector3(mJigsawWith, 0));
+        listVertices.Add(new Vector3(mJigsawWith/2f, -mJigsawHigh / 2f));
         //添加下边凸出部分坐标点
-        Vector3 belowEdgeCenterVector = new Vector3(mJigsawWith / 2f, 0f);
+        Vector3 belowEdgeCenterVector = new Vector3(0, -mJigsawHigh / 2f);
         List<Vector3> belowCircleVertices = getCircleVertices(belowEdgeCenterVector, mJigsawBulgeR, JigsawStyleNormalEdgeEnum.Below, belowBulge);
         List<Vector3> belowVertices = getCirclePartEdgeVerticesForNormal(belowCircleVertices, belowEdgeCenterVector, JigsawStyleNormalEdgeEnum.Below, belowBulge);
         listVertices.AddRange(belowVertices);
@@ -247,8 +247,8 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
         foreach (Vector3 item in listVertices)
         {
-            float uvXposition = (item.x / xRatio) + (markLocation.x * mJigsawUVWith);
-            float uvYposition = (item.y / yRatio) + (markLocation.y * mJigsawUVHigh);
+            float uvXposition = ((item.x+ mJigsawWith/2f) / xRatio) + (markLocation.x * mJigsawUVWith);
+            float uvYposition = ((item.y+ mJigsawHigh/2f) / yRatio) + (markLocation.y * mJigsawUVHigh);
             listUVposition.Add(new Vector2(uvXposition, uvYposition));
         }
 

@@ -2,7 +2,7 @@
 
 Shader "Custom/WaterBlur" {
     Properties {
-	_blurSizeXY("BlurSizeXY", Range(0,10)) = 0
+	_blurSizeXY("BlurSizeXY", Range(0,10)) = 10
 }
     SubShader {
 
