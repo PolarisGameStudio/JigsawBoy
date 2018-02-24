@@ -22,7 +22,7 @@ public class GameJigsawControlCpt : MonoBehaviour
     private float moveScale = 5f;
 
     //选择物体增量
-    public float rotateObjAngleAdd = 10;
+    public float rotateObjAngleAdd = 5;
 
     // Use this for initialization
     void Start()
@@ -75,16 +75,13 @@ public class GameJigsawControlCpt : MonoBehaviour
         {
             isSelect = true;
             Collider2D jigsawCollider = hitRC.collider;
-            GameObject jigsawGameObj = jigsawCollider.gameObject;
-            Transform jigsawTransform = jigsawGameObj.transform;
-            jigsawCollider.isTrigger = true;
-
+            Transform jigsawTransform = jigsawCollider.transform;
             //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差
             vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
             jigsawContainerCpt = jigsawTransform.GetComponent<JigsawContainerCpt>();
             if (jigsawContainerCpt != null)
             {
-                jigsawContainerCpt.isSelect = true;
+                jigsawContainerCpt.setIsSelect(true);
             }
         }
     }
@@ -94,15 +91,10 @@ public class GameJigsawControlCpt : MonoBehaviour
     /// </summary>
     private void onMouseUp()
     {
-        if (hitRC.collider != null)
-        {
-            Collider2D jigsawCollider = hitRC.collider;
-            jigsawCollider.isTrigger = false;
-        }
         isSelect = false;
         if (jigsawContainerCpt != null)
         {
-            jigsawContainerCpt.isSelect = false;
+            jigsawContainerCpt.setIsSelect(false);
         }
 
     }
@@ -166,24 +158,13 @@ public class GameJigsawControlCpt : MonoBehaviour
 
         if (childTF != null && childTF.Length > 0)
         {
-            Vector3 centerVec;
-            int childCount = childTF.Length;
-            float centerXAll = 0;
-            float centerYAll = 0;
-            for (int childPosition = 1; childPosition < childCount; childPosition++)
-            {
-                Transform childItemTF = childTF[childPosition];
-                centerXAll += childItemTF.position.x;
-                centerYAll += childItemTF.position.y;
-            }
-            centerVec = new Vector3(centerXAll / (childCount - 1), centerYAll / (childCount - 1));
             if (rotationDirection.Equals(RotationDirectionEnum.Clockwise))
             {
-                jigsawTransform.RotateAround(centerVec, new Vector3(0, 0, 1), -rotateObjAngleAdd );
+                jigsawTransform.Rotate(0,0, -rotateObjAngleAdd);
             }
             else if (rotationDirection.Equals(RotationDirectionEnum.Anticlockwise))
             {
-                jigsawTransform.RotateAround(centerVec, new Vector3(0, 0, 1), rotateObjAngleAdd );
+                jigsawTransform.Rotate(0, 0, rotateObjAngleAdd);
             }
         }
 

@@ -9,8 +9,6 @@ public class JigsawContainerCpt : MonoBehaviour
 {
     //容器所含拼图对象数据
     public List<JigsawBean> listJigsaw;
-    //是否被选中
-    public bool isSelect;
     //是否开启合并检测
     public bool isOpenMergeCheck;
 
@@ -20,7 +18,8 @@ public class JigsawContainerCpt : MonoBehaviour
     //合并动画持续时间
     public float mergeAnimDuration;
 
-
+    //是否被选中
+    private bool isSelect;
     public JigsawContainerCpt()
     {
         isOpenMergeCheck = true;
@@ -141,6 +140,48 @@ public class JigsawContainerCpt : MonoBehaviour
     public void setMergeCheck(bool openStatus)
     {
         isOpenMergeCheck = openStatus;
+    }
+
+    /// <summary>
+    /// 设置层级
+    /// </summary>
+    /// <param name="sortingOrder"></param>
+    public void setSortingOrder(int sortingOrder)
+    {
+        Renderer[] jigsawRenderList= GetComponentsInChildren<Renderer>();
+        int jigsawRenderListSize = jigsawRenderList.Length;
+        for (int jigsawRenderPosition = 0; jigsawRenderPosition < jigsawRenderListSize; jigsawRenderPosition++)
+        {
+            Renderer itemRender= jigsawRenderList[jigsawRenderPosition];
+            itemRender.sortingOrder = sortingOrder;
+        };
+    }
+
+    /// <summary>
+    ///  设置是trigger
+    /// </summary>
+    /// <param name="isTrigger"></param>
+    public void setIsTrigger(bool isTrigger) {
+        CompositeCollider2D collider= GetComponent<CompositeCollider2D>();
+        collider.isTrigger = isTrigger;
+    }
+
+    /// <summary>
+    /// 设置是否选中
+    /// </summary>
+    /// <param name="isSelect"></param>
+    public void setIsSelect(bool isSelect)
+    {
+        this.isSelect = isSelect;
+        //设置碰撞
+        setIsTrigger(isSelect);
+        //设置层级
+        int sortingOrder;
+        if (isSelect)
+            sortingOrder = 32767;
+        else
+            sortingOrder= DevUtil.getRandomInt(0, 30000);
+        setSortingOrder(sortingOrder);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
