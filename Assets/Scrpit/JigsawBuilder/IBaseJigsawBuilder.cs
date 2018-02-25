@@ -53,13 +53,6 @@ interface IBaseJigsawBuilder
     void setListUVPosition(JigsawBean jigsaw, List<Vector2> listUVposition);
 
     /// <summary>
-    /// 设置原图片
-    /// </summary>
-    /// <param name="jigsaw"></param>
-    /// <param name="sourcePic"></param>
-    void setSourcePic(JigsawBean jigsaw,Texture2D sourcePic);
-
-    /// <summary>
     /// 设置中心点坐标
     /// </summary>
     /// <param name="jigsaw"></param>

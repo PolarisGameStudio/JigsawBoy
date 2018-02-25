@@ -59,8 +59,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
             {
                 //生成拼图对象
                 JigsawBean jigsawItem = new JigsawBean();
-                //确认拼图原图片
-                setSourcePic(jigsawItem, jigsawPic);
                 //确认拼图样式
                 setJigsawStyle(jigsawItem);
                 //确认当前拼图碎片相对图片的坐标
@@ -486,16 +484,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         jigsaw.ListUVposition = listUVposition;
     }
 
-    /// <summary>
-    /// 设置原图片
-    /// </summary>
-    /// <param name="jigsaw"></param>
-    /// <param name="sourcePic"></param>
-    public void setSourcePic(JigsawBean jigsaw, Texture2D sourcePic)
-    {
-        if (jigsaw == null) { return; }
-        jigsaw.SourcePic = sourcePic;
-    }
 
     /// <summary>
     /// 设置中心点坐标

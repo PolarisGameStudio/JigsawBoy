@@ -8,7 +8,7 @@ public class CreateGameWallUtil : MonoBehaviour
     //墙厚度
     public static float wallThick = 1000f;
     //墙缩放大小
-    public static float wallScale = 5f;
+    public static float wallScale = 3f;
 
     public static void createWall(float picAllW, float picAllH)
     {

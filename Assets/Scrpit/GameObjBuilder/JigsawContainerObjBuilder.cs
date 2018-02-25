@@ -19,11 +19,11 @@ public class JigsawContainerGameObjBuilder
         GameObject jigsawContainerObj = new GameObject(objName);
 
         //设置容器组件
-        setContainerCpt(jigsawContainerObj);
+        addContainerCpt(jigsawContainerObj);
         //设置刚体
-        setRigidbody(jigsawContainerObj);
+        //addRigidbody(jigsawContainerObj);
         //增加碰撞
-        setCollider(jigsawContainerObj);
+        //addCollider(jigsawContainerObj);
         return jigsawContainerObj;
     }
 
@@ -33,7 +33,7 @@ public class JigsawContainerGameObjBuilder
     /// 设置容器组件
     /// </summary>
     /// <param name="jigsawContainerObj"></param>
-    private static void setContainerCpt(GameObject jigsawContainerObj)
+    private static void addContainerCpt(GameObject jigsawContainerObj)
     {
         jigsawContainerObj.AddComponent<JigsawContainerCpt>();
     }
@@ -42,7 +42,7 @@ public class JigsawContainerGameObjBuilder
     /// 设置刚体
     /// </summary>
     /// <param name="jigsawContainerObj"></param>
-    private static void setRigidbody(GameObject jigsawContainerObj)
+    public static void addRigidbody(GameObject jigsawContainerObj)
     {
         Rigidbody2D jigsawContainerRB = jigsawContainerObj.AddComponent<Rigidbody2D>();
         jigsawContainerRB.gravityScale = 0f;
@@ -52,8 +52,25 @@ public class JigsawContainerGameObjBuilder
     /// 增加碰撞
     /// </summary>
     /// <param name="jigsawContainerObj"></param>
-    public static void setCollider(GameObject jigsawContainerObj)
+    public static void addCollider(GameObject jigsawContainerObj)
     {
+        Transform[] childsTFs= jigsawContainerObj.GetComponentsInChildren<Transform>();
+        if (childsTFs != null)
+        {
+            int childsTFsSize = childsTFs.Length;
+            for (int childPosition = 0; childPosition < childsTFsSize; childPosition++)
+            {
+                Transform childsItemTF = childsTFs[childPosition];
+                NormalJigsawCpt jigsawItem= childsItemTF.GetComponent<NormalJigsawCpt>();
+                if (jigsawItem == null)
+                    continue;
+                JigsawBean jigsawData= jigsawItem.getJigsawData();
+                if (jigsawData == null)
+                    continue;
+                JigsawObjBuilder.setCollider2D(childsItemTF.gameObject, jigsawData.CenterVector,jigsawData.JigsawWith,jigsawData.JigsawHigh);
+            };
+        }
+
         CompositeCollider2D jigsawContainerCollider = jigsawContainerObj.AddComponent<CompositeCollider2D>();
         jigsawContainerCollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
         jigsawContainerCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;

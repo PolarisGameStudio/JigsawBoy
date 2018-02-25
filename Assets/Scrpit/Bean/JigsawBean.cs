@@ -49,12 +49,10 @@ public class JigsawBean
     /// </summary>
     private JigsawBulgeEnum[] listBulge;
 
-
-
     /// <summary>
-    /// 拼图图片
+    /// 拼图图片路径
     /// </summary>
-    private Texture2D sourcePic;
+    private string sourcePicPath;
 
 
     public GameObject JigsawGameObj
@@ -134,20 +132,6 @@ public class JigsawBean
             listBulge = value;
         }
     }
-
-    public Texture2D SourcePic
-    {
-        get
-        {
-            return sourcePic;
-        }
-
-        set
-        {
-            sourcePic = value;
-        }
-    }
-
  
 
 
@@ -190,4 +174,16 @@ public class JigsawBean
         }
     }
 
+    public string SourcePicPath
+    {
+        get
+        {
+            return sourcePicPath;
+        }
+
+        set
+        {
+            sourcePicPath = value;
+        }
+    }
 }

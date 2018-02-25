@@ -5,32 +5,47 @@
 [
 {
 "id":1,
-"markFileName":"An_Anonymous_Girl",
-"horizontalNumber":9,
-"verticalJigsawNumber":6,
+"markFileName":"Mona_Lisa",
+"horizontalNumber":26,
+"verticalJigsawNumber":40,
 "details":
 	{
-	"workOfName":"无名女郎",
+	"workOfName":"蒙拉丽莎",
 	"workOfCreator":"伊万·尼古拉耶维奇·克拉姆斯柯依(俄国)",
 	"storageArea":"莫斯科特列恰科夫美术博物馆",
 	"specifications":"75.5 × 99cm",
 	"timeOfCreation":"1883年",
-	"introductionContent":"我们面前的这位典型的19世纪俄国知识女性，她侧身端坐，转首俯视着这个冷酷无情的世界，显得高傲而又自尊。这种姿势语言表明画中人物与这个世道格格不入，冷眼审视，不屑一顾，又不愿与之合流的神情，这隐含着当时一部分民主主义知识分子对社会的态度。这幅女子肖像显示的美在于性格表现，也体现画家的美学观。我们面前这位女子没有华丽服饰和贵夫人的打扮，而是入时得体，是上流社会有文化、有修养、品位极高的知识女性打扮。色调浓重且有变化，冷漠、深沉、俊秀的面孔鲜明突出，格外庄重、典雅而高尚。"
+	"introductionContent":""
 	}
 },
 {
 "id":2,
-"markFileName":"Avignon_Girls",
-"horizontalNumber":9,
-"verticalJigsawNumber":9,
+"markFileName":"The_Scream",
+"horizontalNumber":8,
+"verticalJigsawNumber":10,
 "details":
 	{
-	"workOfName":"亚威农少女",
-	"workOfCreator":"巴勃罗·毕加索",
-	"storageArea":"纽约现代艺术博物馆",
-	"specifications":"244 × 234cm",
-	"timeOfCreation":"1907年",
-	"introductionContent":"毕加索以他青年时代在巴塞罗那的“亚威农大街”所见的妓女形象为依据。这条街以妓院林立而闻名。画上的女人形象，就是这条街上的妓女们。画家曾多次易稿。在这件作品的草图中，曾出现一个海员和一个刚进门的医学院学生。毕加索大胆地画了五个姑娘和两个男人。背景是妓院的客厅或饭厅。后来几经修改，又作了大胆的突破。毕加索曾对人说，他讨厌这个题目。因为亚威农的姑娘并非是些风姿绰约的妙龄女郎，而是一些出卖爱情的妓女，她们与画上的女人毫无干系。这幅画的题目是诗人萨尔蒙给起的。也许诗人根据这些裸女，才把她们与亚威农妓院联系起来。由于这一幅以裸体女人为主的大型油画，与那个不光彩的亚威农背景相联系，使毕加索受到了猛烈的抨击。在此画的第一幅稿子上，一如前述，还有两个男子，一个持花束，另一个从布幕后面走出来。毕加索自己说，他原想画一个骷髅，以强调死亡。如是这样，似乎又多了一层“劝人为善”的意义，以符合西班牙人对花街柳巷蔑视的传统。但后来全部改变了，以立体主义方法来表现五个裸女。在这幅画上，观者多少可感觉到画家着意于纯粹的田园风趣。五个裸体女人的色调是以蓝色背景来映衬的。蓝色使他想起戈索尔那美丽宜人的风光。但观众看到的是一群几何形变异的女人。右边坐着的一个女人像戴上假面具一般，当她转过身来，脸容十分可怕，就像从阴间爬出来的鬼魅，颜色却又像烤熟了的乳猪。最左边一个女人，正拉开赭红色的布幕，为要展示她的姊妹们的菱形身体。她那严肃的表情，侧面的轮廓，简直像埃及的壁画。中间还有一堆水果。"
+	"workOfName":"蒙拉丽莎",
+	"workOfCreator":"伊万·尼古拉耶维奇·克拉姆斯柯依(俄国)",
+	"storageArea":"莫斯科特列恰科夫美术博物馆",
+	"specifications":"75.5 × 99cm",
+	"timeOfCreation":"1883年",
+	"introductionContent":""
+	}
+},
+{
+"id":3,
+"markFileName":"The_Unknown_Girl",
+"horizontalNumber":8,
+"verticalJigsawNumber":10,
+"details":
+	{
+	"workOfName":"蒙拉丽莎",
+	"workOfCreator":"伊万·尼古拉耶维奇·克拉姆斯柯依(俄国)",
+	"storageArea":"莫斯科特列恰科夫美术博物馆",
+	"specifications":"75.5 × 99cm",
+	"timeOfCreation":"1883年",
+	"introductionContent":""
 	}
 }
 ]

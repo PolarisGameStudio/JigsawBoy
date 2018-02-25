@@ -10,9 +10,9 @@ public class CreateJigsawGameObjUtil {
     /// </summary>
     /// <param name="jigsawData"></param>
     /// <returns></returns>
-    public static GameObject createJigsawGameObj(JigsawBean jigsawData)
+    public static GameObject createJigsawGameObj(JigsawBean jigsawData, Texture2D jigsawPic)
     {
-        GameObject jigsawGameObj=  JigsawObjBuilder.buildJigsawGameObj(jigsawData);
+        GameObject jigsawGameObj=  JigsawObjBuilder.buildJigsawGameObj(jigsawData, jigsawPic);
         jigsawData.JigsawGameObj = jigsawGameObj;
         return jigsawGameObj;
     }
@@ -22,7 +22,7 @@ public class CreateJigsawGameObjUtil {
     /// </summary>
     /// <param name="listJigsawData"></param>
     /// <returns></returns>
-    public static List<GameObject> createJigsawGameObjList(List<JigsawBean> listJigsawData)
+    public static List<GameObject> createJigsawGameObjList(List<JigsawBean> listJigsawData, Texture2D jigsawPic)
     {
         List<GameObject> listJigsawGameObj = new List<GameObject>();
         if (listJigsawData == null)
@@ -33,7 +33,7 @@ public class CreateJigsawGameObjUtil {
            
         foreach (JigsawBean itemBean in listJigsawData)
         {
-            GameObject itemObj= createJigsawGameObj(itemBean);
+            GameObject itemObj= createJigsawGameObj(itemBean,jigsawPic);
             listJigsawGameObj.Add(itemObj);
         }
         return listJigsawGameObj;

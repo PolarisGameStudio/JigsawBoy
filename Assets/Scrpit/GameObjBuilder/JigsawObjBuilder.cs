@@ -10,13 +10,12 @@ public class JigsawObjBuilder
     /// </summary>
     /// <param name="JigsawBean">需要生成的拼图块数据</param>
     /// <returns></returns>
-    public static GameObject buildJigsawGameObj(JigsawBean jigsawData)
+    public static GameObject buildJigsawGameObj(JigsawBean jigsawData, Texture2D jigsawPic)
     {
         if (jigsawData == null)
             throw new Exception("没有拼图数据");
         List<Vector3> listVertices = jigsawData.ListVertices;
         List<Vector2> listUVposition = jigsawData.ListUVposition;
-        Texture2D jigsawPic = jigsawData.SourcePic;
         Vector2 markLocation = jigsawData.MarkLocation;
         Vector3 centerVector = jigsawData.CenterVector;
         float jigsawWith = jigsawData.JigsawWith;
@@ -63,10 +62,8 @@ public class JigsawObjBuilder
         setRenderer(jigsawGameObj, jigsawPic);
         //设置网格
         setMeshFilter(jigsawGameObj, listVertices, listUVposition);
-        //设置刚体
-        // setRigidbody2D(jigsawGameObj);
         //设置2D碰撞器
-        setCollider2D(jigsawGameObj, centerVector, jigsawWith, jigsawHigh);
+        //setCollider2D(jigsawGameObj, centerVector, jigsawWith, jigsawHigh);
         //设置线框
         //setWireFrame(jigsawGameObj);
         //设置拼图component
@@ -128,17 +125,6 @@ public class JigsawObjBuilder
     }
 
     /// <summary>
-    /// 设置刚体
-    /// </summary>
-    /// <param name="jigsawGameObj"></param>
-    private static void setRigidbody2D(GameObject jigsawGameObj)
-    {
-        //获取拼图的刚体并设置
-        Rigidbody2D jigsawRB = jigsawGameObj.AddComponent<Rigidbody2D>();
-        jigsawRB.gravityScale = 0f;
-    }
-
-    /// <summary>
     /// 设置网格
     /// </summary>
     /// <param name="jigsawGameObj"></param>
@@ -171,7 +157,7 @@ public class JigsawObjBuilder
     /// </summary>
     /// <param name="jigsawGameObj"></param>
     /// <param name="listVertices"></param>
-    private static void setCollider2D(GameObject jigsawGameObj, Vector3 centerVector, float jigsawWith, float jigsawHigh)
+    public static void setCollider2D(GameObject jigsawGameObj, Vector3 centerVector, float jigsawWith, float jigsawHigh)
     {
         BoxCollider2D jigsawCollider = jigsawGameObj.AddComponent<BoxCollider2D>();
         jigsawCollider.size = new Vector2(jigsawWith, jigsawHigh);

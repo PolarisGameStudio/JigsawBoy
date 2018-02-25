@@ -8,21 +8,16 @@ public class TestScrpit : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-
-        
-
         Texture2D pic2D = (Texture2D)Resources.Load("Painting/Avignon_Girls");
+        List<JigsawBean> listData = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, 9, 6, pic2D);
+        CreateJigsawGameObjUtil.createJigsawGameObjList(listData, pic2D);
 
-       List<JigsawBean> listData= CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal,9,6,pic2D);
-        CreateJigsawGameObjUtil.createJigsawGameObjList(listData);
-
-       List<GameObject> containerList= CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);
-        for(int i = 0; i < listData.Count; i++)
+        List<GameObject> containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);
+        for (int i = 0; i < listData.Count; i++)
         {
             JigsawBean item = listData[i];
 
-            containerList[i].transform.position=new Vector3(item.MarkLocation.x * 3.5f,item.MarkLocation.y * 3.5f,0);
+            containerList[i].transform.position = new Vector3(item.MarkLocation.x * 3.5f, item.MarkLocation.y * 3.5f, 0);
             containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }

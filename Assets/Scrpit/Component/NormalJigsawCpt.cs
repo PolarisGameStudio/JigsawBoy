@@ -66,4 +66,12 @@ public class NormalJigsawCpt : MonoBehaviour
     {
         this.jigsawData = jigsawData;
     }
+    /// <summary>
+    /// 获取拼图数据
+    /// </summary>
+    /// <returns></returns>
+    public JigsawBean getJigsawData()
+    {
+        return jigsawData;
+    }
 }

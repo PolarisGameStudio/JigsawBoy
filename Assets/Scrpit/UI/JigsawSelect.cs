@@ -71,8 +71,8 @@ public class JigsawSelect : MonoBehaviour
         Button itemBT = buttonObj.GetComponent<Button>();
         itemBT.onClick.AddListener(delegate ()
         {
-            CommonData.selectJigsawInfo = itemInfo;
-            SceneUtil.jumpGameScene();
+           CommonData.selectJigsawInfo = itemInfo;
+           SceneUtil.jumpGameScene();
         });
 
 
@@ -90,6 +90,9 @@ public class JigsawSelect : MonoBehaviour
                 }
             }
         }
+
+
     }
+
 
 }

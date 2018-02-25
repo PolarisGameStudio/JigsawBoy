@@ -19,7 +19,7 @@ public class GameJigsawControlCpt : MonoBehaviour
     public float moveWithMax = 0f;
     public float moveHighMax = 0f;
 
-    private float moveScale = 5f;
+    private float moveScale = 3f;
 
     //选择物体增量
     public float rotateObjAngleAdd = 5;
@@ -96,7 +96,6 @@ public class GameJigsawControlCpt : MonoBehaviour
         {
             jigsawContainerCpt.setIsSelect(false);
         }
-
     }
 
 

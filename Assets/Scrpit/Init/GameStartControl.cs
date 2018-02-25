@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameStartControl : MonoBehaviour
 {
@@ -60,7 +61,6 @@ public class GameStartControl : MonoBehaviour
 
         //生成拼图
         createJigsaw(pic2D, horizontalNumber, verticalJigsawNumber);
-
         //获取图片的高和宽
         if (listJigsawBean != null && listJigsawBean.Count > 0)
         {
@@ -85,14 +85,15 @@ public class GameStartControl : MonoBehaviour
     private void createJigsaw(Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
     {
         listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, horizontalNumber, verticalJigsawNumber, pic2D);
-        CreateJigsawGameObjUtil.createJigsawGameObjList(listJigsawBean);
+        CreateJigsawGameObjUtil.createJigsawGameObjList(listJigsawBean, pic2D);
 
         List<GameObject> containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listJigsawBean);
         for (int i = 0; i < listJigsawBean.Count; i++)
         {
             JigsawBean item = listJigsawBean[i];
-            containerList[i].transform.position = new Vector3(0, 0, 0);
+            containerList[i].transform.position = new Vector3(item.MarkLocation.x*3.2f, item.MarkLocation.y * 3.2f, 0);
             containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+            containerList[i].transform.DOMove(new Vector3(0,0,0),10);
         }
     }
 

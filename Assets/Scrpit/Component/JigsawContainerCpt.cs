@@ -30,19 +30,6 @@ public class JigsawContainerCpt : MonoBehaviour
         mergeAnimDuration = 0.2f;
     }
 
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// 添加拼图块
     /// </summary>
@@ -184,50 +171,6 @@ public class JigsawContainerCpt : MonoBehaviour
         setSortingOrder(sortingOrder);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        collisionCheck(collision);
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        collisionCheck(collision);
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        collisionCheck(collision);
-    }
-
-
-    /// <summary>
-    /// 碰撞处理
-    /// </summary>
-    /// <param name="collision"></param>
-    private void collisionCheck(Collider2D collision)
-    {
-
-        if (!isOpenMergeCheck)
-            return;
-        if (!isSelect)
-            return;
-
-        //获取被撞物体和其父对象
-        JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
-        if (collisionJCC == null)
-            return;
-        if (checkMerge(collisionJCC))
-        {
-            //设置不可在拖拽
-            CommonData.isDargMove = false;
-            isSelect = false;
-            // 添加拼图碎片到碰撞容器里
-            collisionJCC.addJigsawList(listJigsaw);
-            collisionJCC.jigsawLocationCorrect();
-            // 最后删除当前容器
-            Destroy(gameObject);
-        }
-    }
-
     /// <summary>
     /// 获取该拼图附近能合并的点坐标
     /// </summary>
@@ -323,5 +266,79 @@ public class JigsawContainerCpt : MonoBehaviour
             }
         }
         return false;
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    //镜头控制
+    public GameCameraControlCpt mCameraControlCpt;
+
+    private void Start()
+    {
+        //获取镜头控制
+        GameObject cameraObj =GameObject.Find("/Main Camera");
+        if (cameraObj != null)
+            mCameraControlCpt = cameraObj.GetComponent<GameCameraControlCpt>();
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collisionCheck(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        collisionCheck(collision);
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        collisionCheck(collision);
+    }
+
+
+    /// <summary>
+    /// 碰撞处理
+    /// </summary>
+    /// <param name="collision"></param>
+    private void collisionCheck(Collider2D collision)
+    {
+
+        if (!isOpenMergeCheck)
+            return;
+        if (!isSelect)
+            return;
+
+        //获取被撞物体和其父对象
+        JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
+        if (collisionJCC == null)
+            return;
+        if (checkMerge(collisionJCC))
+        {
+            //设置不可在拖拽
+            CommonData.isDargMove = false;
+            isSelect = false;
+            // 添加拼图碎片到碰撞容器里
+            collisionJCC.addJigsawList(listJigsaw);
+            collisionJCC.jigsawLocationCorrect();
+            //摇晃镜头
+            shakeCamer();
+            // 最后删除当前容器
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// 抖动镜头
+    /// </summary>
+    private void shakeCamer()
+    {
+        if (mCameraControlCpt != null)
+            mCameraControlCpt.shakeCamera();
     }
 }
