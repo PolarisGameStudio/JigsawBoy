@@ -28,7 +28,7 @@ public class GameCameraControlCpt : MonoBehaviour
     private float cameraMoveScale = 5f;
 
     //镜头移动增量
-    private float cameraMoveAdd = 5f;
+    private float cameraMoveAdd =1f;
 
     //游戏镜头
     private Camera gameCamera;
@@ -60,19 +60,19 @@ public class GameCameraControlCpt : MonoBehaviour
         //CameraMove
         if (Input.GetKey(KeyCode.A))
         {
-            moveCamera(new Vector2(-cameraMoveAdd * Time.deltaTime, 0));
+            moveCamera(new Vector2(-cameraMoveAdd, 0));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveCamera(new Vector2(cameraMoveAdd * Time.deltaTime, 0));
+            moveCamera(new Vector2(cameraMoveAdd , 0));
         }
         if (Input.GetKey(KeyCode.W))
         {
-            moveCamera(new Vector2(0, cameraMoveAdd * Time.deltaTime));
+            moveCamera(new Vector2(0, cameraMoveAdd ));
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveCamera(new Vector2(0, -cameraMoveAdd * Time.deltaTime));
+            moveCamera(new Vector2(0, -cameraMoveAdd ));
         }
     }
 
