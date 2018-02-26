@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+
 
 public class GameStartControl : MonoBehaviour
 {
+
+    public static string Game_Timer_Obj_Path = "/GameUI/GameTimer";
     //图片信息
     public JigsawResInfoBean jigsawInfoData;
     //所有拼图信息
@@ -13,6 +15,9 @@ public class GameStartControl : MonoBehaviour
     //图片的宽和高
     private float picAllWith;
     private float picAllHigh;
+
+    //游戏计时器
+    private Transform gameTimerTF;
 
     // Use this for initialization
     void Start()
@@ -58,6 +63,9 @@ public class GameStartControl : MonoBehaviour
             LogUtil.log("没有源图片");
             return;
         }
+        //获取计时
+        gameTimerTF = transform.Find(Game_Timer_Obj_Path);
+
 
         //生成拼图
         createJigsaw(pic2D, horizontalNumber, verticalJigsawNumber);
@@ -91,10 +99,13 @@ public class GameStartControl : MonoBehaviour
         for (int i = 0; i < listJigsawBean.Count; i++)
         {
             JigsawBean item = listJigsawBean[i];
-            containerList[i].transform.position = new Vector3(item.MarkLocation.x*3.2f, item.MarkLocation.y * 3.2f, 0);
-            containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
-            containerList[i].transform.DOMove(new Vector3(0,0,0),10);
+            Vector3 jigsawPosition = new Vector3(
+                item.MarkLocation.x * item.JigsawWith - item.JigsawWith * horizontalNumber / 2f,
+                item.MarkLocation.y * item.JigsawHigh - item.JigsawHigh * verticalJigsawNumber / 2f
+                );
+            containerList[i].transform.position = jigsawPosition;
         }
+        GameStartAnimationManager.startAnimation(this,containerList, GameStartAnimationEnum.Closure_Dispersed);
     }
 
     /// <summary>
@@ -137,7 +148,7 @@ public class GameStartControl : MonoBehaviour
         if (picAllWith > picAllHigh)
         {
             cameraControl.setCameraOrthographicSize(picAllWith * 2f);
-            cameraControl.zoomOutMax=picAllWith * 2f;
+            cameraControl.zoomOutMax = picAllWith * 2f;
         }
         else
         {
@@ -157,5 +168,19 @@ public class GameStartControl : MonoBehaviour
         GameJigsawControlCpt jigsawControl = gameObject.AddComponent<GameJigsawControlCpt>();
         jigsawControl.moveWithMax = picAllWith;
         jigsawControl.moveHighMax = picAllHigh;
+    }
+    //---------------------------------------------------------------------------------------------
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    public void gameStart()
+    {
+        if (gameTimerTF != null)
+        {
+            GameTimerControlCpt gameTimer = gameTimerTF.GetComponent<GameTimerControlCpt>();
+            if (gameTimer != null)
+                gameTimer.startTimer();
+        }
+
     }
 }

@@ -75,4 +75,16 @@ public class TimeUtil : ScriptableObject
     {
         return DateTime.Now.Millisecond;
     } 
+
+    /// <summary>
+    /// 获取时间差
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="endTime"></param>
+    /// <returns></returns>
+    public static TimeSpan getTimeDifference(DateTime startTime,DateTime endTime)
+    {
+        TimeSpan differenceTime = endTime- startTime ;
+        return differenceTime;
+    }
 }

@@ -52,7 +52,7 @@ public class JigsawContainerGameObjBuilder
     /// 增加碰撞
     /// </summary>
     /// <param name="jigsawContainerObj"></param>
-    public static void addCollider(GameObject jigsawContainerObj)
+    public static CompositeCollider2D addCollider(GameObject jigsawContainerObj)
     {
         Transform[] childsTFs= jigsawContainerObj.GetComponentsInChildren<Transform>();
         if (childsTFs != null)
@@ -74,6 +74,7 @@ public class JigsawContainerGameObjBuilder
         CompositeCollider2D jigsawContainerCollider = jigsawContainerObj.AddComponent<CompositeCollider2D>();
         jigsawContainerCollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
         jigsawContainerCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
+        return jigsawContainerCollider;
     }
 
 
