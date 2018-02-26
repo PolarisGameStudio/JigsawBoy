@@ -1,0 +1,67 @@
+{
+"dataType":"painting",
+"dataFilePath":"Painting/",
+"dataList":
+[
+{
+"id":1,
+"markFileName":"Mona_Lisa",
+"horizontalNumber":13,
+"verticalJigsawNumber":20,
+"details":
+	{
+	"workOfName":"Mona Lisa",
+	"workOfCreator":"Leonardo da Vinci",
+	"storageArea":"Louvre Museum",
+	"specifications":"77 × 53cm",
+	"timeOfCreation":"between 1503 and 1516",
+	"introductionContent":"The painting is thought to be a portrait of Lisa Gherardini, the wife of Francesco del Giocondo, and is in oil on a white Lombardy poplar panel. It had been believed to have been painted between 1503 and 1506; however, Leonardo may have continued working on it as late as 1517. Recent academic work suggests that it would not have been started before 1513. It was acquired by King Francis I of France and is now the property of the French Republic, on permanent display at the Louvre Museum in Paris since 1797."
+	}
+},
+{
+"id":2,
+"markFileName":"The_Scream",
+"horizontalNumber":8,
+"verticalJigsawNumber":10,
+"details":
+	{
+	"workOfName":"The Scream",
+	"workOfCreator":"Edward Munch",
+	"storageArea":"Munch Museum",
+	"specifications":"83 × 66 cm",
+	"timeOfCreation":"1910",
+	"introductionContent":"The Scream, by Edvard Munch. This version, executed in 1910 in tempera on cardboard, was stolen from the Munch Museum in 2004, and recovered in 2006."
+	}
+},
+{
+"id":3,
+"markFileName":"The_Starry_Night",
+"horizontalNumber":20,
+"verticalJigsawNumber":16,
+"details":
+	{
+	"workOfName":"The Starry Night",
+	"workOfCreator":"Vincent van Gogh",
+	"storageArea":"	Museum of Modern Art",
+	"specifications":"73 × 92 cm",
+	"timeOfCreation":"1889",
+	"introductionContent":"In the aftermath of the 23 December 1888 breakdown that resulted in the self-mutilation of his left ear, Van Gogh voluntarily admitted himself to the Saint-Paul-de-Mausole lunatic asylum on 8 May 1889. Housed in a former monastery, Saint-Paul-de-Mausole catered to the wealthy and was less than half full when Van Gogh arrived, allowing him to occupy not only a second-story bedroom but also a ground-floor room for use as a painting studio.During the year Van Gogh stayed at the asylum, the prolific output of paintings he had begun in Arles continued. During this period, he produced some of the best-known works of his career, including the Irises from May 1889, now in the J. Paul Getty Museum, and the blue self-portrait from September, 1889, in the Musée d'Orsay. The Starry Night was painted mid-June by around 18 June, the date he wrote to his brother Theo to say he had a new study of a starry sky."
+	}
+},
+{
+"id":4,
+"markFileName":"Along_The_River_During_The_Qingming_Festival",
+"horizontalNumber":204,
+"verticalJigsawNumber":9,
+"details":
+	{
+	"workOfName":"Along The River During The Qingming Festival",
+	"workOfCreator":"Zhang Zeduan",
+	"storageArea":"The Palace Museum",
+	"specifications":"24.8 cm × 528.7 cm",
+	"timeOfCreation":"1085-1145",
+	"introductionContent":"Along the River During the Qingming Festival, also known by its Chinese name as the Qingming Shanghe Tu, is a painting by the Song dynasty artist Zhang Zeduan (1085–1145). It captures the daily life of people and the landscape of the capital, Bianjing (present-day Kaifeng) during the Northern Song. The theme is often said to celebrate the festive spirit and worldly commotion at the Qingming Festival, rather than the holiday's ceremonial aspects, such as tomb sweeping and prayers. Successive scenes reveal the lifestyle of all levels of the society from rich to poor as well as different economic activities in rural areas and the city, and offer glimpses of period clothing and architecture. The painting is considered to be the most renowned work among all Chinese paintings, and it has been called 《China's Mona Lisa.》"
+	}
+}
+]
+}
