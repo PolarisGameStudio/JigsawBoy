@@ -13,7 +13,8 @@ public class DevUtil {
     /// <returns>int类型随机数</returns>
 	public static int getRandomInt(int startNumber,int endNumber)
     {
-        System.Random random = new System.Random(int.Parse(DateTime.Now.ToString("HHmmssfff")));
+        var seed = Guid.NewGuid().GetHashCode();
+        System.Random random = new System.Random(seed);
         int randomNumber= random.Next(startNumber, endNumber+1);
         return randomNumber;
     }
