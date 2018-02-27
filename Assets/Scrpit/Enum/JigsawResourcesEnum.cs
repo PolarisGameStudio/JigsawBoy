@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
+﻿
 public enum JigsawResourcesEnum
 {
 

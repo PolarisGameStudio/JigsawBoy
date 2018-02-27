@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-
-public enum JigsawMergeStatusEnum
+﻿public enum JigsawMergeStatusEnum
 {
 
     Unincorporated = 0,//未合并
