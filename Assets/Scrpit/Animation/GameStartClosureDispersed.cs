@@ -35,7 +35,7 @@ public class GameStartClosureDispersed : BaseAnimation
         prependTime = 1f;
         startPosition = new Vector3(0, 0, 0);
         closeureTime = 0.5f;
-        animOffsetTime = 0.1f;
+        animOffsetTime = 0.01f;
         dispersedOffsetTime = 0.1f;
     }
     public void startAnim()
@@ -104,7 +104,6 @@ public class GameStartClosureDispersed : BaseAnimation
              {
                  gameStartControl.gameStart();
              });
-
     }
 }
 

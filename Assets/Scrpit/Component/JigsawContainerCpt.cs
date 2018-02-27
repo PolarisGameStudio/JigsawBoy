@@ -25,8 +25,8 @@ public class JigsawContainerCpt : MonoBehaviour
         isOpenMergeCheck = true;
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
-        mergeVectorOffset = 1f;
-        mergeAnglesOffset = 10;
+        mergeVectorOffset = 1.5f;
+        mergeAnglesOffset = 45;
         mergeAnimDuration = 0.2f;
     }
 
