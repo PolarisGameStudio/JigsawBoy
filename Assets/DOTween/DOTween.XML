@@ -1217,7 +1217,7 @@
         </member>
         <member name="T:DG.Tweening.Core.DOTweenComponent">
             <summary>
-            Used to separate DOTween class from the MonoBehaviour instance (in order to use static constructors on DOTween).
+            Used to separate DOTween class from the BaseMonoBehaviour instance (in order to use static constructors on DOTween).
             Contains all instance-based methods
             </summary>
         </member>

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
-public class JigsawContainerCpt : MonoBehaviour
+public class JigsawContainerCpt : BaseMonoBehaviour
 {
     //容器所含拼图对象数据
     public List<JigsawBean> listJigsaw;

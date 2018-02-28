@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateGameBackgroundUtil : MonoBehaviour
+public class CreateGameBackgroundUtil : BaseMonoBehaviour
 {
     //背景缩放大小
     public static float backgroundScale = 3f;

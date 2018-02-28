@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using DG.Tweening;
 
-public class GameCameraControlCpt : MonoBehaviour
+public class GameCameraControlCpt : BaseMonoBehaviour
 {
     //鼠标滚轮操作关键词
     private static string MouseScrollWheel = "Mouse ScrollWheel";

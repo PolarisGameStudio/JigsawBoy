@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class GameInfoUIControl : MonoBehaviour
+public class GameInfoUIControl : BaseMonoBehaviour
 {
 
     //信息画布
