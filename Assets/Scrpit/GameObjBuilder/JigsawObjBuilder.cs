@@ -121,10 +121,9 @@ public class JigsawObjBuilder
         jigsawRenderer.sortingOrder = -1;
 
         Material jigsawMaterial = jigsawRenderer.material;
-        jigsawMaterial.mainTexture = jigsawPic;
         //设置贴图无光照
         jigsawMaterial.shader = Shader.Find("Unlit/Texture");
-
+        jigsawMaterial.mainTexture = jigsawPic;
     }
 
     /// <summary>
