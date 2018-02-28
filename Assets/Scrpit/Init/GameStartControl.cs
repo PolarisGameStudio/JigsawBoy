@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -147,13 +148,13 @@ public class GameStartControl : MonoBehaviour
         //设置镜头缩放大小
         if (picAllWith > picAllHigh)
         {
-            cameraControl.setCameraOrthographicSize(picAllWith * 2f);
-            cameraControl.zoomOutMax = picAllWith * 2f;
+            cameraControl.setCameraOrthographicSize(picAllHigh * 2f);
+            cameraControl.zoomOutMax = picAllWith;
         }
         else
         {
-            cameraControl.setCameraOrthographicSize(picAllHigh * 2f);
-            cameraControl.zoomOutMax = picAllWith * 2f;
+            cameraControl.setCameraOrthographicSize(picAllWith * 2f);
+            cameraControl.zoomOutMax = picAllHigh;
         }
         cameraControl.cameraMoveWithMax = picAllWith;
         cameraControl.cameraMoveHighMax = picAllHigh;
@@ -181,6 +182,5 @@ public class GameStartControl : MonoBehaviour
             if (gameTimer != null)
                 gameTimer.startTimer();
         }
-
     }
 }
