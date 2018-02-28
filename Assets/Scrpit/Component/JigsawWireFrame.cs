@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JigsawWireFrame : MonoBehaviour {
+public class JigsawWireFrame : BaseMonoBehaviour
+{
 
 
     // Use this for initialization

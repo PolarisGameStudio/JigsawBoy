@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CreateGameWallUtil : MonoBehaviour
+public class CreateGameWallUtil : BaseMonoBehaviour
 {
     public static Vector3 wallCenter = new Vector3(0, 0, 0);
     //墙厚度

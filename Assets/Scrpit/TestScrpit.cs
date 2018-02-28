@@ -2,24 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScrpit : MonoBehaviour
+public class TestScrpit : BaseMonoBehaviour
 {
 
     // Use this for initialization
     void Start()
     {
-        Texture2D pic2D = (Texture2D)Resources.Load("Painting/Avignon_Girls");
-        List<JigsawBean> listData = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, 9, 6, pic2D);
-        CreateJigsawGameObjUtil.createJigsawGameObjList(listData, pic2D);
+        PlayerPrefs.DeleteAll();
+        JigsawUnlockStateBean param = new JigsawUnlockStateBean();
+        param.puzzleId = 1;
+        param.puzzleType = JigsawResourcesEnum.Animal;
+        param.unlockState = JigsawUnlockEnum.UnLock;
+        DataStorageManage.getJigsawUnlockStateHandle().saveData(param);
 
-        List<GameObject> containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listData);
-        for (int i = 0; i < listData.Count; i++)
-        {
-            JigsawBean item = listData[i];
-
-            containerList[i].transform.position = new Vector3(item.MarkLocation.x * 3.5f, item.MarkLocation.y * 3.5f, 0);
-            containerList[i].transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        JigsawUnlockStateBean data= DataStorageManage.getJigsawUnlockStateHandle().getData(param);
+      long id=  data.puzzleId;
     }
 
     // Update is called once per frame

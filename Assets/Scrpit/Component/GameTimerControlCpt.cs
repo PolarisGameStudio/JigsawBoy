@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameTimerControlCpt : MonoBehaviour
+public class GameTimerControlCpt : BaseMonoBehaviour
 {
     //是否开始计时
     private bool isStartTimer;

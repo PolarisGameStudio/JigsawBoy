@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JigsawSelect : MonoBehaviour
+public class JigsawSelect : BaseMonoBehaviour
 {
 
     private JigsawResourcesEnum resourcesType;
@@ -12,8 +12,7 @@ public class JigsawSelect : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        resourcesType = JigsawResourcesEnum.Painting;
-        loadJigsaw(resourcesType);
+   
     }
 
     // Update is called once per frame
@@ -38,6 +37,7 @@ public class JigsawSelect : MonoBehaviour
     /// <param name="resourcesEnum"></param>
     public void loadJigsaw(JigsawResourcesEnum resourcesEnum)
     {
+        resourcesType = resourcesEnum;
         //加载该类型下所有拼图数据
         JigsawResourcesBean resourcesData = JigsawDataLoadUtil.loadAllJigsawDataByType(resourcesEnum);
         if (resourcesData == null || resourcesData.dataList == null)

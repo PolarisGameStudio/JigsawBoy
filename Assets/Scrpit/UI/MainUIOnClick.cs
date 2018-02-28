@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainUIOnClick : MonoBehaviour
+public class MainUIOnClick : BaseMonoBehaviour
 {
     //按钮
     private Button[] listBT;

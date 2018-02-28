@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JigsawMoveCpt : MonoBehaviour {
+public class JigsawMoveCpt : BaseMonoBehaviour
+{
 
 
 

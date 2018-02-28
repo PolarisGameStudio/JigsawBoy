@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameJigsawControlCpt : MonoBehaviour
+public class GameJigsawControlCpt : BaseMonoBehaviour
 {
 
     //位置差

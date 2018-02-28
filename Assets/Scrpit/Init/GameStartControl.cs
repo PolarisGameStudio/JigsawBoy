@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-public class GameStartControl : MonoBehaviour
+public class GameStartControl : BaseMonoBehaviour
 {
 
     public static string Game_Timer_Obj_Path = "/GameUI/GameTimer";

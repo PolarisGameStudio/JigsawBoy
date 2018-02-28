@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalJigsawCpt : MonoBehaviour
+public class NormalJigsawCpt : BaseMonoBehaviour
 {
     //拼图数据
     private JigsawBean jigsawData;

@@ -8,6 +8,7 @@
 "markFileName":"Mona_Lisa",
 "horizontalNumber":13,
 "verticalJigsawNumber":20,
+"level":13,
 "details":
 	{
 	"workOfName":"Mona Lisa",
@@ -23,6 +24,7 @@
 "markFileName":"The_Scream",
 "horizontalNumber":8,
 "verticalJigsawNumber":10,
+"level":5,
 "details":
 	{
 	"workOfName":"The Scream",
@@ -38,6 +40,7 @@
 "markFileName":"The_Starry_Night",
 "horizontalNumber":20,
 "verticalJigsawNumber":16,
+"level":14,
 "details":
 	{
 	"workOfName":"The Starry Night",
@@ -51,8 +54,9 @@
 {
 "id":4,
 "markFileName":"Along_The_River_During_The_Qingming_Festival",
-"horizontalNumber":204,
-"verticalJigsawNumber":9,
+"horizontalNumber":100,
+"verticalJigsawNumber":4,
+"level":16,
 "details":
 	{
 	"workOfName":"Along The River During The Qingming Festival",
