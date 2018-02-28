@@ -19,7 +19,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     public float moveWithMax = 0f;
     public float moveHighMax = 0f;
 
-    private float moveScale = 3f;
+    private float moveScale = 2f;
 
     //选择物体增量
     public float rotateObjAngleAdd = 5;

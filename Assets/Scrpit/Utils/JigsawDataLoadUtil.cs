@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class JigsawDataLoadUtil
 {
-
-    private static string CustomData = "CustomData_";
-    private static string PaintingData = "Painting/PaintingData_";
+    private static string PaintingDataPath = "PuzzlesPic/PaintingData_";
+    private static string MovieDataPath = "PuzzlesPic/MovieData_";
 
     /// <summary>
     /// 获取拼图图片数据
@@ -20,10 +19,13 @@ public class JigsawDataLoadUtil
         GameLanguageEnum language = CommonData.gameLanguage;
 
         string fileName = "";
-        if (resourcesType.Equals(JigsawResourcesEnum.Custom))
-            fileName = CustomData;
-        else if (resourcesType.Equals(JigsawResourcesEnum.Painting))
-            fileName = PaintingData;
+        if (resourcesType.Equals(JigsawResourcesEnum.Painting))
+            fileName = PaintingDataPath;
+        else if (resourcesType.Equals(JigsawResourcesEnum.Movie))
+            fileName = MovieDataPath;
+        else
+            return null;
+
 
         if (language.Equals(GameLanguageEnum.Chinese))
         {
@@ -32,6 +34,10 @@ public class JigsawDataLoadUtil
         else if (language.Equals(GameLanguageEnum.English))
         {
             resourcesList = startLoad(fileName + "EN");
+        }
+        else
+        {
+            return null;
         }
         return resourcesList;
     }

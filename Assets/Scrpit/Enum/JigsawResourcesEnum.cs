@@ -1,8 +1,10 @@
 ﻿
 public enum JigsawResourcesEnum
 {
-
-    Custom = 0,//自定义
     Painting = 1,//名画
-    Animal = 2//动物
+    Movie = 2,//电影
+    Celebrity=3,//名人
+    Animal=4,//动物
+    Scenery=5,//风景
+    Custom = 100,//自定义
 }

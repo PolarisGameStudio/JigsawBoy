@@ -5,7 +5,7 @@ using UnityEngine;
 public class CreateGameBackgroundUtil : BaseMonoBehaviour
 {
     //背景缩放大小
-    public static float backgroundScale = 3f;
+    public static float backgroundScale = 2f;
     //背景位置
     public static Vector3 backgroundVector = new Vector3(0, 0, 1);
 

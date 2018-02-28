@@ -30,17 +30,23 @@ public class MenuSelectUIControl : BaseMonoBehaviour
                     resTypeSelectView = itemScroll;
                     Transform contentView = getScorllViewChildContent(resTypeSelectView.transform);
                     if (contentView != null)
+                    {
                         resTypeSelectContent = contentView.gameObject.AddComponent<JigsawResTypeSelect>();
+                        resTypeSelectContent.setMenuSelectUIControl(this);
+                        resTypeSelectContent.loadResTypeData();
+                    }
                 }
                 else if (itemScroll.name.Equals("JigsawSelectView"))
                 {
                     jigsawSelectView = itemScroll;
                     Transform contentView = getScorllViewChildContent(jigsawSelectView.transform);
-                    if (contentView != null) {
+                    if (contentView != null)
+                    {
                         jigsawSelectContent = contentView.gameObject.AddComponent<JigsawSelect>();
+                        jigsawSelectContent.setMenuSelectUIControl(this);
                         jigsawSelectContent.loadJigsaw(JigsawResourcesEnum.Painting);
                     }
-                      
+
                 }
             }
         }
@@ -50,14 +56,11 @@ public class MenuSelectUIControl : BaseMonoBehaviour
     /// 设置拼图类型选择数据
     /// </summary>
     /// <param name="resTypeSelectView"></param>
-    private void setResTypeSelectData(JigsawResTypeSelect select)
+    public  void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
     {
-        if (select == null)
+        if (jigsawSelectContent == null)
             return;
-        foreach (JigsawResourcesEnum itemEnum in Enum.GetValues(typeof(JigsawResourcesEnum)))
-        {
-            //TODO
-        }
+        jigsawSelectContent.loadJigsaw(resourcesEnum);
     }
 
     /// <summary>

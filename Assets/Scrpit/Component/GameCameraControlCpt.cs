@@ -26,7 +26,7 @@ public class GameCameraControlCpt : BaseMonoBehaviour
     //镜头移动纵向最大距离
     public float cameraMoveHighMax = 0;
     //镜头移动缩放比例
-    private float cameraMoveScale = 3f;
+    private float cameraMoveScale = 2f;
 
     //镜头抖动时间
     public float shakeDuration = 0.5f;

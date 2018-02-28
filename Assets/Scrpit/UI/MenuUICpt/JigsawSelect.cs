@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 
 public class JigsawSelect : BaseMonoBehaviour
 {
-
+    public MenuSelectUIControl menuSelectUIControl;
     private JigsawResourcesEnum resourcesType;
-    private static string JigsawSelectItemPath = "Prefab/UI/JigsawSelectItem";
+    private static string JigsawSelectItemPath = "Prefab/UI/Menu/JigsawSelectItem";
 
     // Use this for initialization
     void Start()
@@ -19,6 +18,14 @@ public class JigsawSelect : BaseMonoBehaviour
     void Update()
     {
 
+    }
+    /// <summary>
+    /// 设置UI控制器
+    /// </summary>
+    /// <param name="menuSelectUIControl"></param>
+    public void setMenuSelectUIControl(MenuSelectUIControl menuSelectUIControl)
+    {
+        this.menuSelectUIControl = menuSelectUIControl;
     }
 
     /// <summary>
@@ -38,6 +45,11 @@ public class JigsawSelect : BaseMonoBehaviour
     public void loadJigsaw(JigsawResourcesEnum resourcesEnum)
     {
         resourcesType = resourcesEnum;
+        //删除原数据
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
         //加载该类型下所有拼图数据
         JigsawResourcesBean resourcesData = JigsawDataLoadUtil.loadAllJigsawDataByType(resourcesEnum);
         if (resourcesData == null || resourcesData.dataList == null)

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -101,12 +99,12 @@ public class GameStartControl : BaseMonoBehaviour
         {
             JigsawBean item = listJigsawBean[i];
             Vector3 jigsawPosition = new Vector3(
-                item.MarkLocation.x * item.JigsawWith - item.JigsawWith * horizontalNumber / 2f,
-                item.MarkLocation.y * item.JigsawHigh - item.JigsawHigh * verticalJigsawNumber / 2f
+                item.MarkLocation.x * item.JigsawWith - item.JigsawWith * horizontalNumber / 2f + item.JigsawWith / 2f,
+                item.MarkLocation.y * item.JigsawHigh - item.JigsawHigh * verticalJigsawNumber / 2f + item.JigsawHigh / 2f
                 );
             containerList[i].transform.position = jigsawPosition;
         }
-        GameStartAnimationManager.startAnimation(this,containerList, GameStartAnimationEnum.Closure_Dispersed);
+        GameStartAnimationManager.startAnimation(this, containerList, GameStartAnimationEnum.Closure_Dispersed);
     }
 
     /// <summary>
@@ -148,12 +146,12 @@ public class GameStartControl : BaseMonoBehaviour
         //设置镜头缩放大小
         if (picAllWith > picAllHigh)
         {
-            cameraControl.setCameraOrthographicSize(picAllHigh * 2f);
+            cameraControl.setCameraOrthographicSize(picAllHigh );
             cameraControl.zoomOutMax = picAllWith;
         }
         else
         {
-            cameraControl.setCameraOrthographicSize(picAllWith * 2f);
+            cameraControl.setCameraOrthographicSize(picAllWith);
             cameraControl.zoomOutMax = picAllHigh;
         }
         cameraControl.cameraMoveWithMax = picAllWith;
