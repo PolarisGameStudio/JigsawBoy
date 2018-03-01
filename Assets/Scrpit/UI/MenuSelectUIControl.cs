@@ -10,45 +10,34 @@ public class MenuSelectUIControl : BaseMonoBehaviour
     public Canvas menuSelectUICanvas;
 
     public ScrollRect resTypeSelectView;
-    public JigsawResTypeSelect resTypeSelectContent;
+    public Transform resTypeSelectContentTF;
+    public JigsawResTypeSelect resTypeSelectContentSC;
 
     public ScrollRect jigsawSelectView;
-    public JigsawSelect jigsawSelectContent;
+    public Transform jigsawSelectContentTF;
+    public JigsawSelect jigsawSelectContentSC;
 
     void Start()
     {
         menuSelectUICanvas = GetComponent<Canvas>();
-        ScrollRect[] listScrollRect = GetComponentsInChildren<ScrollRect>();
-        if (listScrollRect != null)
-        {
-            int listScrollSize = listScrollRect.Length;
-            for (int i = 0; i < listScrollSize; i++)
-            {
-                ScrollRect itemScroll = listScrollRect[i];
-                if (itemScroll.name.Equals("ResTypeSelectView"))
-                {
-                    resTypeSelectView = itemScroll;
-                    Transform contentView = getScorllViewChildContent(resTypeSelectView.transform);
-                    if (contentView != null)
-                    {
-                        resTypeSelectContent = contentView.gameObject.AddComponent<JigsawResTypeSelect>();
-                        resTypeSelectContent.setMenuSelectUIControl(this);
-                        resTypeSelectContent.loadResTypeData();
-                    }
-                }
-                else if (itemScroll.name.Equals("JigsawSelectView"))
-                {
-                    jigsawSelectView = itemScroll;
-                    Transform contentView = getScorllViewChildContent(jigsawSelectView.transform);
-                    if (contentView != null)
-                    {
-                        jigsawSelectContent = contentView.gameObject.AddComponent<JigsawSelect>();
-                        jigsawSelectContent.setMenuSelectUIControl(this);
-                        jigsawSelectContent.loadJigsaw(JigsawResourcesEnum.Painting);
-                    }
 
-                }
-            }
+        //初始化拼图选择类型数据
+        resTypeSelectView = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "ResTypeSelectView");
+        resTypeSelectContentTF = CptUtil.getCptFormParentByName<ScrollRect, Transform>(resTypeSelectView, "Content");
+        if (resTypeSelectContentTF != null)
+        {
+            resTypeSelectContentSC = resTypeSelectContentTF.gameObject.AddComponent<JigsawResTypeSelect>();
+            resTypeSelectContentSC.setMenuSelectUIControl(this);
+            resTypeSelectContentSC.loadResTypeData();
+        }
+        //初始化拼图选择数据
+        jigsawSelectView= CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "JigsawSelectView");
+        jigsawSelectContentTF = CptUtil.getCptFormParentByName<ScrollRect, Transform>(jigsawSelectView, "Content");
+        if (jigsawSelectContentTF != null)
+        {
+            jigsawSelectContentSC = jigsawSelectContentTF.gameObject.AddComponent<JigsawSelect>();
+            jigsawSelectContentSC.setMenuSelectUIControl(this);
+            jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
         }
     }
 
@@ -56,34 +45,11 @@ public class MenuSelectUIControl : BaseMonoBehaviour
     /// 设置拼图类型选择数据
     /// </summary>
     /// <param name="resTypeSelectView"></param>
-    public  void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
+    public void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
     {
-        if (jigsawSelectContent == null)
+        if (jigsawSelectContentSC == null)
             return;
-        jigsawSelectContent.loadJigsaw(resourcesEnum);
-    }
-
-    /// <summary>
-    /// 获取内存对象
-    /// </summary>
-    /// <param name="fatherTF"></param>
-    /// <returns></returns>
-    private Transform getScorllViewChildContent(Transform fatherTF)
-    {
-        Transform[] childTFList = fatherTF.GetComponentsInChildren<Transform>();
-        if (childTFList != null)
-        {
-            int childTFSize = childTFList.Length;
-            for (int i = 0; i < childTFSize; i++)
-            {
-                Transform itemTF = childTFList[i];
-                if (itemTF.name.Equals("Content"))
-                {
-                    return itemTF;
-                }
-            }
-        }
-        return null;
+        jigsawSelectContentSC.loadJigsaw(resourcesEnum);
     }
 }
 

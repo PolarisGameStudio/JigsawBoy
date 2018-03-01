@@ -9,29 +9,31 @@ public class GameInfoUIControl : BaseMonoBehaviour
 
     //信息画布
     public Canvas gameInfoUICanvas;
+    public Image gameInfoUIBackground;
     //信息介绍
-    public Image gameInfoDetails;
-    private Vector3 gameInfoDetailsOldPosition;
+    public ScrollRect gameInfoDetails;
+    public Image gameInfoDetailsBackground;
+    public Transform gameInfoDetailsContentTF;
+    public GameInfoDetails gameInfoDetailsContentSC;
+
 
     // Use this for initialization
     void Start()
     {
+        //初始化画布信息
         gameInfoUICanvas = GetComponent<Canvas>();
-        Image[] imageList = GetComponentsInChildren<Image>();
-        if (imageList != null)
+        gameInfoUIBackground = GetComponent<Image>();
+
+        //初始化信息介绍
+        gameInfoDetailsBackground = CptUtil.getCptFormParentByName<Transform, Image>(transform, "GameInfoDetails");
+        gameInfoDetails = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "GameInfoDetails");
+
+        gameInfoDetailsContentTF = CptUtil.getCptFormParentByName<ScrollRect, Transform>(gameInfoDetails, "Content");
+        if (gameInfoDetailsContentTF != null)
         {
-            int imageListSize = imageList.Length;
-            for (int i = 0; i < imageListSize; i++)
-            {
-                Image itemImage = imageList[i];
-                if (itemImage.name.Equals("GameInfoDetails"))
-                {
-                    gameInfoDetails = itemImage;
-                    gameInfoDetailsOldPosition = gameInfoDetails.transform.position;
-                }
-            }
+            gameInfoDetailsContentSC= gameInfoDetailsContentTF.gameObject.AddComponent<GameInfoDetails>();
+            gameInfoDetailsContentSC.loadData(CommonData.selectJigsawInfo);
         }
-        gameInfoUICanvas.enabled = false;
     }
 
     // Update is called once per frame
@@ -48,27 +50,24 @@ public class GameInfoUIControl : BaseMonoBehaviour
     /// </summary>
     public void setGameInfoUIEnabled()
     {
-        if (gameInfoUICanvas == null)
+        if (gameInfoUICanvas == null || gameInfoUIBackground == null)
             return;
         bool isEnabled = gameInfoUICanvas.isActiveAndEnabled;
-        Image gameInfoUIBackground = gameInfoUICanvas.GetComponent<Image>();
         if (isEnabled)
         {
             //设置背景颜色
-            if (gameInfoUIBackground != null)
-                gameInfoUIBackground.DOFade(0, 0.2f).OnComplete(delegate ()
-                {
-                    gameInfoUICanvas.enabled = !isEnabled;
-                });
-            gameInfoDetails.DOFade(0, 0.2f);
+            gameInfoUIBackground.DOFade(0, 0.2f).OnComplete(delegate ()
+            {
+                gameInfoUICanvas.enabled = !isEnabled;
+            });
+            gameInfoDetailsBackground.DOFade(0, 0.2f);
         }
         else
         {
             //设置背景颜色
-            if (gameInfoUIBackground != null)
-                gameInfoUICanvas.enabled = !isEnabled;
+            gameInfoUICanvas.enabled = !isEnabled;
             gameInfoUIBackground.DOFade(0.5f, 0.2f);
-            gameInfoDetails.DOFade(0.2f, 0.2f);
+            gameInfoDetailsBackground.DOFade(0.2f, 0.2f);
         }
     }
 }
