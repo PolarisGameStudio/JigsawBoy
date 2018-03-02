@@ -17,7 +17,7 @@ public class CreateParticleUtil : MonoBehaviour
         ParticleSystem particleSys = null;
         if (particleEnum.Equals(BackParticleEnum.Def))
         {
-            particleSys = Resources.Load(ParticleResPath.Back_Def_Path) as ParticleSystem;
+            particleSys = ResourcesManager.loadData<ParticleSystem>(ParticleResPath.Back_Def_Path);
 
         }
 

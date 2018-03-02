@@ -19,17 +19,16 @@ public class CreateGameBackgroundUtil : BaseMonoBehaviour
     //设置背景
     private static void setPicBackground(float picAllW, float picAllH)
     {
-        GameObject picBackgroundObj = Instantiate(Resources.Load("Prefab/Game/PicBackgroundGameObj") as GameObject);
+        GameObject picBackgroundObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/Game/PicBackgroundGameObj"));
         picBackgroundObj.name = "GamePicBackground";
         picBackgroundObj.transform.position = backgroundVector;
         picBackgroundObj.transform.localScale = new Vector3(picAllW * backgroundScale, picAllH * backgroundScale, 3);
-
     }
 
     //设置高斯模糊
     private static void setBlurBackground(float picAllW, float picAllH)
     {
-        GameObject blurBackgroundObj = Instantiate(Resources.Load("Prefab/Game/BlurBackgroundGameObj") as GameObject);
+        GameObject blurBackgroundObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/Game/BlurBackgroundGameObj"));
         blurBackgroundObj.name = "GameBlurBackground";
         blurBackgroundObj.transform.position = backgroundVector;
         blurBackgroundObj.transform.localScale = new Vector3(picAllW * backgroundScale, picAllH * backgroundScale, 1);

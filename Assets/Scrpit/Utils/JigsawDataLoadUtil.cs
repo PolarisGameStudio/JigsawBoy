@@ -49,8 +49,8 @@ public class JigsawDataLoadUtil
     //开始加载
     private static JigsawResourcesBean startLoad(string fileName)
     {
-        TextAsset jsonData = Resources.Load<TextAsset>(fileName);
-        JigsawResourcesBean listData= JsonUtility.FromJson<JigsawResourcesBean>(jsonData.text);
+        TextAsset jsonData = ResourcesManager.loadData<TextAsset>(fileName);
+        JigsawResourcesBean listData = JsonUtil.FromJson<JigsawResourcesBean>(jsonData.text);
         return listData;
     }
 }

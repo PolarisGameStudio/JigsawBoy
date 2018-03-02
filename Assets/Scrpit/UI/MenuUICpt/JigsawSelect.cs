@@ -69,14 +69,14 @@ public class JigsawSelect : BaseMonoBehaviour
     /// <param name="itemInfo"></param>
     private void createSelectItem(JigsawResInfoBean itemInfo)
     {
-        GameObject buttonObj = Instantiate(Resources.Load(JigsawSelectItemPath)) as GameObject;
+        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath) ) ;
         buttonObj.name = itemInfo.markFileName;
         buttonObj.transform.parent = transform;
 
         //设置背景图片
         Image backImage = buttonObj.GetComponent<Image>();
         string filePath = itemInfo.resFilePath;
-        Sprite backSp = Resources.Load(filePath, typeof(Sprite)) as Sprite;
+        Sprite backSp = ResourcesManager.loadData<Sprite>(filePath);
         backImage.sprite = backSp;
 
         //设置按键

@@ -8,15 +8,12 @@ public class TestScrpit : BaseMonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerPrefs.DeleteAll();
-        JigsawUnlockStateBean param = new JigsawUnlockStateBean();
-        param.puzzleId = 1;
-        param.puzzleType = JigsawResourcesEnum.Animal;
-        param.unlockState = JigsawUnlockEnum.UnLock;
-        DataStorageManage.getJigsawUnlockStateHandle().saveData(param);
-
-        JigsawUnlockStateBean data= DataStorageManage.getJigsawUnlockStateHandle().getData(param);
-      long id=  data.puzzleId;
+        List<JigsawUnlockStateBean> listDataTemp = new List<JigsawUnlockStateBean>();
+        JigsawUnlockStateBean jigsaw = new JigsawUnlockStateBean();
+        jigsaw.puzzleId=2;
+        listDataTemp.Add(jigsaw);
+        DataStorageManage.getJigsawUnlockStateHandle().saveAllData(listDataTemp);
+        List<JigsawUnlockStateBean> listData= DataStorageManage.getJigsawUnlockStateHandle().getAllData();
     }
 
     // Update is called once per frame

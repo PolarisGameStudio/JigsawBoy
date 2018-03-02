@@ -6,7 +6,7 @@ using System.Text;
 
 public class DataStorageManage
 {
-    public static BaseDataStorageHandle<JigsawUnlockStateBean, JigsawUnlockStateBean> getJigsawUnlockStateHandle()
+    public static IBaseDataStorage<List<JigsawUnlockStateBean>, List<JigsawUnlockStateBean>> getJigsawUnlockStateHandle()
     {
         return JigsawUnlockStateHandle.getInstance();
     }
