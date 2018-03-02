@@ -6,6 +6,7 @@ public class JigsawDataLoadUtil
 {
     private static string PaintingDataPath = "PuzzlesPic/PaintingData_";
     private static string MovieDataPath = "PuzzlesPic/MovieData_";
+    private static string CelebrityDataPath = "PuzzlesPic/CelebrityData_";
 
     /// <summary>
     /// 获取拼图图片数据
@@ -23,6 +24,8 @@ public class JigsawDataLoadUtil
             fileName = PaintingDataPath;
         else if (resourcesType.Equals(JigsawResourcesEnum.Movie))
             fileName = MovieDataPath;
+        else if (resourcesType.Equals(JigsawResourcesEnum.Celebrity))
+            fileName = CelebrityDataPath;
         else
             return null;
 

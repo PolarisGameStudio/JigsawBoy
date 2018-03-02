@@ -1,0 +1,23 @@
+{
+"dataType":"celebrity",
+"dataFilePath":"PuzzlesPic/Celebrity/",
+"dataList":
+[
+{
+"id":1,
+"markFileName":"Leonardo_da_Vinci",
+"horizontalNumber":3,
+"verticalJigsawNumber":4,
+"level":1,
+"details":
+	{
+	"celebrityName":"达·芬奇",
+	"bornAndDeath":"1452年4月15日-1519年5月2日",
+	"country":"意大利 佛罗伦萨共和国",
+	"knownFor":"艺术家，科学家",
+	"Works":"《蒙娜丽莎》、《最后的晚餐》等",
+	"introductionContent":"1452年的4月15日（儒略历），达·芬奇出生在夜幕降临三个小时后”在芬奇的托斯卡纳小山镇，阿尔诺河流过的山谷附近，当时这个地方是美第奇家族统治下的佛罗伦萨共和国的领地。达·芬奇的父亲叫瑟·皮耶罗·达芬奇，是佛罗伦萨的法律公证员，因此十分富有。他的母亲卡泰丽娜是农妇。达·芬奇是他们的私生子。达·芬奇并没有一个真正意义的姓，他的全名“Lionardo di ser Piero da Vinci”意思是：“芬奇镇梅瑟·皮耶罗之子——列奥纳多”。他名字中的“ser”只表明他的父亲是一个绅士。"
+	}
+}
+]
+}

@@ -1,0 +1,23 @@
+{
+"dataType":"celebrity",
+"dataFilePath":"PuzzlesPic/Celebrity/",
+"dataList":
+[
+{
+"id":1,
+"markFileName":"Leonardo_da_Vinci",
+"horizontalNumber":3,
+"verticalJigsawNumber":4,
+"level":1,
+"details":
+	{
+	"celebrityName":"Leonardo da Vinci",
+	"bornAndDeath":"1452.4.15-1519.5.2",
+	"country":"Repubblica Fiorentina",
+	"knownFor":"Art, Science",
+	"Works":"Mona Lisa,The Last Supper,The Vitruvian Man,Lady with an Ermine",
+	"introductionContent":"Leonardo di ser Piero da Vinci (Italian; 15 April 1452 – 2 May 1519), more commonly Leonardo da Vinci or simply Leonardo, was an Italian Renaissance polymath whose areas of interest included invention, painting, sculpting, architecture, science, music, mathematics, engineering, literature, anatomy, geology, astronomy, botany, writing, history, and cartography. He has been variously called the father of palaeontology, ichnology, and architecture, and is widely considered one of the greatest painters of all time. Sometimes credited with the inventions of the parachute, helicopter and tank, he epitomised the Renaissance humanist ideal."
+	}
+}
+]
+}
