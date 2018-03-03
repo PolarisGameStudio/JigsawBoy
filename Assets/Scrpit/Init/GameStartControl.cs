@@ -7,7 +7,7 @@ public class GameStartControl : BaseMonoBehaviour
 
     public static string Game_Timer_Obj_Path = "/GameUI/GameTimer";
     //图片信息
-    public JigsawResInfoBean jigsawInfoData;
+    public PuzzlesInfoBean jigsawInfoData;
     //所有拼图信息
     private List<JigsawBean> listJigsawBean;
 
@@ -21,7 +21,7 @@ public class GameStartControl : BaseMonoBehaviour
     // Use this for initialization
     void Start()
     {
-        jigsawInfoData = CommonData.selectJigsawInfo;
+        jigsawInfoData = CommonData.SelectPuzzlesInfo;
         initData();
     }
 
@@ -31,7 +31,7 @@ public class GameStartControl : BaseMonoBehaviour
 
     }
 
-    private void setJigsawResInfo(JigsawResInfoBean jigsawInfoData)
+    private void setJigsawResInfo(PuzzlesInfoBean jigsawInfoData)
     {
         this.jigsawInfoData = jigsawInfoData;
     }
@@ -43,9 +43,9 @@ public class GameStartControl : BaseMonoBehaviour
     {
         if (jigsawInfoData == null)
             return;
-        string resFilePath = jigsawInfoData.resFilePath;
-        int horizontalNumber = jigsawInfoData.horizontalNumber;
-        int verticalJigsawNumber = jigsawInfoData.verticalJigsawNumber;
+        string resFilePath = jigsawInfoData.Data_file_path + jigsawInfoData.Mark_file_name;
+        int horizontalNumber = jigsawInfoData.Horizontal_number;
+        int verticalJigsawNumber = jigsawInfoData.Vertical_number;
         if (resFilePath == null)
         {
             LogUtil.log("没有拼图图片路径");
@@ -56,7 +56,7 @@ public class GameStartControl : BaseMonoBehaviour
             LogUtil.log("没有拼图生成数量");
             return;
         }
-        Texture2D pic2D = ResourcesManager.loadData<Texture2D>(jigsawInfoData.resFilePath);
+        Texture2D pic2D = ResourcesManager.loadData<Texture2D>(resFilePath);
         if (pic2D == null)
         {
             LogUtil.log("没有源图片");

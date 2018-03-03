@@ -8,43 +8,40 @@ using UnityEngine.UI;
 
 public class GameInfoDetails : MonoBehaviour
 {
-    public JigsawResInfoBean selectJigsawInfo;
+    public PuzzlesInfoBean selectJigsawInfo;
     private static string GameInfoTextItem = "Prefab/UI/Game/GameInfoTextItem";
 
     public int nameTextSize = 25;
 
-    public void loadData(JigsawResInfoBean selectJigsawInfo)
+    public void loadData(PuzzlesInfoBean selectJigsawInfo)
     {
         if (selectJigsawInfo == null)
             return;
         this.selectJigsawInfo = selectJigsawInfo;
-
-        JigsawResInfoIntroduceBean details = selectJigsawInfo.details;
-        if (details == null)
+        if (selectJigsawInfo == null)
             return;
 
-        string introductionContent = details.introductionContent;
+        string introductionContent = selectJigsawInfo.Introduction_content;
+        string name = selectJigsawInfo.Name;
 
-        string workOfName = details.workOfName;
-        string storageArea = details.storageArea;
-        string specifications = details.specifications;
-        string timeOfCreation = details.timeOfCreation;
-        string workOfCreator = details.workOfCreator;
+        string storageArea = selectJigsawInfo.Storage_area;
+        string specifications = selectJigsawInfo.Specifications;
+        string timeOfCreation = selectJigsawInfo.Time_creation;
+        string workOfCreator = selectJigsawInfo.Work_creator;
 
-        string moveOfName = details.moveOfName;
-        string moveOfDirector = details.moveOfDirector;
-        string stars = details.stars;
-        string length = details.length;
-        string releaseDate = details.releaseDate;
+        string moveOfDirector = selectJigsawInfo.Move_director;
+        string stars = selectJigsawInfo.Stars;
+        string length = selectJigsawInfo.Length;
+        string releaseDate = selectJigsawInfo.Release_date;
 
-        string celebrityName = details.celebrityName;
-        string bornAndDeath = details.bornAndDeath;
-        string country = details.country;
-        string knownFor = details.knownFor;
-        string works = details.works;
+        string bornAndDeath = selectJigsawInfo.Born_death;
+        string country = selectJigsawInfo.Country;
+        string knownFor = selectJigsawInfo.Known_for;
+        string works = selectJigsawInfo.Works;
 
-        if (workOfName != null && workOfName.Length != 0)
-            createTextItem("作品名称", workOfName, nameTextSize);
+        if (name != null && name.Length != 0)
+            createTextItem("名称", name);
+
         if (workOfCreator != null && workOfCreator.Length != 0)
             createTextItem("作品作者", workOfCreator);
         if (storageArea != null && storageArea.Length != 0)
@@ -54,8 +51,6 @@ public class GameInfoDetails : MonoBehaviour
         if (timeOfCreation != null && timeOfCreation.Length != 0)
             createTextItem("创作时间", timeOfCreation);
 
-        if (moveOfName != null && moveOfName.Length != 0)
-            createTextItem("电影名称", moveOfName, nameTextSize);
         if (moveOfDirector != null && moveOfDirector.Length != 0)
             createTextItem("电影导演", moveOfDirector);
         if (stars != null && stars.Length != 0)
@@ -65,8 +60,6 @@ public class GameInfoDetails : MonoBehaviour
         if (releaseDate != null && releaseDate.Length != 0)
             createTextItem("上映日期", releaseDate);
 
-        if (celebrityName != null && celebrityName.Length != 0)
-            createTextItem("名字", celebrityName, nameTextSize);
         if (knownFor != null && knownFor.Length != 0)
             createTextItem("职业", knownFor);
         if (bornAndDeath != null && bornAndDeath.Length != 0)

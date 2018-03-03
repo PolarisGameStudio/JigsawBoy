@@ -28,7 +28,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     void Start()
     {
         isSelect = false;
-        CommonData.isDargMove = true;
+        CommonData.IsDargMove = true;
     }
 
     // Update is called once per frame
@@ -36,7 +36,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CommonData.isDargMove = true;
+            CommonData.IsDargMove = true;
             onMouseDown();
         }
 
@@ -45,7 +45,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
             onMouseUp();
         }
 
-        if (isSelect && CommonData.isDargMove)
+        if (isSelect && CommonData.IsDargMove)
         {
             onMouseDrag();
         }

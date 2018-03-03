@@ -32,7 +32,7 @@ public class GameInfoUIControl : BaseMonoBehaviour
         if (gameInfoDetailsContentTF != null)
         {
             gameInfoDetailsContentSC= gameInfoDetailsContentTF.gameObject.AddComponent<GameInfoDetails>();
-            gameInfoDetailsContentSC.loadData(CommonData.selectJigsawInfo);
+            gameInfoDetailsContentSC.loadData(CommonData.SelectPuzzlesInfo);
         }
     }
 

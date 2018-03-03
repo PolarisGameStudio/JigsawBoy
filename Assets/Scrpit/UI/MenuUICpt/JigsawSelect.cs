@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class JigsawSelect : BaseMonoBehaviour
     // Use this for initialization
     void Start()
     {
-   
+
     }
 
     // Update is called once per frame
@@ -51,14 +52,15 @@ public class JigsawSelect : BaseMonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
         //加载该类型下所有拼图数据
-        JigsawResourcesBean resourcesData = JigsawDataLoadUtil.loadAllJigsawDataByType(resourcesEnum);
-        if (resourcesData == null || resourcesData.dataList == null)
+        List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
+
+        if (listData == null || listData.Count == 0)
             return;
-        int resourcesListCount = resourcesData.dataList.Count;
+
+        int resourcesListCount = listData.Count;
         for (int itemPosition = 0; itemPosition < resourcesListCount; itemPosition++)
         {
-            JigsawResInfoBean itemInfo = resourcesData.dataList[itemPosition];
-            itemInfo.resFilePath = resourcesData.dataFilePath + itemInfo.markFileName;
+            PuzzlesInfoBean itemInfo = listData[itemPosition];
             createSelectItem(itemInfo);
         }
     }
@@ -67,15 +69,15 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建相对应按钮
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createSelectItem(JigsawResInfoBean itemInfo)
+    private void createSelectItem(PuzzlesInfoBean itemInfo)
     {
-        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath) ) ;
-        buttonObj.name = itemInfo.markFileName;
+        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
+        buttonObj.name = itemInfo.Mark_file_name;
         buttonObj.transform.parent = transform;
 
         //设置背景图片
         Image backImage = buttonObj.GetComponent<Image>();
-        string filePath = itemInfo.resFilePath;
+        string filePath = itemInfo.Data_file_path + itemInfo.Mark_file_name;
         Sprite backSp = ResourcesManager.loadData<Sprite>(filePath);
         backImage.sprite = backSp;
 
@@ -83,8 +85,8 @@ public class JigsawSelect : BaseMonoBehaviour
         Button itemBT = buttonObj.GetComponent<Button>();
         itemBT.onClick.AddListener(delegate ()
         {
-           CommonData.selectJigsawInfo = itemInfo;
-           SceneUtil.jumpGameScene();
+            CommonData.SelectPuzzlesInfo = itemInfo;
+            SceneUtil.jumpGameScene();
         });
 
 
@@ -98,7 +100,7 @@ public class JigsawSelect : BaseMonoBehaviour
                 Text textItem = allText[textPosition];
                 if (textItem.name.Equals("JigsawName"))
                 {
-                    textItem.text = itemInfo.details.workOfName;
+                    textItem.text = itemInfo.Name;
                 }
             }
         }
