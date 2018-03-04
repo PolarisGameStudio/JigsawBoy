@@ -73,14 +73,14 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         hitRC = Physics2D.Raycast(mousePos2D, Vector2.zero);
         if (hitRC.collider != null)
         {
-            isSelect = true;
             Collider2D jigsawCollider = hitRC.collider;
             Transform jigsawTransform = jigsawCollider.transform;
-            //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差
-            vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
+            //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差    
             jigsawContainerCpt = jigsawTransform.GetComponent<JigsawContainerCpt>();
             if (jigsawContainerCpt != null)
             {
+                isSelect = true;
+                vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
                 jigsawContainerCpt.setIsSelect(true);
             }
         }

@@ -10,6 +10,8 @@ public class MainUIOnClick : BaseMonoBehaviour
     //画布
     private Canvas mainUICanvas;
 
+    public AudioSourceControl sourceControl;
+
     void Start()
     {
         initData();
@@ -43,15 +45,16 @@ public class MainUIOnClick : BaseMonoBehaviour
     /// </summary>
     public void startGameOnClick()
     {
+        sourceControl.playOnClickClip(AudioButtonOnClickEnum.def);
         //隐藏当前UI
-        mainUICanvas.enabled = false;
+        //mainUICanvas.enabled = false;
         //打开开始游戏UI
         GameObject startGameUI = GameObject.Find("StartGameUI");
         if (startGameUI != null)
         {
-            Canvas startGameCanvas= startGameUI.GetComponent<Canvas>();
-            if (startGameCanvas != null)
-                startGameCanvas.enabled = true;
+           // Canvas startGameCanvas= startGameUI.GetComponent<Canvas>();
+           // if (startGameCanvas != null)
+           //   startGameCanvas.enabled = true;
         }
     }
 }

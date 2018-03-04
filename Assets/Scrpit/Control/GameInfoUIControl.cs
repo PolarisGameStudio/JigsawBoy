@@ -15,7 +15,11 @@ public class GameInfoUIControl : BaseMonoBehaviour
     public Image gameInfoDetailsBackground;
     public Transform gameInfoDetailsContentTF;
     public GameInfoDetails gameInfoDetailsContentSC;
-
+    //图片
+    public ScrollRect gameInfoPic;
+    public RectTransform gameInfoPicTF;
+    public Image gameInfoPicImage;
+    public RectTransform gameInfoPicImageTF;
 
     // Use this for initialization
     void Start()
@@ -29,11 +33,34 @@ public class GameInfoUIControl : BaseMonoBehaviour
         gameInfoDetails = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "GameInfoDetails");
 
         gameInfoDetailsContentTF = CptUtil.getCptFormParentByName<ScrollRect, Transform>(gameInfoDetails, "Content");
-        if (gameInfoDetailsContentTF != null)
+        if (gameInfoDetailsContentTF != null && CommonData.SelectPuzzlesInfo != null)
         {
-            gameInfoDetailsContentSC= gameInfoDetailsContentTF.gameObject.AddComponent<GameInfoDetails>();
+            gameInfoDetailsContentSC = gameInfoDetailsContentTF.gameObject.AddComponent<GameInfoDetails>();
             gameInfoDetailsContentSC.loadData(CommonData.SelectPuzzlesInfo);
         }
+
+        //初始化图片
+        gameInfoPic = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "GameInfoPic");
+        gameInfoPicImage = CptUtil.getCptFormParentByName<ScrollRect, Image>(gameInfoPic, "Image");
+        if (gameInfoPic != null)
+        {
+            gameInfoPicTF = gameInfoPic.GetComponent<RectTransform>();
+        }
+        if (gameInfoPicImage != null && CommonData.SelectPuzzlesInfo != null)
+        {
+            string picPath = CommonData.SelectPuzzlesInfo.Data_file_path + CommonData.SelectPuzzlesInfo.Mark_file_name;
+            Sprite picSP = ResourcesManager.loadData<Sprite>(picPath);
+
+            float gameInfoPicImageH = gameInfoPicTF.rect.height * 0.9f;
+            float gameInfoPicImageW = (gameInfoPicTF.rect.height / picSP.texture.height) * picSP.texture.width * 0.9f;
+
+            gameInfoPicImageTF = gameInfoPicImage.GetComponent<RectTransform>();
+            gameInfoPicImageTF.sizeDelta = new Vector2(gameInfoPicImageW, gameInfoPicImageH);
+
+            gameInfoPicImage.sprite = picSP;
+
+        }
+        gameInfoUICanvas.enabled = false;
     }
 
     // Update is called once per frame
