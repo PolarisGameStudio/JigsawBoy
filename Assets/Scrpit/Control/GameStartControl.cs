@@ -83,6 +83,8 @@ public class GameStartControl : BaseMonoBehaviour
         addCameraControl(picAllWith, picAllHigh);
         //增加拼图控制
         addJigsawControl(picAllWith, picAllHigh);
+ 
+       
     }
 
     /// <summary>
@@ -136,6 +138,7 @@ public class GameStartControl : BaseMonoBehaviour
         }
         CreateGameBackgroundUtil.createBackground(picAllWith, picAllHigh);
     }
+
 
     /// <summary>
     /// 增加镜头控制

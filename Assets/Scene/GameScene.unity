@@ -521,17 +521,17 @@ Prefab:
     - target: {fileID: 224819676523416014, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -240
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224118360125500380, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224045135462818376, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: -639.3767
+      value: -643.1245
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8df865289fc91d54293bd8d7d967c265, type: 2}
@@ -613,6 +613,8 @@ GameObject:
   - component: {fileID: 1690610168}
   - component: {fileID: 1690610167}
   - component: {fileID: 1690610171}
+  - component: {fileID: 1690610172}
+  - component: {fileID: 1690610173}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -694,3 +696,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1025bd396227dce40a2edaff374f30ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1690610172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1690610166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744a0630aee767543bcace61388dd2e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+--- !u!114 &1690610173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1690610166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa5933cd49f146419ce5c0407656bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 0}

@@ -9,7 +9,6 @@ public class TestScrpit : BaseMonoBehaviour
     // Use this for initialization
     void Start()
     {
-        List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(JigsawResourcesEnum.Painting);
     }
 
     // Update is called once per frame

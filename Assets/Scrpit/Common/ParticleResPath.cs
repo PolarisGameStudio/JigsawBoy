@@ -7,6 +7,8 @@ using System.Text;
 public class ParticleResPath
 {
 
-    public readonly static string Back_Def_Path = "";
+    public readonly static string Back_Def_Path = "Prefab/Particle/Background/ParticleBackDef";
+
+    public readonly static string Merge_Def_Path = "Prefab/Particle/Merge/ParticleMergeDef";
 }
 
