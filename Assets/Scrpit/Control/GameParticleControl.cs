@@ -4,9 +4,15 @@ using DG.Tweening;
 
 public class GameParticleControl : BaseMonoBehaviour
 {
+    //合并粒子特效样式
+    public MergeParticleEnum mergeParticleEnum;
+    //移动粒子特效样式
+    public MoveParticleEnum moveParticleEnum;
+
     void Start()
     {
-
+        mergeParticleEnum = MergeParticleEnum.Def;
+        moveParticleEnum = MoveParticleEnum.Def;
     }
 
     void Update()
@@ -14,7 +20,11 @@ public class GameParticleControl : BaseMonoBehaviour
 
     }
 
-    public void playParticle(Transform mergeObj)
+    /// <summary>
+    /// 播放合并动画
+    /// </summary>
+    /// <param name="mergeObj"></param>
+    public void playMergeParticle(Transform mergeObj)
     {
         if (mergeObj == null)
             return;
@@ -28,16 +38,19 @@ public class GameParticleControl : BaseMonoBehaviour
             ParticleSystem itemParticle = itemTF.GetComponentInChildren<ParticleSystem>();
             if (itemParticle == null)
             {
-                ParticleSystem particleSystem = CreateParticleUtil.createMergeParticle(itemTF.position, 3f, 3f, MergeParticleEnum.Def);
-                particleSystem.transform.parent = itemTF;
-                particleSystem.Play();
+                ParticleSystem particleSystem = CreateParticleUtil.createMergeParticle(itemTF, mergeParticleEnum);
             }
-            else
-            {
-                itemParticle.Play();
-            }
+            itemParticle.Play();
         }
     }
 
+    /// <summary>
+    /// 播放移动粒子特效
+    /// </summary>
+    /// <param name="moveObj"></param>
+    public void playMoveParticle(Transform moveObj)
+    {
+
+    }
 
 }

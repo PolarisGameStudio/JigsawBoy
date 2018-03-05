@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
-public enum AudioBGMEnum
+[Serializable]
+public class GameConfigureBean
 {
-    Op9_No2=1,//肖邦 
+    public int gameLanguage;
 }
 

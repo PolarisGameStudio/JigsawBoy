@@ -7,6 +7,7 @@
     private int level;//拼图等级
     private string data_file_path;//拼图文件路径
     private int data_type;//拼图类型
+    private int unlock_point;//解锁点数
     private int valid;//拼图有效值
 
     public long Id
@@ -110,6 +111,19 @@
         set
         {
             valid = value;
+        }
+    }
+
+    public int Unlock_point
+    {
+        get
+        {
+            return unlock_point;
+        }
+
+        set
+        {
+            unlock_point = value;
         }
     }
 }

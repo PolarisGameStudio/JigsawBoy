@@ -13,6 +13,7 @@ public class AudioSourceControl : MonoBehaviour
         playBGMClip(AudioBGMEnum.Op9_No2);
     }
 
+
     /// <summary>
     /// 播放按钮点击音效
     /// </summary>
@@ -36,14 +37,15 @@ public class AudioSourceControl : MonoBehaviour
     public void playBGMClip(AudioBGMEnum bgmEnum)
     {
         AudioClip audioClip;
-        string audioPath= "Sound/BGM/";
-        if (bgmEnum.Equals(AudioBGMEnum.Op9_No2))
+        List<BGMInfoBean> bgmDataList = BGMInfoManager.LoadBGMInfo(bgmEnum);
+        if (bgmDataList != null && bgmDataList.Count > 0)
         {
-            audioPath += "Op9_No2";
+            BGMInfoBean item = bgmDataList[0];
+            string audioPath = item.FilePath;
+            audioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            audioSource.clip = audioClip;
+            audioSource.loop = true;
+            audioSource.Play();
         }
-        audioClip = ResourcesManager.loadData<AudioClip>(audioPath);
-        audioSource.clip = audioClip;
-        audioSource.loop = true;
-        audioSource.Play();
     }
 }

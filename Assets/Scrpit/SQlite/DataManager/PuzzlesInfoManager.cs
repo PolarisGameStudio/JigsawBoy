@@ -11,15 +11,15 @@ public class PuzzlesInfoManager
     public static List<PuzzlesInfoBean> LoadAllPuzzlesDataByType(JigsawResourcesEnum resourcesType)
     {
         List<PuzzlesInfoBean> listData = new List<PuzzlesInfoBean>();
-        GameLanguageEnum language = CommonData.GameLanguage;
+        GameLanguageEnum language =CommonConfigure.GameLanguage;
 
         string detailsTableName = "";
         if (resourcesType.Equals(JigsawResourcesEnum.Painting))
-            detailsTableName = CommonData.PuzzleInfoDB_Details_Painting_Table;
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_Painting_Table;
         else if (resourcesType.Equals(JigsawResourcesEnum.Movie))
-            detailsTableName = CommonData.PuzzleInfoDB_Details_Movie_Table;
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_Movie_Table;
         else if (resourcesType.Equals(JigsawResourcesEnum.Celebrity))
-            detailsTableName = CommonData.PuzzleInfoDB_Details_Celebrity_Table;
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_Celebrity_Table;
         else
             return null;
 
@@ -32,8 +32,8 @@ public class PuzzlesInfoManager
 
         listData = SQliteHandle.LoadTableData<PuzzlesInfoBean>
             (
-            CommonData.PuzzleInfoDB_Name,
-            CommonData.PuzzleInfoDB_PuzzlesBase_Table,
+            CommonDB.PuzzleInfoDB_Name,
+            CommonDB.PuzzleInfoDB_PuzzlesBase_Table,
             new string[] { detailsTableName },
             "id",
             new string[] { "puzzles_id" },

@@ -337,7 +337,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
 
             //合并特效
             if (gameParticleControl != null)
-                gameParticleControl.playParticle(collisionJCC.transform);
+                gameParticleControl.playMergeParticle(collisionJCC.transform);
             //摇晃镜头
             shakeCamer();
             // 最后删除当前容器

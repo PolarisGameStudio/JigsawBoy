@@ -123,4 +123,9 @@ public class SQliteHandle : ScriptableObject
     {
         return LoadTableData<T>(dbName, mainTable, leftTableName, mainKey, leftKey, null, null, null);
     }
+
+    public static List<T> LoadTableData<T>(string dbName, string mainTable, string[] mainColNames, string[] mainOperations, string[] mainColValue)
+    {
+        return LoadTableData<T>(dbName, mainTable, null, null, null, mainColNames, mainOperations, mainColValue);
+    }
 }

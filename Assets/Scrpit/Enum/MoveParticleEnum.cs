@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 
 
-public enum AudioBGMEnum
+public enum MoveParticleEnum
 {
-    Op9_No2=1,//肖邦 
+    Def=0,//默认
 }
 
