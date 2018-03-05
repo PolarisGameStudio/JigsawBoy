@@ -2,7 +2,7 @@
 
 Shader "Custom/WaterBlurGaussian" {
 	Properties{
-	_blurSizeXY("BlurSizeXY", Range(0,20)) = 20 }
+	_blurSizeXY("BlurSizeXY", Range(0,20)) = 10 }
     SubShader {
 
         // Draw ourselves after all opaque geometry

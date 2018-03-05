@@ -1,33 +1,70 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
-public interface BaseDataStorageHandle<T,V>
+public abstract class BaseDataStorageHandle<T>
 {
-    /// <summary>
-    /// 保存数据
-    /// </summary>
-    /// <param name="data"></param>
-    void saveData(T data);
+    private string Data_Path = Application.persistentDataPath;
 
-    /// <summary>
-    /// 保存数据集
-    /// </summary>
-    /// <param name="listData"></param>
-    void saveListData(List<T> listData);
+    public void startSaveData(string fileName, T dataBean)
+    {
+        if (fileName == null)
+        {
+            LogUtil.log("保存文件失败-没有文件名称");
+            return;
+        }
+        if (dataBean == null)
+        {
+            LogUtil.log("保存文件失败-没有数据");
+            return;
+        }
+        string strData = JsonUtil.ToJson(dataBean);
+        FileUtil.CreateTextFile(Data_Path, fileName, strData);
+    }
 
-    /// <summary>
-    /// 获取数据
-    /// </summary>
-    /// <param name="markId"></param>
-    T getData(V markData);
+    public void startSaveData(string fileName, List<T> dataBeanList)
+    {
+        if (fileName == null)
+        {
+            LogUtil.log("保存文件失败-没有文件名称");
+            return;
+        }
+        if (dataBeanList == null || dataBeanList.Count == 0)
+        {
+            LogUtil.log("保存文件失败-没有数据");
+            return;
+        }
+        ListHandleBean<T> handBean = new ListHandleBean<T>();
+        handBean.listData = dataBeanList;
+        string strData = JsonUtil.ToJson(handBean);
+        FileUtil.CreateTextFile(Data_Path, fileName, strData);
+    }
 
-    /// <summary>
-    /// 获取数据集
-    /// </summary>
-    /// <param name="listMarkId"></param>
-    List<T> getListData(List<V> listMarkData);
+    public T startLoadData(string fileName)
+    {
+        if (fileName == null)
+        {
+            LogUtil.log("保存文件失败-没有文件名称");
+            return default(T);
+        }
+        string strData = FileUtil.LoadTextFile(Data_Path + "/" + fileName);
+        if (strData == null)
+            return default(T);
+        T data = JsonUtil.FromJson<T>(strData);
+        return data;
+    }
+
+
+    public List<T> startLoadDataForList(string fileName)
+    {
+        if (fileName == null)
+        {
+            LogUtil.log("保存文件失败-没有文件名称");
+            return null;
+        }
+        string strData = FileUtil.LoadTextFile(Data_Path + "/" + fileName);
+        if (strData == null)
+            return null;
+        ListHandleBean<T> handBean=  JsonUtil.FromJson<ListHandleBean<T>>(strData);
+        return handBean.listData;
+    }
 }
-

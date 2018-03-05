@@ -7,6 +7,9 @@ using DG.Tweening;
 
 public class JigsawContainerCpt : BaseMonoBehaviour
 {
+    public GameParticleControl gameParticleControl;
+    public AudioSourceControl audioSourceControl;
+
     //容器所含拼图对象数据
     public List<JigsawBean> listJigsaw;
     //是否开启合并检测
@@ -104,8 +107,8 @@ public class JigsawContainerCpt : BaseMonoBehaviour
 
 
             //设置位置
-           // jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-           // jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            // jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            // jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
             jigsawTF.position = jigsawItemPosition;
             jigsawTF.rotation = transform.rotation;
 
@@ -135,11 +138,11 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// <param name="sortingOrder"></param>
     public void setSortingOrder(int sortingOrder)
     {
-        Renderer[] jigsawRenderList= GetComponentsInChildren<Renderer>();
+        Renderer[] jigsawRenderList = GetComponentsInChildren<Renderer>();
         int jigsawRenderListSize = jigsawRenderList.Length;
         for (int jigsawRenderPosition = 0; jigsawRenderPosition < jigsawRenderListSize; jigsawRenderPosition++)
         {
-            Renderer itemRender= jigsawRenderList[jigsawRenderPosition];
+            Renderer itemRender = jigsawRenderList[jigsawRenderPosition];
             itemRender.sortingOrder = sortingOrder;
         };
     }
@@ -148,8 +151,9 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     ///  设置是trigger
     /// </summary>
     /// <param name="isTrigger"></param>
-    public void setIsTrigger(bool isTrigger) {
-        CompositeCollider2D collider= GetComponent<CompositeCollider2D>();
+    public void setIsTrigger(bool isTrigger)
+    {
+        CompositeCollider2D collider = GetComponent<CompositeCollider2D>();
         collider.isTrigger = isTrigger;
     }
 
@@ -167,7 +171,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         if (isSelect)
             sortingOrder = 32767;
         else
-            sortingOrder= DevUtil.getRandomInt(0, 30000);
+            sortingOrder = DevUtil.getRandomInt(0, 30000);
         setSortingOrder(sortingOrder);
     }
 
@@ -277,9 +281,13 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     private void Start()
     {
         //获取镜头控制
-        GameObject cameraObj =GameObject.Find("/Main Camera");
+        GameObject cameraObj = GameObject.Find("/Main Camera");
         if (cameraObj != null)
+        {
             mCameraControlCpt = cameraObj.GetComponent<GameCameraControlCpt>();
+            gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
+        }
+
     }
 
     private void Update()
@@ -291,7 +299,6 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     {
         collisionCheck(collision);
     }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         collisionCheck(collision);
@@ -320,12 +327,17 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             return;
         if (checkMerge(collisionJCC))
         {
+     
             //设置不可在拖拽
-            CommonData.isDargMove = false;
+            CommonData.IsDargMove = false;
             isSelect = false;
             // 添加拼图碎片到碰撞容器里
             collisionJCC.addJigsawList(listJigsaw);
             collisionJCC.jigsawLocationCorrect();
+
+            //合并特效
+            if (gameParticleControl != null)
+                gameParticleControl.playParticle(collisionJCC.transform);
             //摇晃镜头
             shakeCamer();
             // 最后删除当前容器

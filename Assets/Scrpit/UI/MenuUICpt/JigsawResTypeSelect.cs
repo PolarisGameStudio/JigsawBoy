@@ -39,7 +39,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     /// <param name="resType"></param>
     private void createSelectItem(JigsawResourcesEnum resType)
     {
-        GameObject buttonObj = Instantiate(Resources.Load(ResTypeSelectItemPath)) as GameObject;
+        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
         buttonObj.name = resType.ToString();
         buttonObj.transform.parent = transform;
 

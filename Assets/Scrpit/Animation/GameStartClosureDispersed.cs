@@ -32,7 +32,7 @@ public class GameStartClosureDispersed : BaseAnimation
     {
         this.listObj = listObj;
         this.gameStartControl = gameStartControl;
-        prependTime = 1f;
+        prependTime = 3f;
         startPosition = new Vector3(0, 0, 0);
         closeureTime = 0.5f;
         animOffsetTime = 0.01f;
