@@ -9,6 +9,7 @@ public class GameParticleControl : BaseMonoBehaviour
     //移动粒子特效样式
     public MoveParticleEnum moveParticleEnum;
 
+
     void Start()
     {
         mergeParticleEnum = MergeParticleEnum.Def;
@@ -36,21 +37,13 @@ public class GameParticleControl : BaseMonoBehaviour
         {
             Transform itemTF = mergeObjChilds[i];
             ParticleSystem itemParticle = itemTF.GetComponentInChildren<ParticleSystem>();
-            if (itemParticle == null)
+            if (itemParticle == null || !itemParticle.name.Contains("ParticleMerge"))
             {
-                ParticleSystem particleSystem = CreateParticleUtil.createMergeParticle(itemTF, mergeParticleEnum);
+                itemParticle = CreateParticleUtil.createMergeParticle(itemTF, mergeParticleEnum);
             }
             itemParticle.Play();
         }
     }
 
-    /// <summary>
-    /// 播放移动粒子特效
-    /// </summary>
-    /// <param name="moveObj"></param>
-    public void playMoveParticle(Transform moveObj)
-    {
-
-    }
 
 }

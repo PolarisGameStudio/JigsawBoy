@@ -10,5 +10,7 @@ public class CommonParticleResPath
     public readonly static string Back_Def_Path = "Prefab/Particle/Background/ParticleBackDef";
 
     public readonly static string Merge_Def_Path = "Prefab/Particle/Merge/ParticleMergeDef";
+
+    public readonly static string Move_Def_Path = "Prefab/Particle/Move/ParticleMoveDef";
 }
 

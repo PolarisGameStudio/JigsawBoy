@@ -70,4 +70,30 @@ public class CreateParticleUtil : MonoBehaviour
         return particleSys;
     }
 
+    /// <summary>
+    /// 在一个物体中添移动并粒子特效
+    /// </summary>
+    /// <param name="parentTF"></param>
+    /// <param name="particleEnum"></param>
+    /// <returns></returns>
+    public static ParticleSystem createMoveParticle(Transform parentTF, MoveParticleEnum particleEnum)
+    {
+        ParticleSystem particleSys = null;
+        if (particleEnum.Equals(MoveParticleEnum.Def))
+        {
+            particleSys = Instantiate(ResourcesManager.loadData<ParticleSystem>(CommonParticleResPath.Move_Def_Path));
+
+        }
+
+        //通用参数设置
+        if (particleSys != null)
+        {
+            //设置位置
+            Transform particleSysTF = particleSys.transform;
+            particleSysTF.position = parentTF.position;
+            particleSysTF.parent = parentTF;
+        }
+
+        return particleSys;
+    }
 }

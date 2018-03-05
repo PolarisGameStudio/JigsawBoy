@@ -24,11 +24,19 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     //选择物体增量
     public float rotateObjAngleAdd = 5;
 
+    public GameParticleControl gameParticleControl;
+
     // Use this for initialization
     void Start()
     {
         isSelect = false;
         CommonData.IsDargMove = true;
+        //获取镜头控制
+        GameObject cameraObj = GameObject.Find("/Main Camera");
+        if (cameraObj != null)
+        {
+            gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +90,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
                 isSelect = true;
                 vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
                 jigsawContainerCpt.setIsSelect(true);
+          
             }
         }
     }

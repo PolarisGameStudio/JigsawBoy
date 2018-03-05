@@ -292,7 +292,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
 
     private void Update()
     {
-
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
