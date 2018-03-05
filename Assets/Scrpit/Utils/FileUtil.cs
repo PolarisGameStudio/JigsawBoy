@@ -28,7 +28,6 @@ public class FileUtil : ScriptableObject
             if (writer != null)
                 writer.Close();
         }
-
     }
 
     /// <summary>

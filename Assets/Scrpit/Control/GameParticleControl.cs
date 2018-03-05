@@ -4,13 +4,15 @@ using DG.Tweening;
 
 public class GameParticleControl : BaseMonoBehaviour
 {
-
-    public ParticleSystem particleSystem;
+    //合并粒子特效样式
+    public MergeParticleEnum mergeParticleEnum;
+    //移动粒子特效样式
+    public MoveParticleEnum moveParticleEnum;
 
     void Start()
     {
-        particleSystem= CreateParticleUtil.createMergeParticle(new Vector3(0, 0, 0), 3f, 3f, MergeParticleEnum.Def);
-       
+        mergeParticleEnum = MergeParticleEnum.Def;
+        moveParticleEnum = MoveParticleEnum.Def;
     }
 
     void Update()
@@ -18,28 +20,37 @@ public class GameParticleControl : BaseMonoBehaviour
 
     }
 
-    public void playParticle(Transform mergeObj)
+    /// <summary>
+    /// 播放合并动画
+    /// </summary>
+    /// <param name="mergeObj"></param>
+    public void playMergeParticle(Transform mergeObj)
     {
-        if (particleSystem == null|| mergeObj==null)
+        if (mergeObj == null)
             return;
-        MeshRenderer[] mergeObjMeshs = mergeObj.GetComponentsInChildren<MeshRenderer>();
-        if (mergeObjMeshs == null)
+        Transform[] mergeObjChilds = mergeObj.GetComponentsInChildren<Transform>();
+        if (mergeObjChilds == null || mergeObjChilds.Length == 0)
             return;
-        int meshSize = mergeObjMeshs.Length;
-
+        int meshSize = mergeObjChilds.Length;
         for (int i = 0; i < meshSize; i++)
         {
-            MeshRenderer itemMesh = mergeObjMeshs[i];
-            StartCoroutine(ShowA(itemMesh,i));
+            Transform itemTF = mergeObjChilds[i];
+            ParticleSystem itemParticle = itemTF.GetComponentInChildren<ParticleSystem>();
+            if (itemParticle == null)
+            {
+                ParticleSystem particleSystem = CreateParticleUtil.createMergeParticle(itemTF, mergeParticleEnum);
+            }
+            itemParticle.Play();
         }
     }
 
-    private IEnumerator ShowA(MeshRenderer itemMesh,int position)
+    /// <summary>
+    /// 播放移动粒子特效
+    /// </summary>
+    /// <param name="moveObj"></param>
+    public void playMoveParticle(Transform moveObj)
     {
-        yield return new WaitForSeconds(0.1f* position);
-        ParticleSystem.ShapeModule shapeModule = particleSystem.shape;
-        shapeModule.meshRenderer = itemMesh;
-        particleSystem.Play();
+
     }
 
 }

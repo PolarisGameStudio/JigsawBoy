@@ -10,8 +10,9 @@ public class AudioSourceControl : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        playBGM();
+        playBGMClip(AudioBGMEnum.Op9_No2);
     }
+
 
     /// <summary>
     /// 播放按钮点击音效
@@ -29,11 +30,22 @@ public class AudioSourceControl : MonoBehaviour
             AudioSource.PlayClipAtPoint(clip, transform.position);
     }
 
-    public void playBGM()
+    /// <summary>
+    /// 播放BGM
+    /// </summary>
+    /// <param name="bgmEnum"></param>
+    public void playBGMClip(AudioBGMEnum bgmEnum)
     {
-        AudioClip audio= ResourcesManager.loadData<AudioClip>("Sound/BGM/Op9_No2");
-        audioSource.clip = audio;
-        audioSource.loop = true;
-        audioSource.Play();
+        AudioClip audioClip;
+        List<BGMInfoBean> bgmDataList = BGMInfoManager.LoadBGMInfo(bgmEnum);
+        if (bgmDataList != null && bgmDataList.Count > 0)
+        {
+            BGMInfoBean item = bgmDataList[0];
+            string audioPath = item.FilePath;
+            audioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            audioSource.clip = audioClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
     }
 }

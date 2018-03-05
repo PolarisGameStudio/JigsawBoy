@@ -43,7 +43,7 @@ public abstract class BaseDataStorageHandle<T>
     {
         if (fileName == null)
         {
-            LogUtil.log("保存文件失败-没有文件名称");
+            LogUtil.log("读取文件失败-没有文件名称");
             return default(T);
         }
         string strData = FileUtil.LoadTextFile(Data_Path + "/" + fileName);
@@ -58,7 +58,7 @@ public abstract class BaseDataStorageHandle<T>
     {
         if (fileName == null)
         {
-            LogUtil.log("保存文件失败-没有文件名称");
+            LogUtil.log("读取文件失败-没有文件名称");
             return null;
         }
         string strData = FileUtil.LoadTextFile(Data_Path + "/" + fileName);
