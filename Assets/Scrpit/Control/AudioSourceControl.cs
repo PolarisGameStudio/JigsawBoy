@@ -10,7 +10,7 @@ public class AudioSourceControl : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        playBGM();
+        playBGMClip(AudioBGMEnum.Op9_No2);
     }
 
     /// <summary>
@@ -29,10 +29,20 @@ public class AudioSourceControl : MonoBehaviour
             AudioSource.PlayClipAtPoint(clip, transform.position);
     }
 
-    public void playBGM()
+    /// <summary>
+    /// 播放BGM
+    /// </summary>
+    /// <param name="bgmEnum"></param>
+    public void playBGMClip(AudioBGMEnum bgmEnum)
     {
-        AudioClip audio= ResourcesManager.loadData<AudioClip>("Sound/BGM/Op9_No2");
-        audioSource.clip = audio;
+        AudioClip audioClip;
+        string audioPath= "Sound/BGM/";
+        if (bgmEnum.Equals(AudioBGMEnum.Op9_No2))
+        {
+            audioPath += "Op9_No2";
+        }
+        audioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+        audioSource.clip = audioClip;
         audioSource.loop = true;
         audioSource.Play();
     }

@@ -4,13 +4,9 @@ using DG.Tweening;
 
 public class GameParticleControl : BaseMonoBehaviour
 {
-
-    public ParticleSystem particleSystem;
-
     void Start()
     {
-        particleSystem= CreateParticleUtil.createMergeParticle(new Vector3(0, 0, 0), 3f, 3f, MergeParticleEnum.Def);
-       
+
     }
 
     void Update()
@@ -20,26 +16,28 @@ public class GameParticleControl : BaseMonoBehaviour
 
     public void playParticle(Transform mergeObj)
     {
-        if (particleSystem == null|| mergeObj==null)
+        if (mergeObj == null)
             return;
-        MeshRenderer[] mergeObjMeshs = mergeObj.GetComponentsInChildren<MeshRenderer>();
-        if (mergeObjMeshs == null)
+        Transform[] mergeObjChilds = mergeObj.GetComponentsInChildren<Transform>();
+        if (mergeObjChilds == null || mergeObjChilds.Length == 0)
             return;
-        int meshSize = mergeObjMeshs.Length;
-
+        int meshSize = mergeObjChilds.Length;
         for (int i = 0; i < meshSize; i++)
         {
-            MeshRenderer itemMesh = mergeObjMeshs[i];
-            StartCoroutine(ShowA(itemMesh,i));
+            Transform itemTF = mergeObjChilds[i];
+            ParticleSystem itemParticle = itemTF.GetComponentInChildren<ParticleSystem>();
+            if (itemParticle == null)
+            {
+                ParticleSystem particleSystem = CreateParticleUtil.createMergeParticle(itemTF.position, 3f, 3f, MergeParticleEnum.Def);
+                particleSystem.transform.parent = itemTF;
+                particleSystem.Play();
+            }
+            else
+            {
+                itemParticle.Play();
+            }
         }
     }
 
-    private IEnumerator ShowA(MeshRenderer itemMesh,int position)
-    {
-        yield return new WaitForSeconds(0.1f* position);
-        ParticleSystem.ShapeModule shapeModule = particleSystem.shape;
-        shapeModule.meshRenderer = itemMesh;
-        particleSystem.Play();
-    }
 
 }
