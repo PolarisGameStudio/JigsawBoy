@@ -39,6 +39,8 @@ public class MenuSelectUIControl : BaseMonoBehaviour
             jigsawSelectContentSC.setMenuSelectUIControl(this);
             jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
         }
+
+        menuSelectUICanvas.enabled = false;
     }
 
     /// <summary>
