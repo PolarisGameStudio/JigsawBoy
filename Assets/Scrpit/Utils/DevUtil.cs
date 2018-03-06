@@ -52,4 +52,34 @@ public class DevUtil {
         }
         return tempArray;
     }
+
+
+    /// <summary>
+    /// list转数组
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static T[] listToArrayFormPosition<T>(List<T> list,int position)
+    {
+        if (list == null)
+            return null;
+        int listCount = list.Count;
+        T[] tempArray = new T[listCount];
+        int f = 0;
+        for (int i = 0; i < listCount; i++)
+        {
+            int startPosition = i + position;
+            if (startPosition < listCount) {
+                tempArray[i] = list[startPosition];
+            }
+            else
+            {
+                tempArray[i] = list[f];
+                f++;
+            }
+            
+        }
+        return tempArray;
+    }
 }

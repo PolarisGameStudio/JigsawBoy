@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,10 +11,12 @@ public class GameStartControl : BaseMonoBehaviour
     public PuzzlesInfoBean jigsawInfoData;
     //所有拼图信息
     private List<JigsawBean> listJigsawBean;
+    //所有的拼图容器
+    private List<GameObject> containerList;
 
     //图片的宽和高
-    private float picAllWith;
-    private float picAllHigh;
+    public float picAllWith;
+    public float picAllHigh;
 
     //游戏计时器
     private Transform gameTimerTF;
@@ -83,9 +86,12 @@ public class GameStartControl : BaseMonoBehaviour
         addCameraControl(picAllWith, picAllHigh);
         //增加拼图控制
         addJigsawControl(picAllWith, picAllHigh);
- 
-       
+        //启动动画
+        startAnim();
+
     }
+
+
 
     /// <summary>
     /// 创建拼图
@@ -96,7 +102,7 @@ public class GameStartControl : BaseMonoBehaviour
         listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, horizontalNumber, verticalJigsawNumber, pic2D);
         CreateJigsawGameObjUtil.createJigsawGameObjList(listJigsawBean, pic2D);
 
-        List<GameObject> containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listJigsawBean);
+        containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listJigsawBean);
         for (int i = 0; i < listJigsawBean.Count; i++)
         {
             JigsawBean item = listJigsawBean[i];
@@ -106,7 +112,6 @@ public class GameStartControl : BaseMonoBehaviour
                 );
             containerList[i].transform.position = jigsawPosition;
         }
-        GameStartAnimationManager.startAnimation(this, containerList, GameStartAnimationEnum.Closure_Dispersed);
     }
 
     /// <summary>
@@ -149,7 +154,7 @@ public class GameStartControl : BaseMonoBehaviour
         //设置镜头缩放大小
         if (picAllWith > picAllHigh)
         {
-            cameraControl.setCameraOrthographicSize(picAllHigh );
+            cameraControl.setCameraOrthographicSize(picAllHigh);
             cameraControl.zoomOutMax = picAllWith;
         }
         else
@@ -171,6 +176,17 @@ public class GameStartControl : BaseMonoBehaviour
         jigsawControl.moveWithMax = picAllWith;
         jigsawControl.moveHighMax = picAllHigh;
     }
+
+    /// <summary>
+    /// 开始动画
+    /// </summary>
+    private void startAnim()
+    {
+        int animInt = DevUtil.getRandomInt(1, 2);
+        GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
+        GameStartAnimationManager.startAnimation(this, containerList, animEnum);
+    }
+
     //---------------------------------------------------------------------------------------------
     /// <summary>
     /// 开始游戏

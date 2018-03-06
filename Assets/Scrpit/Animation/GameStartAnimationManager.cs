@@ -14,7 +14,7 @@ public class GameStartAnimationManager
         }
         else if (animationEnum.Equals(GameStartAnimationEnum.Decompose_Rotate))
         {
-
+            animation = new GameStartDecomposeRotate(listObj, gameStartControl);
         }
 
         if (animation != null)
