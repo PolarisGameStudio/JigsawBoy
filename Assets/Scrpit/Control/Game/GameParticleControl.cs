@@ -41,7 +41,7 @@ public class GameParticleControl : BaseMonoBehaviour
             {
                 itemParticle = CreateParticleUtil.createMergeParticle(itemTF, mergeParticleEnum);
             }
-            itemParticle.Play();
+           itemParticle.Play();
         }
     }
 
