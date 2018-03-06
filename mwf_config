@@ -1,0 +1,10 @@
+<MWFConfig>
+  <FileDialog>
+    <value name="Height" type="int">385</value>
+    <value name="Y" type="int">328</value>
+    <value name="X" type="int">675</value>
+    <value name="FileNames" type="string-array" />
+    <value name="LastFolder" type="string">F:\JB\JigsawBoy</value>
+    <value name="Width" type="int">555</value>
+  </FileDialog>
+</MWFConfig>

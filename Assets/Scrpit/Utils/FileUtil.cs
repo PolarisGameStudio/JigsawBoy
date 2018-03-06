@@ -47,7 +47,7 @@ public class FileUtil : ScriptableObject
         catch (Exception e)
         {
             string strError = "读取文件失败-" + e.Message;
-            LogUtil.logError(strError);
+            LogUtil.log(strError);
             return null;
         }
         finally
