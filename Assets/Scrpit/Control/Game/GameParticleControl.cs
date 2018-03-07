@@ -10,16 +10,12 @@ public class GameParticleControl : BaseMonoBehaviour
     public MoveParticleEnum moveParticleEnum;
 
 
-    void Start()
+    private void Awake()
     {
         mergeParticleEnum = MergeParticleEnum.Def;
         moveParticleEnum = MoveParticleEnum.Def;
     }
 
-    void Update()
-    {
-
-    }
 
     /// <summary>
     /// 播放合并动画

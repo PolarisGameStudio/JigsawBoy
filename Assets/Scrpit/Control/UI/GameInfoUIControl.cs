@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class GameInfoUIControl : BaseMonoBehaviour
+public class GameInfoUIControl : BaseUIControl
 {
-
-    //信息画布
-    public Canvas gameInfoUICanvas;
+    //背景
     public Image gameInfoUIBackground;
     //信息介绍
     public ScrollRect gameInfoDetails;
@@ -21,11 +19,10 @@ public class GameInfoUIControl : BaseMonoBehaviour
     public Image gameInfoPicImage;
     public RectTransform gameInfoPicImageTF;
 
-    // Use this for initialization
-    void Start()
+    private new void Awake()
     {
-        //初始化画布信息
-        gameInfoUICanvas = GetComponent<Canvas>();
+        base.Awake();
+        //初始化背景信息
         gameInfoUIBackground = GetComponent<Image>();
 
         //初始化信息介绍
@@ -58,43 +55,58 @@ public class GameInfoUIControl : BaseMonoBehaviour
             gameInfoPicImageTF.sizeDelta = new Vector2(gameInfoPicImageW, gameInfoPicImageH);
 
             gameInfoPicImage.sprite = picSP;
-
-        }
-        gameInfoUICanvas.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            setGameInfoUIEnabled();
         }
     }
+
 
     /// <summary>
     /// 设置是否显示信息
     /// </summary>
-    public void setGameInfoUIEnabled()
+    private void setGameInfoUIEnabled(bool isEnabled)
     {
-        if (gameInfoUICanvas == null || gameInfoUIBackground == null)
+        if (mUICanvas == null)
             return;
-        bool isEnabled = gameInfoUICanvas.isActiveAndEnabled;
+
         if (isEnabled)
         {
             //设置背景颜色
-            gameInfoUIBackground.DOFade(0, 0.2f).OnComplete(delegate ()
-            {
-                gameInfoUICanvas.enabled = !isEnabled;
-            });
-            gameInfoDetailsBackground.DOFade(0, 0.2f);
+            mUICanvas.enabled = isEnabled;
+            if (gameInfoUIBackground != null)
+                gameInfoUIBackground.DOFade(0.5f, 0.2f);
+            if (gameInfoDetailsBackground != null)
+                gameInfoDetailsBackground.DOFade(0.2f, 0.2f);
         }
         else
         {
             //设置背景颜色
-            gameInfoUICanvas.enabled = !isEnabled;
-            gameInfoUIBackground.DOFade(0.5f, 0.2f);
-            gameInfoDetailsBackground.DOFade(0.2f, 0.2f);
+            if (gameInfoUIBackground != null)
+            {
+                gameInfoUIBackground.DOFade(0, 0.2f).OnComplete(delegate ()
+                {
+                    mUICanvas.enabled = isEnabled;
+                });
+            }
+            else
+            {
+                mUICanvas.enabled = isEnabled;
+            }
+            if (gameInfoDetailsBackground != null)
+                gameInfoDetailsBackground.DOFade(0, 0.2f);
         }
+    }
+
+    public override void openUI()
+    {
+        setGameInfoUIEnabled(true);
+    }
+
+    public override void closeUI()
+    {
+        setGameInfoUIEnabled(false);
+    }
+
+    public override void loadUIData()
+    {
+
     }
 }
