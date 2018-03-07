@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 public class FileUtil : ScriptableObject
 {
@@ -55,5 +56,18 @@ public class FileUtil : ScriptableObject
             if(reader!=null)
             reader.Close();
         } 
+    }
+
+    /// <summary>
+    /// 打开文件选择弹窗
+    /// </summary>
+    public static void OpenFileDialog()
+    {
+        OpenFileDialog ofd = new OpenFileDialog();   //new一个方法
+        ofd.InitialDirectory = "file://" + UnityEngine.Application.dataPath;  //定义打开的默认文件夹位置//定义打开的默认文件夹位置
+        if (ofd.ShowDialog() == DialogResult.OK)
+        {
+            LogUtil.log(ofd.FileName);
+        }
     }
 }

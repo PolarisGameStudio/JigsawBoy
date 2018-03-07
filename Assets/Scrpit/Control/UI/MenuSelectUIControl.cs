@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuSelectUIControl : BaseMonoBehaviour
+public class MenuSelectUIControl : BaseUIControl
 {
-    public Canvas menuSelectUICanvas;
-
     public ScrollRect resTypeSelectView;
     public Transform resTypeSelectContentTF;
     public JigsawResTypeSelect resTypeSelectContentSC;
@@ -17,9 +12,10 @@ public class MenuSelectUIControl : BaseMonoBehaviour
     public Transform jigsawSelectContentTF;
     public JigsawSelect jigsawSelectContentSC;
 
-    void Start()
+
+    private new void Awake()
     {
-        menuSelectUICanvas = GetComponent<Canvas>();
+        base.Awake();
 
         //初始化拼图选择类型数据
         resTypeSelectView = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "ResTypeSelectView");
@@ -28,19 +24,16 @@ public class MenuSelectUIControl : BaseMonoBehaviour
         {
             resTypeSelectContentSC = resTypeSelectContentTF.gameObject.AddComponent<JigsawResTypeSelect>();
             resTypeSelectContentSC.setMenuSelectUIControl(this);
-            resTypeSelectContentSC.loadResTypeData();
         }
+
         //初始化拼图选择数据
-        jigsawSelectView= CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "JigsawSelectView");
+        jigsawSelectView = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "JigsawSelectView");
         jigsawSelectContentTF = CptUtil.getCptFormParentByName<ScrollRect, Transform>(jigsawSelectView, "Content");
         if (jigsawSelectContentTF != null)
         {
             jigsawSelectContentSC = jigsawSelectContentTF.gameObject.AddComponent<JigsawSelect>();
             jigsawSelectContentSC.setMenuSelectUIControl(this);
-            jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
         }
-
-
     }
 
     /// <summary>
@@ -52,6 +45,25 @@ public class MenuSelectUIControl : BaseMonoBehaviour
         if (jigsawSelectContentSC == null)
             return;
         jigsawSelectContentSC.loadJigsaw(resourcesEnum);
+    }
+
+    public override void openUI()
+    {
+        mUICanvas.enabled = true;
+        loadUIData();
+    }
+
+    public override void closeUI()
+    {
+        mUICanvas.enabled = false;
+    }
+
+    public override void loadUIData()
+    {
+        if (resTypeSelectContentSC != null)
+            resTypeSelectContentSC.loadResTypeData();
+        if (jigsawSelectContentSC != null)
+            jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
     }
 }
 

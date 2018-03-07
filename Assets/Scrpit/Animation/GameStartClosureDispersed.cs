@@ -78,7 +78,6 @@ public class GameStartClosureDispersed : BaseAnimation
     private void dispersedAnim()
     {
         int listCount = listObj.Count;
-
         for (int i = 0; i < listCount; i++)
         {
             GameObject itemObj = listObj[i];

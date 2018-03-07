@@ -6,7 +6,9 @@ using UnityEngine;
 public class GameStartControl : BaseMonoBehaviour
 {
 
-    public static string Game_Timer_Obj_Path = "/GameUI/GameTimer";
+    public UIMasterControl uiMasterControl;
+    public AudioSourceControl audioSourceControl;
+
     //图片信息
     public PuzzlesInfoBean jigsawInfoData;
     //所有拼图信息
@@ -18,25 +20,16 @@ public class GameStartControl : BaseMonoBehaviour
     public float picAllWith;
     public float picAllHigh;
 
-    //游戏计时器
-    private Transform gameTimerTF;
-
-    // Use this for initialization
-    void Start()
+    private void Awake()
     {
-        jigsawInfoData = CommonData.SelectPuzzlesInfo;
+        uiMasterControl = gameObject.AddComponent<UIMasterControl>();
+        audioSourceControl = gameObject.AddComponent<AudioSourceControl>();
         initData();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-
-    }
-
-    private void setJigsawResInfo(PuzzlesInfoBean jigsawInfoData)
-    {
-        this.jigsawInfoData = jigsawInfoData;
+        uiMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
     }
 
     /// <summary>
@@ -44,8 +37,12 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     private void initData()
     {
+        jigsawInfoData = CommonData.SelectPuzzlesInfo;
         if (jigsawInfoData == null)
+        {
+            LogUtil.log("没有拼图数据");
             return;
+        }
         string resFilePath = jigsawInfoData.Data_file_path + jigsawInfoData.Mark_file_name;
         int horizontalNumber = jigsawInfoData.Horizontal_number;
         int verticalJigsawNumber = jigsawInfoData.Vertical_number;
@@ -65,9 +62,6 @@ public class GameStartControl : BaseMonoBehaviour
             LogUtil.log("没有源图片");
             return;
         }
-        //获取计时
-        gameTimerTF = transform.Find(Game_Timer_Obj_Path);
-
 
         //生成拼图
         createJigsaw(pic2D, horizontalNumber, verticalJigsawNumber);
@@ -88,9 +82,7 @@ public class GameStartControl : BaseMonoBehaviour
         addJigsawControl(picAllWith, picAllHigh);
         //启动动画
         startAnim();
-
     }
-
 
 
     /// <summary>
@@ -182,7 +174,7 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     private void startAnim()
     {
-        int animInt = DevUtil.getRandomInt(1, 2);
+        int animInt = DevUtil.getRandomInt(1, 3);
         GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
         GameStartAnimationManager.startAnimation(this, containerList, animEnum);
     }
@@ -193,11 +185,10 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     public void gameStart()
     {
-        if (gameTimerTF != null)
+        GameMainUIControl gameMainUI= uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
+        if (gameMainUI != null)
         {
-            GameTimerControlCpt gameTimer = gameTimerTF.GetComponent<GameTimerControlCpt>();
-            if (gameTimer != null)
-                gameTimer.startTimer();
+            gameMainUI.startTimer();
         }
     }
 }
