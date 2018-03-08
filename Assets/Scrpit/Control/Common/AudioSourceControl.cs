@@ -6,11 +6,11 @@ public class AudioSourceControl : BaseMonoBehaviour
 {
 
     public AudioSource audioSource;
+    public AudioClip aduioClip;
     // Use this for initialization
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
-        playBGMClip(AudioBGMEnum.Op9_No2);
     }
 
 
@@ -25,28 +25,53 @@ public class AudioSourceControl : BaseMonoBehaviour
         {
             soundPath += "button_onclick_def";
         }
-        AudioClip clip = ResourcesManager.loadData<AudioClip>(soundPath);
-        if (clip != null)
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+        AudioClip tempClip = ResourcesManager.loadData<AudioClip>(soundPath);
+        if (tempClip != null)
+            AudioSource.PlayClipAtPoint(tempClip, transform.position);
     }
 
     /// <summary>
     /// 播放BGM
     /// </summary>
     /// <param name="bgmEnum"></param>
-    public void playBGMClip(AudioBGMEnum bgmEnum)
+    public void playBGMClip(BGMInfoBean data)
     {
-        AudioClip audioClip;
-        List<BGMInfoBean> bgmDataList = BGMInfoManager.LoadBGMInfo(bgmEnum);
-        if (bgmDataList != null && bgmDataList.Count > 0)
+        if (audioSource == null)
+            return;
+        if (data != null)
         {
-            BGMInfoBean item = bgmDataList[0];
-            string audioPath = item.FilePath;
-            audioClip = ResourcesManager.loadData<AudioClip>(audioPath);
-            audioSource.clip = audioClip;
+            string audioPath = data.FilePath;
+            aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            audioSource.clip = aduioClip;
             audioSource.loop = true;
             audioSource.Play();
         }
+    }
+
+    /// <summary>
+    /// 播放之前的BGM
+    /// </summary>
+    public void playBeforeBGMClip()
+    {
+        if (audioSource == null)
+            return;
+        if (aduioClip == null)
+        {
+            List<BGMInfoBean> dataList=  BGMInfoManager.LoadBGMInfo(1);
+            if (dataList != null && dataList.Count > 0)
+            {
+                string audioPath = dataList[0].FilePath;
+                aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        audioSource.clip = aduioClip;
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     /// <summary>

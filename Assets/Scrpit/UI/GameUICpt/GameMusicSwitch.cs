@@ -3,7 +3,7 @@ using UnityEngine.UI;
 public class GameMusicSwitch : BaseMonoBehaviour
 {
     private Toggle[] toggleList;
-    private IRadioButtonCallBack radioButtonCallBack;
+    private IRadioButtonCallBack<Toggle,long> radioButtonCallBack;
     private void Start()
     {
         toggleList = transform.GetComponentsInChildren<Toggle>();
@@ -23,7 +23,7 @@ public class GameMusicSwitch : BaseMonoBehaviour
     /// 设置监听
     /// </summary>
     /// <param name="radioButtonCallBack"></param>
-    public void addRadioButtonCallBack(IRadioButtonCallBack radioButtonCallBack)
+    public void addRadioButtonCallBack(IRadioButtonCallBack<Toggle, long> radioButtonCallBack)
     {
         this.radioButtonCallBack = radioButtonCallBack;
     }
@@ -35,7 +35,7 @@ public class GameMusicSwitch : BaseMonoBehaviour
     /// <param name="value"></param>
     public void OnToggleClick(Toggle toggle, bool value)
     {
-        radioButtonCallBack.radioBTOnClick(toggle, value);
+        radioButtonCallBack.radioBTOnClick(toggle, value, 0);
     }
 }
 

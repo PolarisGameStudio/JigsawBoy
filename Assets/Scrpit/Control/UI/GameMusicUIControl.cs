@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack
+public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,long>,IButtonCallBack<Button, BGMInfoBean>
 {
     public AudioSourceControl audioSourceControl;
 
@@ -22,6 +18,7 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack
         if (musicSelectTF != null)
         {
             musicSelect = musicSelectTF.gameObject.AddComponent<GameMusicDetails>();
+            musicSelect.addMusicSelectCallBack(this);
             musicSelect.loadData();
         }
 
@@ -54,22 +51,28 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack
 
     }
 
+
     /// <summary>
     /// 是否播放音乐监听
     /// </summary>
     /// <param name="toggle"></param>
     /// <param name="value"></param>
-    public void radioBTOnClick(Toggle toggle, bool value)
+    public void radioBTOnClick(Toggle radioBT, bool value, long data)
     {
-        if (toggle.name.Equals("MusicOn") && value == true)
+        if (radioBT.name.Equals("MusicOn") && value == true)
         {
             if (!audioSourceControl.isPlayBGMClip())
-                audioSourceControl.playBGMClip(AudioBGMEnum.Op9_No2);
+                audioSourceControl.playBeforeBGMClip();
         }
-        else if (toggle.name.Equals("MusicOff") && value == true)
+        else if (radioBT.name.Equals("MusicOff") && value == true)
         {
             audioSourceControl.stopBGMClip();
         }
+    }
+
+    public void buttonOnClick(Button button, BGMInfoBean data)
+    {
+            audioSourceControl.playBGMClip(data);
     }
 }
 

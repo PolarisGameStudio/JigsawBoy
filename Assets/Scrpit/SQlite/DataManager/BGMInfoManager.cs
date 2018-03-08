@@ -28,10 +28,9 @@ public class BGMInfoManager
     /// </summary>
     /// <param name="bGMEnum"></param>
     /// <returns></returns>
-    public static List<BGMInfoBean> LoadBGMInfo(AudioBGMEnum bGMEnum)
+    public static List<BGMInfoBean> LoadBGMInfo(long bgmId)
     {
         List<BGMInfoBean> listData = new List<BGMInfoBean>();
-        int bgmId = (int)bGMEnum;
         listData = SQliteHandle.LoadTableData<BGMInfoBean>
           (
           CommonDB.PuzzleInfoDB_Name,
