@@ -48,4 +48,28 @@ public class AudioSourceControl : BaseMonoBehaviour
             audioSource.Play();
         }
     }
+
+    /// <summary>
+    /// 停止播放
+    /// </summary>
+    public void stopBGMClip()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+    }
+
+    /// <summary>
+    /// 是否在播放音乐
+    /// </summary>
+    /// <returns></returns>
+    public bool isPlayBGMClip()
+    {
+        if (audioSource != null)
+        {
+            return audioSource.isPlaying;
+        }
+        return false;
+    }
 }

@@ -30,6 +30,11 @@ public class GameMainUIControl : BaseUIControl
             gameTimerControlCpt.endTimer();
     }
 
+    public override void openUI()
+    {
+        mUICanvas.enabled = true;
+    }
+
     public override void closeUI()
     {
         mUICanvas.enabled = false;
@@ -40,10 +45,7 @@ public class GameMainUIControl : BaseUIControl
 
     }
 
-    public override void openUI()
-    {
-        mUICanvas.enabled = true;
-    }
+
 
 }
 

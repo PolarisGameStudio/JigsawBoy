@@ -23,5 +23,14 @@ public class DataStorageManage
     {
         return GameConfigureDSHandle.getInstance();
     }
+
+    /// <summary>
+    /// 游戏数据
+    /// </summary>
+    /// <returns></returns>
+    public static IBaseDataStorage<UserInfoBean, long> getUserInfoDSHandle()
+    {
+        return UserInfoDSHandle.getInstance();
+    }
 }
 
