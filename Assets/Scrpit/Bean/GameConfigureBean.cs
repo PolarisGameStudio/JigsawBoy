@@ -7,5 +7,6 @@ using System.Text;
 public class GameConfigureBean
 {
     public int gameLanguage;
+    public int isOpenBGM;
 }
 

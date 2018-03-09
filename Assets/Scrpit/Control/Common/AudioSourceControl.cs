@@ -7,12 +7,44 @@ public class AudioSourceControl : BaseMonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip aduioClip;
-    // Use this for initialization
+    //音乐播放方式
+    public AudioPlayWayEnum playWay;
+    //音乐列表
+    public List<BGMInfoBean> listBGMInfo;
+    //是否开启音乐播放
+    public EnabledEnum isOpenAudio;
+    //音乐播放点
+    public int musicPlayPosition;
+    private void Awake()
+    {
+        playWay = AudioPlayWayEnum.Cycle_Play;
+        listBGMInfo = BGMInfoManager.LoadAllBGMInfo();
+        isOpenAudio = CommonConfigure.isOpenBGM;
+    }
+
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
     }
+    void Update()
+    {
+        if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON))
+        {
+            if (playWay.Equals(AudioPlayWayEnum.Single_Play))
+            {
+                return;
+            }
+            else if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
+            {
+                playBeforeBGMClip();
+            }
+            else if (playWay.Equals(AudioPlayWayEnum.Order_Play))
+            {
 
+            }
+
+        }
+    }
 
     /// <summary>
     /// 播放按钮点击音效
@@ -43,7 +75,26 @@ public class AudioSourceControl : BaseMonoBehaviour
             string audioPath = data.FilePath;
             aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
             audioSource.clip = aduioClip;
-            audioSource.loop = true;
+            audioSource.loop = false;
+            audioSource.Play();
+        }
+    }
+
+    /// <summary>
+    /// 播放BGM
+    /// </summary>
+    /// <param name="position"></param>
+    public void playBGMClip(int position)
+    {
+        if (audioSource == null)
+            return;
+        if (listBGMInfo != null&& listBGMInfo.Count>0&& position<listBGMInfo.Count-1)
+        {
+            BGMInfoBean data = listBGMInfo[position];
+            string audioPath = data.FilePath;
+            aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            audioSource.clip = aduioClip;
+            audioSource.loop = false;
             audioSource.Play();
         }
     }
@@ -57,7 +108,7 @@ public class AudioSourceControl : BaseMonoBehaviour
             return;
         if (aduioClip == null)
         {
-            List<BGMInfoBean> dataList=  BGMInfoManager.LoadBGMInfo(1);
+            List<BGMInfoBean> dataList = BGMInfoManager.LoadBGMInfo(1);
             if (dataList != null && dataList.Count > 0)
             {
                 string audioPath = dataList[0].FilePath;
@@ -70,7 +121,6 @@ public class AudioSourceControl : BaseMonoBehaviour
 
         }
         audioSource.clip = aduioClip;
-        audioSource.loop = true;
         audioSource.Play();
     }
 
