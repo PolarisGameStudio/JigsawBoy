@@ -8,10 +8,13 @@ public class CommonConfigure
 {
     //游戏语言
     public static GameLanguageEnum GameLanguage;
+    //是否开启BGM
+    public static EnabledEnum isOpenBGM;
 
     static CommonConfigure()
     {
         GameLanguage = GameLanguageEnum.Chinese;
+        isOpenBGM = EnabledEnum.ON;
         GameConfigureBean configureBean=  DataStorageManage.getGameConfigureDSHandle().getAllData();
         if (configureBean != null)
         {
@@ -20,6 +23,8 @@ public class CommonConfigure
             {
                 GameLanguage = (GameLanguageEnum)Enum.ToObject(typeof(GameLanguageEnum), configureBean.gameLanguage);
             }
+            //是否开启BGM
+            isOpenBGM = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenBGM);
         }
     }
 }
