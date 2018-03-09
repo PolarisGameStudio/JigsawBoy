@@ -17,7 +17,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     public int musicPlayPosition;
     private void Awake()
     {
-        playWay = AudioPlayWayEnum.Cycle_Play;
+        playWay = AudioPlayWayEnum.Random_Play;
         listBGMInfo = BGMInfoManager.LoadAllBGMInfo();
         isOpenAudio = CommonConfigure.isOpenBGM;
     }
@@ -30,17 +30,14 @@ public class AudioSourceControl : BaseMonoBehaviour
     {
         if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON))
         {
-            if (playWay.Equals(AudioPlayWayEnum.Single_Play))
-            {
-                return;
-            }
-            else if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
+             if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
             {
                 playBeforeBGMClip();
             }
-            else if (playWay.Equals(AudioPlayWayEnum.Order_Play))
+            else if (playWay.Equals(AudioPlayWayEnum.Random_Play))
             {
-
+                int randomPosition = DevUtil.getRandomInt(0, listBGMInfo.Count - 1);
+                playBGMClip(listBGMInfo[randomPosition]);
             }
 
         }
@@ -129,6 +126,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     /// </summary>
     public void stopBGMClip()
     {
+        isOpenAudio = EnabledEnum.OFF;
         if (audioSource != null)
         {
             audioSource.Stop();
