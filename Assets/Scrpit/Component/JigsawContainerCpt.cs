@@ -28,8 +28,8 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         isOpenMergeCheck = true;
         listJigsaw = new List<JigsawBean>();
         isSelect = false;
-        mergeVectorOffset = 1.5f;
-        mergeAnglesOffset = 45;
+        mergeVectorOffset = 1f;
+        mergeAnglesOffset = 25;
         mergeAnimDuration = 0.2f;
     }
 
