@@ -54,5 +54,36 @@ public class CreateJigsawDataUtils
 
     }
 
+    /// <summary>
+    /// 生成一个随机凹凸的拼图
+    /// </summary>
+    /// <param name="jigsawStyle"></param>
+    /// <param name="jigsawW"></param>
+    /// <param name="jigsawH"></param>
+    /// <returns></returns>
+    public static JigsawBean createJigsaw(JigsawStyleEnum jigsawStyle, float jigsawW, float jigsawH,Texture2D jigsawPic)
+    {
+        JigsawBean jigsawBean = new JigsawBean();
+        //按样式生成不同的拼图碎片
+        IBaseJigsawBuilder jigsawBuilder;
+        JigsawBulgeEnum[] bulge;
+   
+        if (jigsawStyle == JigsawStyleEnum.Normal) {
+            jigsawBuilder = new NomralJigsawBuilder();
+            bulge= new JigsawBulgeEnum[4]
+            {
+                (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
+                (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
+                (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
+                (JigsawBulgeEnum)DevUtil.getRandomInt(0,2)
+            };
+        }   
+        else
+        {
+            LogUtil.logError("没有相对于样式的拼图");
+            return null;
+        }
+        return jigsawBuilder.buildJigsaw(jigsawW, jigsawH, bulge, jigsawPic);
+    }
 
 }

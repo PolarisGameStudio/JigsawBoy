@@ -25,14 +25,16 @@ public class JigsawBean
     private Vector3 centerVector;
 
     /// <summary>
-    /// 拼图宽
+    /// 拼图宽高
     /// </summary>
     private float jigsawWith;
+    private float jigsawHigh;
 
     /// <summary>
-    /// 拼图高
+    /// UV的框和高
     /// </summary>
-    private float jigsawHigh;
+    private float jigsawUVWith;
+    private float jigsawUVHigh;
     
     /// <summary>
     /// 图片UV坐标点集合
@@ -184,6 +186,32 @@ public class JigsawBean
         set
         {
             sourcePicPath = value;
+        }
+    }
+
+    public float JigsawUVWith
+    {
+        get
+        {
+            return jigsawUVWith;
+        }
+
+        set
+        {
+            jigsawUVWith = value;
+        }
+    }
+
+    public float JigsawUVHigh
+    {
+        get
+        {
+            return jigsawUVHigh;
+        }
+
+        set
+        {
+            jigsawUVHigh = value;
         }
     }
 }

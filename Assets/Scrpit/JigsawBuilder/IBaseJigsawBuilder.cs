@@ -8,13 +8,22 @@ using UnityEngine;
 interface IBaseJigsawBuilder
 {
     /// <summary>
-    /// 创建普通样式的拼图碎片集合
+    /// 创建拼图碎片集合
     /// </summary>
     /// <param name="horizontalJigsawNumber">横向块数</param>
     /// <param name="verticalJigsawNumber">纵向块数</param>
     /// <param name="jigsawPic">需要分解的图片</param>
     /// <returns></returns>
     List<JigsawBean> buildJigsawList(int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic);
+
+    /// <summary>
+    /// 创建一个拼图
+    /// </summary>
+    /// <param name="jigsawWith"></param>
+    /// <param name="jigsawHigh"></param>
+    /// <param name="bulgeEnums"></param>
+    /// <returns></returns>
+    JigsawBean buildJigsaw(float jigsawWith, float jigsawHigh, JigsawBulgeEnum[] bulgeEnums, Texture2D jigsawPic);
 
     /// <summary>
     /// 设置拼图碎片对象
@@ -72,5 +81,20 @@ interface IBaseJigsawBuilder
     /// <param name="jigsaw"></param>
     /// <param name="jigsawHigh"></param>
     void setJigsawHigh(JigsawBean jigsaw,float jigsawHigh);
+
+
+    /// <summary>
+    /// 设置拼图UV宽
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawWith"></param>
+    void setJigsawUVWith(JigsawBean jigsaw, float jigsawUVWith);
+
+    /// <summary>
+    /// 设置拼图UV高
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawHigh"></param>
+    void setJigsawUVHigh(JigsawBean jigsaw, float jigsawUVHigh);
 }
 
