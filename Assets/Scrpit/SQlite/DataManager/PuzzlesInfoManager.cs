@@ -20,6 +20,8 @@ public class PuzzlesInfoManager
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Movie_Table;
         else if (resourcesType.Equals(JigsawResourcesEnum.Celebrity))
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Celebrity_Table;
+        else if (resourcesType.Equals(JigsawResourcesEnum.Other))
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_Other_Table;
         else
             return null;
 

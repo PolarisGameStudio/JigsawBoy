@@ -18,11 +18,9 @@ public class GameInfoDetails : MonoBehaviour
         if (selectJigsawInfo == null)
             return;
         this.selectJigsawInfo = selectJigsawInfo;
-        if (selectJigsawInfo == null)
-            return;
-
-        string introductionContent = selectJigsawInfo.Introduction_content;
         string name = selectJigsawInfo.Name;
+        string introductionContent = selectJigsawInfo.Introduction_content;
+ 
 
         string storageArea = selectJigsawInfo.Storage_area;
         string specifications = selectJigsawInfo.Specifications;
@@ -40,7 +38,9 @@ public class GameInfoDetails : MonoBehaviour
         string works = selectJigsawInfo.Works;
 
         if (name != null && name.Length != 0)
-            createTextItem("名称", name);
+            createTextItem("名称", name,nameTextSize);
+        else
+            createTextItem("名称", "未知", nameTextSize);
 
         if (workOfCreator != null && workOfCreator.Length != 0)
             createTextItem("作品作者", workOfCreator);
