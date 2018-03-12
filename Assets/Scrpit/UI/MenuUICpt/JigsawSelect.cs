@@ -1,5 +1,7 @@
 ﻿
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,21 +41,25 @@ public class JigsawSelect : BaseMonoBehaviour
         loadJigsaw(resourcesType);
     }
 
+
     /// <summary>
     /// 读取拼图信息
     /// </summary>
     /// <param name="resourcesEnum"></param>
     public void loadJigsaw(JigsawResourcesEnum resourcesEnum)
     {
+
+
         resourcesType = resourcesEnum;
         //删除原数据
         for (int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i).gameObject);
         }
+
+
         //加载该类型下所有拼图数据
         List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
-
         if (listData == null || listData.Count == 0)
             return;
 
@@ -73,7 +79,7 @@ public class JigsawSelect : BaseMonoBehaviour
     {
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
         buttonObj.name = itemInfo.Mark_file_name;
-        buttonObj.transform.parent = transform;
+        buttonObj.transform.SetParent(transform);
 
         //设置背景图片
         Image backImage = buttonObj.GetComponent<Image>();
@@ -107,6 +113,7 @@ public class JigsawSelect : BaseMonoBehaviour
 
 
     }
+
 
 
 }

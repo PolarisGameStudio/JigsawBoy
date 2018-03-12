@@ -6,6 +6,8 @@ public class CommonData {
 
     //是否能拖拽物体
     public static bool IsDargMove = false;
+    //是否能移动摄像头
+    public static bool IsMoveCamera = false;
     //选择的拼图信息
     public static PuzzlesInfoBean SelectPuzzlesInfo;
 

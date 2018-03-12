@@ -96,5 +96,12 @@ interface IBaseJigsawBuilder
     /// <param name="jigsaw"></param>
     /// <param name="jigsawHigh"></param>
     void setJigsawUVHigh(JigsawBean jigsaw, float jigsawUVHigh);
+
+    /// <summary>
+    /// 设置拼图块数
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawHigh"></param>
+    void setJigsawNumber(JigsawBean jigsaw, int jigsawNumber);
 }
 

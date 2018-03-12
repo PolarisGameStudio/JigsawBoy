@@ -9,6 +9,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
 {
     public GameParticleControl gameParticleControl;
     public AudioSourceControl audioSourceControl;
+    public GameStartControl gameStartControl;
 
     //容器所含拼图对象数据
     public List<JigsawBean> listJigsaw;
@@ -23,6 +24,12 @@ public class JigsawContainerCpt : BaseMonoBehaviour
 
     //是否被选中
     private bool isSelect;
+
+    //拼图容器起始位置
+    public Vector3 startPosition;
+    //拼图容器起始旋转角度
+    public Quaternion startRotation;
+
     public JigsawContainerCpt()
     {
         isOpenMergeCheck = true;
@@ -105,13 +112,44 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             //获取其他拼图的世界坐标
             Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
 
-
             //设置位置
-            // jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            // jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            jigsawTF.position = jigsawItemPosition;
-            jigsawTF.rotation = transform.rotation;
+            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            //jigsawTF.position = jigsawItemPosition;
+            //jigsawTF.rotation = transform.rotation;
+        }
+        //CommonData.IsDargMove = true;
+        mergeDeal();
+    }
 
+    /// <summary>
+    /// 合并成功处理
+    /// </summary>
+    public void mergeDeal()
+    {
+        transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
+        {
+            //合并特效
+            if (gameParticleControl != null)
+                gameParticleControl.playMergeParticle(transform);
+            //摇晃镜头
+            shakeCamer();
+            CommonData.IsDargMove = true;
+        });
+    }
+
+    /// <summary>
+    /// 检测是否完成游戏
+    /// </summary>
+    public void checkFinshGame()
+    {
+        if (listJigsaw == null|| listJigsaw.Count==0)
+            return;
+        int jigsawSize = listJigsaw.Count;
+        int jigsawTotalNumber = listJigsaw[0].JigsawNumber;
+        if (jigsawSize.Equals(jigsawTotalNumber)&&gameStartControl!=null)
+        {
+            gameStartControl.gameFinsh();
         }
     }
 
@@ -286,6 +324,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         {
             mCameraControlCpt = cameraObj.GetComponent<GameCameraControlCpt>();
             gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
+            gameStartControl=cameraObj.GetComponent<GameStartControl>();
         }
 
     }
@@ -334,12 +373,6 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             // 添加拼图碎片到碰撞容器里
             collisionJCC.addJigsawList(listJigsaw);
             collisionJCC.jigsawLocationCorrect();
-
-            //合并特效
-            if (gameParticleControl != null)
-                gameParticleControl.playMergeParticle(collisionJCC.transform);
-            //摇晃镜头
-            shakeCamer();
             // 最后删除当前容器
             Destroy(gameObject);
         }

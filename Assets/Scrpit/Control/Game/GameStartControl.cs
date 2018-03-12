@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 public class GameStartControl : BaseMonoBehaviour
@@ -8,6 +9,7 @@ public class GameStartControl : BaseMonoBehaviour
 
     public UIMasterControl uiMasterControl;
     public AudioSourceControl audioSourceControl;
+    public GameCameraControlCpt cameraControl;
 
     //图片信息
     public PuzzlesInfoBean jigsawInfoData;
@@ -103,6 +105,15 @@ public class GameStartControl : BaseMonoBehaviour
                 item.MarkLocation.y * item.JigsawHigh - item.JigsawHigh * verticalJigsawNumber / 2f + item.JigsawHigh / 2f
                 );
             containerList[i].transform.position = jigsawPosition;
+
+            //设置起始位置和角度
+            JigsawContainerCpt containerCpt= containerList[i].transform.GetComponent<JigsawContainerCpt>();
+            if (containerCpt != null)
+            {
+                containerCpt.startPosition = jigsawPosition;
+                containerCpt.startRotation = containerList[i].transform.rotation;
+            }
+          
         }
     }
 
@@ -142,20 +153,24 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     private void addCameraControl(float picAllWith, float picAllHigh)
     {
-        GameCameraControlCpt cameraControl = gameObject.AddComponent<GameCameraControlCpt>();
+        cameraControl = gameObject.AddComponent<GameCameraControlCpt>();
         //设置镜头缩放大小
+        float cameraOrthographicSize = 0;
         if (picAllWith > picAllHigh)
         {
-            cameraControl.setCameraOrthographicSize(picAllHigh);
+            cameraOrthographicSize = picAllHigh;
             cameraControl.zoomOutMax = picAllWith;
         }
         else
         {
-            cameraControl.setCameraOrthographicSize(picAllWith);
+            cameraOrthographicSize = picAllWith;
             cameraControl.zoomOutMax = picAllHigh;
         }
         cameraControl.cameraMoveWithMax = picAllWith;
         cameraControl.cameraMoveHighMax = picAllHigh;
+        cameraControl.setCameraOrthographicSize(cameraOrthographicSize);
+
+        cameraControl.startCameraOrthographicSize = cameraOrthographicSize;
     }
 
 
@@ -185,10 +200,21 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     public void gameStart()
     {
+        CommonData.IsDargMove = true;
         GameMainUIControl gameMainUI= uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
         if (gameMainUI != null)
         {
             gameMainUI.startTimer();
         }
+    }
+    /// <summary>
+    /// 游戏完成
+    /// </summary>
+    public void gameFinsh()
+    {
+        CommonData.IsDargMove = false;
+        CommonData.IsMoveCamera = false;
+        float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;
+        Tween cameraTW = DOTween.To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, 3);  
     }
 }

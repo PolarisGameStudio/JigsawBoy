@@ -46,13 +46,19 @@ public class GameCameraControlCpt : BaseMonoBehaviour
     //镜头是否移动中
     private bool isMove = false;
 
+    //镜头初始缩放大小
+    public float startCameraOrthographicSize;
+    public 
     void Start()
     {
+        CommonData.IsMoveCamera = true;
         gameCamera = GetComponent<Camera>();
     }
 
     void Update()
     {
+        if (!CommonData.IsMoveCamera)
+            return;
         if (gameCamera == null)
         {
             LogUtil.log("没有游戏镜头");

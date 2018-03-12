@@ -14,10 +14,6 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     //凸出部分直径
     private float mJigsawBulgeR;
 
-
-
-
-
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -40,7 +36,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     {
         //初始化参数
         JigsawBean tempBean = getWithAndHighByTexture2D(horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
-
+        int jigsawTotalNumber = verticalJigsawNumber * horizontalJigsawNumber;
 
         List<JigsawBean> listJigsawBean = new List<JigsawBean>();
 
@@ -60,11 +56,11 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
                 setJigsawWith(jigsawItem, tempBean.JigsawWith);
                 setJigsawUVHigh(jigsawItem, tempBean.JigsawUVHigh);
                 setJigsawUVWith(jigsawItem, tempBean.JigsawUVWith);
+                setJigsawNumber(jigsawItem, jigsawTotalNumber);
                 listJigsawBean.Add(jigsawItem);
             }
 
         }
-
 
         int listJigsawBeanCount = listJigsawBean.Count;
         for (int jigsawposition = 0; jigsawposition < listJigsawBeanCount; jigsawposition++)
@@ -99,7 +95,8 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         setJigsawWith(jigsawItem, jigsawHigh);
         setJigsawUVWith(jigsawItem, jigsawPic.width);
         setJigsawUVHigh(jigsawItem, jigsawPic.height);
-
+        //设置拼图块数
+        setJigsawNumber(jigsawItem, 1);
         //确认拼图每个边的凹凸情况
         setBulgeEdge(jigsawItem, bulgeEdge);
         //确认拼图顶点坐标和UVposition
@@ -601,6 +598,16 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
         jigsaw.JigsawUVHigh = jigsawUVHigh;
     }
 
+    /// <summary>
+    /// 设置拼图块数
+    /// </summary>
+    /// <param name="jigsaw"></param>
+    /// <param name="jigsawNumber"></param>
+    public void setJigsawNumber(JigsawBean jigsaw, int jigsawNumber)
+    {
+        if (jigsaw == null) { return; }
+        jigsaw.JigsawNumber = jigsawNumber;
+    }
 }
 
 

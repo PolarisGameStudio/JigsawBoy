@@ -56,6 +56,11 @@ public class JigsawBean
     /// </summary>
     private string sourcePicPath;
 
+    /// <summary>
+    /// 拼图块数
+    /// </summary>
+    private int jigsawNumber;
+
 
     public GameObject JigsawGameObj
     {
@@ -212,6 +217,19 @@ public class JigsawBean
         set
         {
             jigsawUVHigh = value;
+        }
+    }
+
+    public int JigsawNumber
+    {
+        get
+        {
+            return jigsawNumber;
+        }
+
+        set
+        {
+            jigsawNumber = value;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,12 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     /// 加载数据
     /// </summary>
     public void loadResTypeData()
+    {
+        startLoad();
+    }
+
+
+    private void startLoad()
     {
         foreach (JigsawResourcesEnum item in Enum.GetValues(typeof(JigsawResourcesEnum)))
         {
@@ -41,7 +48,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     {
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
         buttonObj.name = resType.ToString();
-        buttonObj.transform.parent = transform;
+        buttonObj.transform.SetParent(transform);
 
         //设置按键
         Button selectBT = buttonObj.GetComponent<Button>();

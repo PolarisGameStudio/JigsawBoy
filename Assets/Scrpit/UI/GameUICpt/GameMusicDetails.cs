@@ -40,7 +40,7 @@ public class GameMusicDetails : BaseMonoBehaviour
         itemBT.onClick.AddListener(() => changeMusic(itemBT, itemData));
 
         Text itemText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "MusicSelectItemText");
-        itemObj.transform.parent = transform;
+        itemObj.transform.SetParent(transform);
         itemText.text = itemData.Name;
     }
 

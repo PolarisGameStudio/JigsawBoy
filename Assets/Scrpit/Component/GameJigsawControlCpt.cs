@@ -29,10 +29,10 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     // Use this for initialization
     void Start()
     {
+        CommonData.IsDargMove = false;
         isSelect = false;
-        CommonData.IsDargMove = true;
         //获取镜头控制
-        GameObject cameraObj = GameObject.Find("/Main Camera");
+        GameObject cameraObj = Camera.main.gameObject;
         if (cameraObj != null)
         {
             gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
@@ -42,18 +42,17 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!CommonData.IsDargMove)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
-            CommonData.IsDargMove = true;
             onMouseDown();
         }
-
         if (Input.GetMouseButtonUp(0))
         {
             onMouseUp();
         }
-
-        if (isSelect && CommonData.IsDargMove)
+        if (isSelect)
         {
             onMouseDrag();
         }
