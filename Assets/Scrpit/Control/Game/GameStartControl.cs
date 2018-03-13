@@ -22,8 +22,10 @@ public class GameStartControl : BaseMonoBehaviour
     public float picAllWith;
     public float picAllHigh;
 
+    public float gameFinshAnimTime;
     private void Awake()
     {
+        gameFinshAnimTime = 3f;
         uiMasterControl = gameObject.AddComponent<UIMasterControl>();
         audioSourceControl = gameObject.AddComponent<AudioSourceControl>();
         initData();
@@ -171,6 +173,7 @@ public class GameStartControl : BaseMonoBehaviour
         cameraControl.setCameraOrthographicSize(cameraOrthographicSize);
 
         cameraControl.startCameraOrthographicSize = cameraOrthographicSize;
+        cameraControl.startCameraPosition = cameraControl.transform.position;
     }
 
 
@@ -207,6 +210,7 @@ public class GameStartControl : BaseMonoBehaviour
             gameMainUI.startTimer();
         }
     }
+
     /// <summary>
     /// 游戏完成
     /// </summary>
@@ -215,6 +219,25 @@ public class GameStartControl : BaseMonoBehaviour
         CommonData.IsDargMove = false;
         CommonData.IsMoveCamera = false;
         float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;
-        Tween cameraTW = DOTween.To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, 3);  
+        //镜头移动
+        cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
+        Tween cameraTW = DOTween.To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime);
+        //图像归位
+        int containerListSize = containerList.Count;
+        for(int i=0;i< containerListSize; i++)
+        {
+            GameObject container = containerList[i];
+            if (container != null)
+            {
+                JigsawContainerCpt containerCpt= container.GetComponent<JigsawContainerCpt>();
+                Rigidbody2D containerRB = container.GetComponent<Rigidbody2D>();
+                containerRB.Sleep();
+     
+                container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
+                container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
+                return;
+            }
+        }
+    
     }
 }

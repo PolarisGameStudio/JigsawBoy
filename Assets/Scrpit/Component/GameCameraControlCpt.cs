@@ -48,7 +48,8 @@ public class GameCameraControlCpt : BaseMonoBehaviour
 
     //镜头初始缩放大小
     public float startCameraOrthographicSize;
-    public 
+    //镜头初始位置
+    public Vector3 startCameraPosition;
     void Start()
     {
         CommonData.IsMoveCamera = true;

@@ -37,7 +37,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         isSelect = false;
         mergeVectorOffset = 1f;
         mergeAnglesOffset = 25;
-        mergeAnimDuration = 0.2f;
+        mergeAnimDuration = 0.1f;
     }
 
     /// <summary>
@@ -126,15 +126,18 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void mergeDeal()
     {
-        //transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
-        //{
-            //合并特效
-            if (gameParticleControl != null)
-                gameParticleControl.playMergeParticle(transform);
-            //摇晃镜头
-            shakeCamer();
-            CommonData.IsDargMove = true;
-        //});
+
+        //合并特效
+        if (gameParticleControl != null)
+            gameParticleControl.playMergeParticle(transform);
+        //摇晃镜头
+        shakeCamer();
+        CommonData.IsDargMove = true;
+        transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
+        {
+            checkFinshGame();
+        }
+        );
     }
 
     /// <summary>
@@ -142,11 +145,11 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void checkFinshGame()
     {
-        if (listJigsaw == null|| listJigsaw.Count==0)
+        if (listJigsaw == null || listJigsaw.Count == 0)
             return;
         int jigsawSize = listJigsaw.Count;
         int jigsawTotalNumber = listJigsaw[0].JigsawNumber;
-        if (jigsawSize.Equals(jigsawTotalNumber)&&gameStartControl!=null)
+        if (jigsawSize.Equals(jigsawTotalNumber) && gameStartControl != null)
         {
             gameStartControl.gameFinsh();
         }
@@ -323,14 +326,14 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         {
             mCameraControlCpt = cameraObj.GetComponent<GameCameraControlCpt>();
             gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
-            gameStartControl=cameraObj.GetComponent<GameStartControl>();
+            gameStartControl = cameraObj.GetComponent<GameStartControl>();
         }
 
     }
 
     private void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -365,7 +368,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             return;
         if (checkMerge(collisionJCC))
         {
-     
+
             //设置不可在拖拽
             CommonData.IsDargMove = false;
             isSelect = false;

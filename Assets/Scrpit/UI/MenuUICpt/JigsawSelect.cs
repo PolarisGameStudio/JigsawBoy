@@ -31,15 +31,6 @@ public class JigsawSelect : BaseMonoBehaviour
         this.menuSelectUIControl = menuSelectUIControl;
     }
 
-    /// <summary>
-    /// 设置拼图选择类型
-    /// </summary>
-    /// <param name="resourcesType"></param>
-    public void setResourcesType(JigsawResourcesEnum resourcesType)
-    {
-        this.resourcesType = resourcesType;
-        loadJigsaw(resourcesType);
-    }
 
 
     /// <summary>
@@ -48,8 +39,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// <param name="resourcesEnum"></param>
     public void loadJigsaw(JigsawResourcesEnum resourcesEnum)
     {
-
-
+        StopAllCoroutines();
         resourcesType = resourcesEnum;
         //删除原数据
         for (int i = 0; i < transform.childCount; i++)
@@ -57,16 +47,21 @@ public class JigsawSelect : BaseMonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
 
-
         //加载该类型下所有拼图数据
         List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
         if (listData == null || listData.Count == 0)
             return;
+        StartCoroutine(createSelect(listData));
+    }
 
+
+    IEnumerator createSelect(List<PuzzlesInfoBean> listData)
+    {
         int resourcesListCount = listData.Count;
         for (int itemPosition = 0; itemPosition < resourcesListCount; itemPosition++)
         {
             PuzzlesInfoBean itemInfo = listData[itemPosition];
+            yield return new WaitForEndOfFrame();
             createSelectItem(itemInfo);
         }
     }
