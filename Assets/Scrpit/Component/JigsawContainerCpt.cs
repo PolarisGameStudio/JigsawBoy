@@ -113,12 +113,11 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
 
             //设置位置
-            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            //jigsawTF.position = jigsawItemPosition;
-            //jigsawTF.rotation = transform.rotation;
+            //jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            //jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            jigsawTF.position = jigsawItemPosition;
+            jigsawTF.rotation = transform.rotation;
         }
-        //CommonData.IsDargMove = true;
         mergeDeal();
     }
 
@@ -127,15 +126,15 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void mergeDeal()
     {
-        transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
-        {
+        //transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
+        //{
             //合并特效
             if (gameParticleControl != null)
                 gameParticleControl.playMergeParticle(transform);
             //摇晃镜头
             shakeCamer();
             CommonData.IsDargMove = true;
-        });
+        //});
     }
 
     /// <summary>
