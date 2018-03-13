@@ -6,5 +6,7 @@ public enum JigsawResourcesEnum
     Celebrity=3,//名人
     Animal=4,//动物
     Scenery=5,//风景
+    StarrySky=6,//星空
+    Other=99,//其他
     Custom = 100,//自定义
 }
