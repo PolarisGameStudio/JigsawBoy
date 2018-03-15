@@ -10,6 +10,7 @@ public class JigsawSelect : BaseMonoBehaviour
     public MenuSelectUIControl menuSelectUIControl;
     private JigsawResourcesEnum resourcesType;
     private static string JigsawSelectItemPath = "Prefab/UI/Menu/JigsawSelectItem";
+    private static string JigsawSelectLockItemPath = "Prefab/UI/Menu/JigsawSelectLockItem";
 
     // Use this for initialization
     void Start()
@@ -48,19 +49,25 @@ public class JigsawSelect : BaseMonoBehaviour
         }
 
         //加载该类型下所有拼图数据
-        List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
-        if (listData == null || listData.Count == 0)
+        List<PuzzlesInfoBean> listInfoData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
+        if (listInfoData == null || listInfoData.Count == 0)
             return;
+        listInfoData.Sort((x, y) => x.Level.CompareTo(y.Level));
+
+        List<PuzzlesCompleteStateBean> listCompleteData = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
+        List<PuzzlesGameInfoBean> listData = PuzzlesDataUtil.MergePuzzlesInfoAndCompleteState(listInfoData, listCompleteData);
+
+
         StartCoroutine(createSelect(listData));
     }
 
 
-    IEnumerator createSelect(List<PuzzlesInfoBean> listData)
+    IEnumerator createSelect(List<PuzzlesGameInfoBean> listData)
     {
         int resourcesListCount = listData.Count;
         for (int itemPosition = 0; itemPosition < resourcesListCount; itemPosition++)
         {
-            PuzzlesInfoBean itemInfo = listData[itemPosition];
+            PuzzlesGameInfoBean itemInfo = listData[itemPosition];
             yield return new WaitForEndOfFrame();
             createSelectItem(itemInfo);
         }
@@ -70,15 +77,57 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建相对应按钮
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createSelectItem(PuzzlesInfoBean itemInfo)
+    private void createSelectItem(PuzzlesGameInfoBean itemInfo)
     {
+        PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
+        PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
+
+        if (infoBean.Level <= 1)
+        {
+            createNormalItem(itemInfo);
+            return;
+        }
+
+        if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
+        {
+            createLockItem(itemInfo);
+            return;
+        }
+        else
+        {
+            createNormalItem(itemInfo);
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 创建未解锁样式
+    /// </summary>
+    /// <param name="itemInfo"></param>
+    private void createLockItem(PuzzlesGameInfoBean itemInfo)
+    {
+        PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
+
+        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectLockItemPath));
+        itemObj.name = infoBean.Mark_file_name;
+        itemObj.transform.SetParent(transform);
+    }
+
+    /// <summary>
+    /// 创建正常样式
+    /// </summary>
+    private void createNormalItem(PuzzlesGameInfoBean itemInfo)
+    {
+        PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
+        PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
+
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
-        buttonObj.name = itemInfo.Mark_file_name;
+        buttonObj.name = infoBean.Mark_file_name;
         buttonObj.transform.SetParent(transform);
 
         //设置背景图片
         Image backImage = buttonObj.GetComponent<Image>();
-        string filePath = itemInfo.Data_file_path + itemInfo.Mark_file_name;
+        string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
         Sprite backSp = ResourcesManager.loadData<Sprite>(filePath);
         backImage.sprite = backSp;
 
@@ -86,7 +135,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button itemBT = buttonObj.GetComponent<Button>();
         itemBT.onClick.AddListener(delegate ()
         {
-            CommonData.SelectPuzzlesInfo = itemInfo;
+            CommonData.SelectPuzzlesInfo = infoBean;
             SceneUtil.jumpGameScene();
         });
 
@@ -101,14 +150,10 @@ public class JigsawSelect : BaseMonoBehaviour
                 Text textItem = allText[textPosition];
                 if (textItem.name.Equals("JigsawName"))
                 {
-                    textItem.text = itemInfo.Name;
+                    textItem.text = infoBean.Name + infoBean.Level;
                 }
             }
         }
-
-
     }
-
-
 
 }
