@@ -25,7 +25,7 @@ public class GameUtil
             tempCompleteBean.puzzleId = puzzlesInfo.Id;
             tempCompleteBean.completeTime = completeTime;
             tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
-            listCompleteState.Add(completeStateBean);
+            listCompleteState.Add(tempCompleteBean);
         }
         else
         {
@@ -52,7 +52,7 @@ public class GameUtil
                 tempCompleteBean.puzzleId = puzzlesInfo.Id;
                 tempCompleteBean.completeTime = completeTime;
                 tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
-                listCompleteState.Add(completeStateBean);
+                listCompleteState.Add(tempCompleteBean);
             }
         }
         DataStorageManage.getPuzzlesCompleteDSHandle().saveAllData(listCompleteState);

@@ -82,22 +82,24 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        if (infoBean.Level <= 1)
-        {
-            createNormalItem(itemInfo);
-            return;
-        }
 
-        if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
-        {
-            createLockItem(itemInfo);
-            return;
-        }
-        else
-        {
-            createNormalItem(itemInfo);
-            return;
-        }
+        createNormalItem(itemInfo);
+        //if (infoBean.Level <= 1)
+        //{
+        //    createNormalItem(itemInfo);
+        //    return;
+        //}
+
+        //if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
+        //{
+        //    createLockItem(itemInfo);
+        //    return;
+        //}
+        //else
+        //{
+        //    createNormalItem(itemInfo);
+        //    return;
+        //}
     }
 
     /// <summary>
@@ -135,7 +137,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button itemBT = buttonObj.GetComponent<Button>();
         itemBT.onClick.AddListener(delegate ()
         {
-            CommonData.SelectPuzzlesInfo = infoBean;
+            CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
 

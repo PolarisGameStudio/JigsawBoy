@@ -63,7 +63,6 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     {
         while (isStartTimer)
         {
-            yield return new WaitForSeconds(1f);
             DateTime nowTime = TimeUtil.getNow();
             nowTimeSpan = TimeUtil.getTimeDifference(startTime, nowTime);
             if (timeText != null)
@@ -75,7 +74,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
                     + nowTimeSpan.Seconds + "秒";
                 timeText.text = gameTime;
             }
-
+            yield return new WaitForSeconds(1f);
         }
     }
 }

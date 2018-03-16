@@ -9,7 +9,7 @@ public class CommonData {
     //是否能移动摄像头
     public static bool IsMoveCamera = false;
     //选择的拼图信息
-    public static PuzzlesInfoBean SelectPuzzlesInfo;
+    public static PuzzlesGameInfoBean SelectPuzzlesInfo;
 
     //UI文本信息
     static Dictionary<long, UITextBean> UITextMap;

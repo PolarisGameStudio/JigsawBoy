@@ -103,8 +103,8 @@ public class TimeUtil : ScriptableObject
         int targetTimeCode = targetTime.days * 1000 + targetTime.hours * 100 + targetTime.minutes * 10 + targetTime.seconds;
 
         if (sourceTimeCode > targetTimeCode)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
 }

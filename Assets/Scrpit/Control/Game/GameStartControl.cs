@@ -41,7 +41,7 @@ public class GameStartControl : BaseMonoBehaviour
     /// </summary>
     private void initData()
     {
-        jigsawInfoData = CommonData.SelectPuzzlesInfo;
+        jigsawInfoData = CommonData.SelectPuzzlesInfo.puzzlesInfo;
         if (jigsawInfoData == null)
         {
             LogUtil.log("没有拼图数据");

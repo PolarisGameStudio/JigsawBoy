@@ -33,7 +33,7 @@ public class GameInfoUIControl : BaseUIControl
         if (gameInfoDetailsContentTF != null && CommonData.SelectPuzzlesInfo != null)
         {
             gameInfoDetailsContentSC = gameInfoDetailsContentTF.gameObject.AddComponent<GameInfoDetails>();
-            gameInfoDetailsContentSC.loadData(CommonData.SelectPuzzlesInfo);
+            gameInfoDetailsContentSC.loadData(CommonData.SelectPuzzlesInfo.puzzlesInfo);
         }
 
         //初始化图片
@@ -45,7 +45,7 @@ public class GameInfoUIControl : BaseUIControl
         }
         if (gameInfoPicImage != null && CommonData.SelectPuzzlesInfo != null)
         {
-            string picPath = CommonData.SelectPuzzlesInfo.Data_file_path + CommonData.SelectPuzzlesInfo.Mark_file_name;
+            string picPath = CommonData.SelectPuzzlesInfo.puzzlesInfo.Data_file_path + CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name;
             Sprite picSP = ResourcesManager.loadData<Sprite>(picPath);
 
             float gameInfoPicImageH = gameInfoPicTF.rect.height * 0.9f;
