@@ -109,13 +109,13 @@ public class GameStartControl : BaseMonoBehaviour
             containerList[i].transform.position = jigsawPosition;
 
             //设置起始位置和角度
-            JigsawContainerCpt containerCpt= containerList[i].transform.GetComponent<JigsawContainerCpt>();
+            JigsawContainerCpt containerCpt = containerList[i].transform.GetComponent<JigsawContainerCpt>();
             if (containerCpt != null)
             {
                 containerCpt.startPosition = jigsawPosition;
                 containerCpt.startRotation = containerList[i].transform.rotation;
             }
-          
+
         }
     }
 
@@ -204,7 +204,7 @@ public class GameStartControl : BaseMonoBehaviour
     public void gameStart()
     {
         CommonData.IsDargMove = true;
-        GameMainUIControl gameMainUI= uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
+        GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
         if (gameMainUI != null)
         {
             gameMainUI.startTimer();
@@ -219,25 +219,34 @@ public class GameStartControl : BaseMonoBehaviour
         CommonData.IsDargMove = false;
         CommonData.IsMoveCamera = false;
         float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;
+        //保存数据
+        GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
+        TimeBean completeTime = null;
+        if (gameMainUI != null)
+        {
+            gameMainUI.endTimer();
+            completeTime = gameMainUI.getGameTimer();
+        }
+        GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
         Tween cameraTW = DOTween.To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime);
         //图像归位
         int containerListSize = containerList.Count;
-        for(int i=0;i< containerListSize; i++)
+        for (int i = 0; i < containerListSize; i++)
         {
             GameObject container = containerList[i];
             if (container != null)
             {
-                JigsawContainerCpt containerCpt= container.GetComponent<JigsawContainerCpt>();
+                JigsawContainerCpt containerCpt = container.GetComponent<JigsawContainerCpt>();
                 Rigidbody2D containerRB = container.GetComponent<Rigidbody2D>();
                 containerRB.Sleep();
-     
+
                 container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
                 container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
                 return;
             }
         }
-    
+
     }
 }

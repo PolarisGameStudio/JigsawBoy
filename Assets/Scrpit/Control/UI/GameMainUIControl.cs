@@ -29,6 +29,13 @@ public class GameMainUIControl : BaseUIControl
         if (gameTimerControlCpt != null)
             gameTimerControlCpt.endTimer();
     }
+    public TimeBean getGameTimer()
+    {
+        if (gameTimerControlCpt != null) 
+            return gameTimerControlCpt.getGameTimer();
+        else
+            return null;   
+    }
 
     public override void openUI()
     {
@@ -44,7 +51,6 @@ public class GameMainUIControl : BaseUIControl
     {
 
     }
-
 
 
 }
