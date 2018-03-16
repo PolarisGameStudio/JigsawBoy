@@ -13,6 +13,8 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     //开始计时时间
     private DateTime startTime;
     private Text timeText;
+    //游戏进行时间
+    private TimeSpan nowTimeSpan;
     void Start()
     {
         timeText = GetComponent<Text>();
@@ -42,13 +44,28 @@ public class GameTimerControlCpt : BaseMonoBehaviour
         isStartTimer = false;
     }
 
+    /// <summary>
+    /// 获取时间
+    /// </summary>
+    public TimeBean getGameTimer()
+    {
+        if (nowTimeSpan == null)
+            return null;
+        TimeBean timeBean = new TimeBean();
+        timeBean.days = nowTimeSpan.Days;
+        timeBean.hours = nowTimeSpan.Hours;
+        timeBean.minutes = nowTimeSpan.Minutes;
+        timeBean.seconds = nowTimeSpan.Seconds;
+        return timeBean;
+    }
+
     public IEnumerator Timer()
     {
         while (isStartTimer)
         {
             yield return new WaitForSeconds(1f);
             DateTime nowTime = TimeUtil.getNow();
-            TimeSpan nowTimeSpan = TimeUtil.getTimeDifference(startTime, nowTime);
+            nowTimeSpan = TimeUtil.getTimeDifference(startTime, nowTime);
             if (timeText != null)
             {
                 string gameTime = "时间:"

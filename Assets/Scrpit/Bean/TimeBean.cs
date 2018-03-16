@@ -7,5 +7,8 @@ using System.Text;
 public class TimeBean
 {
     public int days;
+    public int hours;
+    public int minutes;
+    public int seconds;  
 }
 
