@@ -12,11 +12,11 @@ public class MenuBackGroundBuilder
         menuBackGroundObj.transform.position = startPosition;
         MenuBackGroundCpt menuBackGroundCpt = menuBackGroundObj.AddComponent<MenuBackGroundCpt>();
 
-        GameObject blurBack = CreateGameBackgroundUtil.setBlurBackground(DevUtil.GetScreenWith(), DevUtil.GetScreenHeight());
-        GameObject picBack = CreateGameBackgroundUtil.setPicBackground(DevUtil.GetScreenWith(), DevUtil.GetScreenHeight());
+      //  GameObject blurBack = CreateGameBackgroundUtil.setBlurBackground(DevUtil.GetScreenWith(), DevUtil.GetScreenHeight());
+      //  GameObject picBack = CreateGameBackgroundUtil.setPicBackground(DevUtil.GetScreenWith(), DevUtil.GetScreenHeight());
 
-        blurBack.transform.SetParent(menuBackGroundObj.transform);
-        picBack.transform.SetParent(menuBackGroundObj.transform);
+     //   blurBack.transform.SetParent(menuBackGroundObj.transform);
+      //  picBack.transform.SetParent(menuBackGroundObj.transform);
 
         return menuBackGroundObj;
     }
