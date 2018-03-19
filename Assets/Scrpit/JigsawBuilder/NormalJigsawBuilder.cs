@@ -84,6 +84,10 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     /// 
     public JigsawBean buildJigsaw(float jigsawWith, float jigsawHigh, JigsawBulgeEnum[] bulgeEdge, Texture2D jigsawPic)
     {
+        if (jigsawHigh > jigsawWith)
+            mJigsawBulgeR = jigsawWith / 3f;
+        else
+            mJigsawBulgeR = jigsawHigh / 3f;
         //生成拼图对象
         JigsawBean jigsawItem = new JigsawBean();
         //确认拼图样式
@@ -288,8 +292,8 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
         List<Vector2> listUVposition = new List<Vector2>();
 
-        float jigsawWithAndr = jigsawItem.JigsawWith + mJigsawBulgeR ;
-        float jigsawHighAndr = jigsawItem.JigsawHigh + mJigsawBulgeR ;
+        float jigsawWithAndr = jigsawItem.JigsawWith + mJigsawBulgeR;
+        float jigsawHighAndr = jigsawItem.JigsawHigh + mJigsawBulgeR;
 
         float picRatio;
 
@@ -297,7 +301,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
             picRatio = jigsawItem.JigsawUVHigh / jigsawHighAndr;
         else
             picRatio = jigsawItem.JigsawUVWith / jigsawWithAndr;
-    
+
 
         float xRatio = 1 / jigsawItem.JigsawUVWith;
         float yRatio = 1 / jigsawItem.JigsawUVHigh;
@@ -305,8 +309,8 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
 
         foreach (Vector3 item in listVertices)
         {
-            float uvXposition = (((item.x + jigsawWithAndr / 2f) * picRatio)  ) * xRatio;
-            float uvYposition = (((item.y + jigsawHighAndr / 2f)* picRatio) ) * yRatio;
+            float uvXposition = (((item.x + jigsawWithAndr / 2f) * picRatio)) * xRatio;
+            float uvYposition = (((item.y + jigsawHighAndr / 2f) * picRatio)) * yRatio;
             listUVposition.Add(new Vector2(uvXposition, uvYposition));
         }
         setListUVPosition(jigsawItem, listUVposition);
