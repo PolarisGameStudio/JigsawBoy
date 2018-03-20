@@ -12,6 +12,8 @@ public class MenuSelectUIControl : BaseUIControl
     public Transform jigsawSelectContentTF;
     public JigsawSelect jigsawSelectContentSC;
 
+    public Transform addCustomJigsaw;
+    public Button addCustomJigsawBT;
 
     private new void Awake()
     {
@@ -33,6 +35,18 @@ public class MenuSelectUIControl : BaseUIControl
         {
             jigsawSelectContentSC = jigsawSelectContentTF.gameObject.AddComponent<JigsawSelect>();
             jigsawSelectContentSC.setMenuSelectUIControl(this);
+        }
+
+        //按钮增加
+        addCustomJigsaw = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "AddCustomJigsaw");
+        addCustomJigsawBT = addCustomJigsaw.GetComponent<Button>();
+        if (addCustomJigsaw != null)
+        {
+            addCustomJigsaw.gameObject.SetActive(false);
+        }
+        if (addCustomJigsaw != null)
+        {
+            addCustomJigsawBT.onClick.AddListener(addCustomJigsawOnClick);
         }
     }
 
@@ -64,6 +78,27 @@ public class MenuSelectUIControl : BaseUIControl
             resTypeSelectContentSC.loadResTypeData();
         if (jigsawSelectContentSC != null)
             jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
+    }
+    
+    /// <summary>
+    /// 增加自定义拼图按钮
+    /// </summary>
+    public void addCustomJigsawOnClick()
+    {
+        // mUIMasterControl.openUIByTypeAndCloseOther();
+        FileUtil.OpenFileDialog();
+    }
+
+    /// <summary>
+    /// 是否展示自定义按钮
+    /// </summary>
+    /// <param name="isShow"></param>
+    public void showAddCustomJigsaw(bool isShow)
+    {
+        if (addCustomJigsaw != null)
+        {
+           addCustomJigsaw.gameObject.SetActive(isShow);
+        }
     }
 }
 

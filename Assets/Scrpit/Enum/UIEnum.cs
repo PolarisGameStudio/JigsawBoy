@@ -6,5 +6,6 @@
     GameInfoUI=4,//游戏信息ui
     GamePauseUI=5,//游戏暂停UI
     GameMusicUI = 6,//游戏音乐UI
+    MenuCustomUpLoadUI=7,//菜单 自定义拼图上传界面
 }
 

@@ -1,4 +1,7 @@
-﻿public class PuzzlesInfoDetailsBean
+﻿using System;
+
+[Serializable]
+public class PuzzlesInfoDetailsBean
 {
     private string introduction_content;//作品介绍
     private string name;//名称

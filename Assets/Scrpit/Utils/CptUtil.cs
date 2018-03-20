@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 
-public class CptUtil :BaseMonoBehaviour
+public class CptUtil :BaseMonoBehaviour 
 {
     /// <summary>
     /// 从父控件中根据名字获取指定控件

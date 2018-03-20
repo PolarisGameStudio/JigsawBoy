@@ -32,5 +32,14 @@ public class DataStorageManage
     {
         return UserInfoDSHandle.getInstance();
     }
+
+    /// <summary>
+    /// 自定义拼图
+    /// </summary>
+    /// <returns></returns>
+    public static IBaseDataStorage<List<PuzzlesInfoBean>, long> getCustomPuzzlesInfoDSHandle()
+    {
+        return CustomPuzzlesInfoDSHandle.getInstance();
+    }
 }
 
