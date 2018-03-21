@@ -85,8 +85,7 @@ public class MenuSelectUIControl : BaseUIControl
     /// </summary>
     public void addCustomJigsawOnClick()
     {
-        // mUIMasterControl.openUIByTypeAndCloseOther();
-        FileUtil.OpenFileDialog();
+       mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
     }
 
     /// <summary>
