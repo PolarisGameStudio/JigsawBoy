@@ -53,21 +53,53 @@ public class FileUtil : ScriptableObject
         }
         finally
         {
-            if(reader!=null)
-            reader.Close();
-        } 
+            if (reader != null)
+                reader.Close();
+        }
     }
 
     /// <summary>
     /// 打开文件选择弹窗
     /// </summary>
-    public static void OpenFileDialog()
+    public static string OpenFileDialog()
     {
         OpenFileDialog ofd = new OpenFileDialog();   //new一个方法
         ofd.InitialDirectory = "file://" + UnityEngine.Application.dataPath;  //定义打开的默认文件夹位置//定义打开的默认文件夹位置
+        ofd.Filter = "jpg(*.jpg)|*.jpg|png(*.png)|*.png";
         if (ofd.ShowDialog() == DialogResult.OK)
         {
-            LogUtil.log(ofd.FileName);
+            return ofd.FileName;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+
+    /// <summary>
+    /// 复制文件到指定路径
+    /// </summary>
+    /// <param name="localFilePath">源文件路径</param>
+    /// <param name="saveFilePath">存储路径</param>
+    /// <param name="isReplace">若存储路径有相同文件是否替换</param>
+    public static void CopyFile(string localFilePath, string saveFilePath, bool isReplace)
+    {
+        if (File.Exists(localFilePath))//必须判断要复制的文件是否存在
+        {
+            File.Copy(localFilePath, saveFilePath, isReplace);
+        }
+    }
+
+    /// <summary>
+    /// 创建文件夹
+    /// </summary>
+    /// <param name="directoryPath"></param>
+    public static void CreateDirectory(string directoryPath)
+    {
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
         }
     }
 }

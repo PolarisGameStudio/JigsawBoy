@@ -49,14 +49,22 @@ public class JigsawSelect : BaseMonoBehaviour
         }
 
         //加载该类型下所有拼图数据
-        List<PuzzlesInfoBean> listInfoData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
+        List<PuzzlesInfoBean> listInfoData = null;
+        if (resourcesEnum.Equals(JigsawResourcesEnum.Custom))
+        {
+            listInfoData = DataStorageManage.getCustomPuzzlesInfoDSHandle().getAllData();
+        }
+        else
+        {
+            listInfoData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(resourcesEnum);
+        }
+
         if (listInfoData == null || listInfoData.Count == 0)
             return;
         listInfoData.Sort((x, y) => x.Level.CompareTo(y.Level));
 
         List<PuzzlesCompleteStateBean> listCompleteData = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
         List<PuzzlesGameInfoBean> listData = PuzzlesDataUtil.MergePuzzlesInfoAndCompleteState(listInfoData, listCompleteData);
-
 
         StartCoroutine(createSelect(listData));
     }
@@ -81,7 +89,6 @@ public class JigsawSelect : BaseMonoBehaviour
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
-
 
         createNormalItem(itemInfo);
         //if (infoBean.Level <= 1)
@@ -114,6 +121,7 @@ public class JigsawSelect : BaseMonoBehaviour
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
     }
+
 
     /// <summary>
     /// 创建正常样式

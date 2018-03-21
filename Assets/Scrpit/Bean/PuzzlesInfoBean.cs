@@ -1,4 +1,7 @@
-﻿public class PuzzlesInfoBean : PuzzlesInfoDetailsBean
+﻿using System;
+
+[Serializable]
+public class PuzzlesInfoBean : PuzzlesInfoDetailsBean
 {
     private long id;//id
     private string mark_file_name;//标记文件名
