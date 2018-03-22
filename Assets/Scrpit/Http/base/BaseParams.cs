@@ -15,7 +15,7 @@ public class BaseParams
         {
             foreach (var item in listData)
             {
-                form.AddField(item.Key, item.Value.ToString());
+                form.AddField(item.Key, (string)item.Value);
             }
         }
         return form;

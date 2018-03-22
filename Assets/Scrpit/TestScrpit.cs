@@ -11,9 +11,9 @@ public class TestScrpit : BaseMonoBehaviour
     void Start()
     {
         FindOrCreateLeaderboardParams baseParams = new FindOrCreateLeaderboardParams();
-        baseParams.Key = "B0147AEB59B2D274DBF8BF54AAA7C0AB";
-        baseParams.Appid = "830620";
-        baseParams.Name = "testLeader";
+        baseParams.key = "B0147AEB59B2D274DBF8BF54AAA7C0AB";
+        baseParams.appid = "830620";
+        baseParams.name = "testLeader";
         MHttpManagerFactory.getSteamManager().findOrCreateLeaderboard(baseParams, new TestHandle());
     }
 
@@ -32,7 +32,7 @@ public class TestScrpit : BaseMonoBehaviour
 
         public override void onSuccess(FindOrCreateLeaderboardResult result)
         {
-           
+            
         }
     }
 }

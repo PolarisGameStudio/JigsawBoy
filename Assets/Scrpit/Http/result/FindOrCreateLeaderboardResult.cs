@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+[Serializable]
+public class FindOrCreateLeaderboardResult
+{
+    public Result result;
 
-   public class FindOrCreateLeaderboardResult
+    [Serializable]
+    public class Result
     {
+        public int result;
     }
+}
 

@@ -30,13 +30,18 @@ public class HttpRequestExecutor : BaseMonoBehaviour
         }
         else
         {
-            Debug.Log(postData.text);
+            T result=default(T);
+            if (postData.text != null)
+            {
+                result= JsonUtil.FromJson<T>(postData.text);
+            }
+            responseHandler.onSuccess(result);
         }
     }
 
-    IEnumerator SendGet(string _url)
+    IEnumerator SendGet(string httpUrl)
     {
-        WWW getData = new WWW(_url);
+        WWW getData = new WWW(httpUrl);
         yield return getData;
         if (getData.error != null)
         {
