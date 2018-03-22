@@ -8,22 +8,18 @@ using DG.Tweening;
 
 public class MenuBackGroundCpt : BaseMonoBehaviour
 {
-    List<PuzzlesInfoBean> listInfoData;
     List<GameObject> listJigsaw;
     private bool isCreateJigsaw;
     private void Awake()
     {
         isCreateJigsaw = false;
-        //加载该类型下所有拼图数据
-        listInfoData = PuzzlesInfoManager.LoadAllPuzzlesDataByType(JigsawResourcesEnum.Painting);
         listJigsaw = new List<GameObject>();
     }
 
     public void startCreateJigsaw()
     {
         isCreateJigsaw = true;
-        if (listInfoData != null && listInfoData.Count > 0)
-            StartCoroutine(createJigsaw());
+      //  StartCoroutine(createJigsaw());
     }
 
     private void Update()
@@ -34,16 +30,15 @@ public class MenuBackGroundCpt : BaseMonoBehaviour
     public void endCreateJigsaw()
     {
         isCreateJigsaw = false;
-        StopCoroutine(createJigsaw());
+      //  StopCoroutine(createJigsaw());
     }
 
     private IEnumerator createJigsaw()
     {
         while (isCreateJigsaw)
         {
-            int randomPosition = DevUtil.getRandomInt(0, listInfoData.Count);
-            Texture2D texture2D = ResourcesManager.loadData<Texture2D>(listInfoData[randomPosition].Data_file_path + listInfoData[randomPosition].Mark_file_name);
-            JigsawBean jigsawBean = CreateJigsawDataUtils.createJigsaw(JigsawStyleEnum.Normal, 3f,3f, texture2D);
+            Texture2D texture2D = Texture2D.blackTexture;
+            JigsawBean jigsawBean = CreateJigsawDataUtils.createJigsaw(JigsawStyleEnum.Normal, 1f, 1f, texture2D);
 
             GameObject jigsawObj = JigsawObjBuilder.buildJigsawGameObj(jigsawBean, texture2D);
             float startX = DevUtil.getRandomFloat(-(int)(DevUtil.GetScreenWith() / 2f), (int)(DevUtil.GetScreenWith() / 2f));
