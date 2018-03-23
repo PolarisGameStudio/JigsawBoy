@@ -13,9 +13,20 @@ public class BaseParams
         Dictionary<string, object> listData = ReflexUtil.getAllNameAndValue(this);
         if (listData != null)
         {
-            foreach (var item in listData)
+            foreach (string key in listData.Keys)
             {
-                form.AddField(item.Key, (string)item.Value);
+                object value = listData[key];
+                if (value == null)
+                    continue;
+                if (value is bool)
+                {
+                    if ((bool)value)
+                        form.AddField(key, "1");
+                    else
+                        form.AddField(key, "0");
+                }
+                else
+                    form.AddField(key, (string)value);
             }
         }
         return form;
