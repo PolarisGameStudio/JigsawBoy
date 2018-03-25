@@ -10,7 +10,7 @@ public class SteamManagerImpl : BaseManagerImpl, ISteamLeaderboards
 
     private SteamManagerImpl()
     {
-        baseUrl = CommonUrl.Base_Steam_Url;
+        baseUrl = CommonInfo.Base_Steam_Url;
     }
 
     public static SteamManagerImpl getInstance()
@@ -20,6 +20,11 @@ public class SteamManagerImpl : BaseManagerImpl, ISteamLeaderboards
             manager = new SteamManagerImpl();
         }
         return manager;
+    }
+
+    public void deleteLeaderboard(DeleteLeaderboardParams baseParams, HttpResponseHandler<DeleteLeaderboardResult> responseHandler)
+    {
+        requestPostForm("ISteamLeaderboards/DeleteLeaderboard/v1", baseParams, responseHandler);
     }
 
     public void findOrCreateLeaderboard(FindOrCreateLeaderboardParams baseParams,HttpResponseHandler<FindOrCreateLeaderboardResult> responseHandler)
