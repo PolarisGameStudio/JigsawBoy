@@ -8,6 +8,7 @@
 #if !DISABLESTEAMWORKS
 
 using System.Runtime.InteropServices;
+using System.Threading;
 using IntPtr = System.IntPtr;
 
 namespace Steamworks {
@@ -296,7 +297,7 @@ namespace Steamworks {
 		/// </summary>
 		public static SteamAPICall_t DownloadLeaderboardEntriesForUsers(SteamLeaderboard_t hSteamLeaderboard, CSteamID[] prgUsers, int cUsers) {
 			InteropHelp.TestIfAvailableClient();
-			return (SteamAPICall_t)NativeMethods.ISteamUserStats_DownloadLeaderboardEntriesForUsers(CSteamAPIContext.GetSteamUserStats(), hSteamLeaderboard, prgUsers, cUsers);
+            return (SteamAPICall_t)NativeMethods.ISteamUserStats_DownloadLeaderboardEntriesForUsers(CSteamAPIContext.GetSteamUserStats(), hSteamLeaderboard, prgUsers, cUsers);
 		}
 
 		/// <summary>

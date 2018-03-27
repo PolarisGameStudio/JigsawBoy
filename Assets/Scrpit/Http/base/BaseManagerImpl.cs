@@ -9,6 +9,11 @@ public class BaseManagerImpl
     protected HttpRequestExecutor excutor = Camera.main.GetComponent<HttpRequestExecutor>();
     protected String baseUrl;
 
+    public void requestGet<T, V>(string url, V baseParams, HttpResponseHandler<T> responseHandler) where V : BaseParams
+    {
+        excutor.requestGet(baseUrl + "/" + url, baseParams, responseHandler);
+    }
+
     public void requestPostForm<T, V>(string url, V baseParams, HttpResponseHandler<T> responseHandler) where V : BaseParams
     {
         excutor.requestPostForm(baseUrl + "/" + url, baseParams, responseHandler);

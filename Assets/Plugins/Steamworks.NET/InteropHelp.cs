@@ -9,6 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace Steamworks {
 	public class InteropHelp {
@@ -19,13 +20,13 @@ namespace Steamworks {
 		}
 
 		public static void TestIfAvailableClient() {
-			TestIfPlatformSupported();
-			if (CSteamAPIContext.GetSteamClient() == System.IntPtr.Zero) {
-				if (!CSteamAPIContext.Init()) {
+            TestIfPlatformSupported();
+            if (CSteamAPIContext.GetSteamClient() == System.IntPtr.Zero) {
+                if (!CSteamAPIContext.Init()) {
 					throw new System.InvalidOperationException("Steamworks is not initialized.");
 				}
 			}
-		}
+        }
 
 		public static void TestIfAvailableGameServer() {
 			TestIfPlatformSupported();

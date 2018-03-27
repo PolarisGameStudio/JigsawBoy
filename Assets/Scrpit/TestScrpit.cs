@@ -4,12 +4,25 @@ using UnityEngine;
 using Mono.Data.Sqlite;
 using Steamworks;
 
-public class TestScrpit : BaseMonoBehaviour,LeaderboardFindResultCallBack
+public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, LeaderboardEntriesFindResultCallBack
 {
+    public void leaderboradEntriesFindResult(ulong leaderboardId)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void leaderboradFindResult(ulong leaderboardId)
     {
-        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-        handle.uploadLeaderboardScore(leaderboardId);
+        //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+        //handle.findLeaderboardEntriesForUser(leaderboardId,this);
+        GetLeaderboardEntriesParams baseParams = new GetLeaderboardEntriesParams();
+        baseParams.key = CommonInfo.Steam_Key_All;
+        baseParams.appid = CommonInfo.Steam_App_Id;
+
+        baseParams.leaderboardid = leaderboardId;
+        baseParams.steamid = SteamUser.GetSteamID().m_SteamID;
+        baseParams.datarequest = "RequestAroundUser";
+        MHttpManagerFactory.getSteamManager().getLeaderboardEntries(baseParams, new TestCallBack());
     }
 
     void Start()
@@ -27,13 +40,26 @@ public class TestScrpit : BaseMonoBehaviour,LeaderboardFindResultCallBack
         //baseParams.name = "testLeader";
         //MHttpManagerFactory.getSteamManager().deleteLeaderboard(baseParams, new TestHandle());
 
-        LeaderboardHandleImpl handle=new LeaderboardHandleImpl();
-        handle.findLeaderboard("test",this);
+        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+        handle.findLeaderboard("test", this);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public class TestCallBack : HttpResponseHandler<GetLeaderboardEntriesResult>
+    {
+        public override void onError(string message)
+        {
+
+        }
+
+        public override void onSuccess(GetLeaderboardEntriesResult result)
+        {
+
+        }
     }
 }

@@ -19,5 +19,12 @@ public interface ISteamLeaderboards
     /// <param name="baseParams"></param>
     /// <param name="responseHandler"></param>
     void deleteLeaderboard(DeleteLeaderboardParams baseParams, HttpResponseHandler<DeleteLeaderboardResult> responseHandler);
+
+    /// <summary>
+    /// 获取排行榜数据
+    /// </summary>
+    /// <param name="baseParams"></param>
+    /// <param name="responseHandler"></param>
+    void getLeaderboardEntries(GetLeaderboardEntriesParams baseParams, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler);
 }
 

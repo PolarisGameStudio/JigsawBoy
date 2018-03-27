@@ -31,5 +31,10 @@ public class SteamManagerImpl : BaseManagerImpl, ISteamLeaderboards
     {
         requestPostForm("ISteamLeaderboards/FindOrCreateLeaderboard/v2", baseParams, responseHandler);
     }
+
+    public void getLeaderboardEntries(GetLeaderboardEntriesParams baseParams, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler)
+    {
+        requestGet("ISteamLeaderboards/GetLeaderboardEntries/v1", baseParams, responseHandler);
+    }
 }
 

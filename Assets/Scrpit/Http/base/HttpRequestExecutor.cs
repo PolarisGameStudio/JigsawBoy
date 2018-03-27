@@ -9,9 +9,11 @@ using UnityEngine;
 public class HttpRequestExecutor : BaseMonoBehaviour
 {
 
-    public void requestGet<T>(HttpResponseHandler<T> responseHandler)
+    public void requestGet<T>(string baseHttpUrl, BaseParams baseParams, HttpResponseHandler<T> responseHandler)
     {
-
+        string httpUrl = baseHttpUrl + baseParams.dataToUrlStr();
+        LogUtil.log("requestGet:"+ httpUrl);
+        StartCoroutine(SendGet(httpUrl, responseHandler));
     }
 
     public void requestPostForm<T>(string httpUrl, BaseParams baseParams, HttpResponseHandler<T> responseHandler)
@@ -26,6 +28,7 @@ public class HttpRequestExecutor : BaseMonoBehaviour
         yield return postData;
         if (postData.error != null)
         {
+            LogUtil.log(postData.error);
             responseHandler.onError(postData.error);
         }
         else
@@ -39,17 +42,23 @@ public class HttpRequestExecutor : BaseMonoBehaviour
         }
     }
 
-    IEnumerator SendGet(string httpUrl)
+    IEnumerator SendGet<T>(string httpUrl, HttpResponseHandler<T> responseHandler)
     {
         WWW getData = new WWW(httpUrl);
         yield return getData;
         if (getData.error != null)
         {
-            Debug.Log(getData.error);
+            LogUtil.log(getData.error);
+            responseHandler.onError(getData.error);
         }
         else
         {
-            Debug.Log(getData.text);
+            T result = default(T);
+            if (getData.text != null)
+            {
+                result = JsonUtil.FromJson<T>(getData.text);
+            }
+            responseHandler.onSuccess(result);
         }
     }
 }
