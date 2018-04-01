@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class ResourcesManager
 {
@@ -14,4 +16,19 @@ public class ResourcesManager
         return resData;
     }
 
+
+
+    /// <summary>
+    /// 异步加载图片
+    /// </summary>
+    /// <param name="imagePath"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator loadLocationImage(string imagePath, Image image)
+    {
+        string filePath = "file://" + imagePath;
+        WWW www = new WWW(filePath);
+        yield return www;
+        image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f)); ;
+    }
 }

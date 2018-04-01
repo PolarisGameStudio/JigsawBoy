@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine.UI;
 using UnityEngine;
-
+using System.Collections;
 
 public class MenuCustomUpLoadUIControl : BaseUIControl
 {
@@ -16,7 +16,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     private new void Awake()
     {
         base.Awake();
-        uploadImage= CptUtil.getCptFormParentByName<Transform, Image>(transform,"UploadImage");
+        uploadImage = CptUtil.getCptFormParentByName<Transform, Image>(transform, "UploadImage");
         uploadBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "UploadImage");
         uploadBT.onClick.AddListener(startUploadImage);
     }
@@ -41,14 +41,15 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     /// </summary>
     public void startUploadImage()
     {
-        string targetPath = Application.persistentDataPath;
         string resPath = FileUtil.OpenFileDialog();
         if (resPath == null || resPath.Length == 0)
             return;
-        FileUtil.CreateDirectory(targetPath + "/Custom");
-        FileUtil.CopyFile(resPath, targetPath + "/Custom/1.png", true);
+        StartCoroutine(ResourcesManager.loadLocationImage(resPath, uploadImage));
+        //  FileUtil.CreateDirectory(CommonInfo.Custom_Res_Save_Path);
+        // FileUtil.CopyFile(resPath, CommonInfo.Custom_Res_Save_Path + "/1.png", true);
 
-  
+
     }
+
 }
 

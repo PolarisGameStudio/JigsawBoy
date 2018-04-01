@@ -10,7 +10,7 @@ public class SteamManagerImpl : BaseManagerImpl, ISteamLeaderboards
 
     private SteamManagerImpl()
     {
-        baseUrl = CommonInfo.Base_Steam_Url;
+        baseUrl = CommonUrl.Base_Steam_Url;
     }
 
     public static SteamManagerImpl getInstance()

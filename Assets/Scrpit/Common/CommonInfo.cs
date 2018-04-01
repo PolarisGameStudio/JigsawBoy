@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-
-public class CommonInfo
+public class CommonInfo 
 {
-    /// <summary>
-    /// steam基础地址
-    /// </summary>
-    public readonly static string Base_Steam_Url = "https://partner.steam-api.com";
-
     /// <summary>
     /// steam所有用户群组key
     /// </summary>
@@ -20,5 +15,12 @@ public class CommonInfo
     /// steamAppId
     /// </summary>
     public readonly static string Steam_App_Id = "830620";
+
+    /// <summary>
+    /// 自定义拼图保存地址
+    /// </summary>
+    public readonly static string Custom_Res_Save_Path = Application.persistentDataPath+ "/Custom";
+
+
 }
 
