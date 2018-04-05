@@ -16,6 +16,18 @@ public class ResourcesManager
         return resData;
     }
 
+    /// <summary>
+    /// 加载本地文件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="resPath"></param>
+    /// <returns></returns>
+    public static WWW loadLocationData(string resPath)
+    {
+        string filePath = "file://" + resPath;
+        WWW www = new WWW(filePath);
+        return www;
+    }
 
 
     /// <summary>

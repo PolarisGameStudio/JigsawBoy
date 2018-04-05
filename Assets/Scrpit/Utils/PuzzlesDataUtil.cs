@@ -27,7 +27,7 @@ public class PuzzlesDataUtil
                 for(int f=0;f< listCompleteStateSize; f++)
                 {
                     PuzzlesCompleteStateBean tempCompleteState = listCompleteState[f];
-                    if (tempInfo.Id.Equals(tempCompleteState.puzzleId))
+                    if (tempInfo.Id.Equals(tempCompleteState.puzzleId) && tempInfo.Data_type.Equals(tempCompleteState.puzzleType))
                     {
                         itemData.completeStateInfo = tempCompleteState;
                     }

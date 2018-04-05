@@ -3,15 +3,15 @@
 [Serializable]
 public class PuzzlesInfoBean : PuzzlesInfoDetailsBean
 {
-    private long id;//id
-    private string mark_file_name;//标记文件名
-    private int horizontal_number;//生成拼图的横向个数
-    private int vertical_number;//生成拼图的纵向个数
-    private int level;//拼图等级
-    private string data_file_path;//拼图文件路径
-    private int data_type;//拼图类型
-    private int unlock_point;//解锁点数
-    private int valid;//拼图有效值
+    public long id;//id
+    public string mark_file_name;//标记文件名
+    public int horizontal_number;//生成拼图的横向个数
+    public int vertical_number;//生成拼图的纵向个数
+    public int level;//拼图等级
+    public string data_file_path;//拼图文件路径
+    public int data_type;//拼图类型
+    public int unlock_point;//解锁点数
+    public int valid;//拼图有效值
 
     public long Id
     {

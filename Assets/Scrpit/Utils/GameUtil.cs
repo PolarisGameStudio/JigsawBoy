@@ -23,6 +23,7 @@ public class GameUtil
 
             PuzzlesCompleteStateBean tempCompleteBean = new PuzzlesCompleteStateBean();
             tempCompleteBean.puzzleId = puzzlesInfo.Id;
+            tempCompleteBean.puzzleType = puzzlesInfo.Data_type;
             tempCompleteBean.completeTime = completeTime;
             tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
             listCompleteState.Add(tempCompleteBean);

@@ -90,7 +90,14 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        createNormalItem(itemInfo);
+        if (infoBean.Data_type.Equals((int)JigsawResourcesEnum.Custom)) {
+            createCustomItem(itemInfo);
+        }
+        else
+        {
+            createNormalItem(itemInfo);
+        }
+      
         //if (infoBean.Level <= 1)
         //{
         //    createNormalItem(itemInfo);
@@ -166,4 +173,43 @@ public class JigsawSelect : BaseMonoBehaviour
         }
     }
 
+
+    private void createCustomItem(PuzzlesGameInfoBean itemInfo)
+    {
+        PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
+        PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
+
+        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
+        buttonObj.name = infoBean.Mark_file_name;
+        buttonObj.transform.SetParent(transform);
+
+        //设置背景图片
+        Image backImage = buttonObj.GetComponent<Image>();
+        string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
+        StartCoroutine(ResourcesManager.loadLocationImage(filePath,backImage));
+
+        //设置按键
+        Button itemBT = buttonObj.GetComponent<Button>();
+        itemBT.onClick.AddListener(delegate ()
+        {
+            CommonData.SelectPuzzlesInfo = itemInfo;
+            SceneUtil.jumpGameScene();
+        });
+
+
+        //设置文本信息
+        Text[] allText = buttonObj.GetComponentsInChildren<Text>();
+        if (allText != null)
+        {
+            int allTextSize = allText.Length;
+            for (int textPosition = 0; textPosition < allTextSize; textPosition++)
+            {
+                Text textItem = allText[textPosition];
+                if (textItem.name.Equals("JigsawName"))
+                {
+                    textItem.text = infoBean.Name + infoBean.Level;
+                }
+            }
+        }
+    }
 }

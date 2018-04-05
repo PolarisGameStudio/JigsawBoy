@@ -60,7 +60,17 @@ public class GameStartControl : BaseMonoBehaviour
             LogUtil.log("没有拼图生成数量");
             return;
         }
-        Texture2D pic2D = ResourcesManager.loadData<Texture2D>(resFilePath);
+        Texture2D pic2D;
+        if (jigsawInfoData.Data_type.Equals((int)JigsawResourcesEnum.Custom))
+        {
+            WWW www= ResourcesManager.loadLocationData(resFilePath);
+            pic2D = www.texture;
+        }
+        else
+        {
+             pic2D = ResourcesManager.loadData<Texture2D>(resFilePath);
+        }
+     
         if (pic2D == null)
         {
             LogUtil.log("没有源图片");
