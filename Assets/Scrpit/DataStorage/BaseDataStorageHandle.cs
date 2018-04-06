@@ -28,7 +28,7 @@ public abstract class BaseDataStorageHandle<T>
             LogUtil.log("保存文件失败-没有文件名称");
             return;
         }
-        if (dataBeanList == null || dataBeanList.Count == 0)
+        if (dataBeanList == null)
         {
             LogUtil.log("保存文件失败-没有数据");
             return;

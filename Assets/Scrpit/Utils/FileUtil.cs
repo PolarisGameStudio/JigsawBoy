@@ -102,4 +102,16 @@ public class FileUtil : ScriptableObject
             Directory.CreateDirectory(directoryPath);
         }
     }
+
+    /// <summary>
+    /// 删除文件
+    /// </summary>
+    /// <param name="filePath"></param>
+    public static void DeleteFile(string filePath)
+    {
+        if (File.Exists(filePath))//必须判断要删除的文件是否存在
+        {
+            File.Delete(filePath);
+        }
+    }
 }

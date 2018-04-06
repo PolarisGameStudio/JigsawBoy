@@ -3,24 +3,24 @@
 [Serializable]
 public class PuzzlesInfoDetailsBean
 {
-    private string introduction_content;//作品介绍
-    private string name;//名称
+    public string introduction_content;//作品介绍
+    public string name;//名称
 
     //------------------名画-----------------------------
-    private string work_creator;//作品作者
-    private string storage_area;//作品现在所在地
-    private string specifications;//大小规格
-    private string time_creation;//创作时间
+    public string work_creator;//作品作者
+    public string storage_area;//作品现在所在地
+    public string specifications;//大小规格
+    public string time_creation;//创作时间
     //-----------------电影-----------------------------
-    private string move_director;//电影导演
-    private string stars;//主演
-    private string length;//片场
-    private string release_date;//上映日期
+    public string move_director;//电影导演
+    public string stars;//主演
+    public string length;//片场
+    public string release_date;//上映日期
     //-----------------名人------------------------------
-    private string born_death;//出生去世
-    private string country;//国家
-    private string known_for;//职业
-    private string works;//主要作品
+    public string born_death;//出生去世
+    public string country;//国家
+    public string known_for;//职业
+    public string works;//主要作品
 
     public string Introduction_content
     {

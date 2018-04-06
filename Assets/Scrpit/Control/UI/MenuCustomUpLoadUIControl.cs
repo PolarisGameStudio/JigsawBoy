@@ -18,6 +18,11 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
 
     private string uploadPath;
 
+    /// <summary>
+    /// 预加载数据
+    /// </summary>
+    private PuzzlesInfoBean oldInfoBean;
+
 
     private new void Awake()
     {
@@ -30,15 +35,23 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         inputVerticalNumber = CptUtil.getCptFormParentByName<Transform, InputField>(transform, "InputVerticalNumber");
 
         submitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "SubmitBT");
-
-
-        uploadBT.onClick.AddListener(showUploadImage);
-        submitBT.onClick.AddListener(submitCustomData);
     }
 
     public override void openUI()
     {
         mUICanvas.enabled = true;
+
+        submitBT.onClick.RemoveAllListeners();
+        uploadBT.onClick.RemoveAllListeners();
+        if (oldInfoBean == null)
+        {
+            submitBT.onClick.AddListener(submitCustomData);
+            uploadBT.onClick.AddListener(showUploadImage);
+        }
+        else
+        {
+            submitBT.onClick.AddListener(changeCustomData);
+        }
     }
 
     public override void closeUI()
@@ -53,6 +66,20 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     }
 
     /// <summary>
+    /// 设置初始化数据
+    /// </summary>
+    /// <param name="infoBean"></param>
+    public void setInitData(PuzzlesInfoBean infoBean)
+    {
+        this.oldInfoBean = infoBean;
+        inputName.text = infoBean.Name;
+        inputHorizontalNumber.text = infoBean.Horizontal_number + "";
+        inputVerticalNumber.text = infoBean.Vertical_number + "";
+        uploadPath = infoBean.Data_file_path + infoBean.Mark_file_name;
+        StartCoroutine(ResourcesManager.loadLocationImage(uploadPath, uploadImage));
+    }
+
+    /// <summary>
     /// 开始上传图片
     /// </summary>
     public void showUploadImage()
@@ -64,68 +91,112 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     }
 
     /// <summary>
+    /// 修改数据
+    /// </summary>
+    public void changeCustomData()
+    {
+        if (!checkData())
+            return;
+
+        this.oldInfoBean.Name = inputName.text;
+        this.oldInfoBean.Horizontal_number = Convert.ToInt32(inputHorizontalNumber.text);
+        this.oldInfoBean.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);
+
+        //修改数据
+        CustomPuzzlesInfoDSHandle handle = (CustomPuzzlesInfoDSHandle)DataStorageManage.getCustomPuzzlesInfoDSHandle();
+        handle.changeData(this.oldInfoBean);
+
+        jumpSelectUI();
+    }
+
+    /// <summary>
     /// 提交数据
     /// </summary>
     public void submitCustomData()
     {
-        if (uploadImage.sprite == null)
-        {
-            LogUtil.log("没有图片");
-            return;
-        }
-        if (uploadPath == null&& uploadPath.Length==0)
-        {
-            LogUtil.log("没有路径");
-            return;
-        }
-        if (inputName.text == null || inputName.text.Length == 0)
-        {
-            LogUtil.log("没有拼图名字");
-            return;
-        }
-        if (inputHorizontalNumber.text == null || inputHorizontalNumber.text.Length == 0)
-        {
-            LogUtil.log("没有拼图横向块数");
-            return;
-        }
-        if (inputVerticalNumber.text == null || inputVerticalNumber.text.Length == 0)
-        {
-            LogUtil.log("没有拼图纵向块数");
-            return;
-        }
-        if (!CheckUtil.checkIsNumber(inputHorizontalNumber.text))
-        {
-            LogUtil.log("横向块数 数据类型错误");
+        if (!checkData())
             return;
 
-        }
-        if (!CheckUtil.checkIsNumber(inputVerticalNumber.text))
-        {
-            LogUtil.log("纵向块数 数据类型错误");
-            return;
-
-        }
         string markFileName = SystemUtil.getUUID();
+        PuzzlesInfoBean infoBean = new PuzzlesInfoBean();
+        infoBean.id = 0;
+        infoBean.Name = inputName.text;
+        infoBean.Horizontal_number = Convert.ToInt32(inputHorizontalNumber.text);
+        infoBean.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);
+        infoBean.Level = 1;
+        infoBean.Data_type = (int)JigsawResourcesEnum.Custom;
+        infoBean.Mark_file_name = markFileName;
+        infoBean.Data_file_path = CommonInfo.Custom_Res_Save_Path + "/";
         FileUtil.CreateDirectory(CommonInfo.Custom_Res_Save_Path);
-        FileUtil.CopyFile(uploadPath, CommonInfo.Custom_Res_Save_Path + "/"+ markFileName, true);
+        FileUtil.CopyFile(uploadPath, CommonInfo.Custom_Res_Save_Path + "/" + markFileName, true);
 
         List<PuzzlesInfoBean> listInfoData = DataStorageManage.getCustomPuzzlesInfoDSHandle().getAllData();
         if (listInfoData == null)
             listInfoData = new List<PuzzlesInfoBean>();
 
-        PuzzlesInfoBean itemInfo = new PuzzlesInfoBean();
-        itemInfo.id = 0;
-        itemInfo.Name = inputName.text;
-        itemInfo.Horizontal_number = Convert.ToInt32(inputHorizontalNumber.text);
-        itemInfo.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);
-        itemInfo.Level = 1;
-        itemInfo.Data_type = (int)JigsawResourcesEnum.Custom;
-        itemInfo.Data_file_path = CommonInfo.Custom_Res_Save_Path + "/" ;
-        itemInfo.Mark_file_name = markFileName;
-        listInfoData.Add(itemInfo);
-        DataStorageManage.getCustomPuzzlesInfoDSHandle().saveAllData(listInfoData);
+        listInfoData.Add(infoBean);
 
-        cleanData();
+        //保存数据
+        CustomPuzzlesInfoDSHandle handle = (CustomPuzzlesInfoDSHandle)DataStorageManage.getCustomPuzzlesInfoDSHandle();
+        handle.saveAllData(listInfoData);
+
+        jumpSelectUI();
+    }
+
+    /// <summary>
+    /// 检测提交数据
+    /// </summary>
+    /// <returns></returns>
+    public bool checkData()
+    {
+        if (uploadImage.sprite == null)
+        {
+            LogUtil.log("没有图片");
+            return false;
+        }
+        if (uploadPath == null && uploadPath.Length == 0)
+        {
+            LogUtil.log("没有路径");
+            return false;
+        }
+        if (inputName.text == null || inputName.text.Length == 0)
+        {
+            LogUtil.log("没有拼图名字");
+            return false;
+        }
+        if (inputHorizontalNumber.text == null || inputHorizontalNumber.text.Length == 0)
+        {
+            LogUtil.log("没有拼图横向块数");
+            return false;
+        }
+        if (inputVerticalNumber.text == null || inputVerticalNumber.text.Length == 0)
+        {
+            LogUtil.log("没有拼图纵向块数");
+            return false;
+        }
+        if (!CheckUtil.checkIsNumber(inputHorizontalNumber.text))
+        {
+            LogUtil.log("横向块数 数据类型错误");
+            return false;
+        }
+        if (!CheckUtil.checkIsNumber(inputVerticalNumber.text))
+        {
+            LogUtil.log("纵向块数 数据类型错误");
+            return false;
+        }
+        int horizontalNumber = Convert.ToInt32(inputHorizontalNumber.text);
+        int verticalNumber = Convert.ToInt32(inputVerticalNumber.text);
+        if (horizontalNumber > 50 || horizontalNumber < 2)
+        {
+            LogUtil.log("拼图横向块数必须小于等于50并且大于2");
+            return false;
+        }
+        if (verticalNumber > 50 || verticalNumber < 2)
+        {
+            LogUtil.log("拼图纵向块数必须小于等于50并且大于2");
+            return false;
+        }
+        return true;
     }
 
     /// <summary>
@@ -143,7 +214,19 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
             inputHorizontalNumber.text = null;
         if (inputVerticalNumber != null)
             inputVerticalNumber.text = null;
+        if (oldInfoBean != null)
+            oldInfoBean = null;
     }
 
+
+    /// <summary>
+    /// 跳转到拼图选择界面（自定义模块）
+    /// </summary>
+    public void jumpSelectUI()
+    {
+        MenuSelectUIControl selectUIControl = mUIMasterControl.getUIByType<MenuSelectUIControl>(UIEnum.MenuSelectUI);
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
+        selectUIControl.setJigsawSelectData(JigsawResourcesEnum.Custom);
+    }
 }
 

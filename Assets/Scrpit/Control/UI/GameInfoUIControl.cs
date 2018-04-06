@@ -46,8 +46,16 @@ public class GameInfoUIControl : BaseUIControl
         if (gameInfoPicImage != null && CommonData.SelectPuzzlesInfo != null)
         {
             string picPath = CommonData.SelectPuzzlesInfo.puzzlesInfo.Data_file_path + CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name;
-            Sprite picSP = ResourcesManager.loadData<Sprite>(picPath);
-
+            Sprite picSP;
+            if (CommonData.SelectPuzzlesInfo.puzzlesInfo.Data_type.Equals((int)JigsawResourcesEnum.Custom))
+            {
+                WWW www = ResourcesManager.loadLocationData(picPath);
+                picSP= Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+            }
+            else
+            {
+                 picSP = ResourcesManager.loadData<Sprite>(picPath);
+            }
             float gameInfoPicImageH = gameInfoPicTF.rect.height * 0.9f;
             float gameInfoPicImageW = (gameInfoPicTF.rect.height / picSP.texture.height) * picSP.texture.width * 0.9f;
 

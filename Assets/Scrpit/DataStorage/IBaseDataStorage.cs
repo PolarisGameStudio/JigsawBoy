@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public interface IBaseDataStorage<T,V>
+public interface IBaseDataStorage<T, V>
 {
     /// <summary>
     /// 保存所有数据

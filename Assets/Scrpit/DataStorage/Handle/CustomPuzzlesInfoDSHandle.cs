@@ -18,19 +18,63 @@ public class CustomPuzzlesInfoDSHandle : BaseDataStorageHandle<PuzzlesInfoBean>,
         return handle;
     }
 
+    /// <summary>
+    /// 获取所有数据
+    /// </summary>
+    /// <returns></returns>
     public List<PuzzlesInfoBean> getAllData()
     {
         return startLoadDataForList(File_Name);
     }
 
+    /// <summary>
+    /// 保存所有数据
+    /// </summary>
+    /// <param name="data"></param>
     public void saveAllData(List<PuzzlesInfoBean> data)
     {
-        if (data == null || data.Count == 0)
+        if (data == null)
         {
             LogUtil.log("保存失败-没有数据");
             return;
         }
         startSaveData(File_Name, data);
+    }
+
+    /// <summary>
+    /// 删除其中一项数据
+    /// </summary>
+    /// <param name="infoBean"></param>
+    public void removeData(PuzzlesInfoBean infoBean)
+    {
+        List<PuzzlesInfoBean> allData = getAllData();
+        if (allData != null)
+        {
+            for (int i = 0; i < allData.Count; i++)
+            {
+                if (allData[i].Mark_file_name.Equals(infoBean.Mark_file_name))
+                    allData.Remove(allData[i]);
+            }
+            saveAllData(allData);
+        }
+    }
+
+    /// <summary>
+    /// 修改数据
+    /// </summary>
+    /// <param name="oldInfoBean"></param>
+    internal void changeData(PuzzlesInfoBean oldInfoBean)
+    {
+        List<PuzzlesInfoBean> allData = getAllData();
+        if (allData != null)
+        {
+            for (int i = 0; i < allData.Count; i++)
+            {
+                if (allData[i].Mark_file_name.Equals(oldInfoBean.Mark_file_name))
+                    allData[i] = oldInfoBean;
+            }
+            saveAllData(allData);
+        }
     }
 }
 

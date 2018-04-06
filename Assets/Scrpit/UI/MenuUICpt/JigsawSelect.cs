@@ -8,9 +8,11 @@ using UnityEngine.UI;
 public class JigsawSelect : BaseMonoBehaviour
 {
     public MenuSelectUIControl menuSelectUIControl;
+
     private JigsawResourcesEnum resourcesType;
     private static string JigsawSelectItemPath = "Prefab/UI/Menu/JigsawSelectItem";
     private static string JigsawSelectLockItemPath = "Prefab/UI/Menu/JigsawSelectLockItem";
+    private static string JigsawSelectCustomItemPath = "Prefab/UI/Menu/JigsawSelectCustomItem";
 
     // Use this for initialization
     void Start()
@@ -158,58 +160,60 @@ public class JigsawSelect : BaseMonoBehaviour
 
 
         //设置文本信息
-        Text[] allText = buttonObj.GetComponentsInChildren<Text>();
-        if (allText != null)
-        {
-            int allTextSize = allText.Length;
-            for (int textPosition = 0; textPosition < allTextSize; textPosition++)
-            {
-                Text textItem = allText[textPosition];
-                if (textItem.name.Equals("JigsawName"))
-                {
-                    textItem.text = infoBean.Name + infoBean.Level;
-                }
-            }
-        }
+        Text jigsawNameText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawName");
+        if (jigsawNameText != null)
+            jigsawNameText.text = infoBean.Name + infoBean.Level;
+
     }
 
-
+    /// <summary>
+    /// 创建自定义样式
+    /// </summary>
+    /// <param name="itemInfo"></param>
     private void createCustomItem(PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
-        buttonObj.name = infoBean.Mark_file_name;
-        buttonObj.transform.SetParent(transform);
+        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectCustomItemPath));
+        itemObj.name = infoBean.Mark_file_name;
+        itemObj.transform.SetParent(transform);
 
         //设置背景图片
-        Image backImage = buttonObj.GetComponent<Image>();
+        Image backImage = itemObj.GetComponent<Image>();
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
         StartCoroutine(ResourcesManager.loadLocationImage(filePath,backImage));
 
         //设置按键
-        Button itemBT = buttonObj.GetComponent<Button>();
+        Button itemBT = itemObj.GetComponent<Button>();
         itemBT.onClick.AddListener(delegate ()
         {
             CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
 
-
         //设置文本信息
-        Text[] allText = buttonObj.GetComponentsInChildren<Text>();
-        if (allText != null)
+        Text jigsawNameText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawName");
+        if(jigsawNameText!=null)
+        jigsawNameText.text = infoBean.Name;
+
+        //设置按钮信息
+        //编辑按钮
+        Button editBT=  CptUtil.getCptFormParentByName<Button, Button>(itemBT, "EditBT");
+        editBT.onClick.AddListener(delegate ()
         {
-            int allTextSize = allText.Length;
-            for (int textPosition = 0; textPosition < allTextSize; textPosition++)
-            {
-                Text textItem = allText[textPosition];
-                if (textItem.name.Equals("JigsawName"))
-                {
-                    textItem.text = infoBean.Name + infoBean.Level;
-                }
-            }
-        }
+            MenuCustomUpLoadUIControl upLoadUIControl = menuSelectUIControl.mUIMasterControl.getUIByType<MenuCustomUpLoadUIControl>(UIEnum.MenuCustomUpLoadUI);
+            upLoadUIControl.setInitData(infoBean);
+            menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+        });
+        //删除按钮
+        Button deleteBT = CptUtil.getCptFormParentByName<Button, Button>(itemBT, "DeleteBT");
+        deleteBT.onClick.AddListener(delegate ()
+        {
+            FileUtil.DeleteFile(filePath);
+            CustomPuzzlesInfoDSHandle handle=(CustomPuzzlesInfoDSHandle)DataStorageManage.getCustomPuzzlesInfoDSHandle();
+            handle.removeData(infoBean);
+            menuSelectUIControl.setJigsawSelectData(JigsawResourcesEnum.Custom);
+        });
     }
 }

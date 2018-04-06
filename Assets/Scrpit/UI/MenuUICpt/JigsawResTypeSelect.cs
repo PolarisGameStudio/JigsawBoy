@@ -19,6 +19,11 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     /// </summary>
     public void loadResTypeData()
     {
+        //删除原数据
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
         startLoad();
     }
 
