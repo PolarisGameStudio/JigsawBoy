@@ -54,7 +54,6 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
         buttonObj.name = resType.ToString();
         buttonObj.transform.SetParent(transform);
-
         //设置按键
         Button selectBT = buttonObj.GetComponent<Button>();
         selectBT.onClick.AddListener(delegate ()
