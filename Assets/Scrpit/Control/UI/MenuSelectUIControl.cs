@@ -12,6 +12,11 @@ public class MenuSelectUIControl : BaseUIControl
     public Transform jigsawSelectContentTF;
     public JigsawSelect jigsawSelectContentSC;
 
+    public Transform jigsawSelectTiltebar;
+    public Button titleBarExitBT;
+    public Text titleBarJigsawPointTV;
+
+
     public Transform addCustomJigsaw;
     public Button addCustomJigsawBT;
 
@@ -35,6 +40,14 @@ public class MenuSelectUIControl : BaseUIControl
         {
             jigsawSelectContentSC = jigsawSelectContentTF.gameObject.AddComponent<JigsawSelect>();
             jigsawSelectContentSC.setMenuSelectUIControl(this);
+        }
+
+        //初始化标题栏
+        jigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
+        titleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(jigsawSelectTiltebar, "ExitBT");
+        titleBarJigsawPointTV = CptUtil.getCptFormParentByName<Transform, Text>(jigsawSelectTiltebar, "JigsawPoint");
+        if (titleBarExitBT != null) {
+            titleBarExitBT.onClick.AddListener(addExitOnClick);
         }
 
         //按钮增加
@@ -86,6 +99,14 @@ public class MenuSelectUIControl : BaseUIControl
     public void addCustomJigsawOnClick()
     {
        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+    }
+
+    /// <summary>
+    /// 增加退出按钮
+    /// </summary>
+    public void addExitOnClick()
+    {
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }
 
     /// <summary>

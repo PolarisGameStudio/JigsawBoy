@@ -61,28 +61,33 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
             menuSelectUIControl.setJigsawSelectData(resType);
             if (resType.Equals(JigsawResourcesEnum.Custom))
             {
+                //展示自定义添加按钮
                 menuSelectUIControl.showAddCustomJigsaw(true);
             }
             else
             {
+                //不展示自定义添加按钮
                 menuSelectUIControl.showAddCustomJigsaw(false);
             }
         });
 
         //设置文本信息
-        Text[] allText = buttonObj.GetComponentsInChildren<Text>();
-        if (allText != null)
-        {
-            int allTextSize = allText.Length;
-            for (int textPosition = 0; textPosition < allTextSize; textPosition++)
-            {
-                Text textItem = allText[textPosition];
-                if (textItem.name.Equals("ResTypeName"))
-                {
-                    textItem.text = resType.ToString();
-                }
-            }
+        Text resTypeNameTV = CptUtil.getCptFormParentByName<Transform, Text>(buttonObj.transform, "ResTypeName");
+        resTypeNameTV.text = resType.ToString();
+
+        //设置图片信息
+        Image resTypeIcon= CptUtil.getCptFormParentByName<Transform, Image>(buttonObj.transform, "ResTypeIcon");
+        String resTypeIconPath="";
+        switch (resType) {
+            case JigsawResourcesEnum.Painting:
+                resTypeIconPath = "Texture/UI/tab_painting";
+                break;
+            case JigsawResourcesEnum.Scenery:
+                resTypeIconPath = "Texture/UI/tab_scenery";
+                break;
         }
+        Sprite resTypeIconSp = ResourcesManager.loadData<Sprite>(resTypeIconPath);
+        resTypeIcon.sprite=resTypeIconSp;
     }
 }
 
