@@ -20,12 +20,22 @@ public class UserInfoDSHandle : BaseDataStorageHandle<UserInfoBean>, IBaseDataSt
     }
 
 
-    public UserInfoBean getAllData()
+    public List<UserInfoBean> getAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public UserInfoBean getData(long data)
     {
         return startLoadData(File_Name);
     }
 
-    public void saveAllData(UserInfoBean data)
+    public void saveAllData(List<UserInfoBean> data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void saveData(UserInfoBean data)
     {
         if (data == null)
         {
@@ -33,6 +43,11 @@ public class UserInfoDSHandle : BaseDataStorageHandle<UserInfoBean>, IBaseDataSt
             return;
         }
         startSaveData(File_Name, data);
+    }
+
+    List<UserInfoBean> IBaseDataStorage<UserInfoBean, long>.getAllData()
+    {
+        throw new NotImplementedException();
     }
 }
 

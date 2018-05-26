@@ -19,19 +19,30 @@ public class GameConfigureDSHandle : BaseDataStorageHandle<GameConfigureBean>, I
         return handle;
     }
 
-    public GameConfigureBean getAllData()
+    public List<GameConfigureBean> getAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public GameConfigureBean getData(long data)
     {
         return startLoadData(File_Name);
     }
 
-    public void saveAllData(GameConfigureBean data)
+    public void saveAllData(List<GameConfigureBean> data)
     {
-        if (data == null )
+        throw new NotImplementedException();
+    }
+
+    public void saveData(GameConfigureBean data)
+    {
+        if (data == null)
         {
             LogUtil.log("保存失败-没有数据");
             return;
         }
         startSaveData(File_Name, data);
     }
+
 }
 

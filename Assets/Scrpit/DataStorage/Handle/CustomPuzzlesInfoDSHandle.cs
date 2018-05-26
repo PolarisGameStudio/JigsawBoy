@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-public class CustomPuzzlesInfoDSHandle : BaseDataStorageHandle<PuzzlesInfoBean>, IBaseDataStorage<List<PuzzlesInfoBean>, long>
+public class CustomPuzzlesInfoDSHandle : BaseDataStorageHandle<PuzzlesInfoBean>, IBaseDataStorage<PuzzlesInfoBean, long>
 {
 
     private const string File_Name = "CustomPuzzlesInfo";
 
-    private static IBaseDataStorage<List<PuzzlesInfoBean>, long> handle;
+    private static IBaseDataStorage<PuzzlesInfoBean, long> handle;
 
-    public static IBaseDataStorage<List<PuzzlesInfoBean>, long> getInstance()
+    public static IBaseDataStorage<PuzzlesInfoBean, long> getInstance()
     {
         if (handle == null)
         {
@@ -38,7 +37,7 @@ public class CustomPuzzlesInfoDSHandle : BaseDataStorageHandle<PuzzlesInfoBean>,
             LogUtil.log("保存失败-没有数据");
             return;
         }
-        startSaveData(File_Name, data);
+        startSaveDataForList(File_Name, data);
     }
 
     /// <summary>
@@ -75,6 +74,16 @@ public class CustomPuzzlesInfoDSHandle : BaseDataStorageHandle<PuzzlesInfoBean>,
             }
             saveAllData(allData);
         }
+    }
+
+    public void saveData(PuzzlesInfoBean data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public PuzzlesInfoBean getData(long data)
+    {
+        throw new NotImplementedException();
     }
 }
 

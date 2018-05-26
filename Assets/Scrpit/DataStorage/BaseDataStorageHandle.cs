@@ -21,7 +21,7 @@ public abstract class BaseDataStorageHandle<T>
         FileUtil.CreateTextFile(Data_Path, fileName, strData);
     }
 
-    public void startSaveData(string fileName, List<T> dataBeanList)
+    public void startSaveDataForList(string fileName, List<T> dataBeanList)
     {
         if (fileName == null)
         {

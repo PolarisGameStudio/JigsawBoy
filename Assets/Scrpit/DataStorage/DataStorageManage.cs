@@ -10,7 +10,7 @@ public class DataStorageManage
     /// 拼图数据完成情况
     /// </summary>
     /// <returns></returns>
-    public static IBaseDataStorage<List<PuzzlesCompleteStateBean>, long> getPuzzlesCompleteDSHandle()
+    public static IBaseDataStorage<PuzzlesCompleteStateBean, long> getPuzzlesCompleteDSHandle()
     {
         return PuzzlesCompleteDSHandle.getInstance();
     }
@@ -37,7 +37,7 @@ public class DataStorageManage
     /// 自定义拼图
     /// </summary>
     /// <returns></returns>
-    public static IBaseDataStorage<List<PuzzlesInfoBean>, long> getCustomPuzzlesInfoDSHandle()
+    public static IBaseDataStorage<PuzzlesInfoBean, long> getCustomPuzzlesInfoDSHandle()
     {
         return CustomPuzzlesInfoDSHandle.getInstance();
     }

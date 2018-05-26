@@ -20,6 +20,8 @@ public class MenuSelectUIControl : BaseUIControl
     public Transform addCustomJigsaw;
     public Button addCustomJigsawBT;
 
+    private JigsawResourcesEnum currentResType;//当前选择数据类型
+
     private new void Awake()
     {
         base.Awake();
@@ -69,9 +71,18 @@ public class MenuSelectUIControl : BaseUIControl
     /// <param name="resTypeSelectView"></param>
     public void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
     {
+        this.currentResType = resourcesEnum;
         if (jigsawSelectContentSC == null)
             return;
         jigsawSelectContentSC.loadJigsaw(resourcesEnum);
+    }
+
+    /// <summary>
+    /// 刷新当前数据
+    /// </summary>
+    public void refreshJigsawSelectData()
+    {
+        setJigsawSelectData(currentResType);
     }
 
     public override void openUI()
@@ -89,8 +100,7 @@ public class MenuSelectUIControl : BaseUIControl
     {
         if (resTypeSelectContentSC != null)
             resTypeSelectContentSC.loadResTypeData();
-        if (jigsawSelectContentSC != null)
-            jigsawSelectContentSC.loadJigsaw(JigsawResourcesEnum.Painting);
+        setJigsawSelectData(JigsawResourcesEnum.Painting);
     }
     
     /// <summary>

@@ -15,7 +15,7 @@ public class CommonConfigure
     {
         GameLanguage = GameLanguageEnum.Chinese;
         isOpenBGM = EnabledEnum.ON;
-        GameConfigureBean configureBean=  DataStorageManage.getGameConfigureDSHandle().getAllData();
+        GameConfigureBean configureBean=  DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
             //游戏语言设置

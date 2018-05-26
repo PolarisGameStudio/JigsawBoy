@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 
 
-public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStateBean>, IBaseDataStorage<List<PuzzlesCompleteStateBean>, long>
+public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStateBean>, IBaseDataStorage<PuzzlesCompleteStateBean, long>
 {
 
     private const string File_Name = "PuzzlesCompleteDS";
 
-    private static IBaseDataStorage<List<PuzzlesCompleteStateBean>, long> handle;
+    private static IBaseDataStorage<PuzzlesCompleteStateBean, long> handle;
 
-    public static IBaseDataStorage<List<PuzzlesCompleteStateBean>, long> getInstance()
+    public static IBaseDataStorage<PuzzlesCompleteStateBean, long> getInstance()
     {
         if (handle == null)
         {
@@ -25,6 +25,11 @@ public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStat
         return startLoadDataForList(File_Name);
     }
 
+    public PuzzlesCompleteStateBean getData(long data)
+    {
+        throw new NotImplementedException();
+    }
+
     public void saveAllData(List<PuzzlesCompleteStateBean> data)
     {
         if (data == null || data.Count == 0)
@@ -32,8 +37,45 @@ public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStat
             LogUtil.log("保存失败-没有数据");
             return;
         }
-        startSaveData(File_Name, data);
+        startSaveDataForList(File_Name, data);
     }
 
+    /// <summary>
+    /// 保存数据
+    /// </summary>
+    /// <param name="data"></param>
+    public void saveData(PuzzlesCompleteStateBean data)
+    {
+        if (data == null || data.puzzleId == 0) {
+            LogUtil.log("保存失败-没有数据或没有拼图ID");
+            return;
+        }
+        List<PuzzlesCompleteStateBean> oldAllData = getAllData();
+        //如果之前没有数据直接存储
+        if (oldAllData == null || oldAllData.Count == 0)
+        {
+            oldAllData = new List<PuzzlesCompleteStateBean>();
+            oldAllData.Add(data);
+            startSaveDataForList(File_Name, oldAllData);
+            return;
+        }
+        //如果有数据则遍历之前看是否有相同
+        int hasDataBefore = -1;
+        for (int i = 0; i < oldAllData.Count; i++) {
+            if (oldAllData[i].puzzleId.Equals(data.puzzleId)) {
+                hasDataBefore = i;
+                break;
+            }
+        }
+        if (hasDataBefore.Equals(-1))
+        {
+            oldAllData.Add(data);
+            saveAllData(oldAllData);
+        }
+        else {
+            oldAllData[hasDataBefore] = data;
+            saveAllData(oldAllData);
+        }
+    }
 }
 
