@@ -13,6 +13,13 @@ public class MenuMainUIControl : BaseUIControl
     //自定义按钮
     public Button customBT;
     public Text customText;
+    //设置按钮
+    public Button settingBT;
+    public Text settingText;
+    //退出按钮
+    public Button exitBT;
+    public Text exitText;
+
 
     private new void Awake()
     {
@@ -20,12 +27,24 @@ public class MenuMainUIControl : BaseUIControl
       
         startGameBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "StartGameBT");
         startGameText = CptUtil.getCptFormParentByName<Button, Text>(startGameBT, "StartGameText");
+        startGameText.text = CommonData.getText(1);
 
         customBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "CustomBT");
         customText = CptUtil.getCptFormParentByName<Button, Text>(customBT, "CustomText");
+        customText.text = CommonData.getText(2);
+
+        settingBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "SettingBT");
+        settingText = CptUtil.getCptFormParentByName<Button, Text>(settingBT, "SettingText");
+        settingText.text = CommonData.getText(3);
+
+        exitBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "ExitBT");
+        exitText = CptUtil.getCptFormParentByName<Button, Text>(exitBT, "ExitText");
+        exitText.text = CommonData.getText(4);
 
         startGameBT.onClick.AddListener(startGameOnClick);
-        customBT.onClick.AddListener(diyOnClick);
+        customBT.onClick.AddListener(customOnClick);
+        settingBT.onClick.AddListener(settingOnClick);
+        exitBT.onClick.AddListener(exitOnClick);
 
     }
 
@@ -39,20 +58,30 @@ public class MenuMainUIControl : BaseUIControl
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
     }
 
-    private void diyOnClick()
+    /// <summary>
+    /// 进入自定义装扮界面
+    /// </summary>
+    private void customOnClick()
     {
 
     }
 
-    private void gameConfigureOnClick()
+    /// <summary>
+    /// 进入设置界面
+    /// </summary>
+    private void settingOnClick()
     {
 
     }
 
-    private void exitGameOnClick()
+    /// <summary>
+    /// 离开游戏
+    /// </summary>
+    private void exitOnClick()
     {
         SystemUtil.exitGame();
     }
+
 
     public override void openUI()
     {

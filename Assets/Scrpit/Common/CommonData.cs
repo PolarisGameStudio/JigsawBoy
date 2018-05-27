@@ -20,4 +20,14 @@ public class CommonData {
 
         UITextMap= UITextManager.LoadAllUIText();
     }
+
+    /// <summary>
+    /// 获取文本信息 By ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static string getText(long id) {
+        UITextBean textData= UITextMap[id];
+        return textData.Content;
+    }
 }

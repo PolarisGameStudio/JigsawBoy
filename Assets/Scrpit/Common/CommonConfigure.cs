@@ -13,7 +13,7 @@ public class CommonConfigure
 
     static CommonConfigure()
     {
-        GameLanguage = GameLanguageEnum.Chinese;
+        GameLanguage = GameLanguageEnum.English;
         isOpenBGM = EnabledEnum.ON;
         GameConfigureBean configureBean=  DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)

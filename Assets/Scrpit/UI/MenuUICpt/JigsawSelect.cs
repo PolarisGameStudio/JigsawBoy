@@ -128,7 +128,8 @@ public class JigsawSelect : BaseMonoBehaviour
         Button unLockBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawUnLock");
         unLockBT.onClick.AddListener(delegate ()
         {
-            if (completeStateBean == null) {
+            if (completeStateBean == null)
+            {
                 completeStateBean = new PuzzlesCompleteStateBean();
                 completeStateBean.puzzleId = infoBean.id;
                 completeStateBean.puzzleType = infoBean.data_type;
@@ -139,7 +140,7 @@ public class JigsawSelect : BaseMonoBehaviour
         });
         //设置文本信息
         Text jigsawUnLockText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawUnLockText");
-        jigsawUnLockText.text = "解锁(" + infoBean.unlock_point+")";
+        jigsawUnLockText.text = CommonData.getText(13) + "( " + infoBean.unlock_point + "PP )";
 
         //设置拼图等级
         setLevel(itemObj, infoBean.level);
@@ -179,14 +180,16 @@ public class JigsawSelect : BaseMonoBehaviour
 
         });
 
-
         //设置文本信息
         Text jigsawNameText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawName");
-        if (jigsawNameText != null)
-            jigsawNameText.text = infoBean.Name + infoBean.Level;
+        Text startBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawStartText");
+        Text scoreBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawScoreText");
+        jigsawNameText.text = infoBean.Name + infoBean.Level;
+        startBTText.text = CommonData.getText(14);
+        scoreBTText.text = CommonData.getText(15);
 
         //设置拼图等级
-        setLevel( itemObj, infoBean.level);
+        setLevel(itemObj, infoBean.level);
     }
 
 
