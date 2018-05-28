@@ -208,26 +208,31 @@ public class JigsawSelect : BaseMonoBehaviour
         itemObj.transform.SetParent(transform);
 
         //设置背景图片
-        Image backImage = itemObj.GetComponent<Image>();
+        Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
         StartCoroutine(ResourcesManager.loadLocationImage(filePath, backImage));
 
         //设置按键
-        Button itemBT = itemObj.GetComponent<Button>();
-        itemBT.onClick.AddListener(delegate ()
+        Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
+        startBT.onClick.AddListener(delegate ()
         {
             CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
+        Button scoreBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawScore");
+        scoreBT.onClick.AddListener(delegate ()
+        {
+
+        });
+
 
         //设置文本信息
-        Text jigsawNameText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawName");
-        if (jigsawNameText != null)
-            jigsawNameText.text = infoBean.Name;
+        Text jigsawNameText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawName");
+        jigsawNameText.text = infoBean.Name;
 
         //设置按钮信息
         //编辑按钮
-        Button editBT = CptUtil.getCptFormParentByName<Button, Button>(itemBT, "EditBT");
+        Button editBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawEdit");
         editBT.onClick.AddListener(delegate ()
         {
             MenuCustomUpLoadUIControl upLoadUIControl = menuSelectUIControl.mUIMasterControl.getUIByType<MenuCustomUpLoadUIControl>(UIEnum.MenuCustomUpLoadUI);
@@ -235,7 +240,7 @@ public class JigsawSelect : BaseMonoBehaviour
             menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
         });
         //删除按钮
-        Button deleteBT = CptUtil.getCptFormParentByName<Button, Button>(itemBT, "DeleteBT");
+        Button deleteBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawDelete");
         deleteBT.onClick.AddListener(delegate ()
         {
             FileUtil.DeleteFile(filePath);

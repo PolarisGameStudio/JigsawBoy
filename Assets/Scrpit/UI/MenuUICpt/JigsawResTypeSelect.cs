@@ -73,6 +73,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
                 resName = CommonData.getText(8);
                 break;
             case JigsawResourcesEnum.Other:
+                resTypeIconPath = "Texture/UI/tab_other";
                 resName = CommonData.getText(9);
                 break;
             case JigsawResourcesEnum.Animal:
