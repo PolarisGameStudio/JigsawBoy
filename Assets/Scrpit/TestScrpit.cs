@@ -15,14 +15,14 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
     {
         //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
         //handle.findLeaderboardEntriesForUser(leaderboardId,this);
-        GetLeaderboardEntriesParams baseParams = new GetLeaderboardEntriesParams();
-        baseParams.key = CommonInfo.Steam_Key_All;
-        baseParams.appid = CommonInfo.Steam_App_Id;
+        //GetLeaderboardEntriesParams baseParams = new GetLeaderboardEntriesParams();
+        //baseParams.key = CommonInfo.Steam_Key_All;
+        //baseParams.appid = CommonInfo.Steam_App_Id;
 
-        baseParams.leaderboardid = leaderboardId;
-        baseParams.steamid = SteamUser.GetSteamID().m_SteamID;
-        baseParams.datarequest = "RequestAroundUser";
-        MHttpManagerFactory.getSteamManager().getLeaderboardEntries(baseParams, new TestCallBack());
+        //baseParams.leaderboardid = leaderboardId;
+        //baseParams.steamid = SteamUser.GetSteamID().m_SteamID;
+        //baseParams.datarequest = "RequestAroundUser";
+        //MHttpManagerFactory.getSteamManager().getLeaderboardEntries(baseParams, new TestCallBack());
     }
 
     void Start()
@@ -40,8 +40,8 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
         //baseParams.name = "testLeader";
         //MHttpManagerFactory.getSteamManager().deleteLeaderboard(baseParams, new TestHandle());
 
-        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-        handle.findLeaderboard("test", this);
+        //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+        //handle.findLeaderboard("test", this);
     }
 
     // Update is called once per frame
