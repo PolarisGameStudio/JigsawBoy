@@ -42,6 +42,8 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
 
         //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
         //handle.findLeaderboard("test", this);
+
+        DialogManager.createToastDialog();
     }
 
     // Update is called once per frame

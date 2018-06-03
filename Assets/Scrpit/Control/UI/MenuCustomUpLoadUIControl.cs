@@ -27,7 +27,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     private new void Awake()
     {
         base.Awake();
-        uploadImage = CptUtil.getCptFormParentByName<Transform, Image>(transform, "UploadImage");
+        uploadImage = CptUtil.getCptFormParentByName<Transform, Image>(transform, "UploadImageContent");
         uploadBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "UploadImage");
 
         inputName = CptUtil.getCptFormParentByName<Transform, InputField>(transform, "InputName");
@@ -85,8 +85,12 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     public void showUploadImage()
     {
         uploadPath = FileUtil.OpenFileDialog();
-        if (uploadPath == null || uploadPath.Length == 0)
+        if (uploadPath == null || uploadPath.Length == 0) {
+            uploadImage.color = new Color(0,0,0,0);
             return;
+        }
+      
+        uploadImage.color = Color.white;
         StartCoroutine(ResourcesManager.loadLocationImage(uploadPath, uploadImage));
     }
 
@@ -152,36 +156,43 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         if (uploadImage.sprite == null)
         {
             LogUtil.log("没有图片");
+            DialogManager.createToastDialog().setToastText("没有图片");
             return false;
         }
         if (uploadPath == null && uploadPath.Length == 0)
         {
             LogUtil.log("没有路径");
+            DialogManager.createToastDialog().setToastText("没有路径");
             return false;
         }
         if (inputName.text == null || inputName.text.Length == 0)
         {
             LogUtil.log("没有拼图名字");
+            DialogManager.createToastDialog().setToastText("没有拼图名字");
             return false;
         }
         if (inputHorizontalNumber.text == null || inputHorizontalNumber.text.Length == 0)
         {
             LogUtil.log("没有拼图横向块数");
+            DialogManager.createToastDialog().setToastText("没有拼图横向块数");
             return false;
         }
         if (inputVerticalNumber.text == null || inputVerticalNumber.text.Length == 0)
         {
             LogUtil.log("没有拼图纵向块数");
+            DialogManager.createToastDialog().setToastText("没有拼图纵向块数");
             return false;
         }
         if (!CheckUtil.checkIsNumber(inputHorizontalNumber.text))
         {
             LogUtil.log("横向块数 数据类型错误");
+            DialogManager.createToastDialog().setToastText("横向块数 数据类型错误");
             return false;
         }
         if (!CheckUtil.checkIsNumber(inputVerticalNumber.text))
         {
             LogUtil.log("纵向块数 数据类型错误");
+            DialogManager.createToastDialog().setToastText("纵向块数 数据类型错误");
             return false;
         }
         int horizontalNumber = Convert.ToInt32(inputHorizontalNumber.text);
@@ -189,11 +200,13 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         if (horizontalNumber > 50 || horizontalNumber < 2)
         {
             LogUtil.log("拼图横向块数必须小于等于50并且大于2");
+            DialogManager.createToastDialog().setToastText("拼图横向块数必须小于等于50并且大于2");
             return false;
         }
         if (verticalNumber > 50 || verticalNumber < 2)
         {
             LogUtil.log("拼图纵向块数必须小于等于50并且大于2");
+            DialogManager.createToastDialog().setToastText("拼图纵向块数必须小于等于50并且大于2");
             return false;
         }
         return true;
@@ -207,7 +220,10 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         if (uploadPath != null)
             uploadPath = null;
         if (uploadImage != null)
+        {
+            uploadImage.color = new Color(0, 0, 0, 0);
             uploadImage.sprite = null;
+        }
         if (inputName != null)
             inputName.text = null;
         if (inputHorizontalNumber != null)
