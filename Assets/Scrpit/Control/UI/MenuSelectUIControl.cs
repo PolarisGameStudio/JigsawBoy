@@ -47,9 +47,14 @@ public class MenuSelectUIControl : BaseUIControl
         //初始化标题栏
         jigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
         titleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(jigsawSelectTiltebar, "ExitBT");
-        titleBarJigsawPointTV = CptUtil.getCptFormParentByName<Transform, Text>(jigsawSelectTiltebar, "JigsawPoint");
-        if (titleBarExitBT != null) {
+        titleBarJigsawPointTV = CptUtil.getCptFormParentByName<Transform, Text>(jigsawSelectTiltebar, "PuzzlesPointText");
+        if (titleBarExitBT != null)
+        {
             titleBarExitBT.onClick.AddListener(addExitOnClick);
+        }
+        if (titleBarJigsawPointTV != null)
+        {
+            refreshPuzzlesPoint();
         }
 
         //按钮增加
@@ -74,6 +79,16 @@ public class MenuSelectUIControl : BaseUIControl
         this.currentResType = resourcesEnum;
         if (jigsawSelectContentSC == null)
             return;
+        if (resourcesEnum.Equals(JigsawResourcesEnum.Custom))
+        {
+            //展示自定义添加按钮
+            showAddCustomJigsaw(true);
+        }
+        else
+        {
+            //不展示自定义添加按钮
+            showAddCustomJigsaw(false);
+        }
         jigsawSelectContentSC.loadJigsaw(resourcesEnum);
     }
 
@@ -83,6 +98,14 @@ public class MenuSelectUIControl : BaseUIControl
     public void refreshJigsawSelectData()
     {
         setJigsawSelectData(currentResType);
+    }
+
+    /// <summary>
+    /// 刷新拼图点数
+    /// </summary>
+    public void refreshPuzzlesPoint()
+    {
+        titleBarJigsawPointTV.text = "x" + DataStorageManage.getUserInfoDSHandle().getData(0).puzzlesPoint + " PP";
     }
 
     public override void openUI()
@@ -100,19 +123,20 @@ public class MenuSelectUIControl : BaseUIControl
     {
         if (resTypeSelectContentSC != null)
             resTypeSelectContentSC.loadResTypeData();
+
         setJigsawSelectData(JigsawResourcesEnum.Painting);
-    }
-    
-    /// <summary>
-    /// 增加自定义拼图按钮
-    /// </summary>
-    public void addCustomJigsawOnClick()
-    {
-       mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
     }
 
     /// <summary>
-    /// 增加退出按钮
+    /// 增加自定义拼图按钮监听
+    /// </summary>
+    public void addCustomJigsawOnClick()
+    {
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+    }
+
+    /// <summary>
+    /// 增加退出按钮监听
     /// </summary>
     public void addExitOnClick()
     {
@@ -127,8 +151,10 @@ public class MenuSelectUIControl : BaseUIControl
     {
         if (addCustomJigsaw != null)
         {
-           addCustomJigsaw.gameObject.SetActive(isShow);
+            addCustomJigsaw.gameObject.SetActive(isShow);
         }
     }
+
+
 }
 

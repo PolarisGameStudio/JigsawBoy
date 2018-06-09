@@ -11,6 +11,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     public Image uploadImage;
     public Button uploadBT;
     public Button submitBT;
+    public Button cancelBT;
 
     public InputField inputName;
     public InputField inputHorizontalNumber;
@@ -35,6 +36,11 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         inputVerticalNumber = CptUtil.getCptFormParentByName<Transform, InputField>(transform, "InputVerticalNumber");
 
         submitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "SubmitBT");
+        cancelBT= CptUtil.getCptFormParentByName<Transform, Button>(transform, "CancelBT");
+
+        cancelBT.onClick.AddListener(delegate{
+            jumpSelectUI();
+        });
     }
 
     public override void openUI()

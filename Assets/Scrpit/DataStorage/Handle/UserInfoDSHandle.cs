@@ -20,20 +20,15 @@ public class UserInfoDSHandle : BaseDataStorageHandle<UserInfoBean>, IBaseDataSt
     }
 
 
-    public List<UserInfoBean> getAllData()
-    {
-        throw new NotImplementedException();
-    }
 
     public UserInfoBean getData(long data)
     {
-        return startLoadData(File_Name);
+        UserInfoBean userInfo = startLoadData(File_Name);
+        if (userInfo == null)
+            userInfo = new UserInfoBean();
+        return userInfo;
     }
 
-    public void saveAllData(List<UserInfoBean> data)
-    {
-        throw new NotImplementedException();
-    }
 
     public void saveData(UserInfoBean data)
     {
@@ -45,7 +40,38 @@ public class UserInfoDSHandle : BaseDataStorageHandle<UserInfoBean>, IBaseDataSt
         startSaveData(File_Name, data);
     }
 
+    /// <summary>
+    /// 增加用户拼图点数
+    /// </summary>
+    /// <param name="puzzlesPoint"></param>
+    public void increaseUserPuzzlesPoint(long puzzlesPoint)
+    {
+        UserInfoBean userInfo = getData(0);
+        userInfo.puzzlesPoint += puzzlesPoint;
+        saveData(userInfo);
+    }
+
+    /// <summary>
+    /// 减少用户拼图点数
+    /// </summary>
+    /// <param name="puzzlesPoint"></param>
+    public void decreaseUserPuzzlesPoint(long puzzlesPoint)
+    {
+        UserInfoBean userInfo = getData(0);
+        userInfo.puzzlesPoint -= puzzlesPoint;
+        saveData(userInfo);
+    }
     List<UserInfoBean> IBaseDataStorage<UserInfoBean, long>.getAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<UserInfoBean> getAllData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void saveAllData(List<UserInfoBean> data)
     {
         throw new NotImplementedException();
     }

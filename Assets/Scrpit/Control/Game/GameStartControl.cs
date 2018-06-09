@@ -237,6 +237,7 @@ public class GameStartControl : BaseMonoBehaviour
             gameMainUI.endTimer();
             completeTime = gameMainUI.getGameTimer();
         }
+        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level*10);
         GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);

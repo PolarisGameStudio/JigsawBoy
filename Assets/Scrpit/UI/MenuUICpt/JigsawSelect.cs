@@ -128,15 +128,31 @@ public class JigsawSelect : BaseMonoBehaviour
         Button unLockBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawUnLock");
         unLockBT.onClick.AddListener(delegate ()
         {
-            if (completeStateBean == null)
+            long userPoint = DataStorageManage.getUserInfoDSHandle().getData(0).puzzlesPoint;
+            if (userPoint < infoBean.unlock_point)
             {
-                completeStateBean = new PuzzlesCompleteStateBean();
-                completeStateBean.puzzleId = infoBean.id;
-                completeStateBean.puzzleType = infoBean.data_type;
+                //如果没有PP则提示不足
+                DialogManager.createToastDialog().setToastText(CommonData.getText(16));
             }
-            completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
-            DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
-            menuSelectUIControl.refreshJigsawSelectData();
+            else
+            {
+                //如果有PP则解锁
+                //保存信息
+                ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).decreaseUserPuzzlesPoint(infoBean.unlock_point);
+                menuSelectUIControl.refreshPuzzlesPoint();
+                //解锁拼图
+                if (completeStateBean == null)
+                {
+                    completeStateBean = new PuzzlesCompleteStateBean();
+                    completeStateBean.puzzleId = infoBean.id;
+                    completeStateBean.puzzleType = infoBean.data_type;
+                }
+                completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
+                DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
+                menuSelectUIControl.refreshJigsawSelectData();
+            }
+
+
         });
         //设置文本信息
         Text jigsawUnLockText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawUnLockText");
@@ -184,7 +200,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Text jigsawNameText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawName");
         Text startBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawStartText");
         Text scoreBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawScoreText");
-        jigsawNameText.text = infoBean.Name + infoBean.Level;
+        jigsawNameText.text = infoBean.Name;
         startBTText.text = CommonData.getText(14);
         scoreBTText.text = CommonData.getText(15);
 

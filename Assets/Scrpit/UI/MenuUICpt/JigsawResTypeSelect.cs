@@ -102,16 +102,6 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         selectBT.onClick.AddListener(delegate ()
         {
             menuSelectUIControl.setJigsawSelectData(resType);
-            if (resType.Equals(JigsawResourcesEnum.Custom))
-            {
-                //展示自定义添加按钮
-                menuSelectUIControl.showAddCustomJigsaw(true);
-            }
-            else
-            {
-                //不展示自定义添加按钮
-                menuSelectUIControl.showAddCustomJigsaw(false);
-            }
         });
 
         //设置文本信息
