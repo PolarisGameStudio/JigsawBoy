@@ -17,7 +17,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     private TimeSpan nowTimeSpan;
     void Start()
     {
-        timeText = GetComponent<Text>();
+        timeText = CptUtil.getCptFormParentByName<Transform, Text>(transform,"GameTimerText");
     }
 
 
@@ -67,7 +67,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
             nowTimeSpan = TimeUtil.getTimeDifference(startTime, nowTime);
             if (timeText != null)
             {
-                string gameTime = "时间:"
+                string gameTime = ""
                     + nowTimeSpan.Days + "天"
                     + nowTimeSpan.Hours + "小时"
                     + nowTimeSpan.Minutes + "分"

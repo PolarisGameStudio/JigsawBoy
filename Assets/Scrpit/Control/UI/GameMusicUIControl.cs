@@ -10,6 +10,8 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,lon
 
     public ToggleGroup musicSwitchGroup;
     public GameMusicSwitch musicSwitchCpt;
+
+    public Button gameCancelBT;
     private new void Awake()
     {
         base.Awake();
@@ -29,10 +31,13 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,lon
             musicSwitchCpt.addRadioButtonCallBack(this);
         }
 
+        gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
+        gameCancelBT.onClick.AddListener(cancelUI);
     }
 
     private new void Start()
     {
+        base.Start();
         audioSourceControl = CptUtil.getCptFormSceneByName<AudioSourceControl>("Main Camera");
     }
 
@@ -49,6 +54,14 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,lon
     public override void loadUIData()
     {
 
+    }
+
+    /// <summary>
+    /// 关闭当前页面
+    /// </summary>
+    public void cancelUI()
+    {
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
     }
 
 

@@ -8,6 +8,7 @@ public class GamePauseUIControl : BaseUIControl
     public Button restartBT;
     public Button exitBT;
 
+    public Button gameCancelBT;
     private new void Awake()
     {
         base.Awake();
@@ -17,7 +18,18 @@ public class GamePauseUIControl : BaseUIControl
         restartBT.onClick.AddListener(restartOnClick);
         exitBT.onClick.AddListener(exitOnClick);
 
+        gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
+        gameCancelBT.onClick.AddListener(cancelUI);
     }
+
+    /// <summary>
+    /// 关闭当前页面
+    /// </summary>
+    public void cancelUI()
+    {
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
+    }
+
 
     /// <summary>
     /// 重新开始游戏

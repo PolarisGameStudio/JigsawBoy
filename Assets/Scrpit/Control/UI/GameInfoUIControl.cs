@@ -19,6 +19,8 @@ public class GameInfoUIControl : BaseUIControl
     public Image gameInfoPicImage;
     public RectTransform gameInfoPicImageTF;
 
+    public Button gameCancelBT;
+
     private new void Awake()
     {
         base.Awake();
@@ -64,8 +66,19 @@ public class GameInfoUIControl : BaseUIControl
 
             gameInfoPicImage.sprite = picSP;
         }
+
+
+        gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
+        gameCancelBT.onClick.AddListener(cancelUI);
     }
 
+    /// <summary>
+    /// 关闭当前页面
+    /// </summary>
+    public void cancelUI()
+    {
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
+    }
 
     /// <summary>
     /// 设置是否显示信息

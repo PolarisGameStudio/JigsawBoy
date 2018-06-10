@@ -55,6 +55,35 @@ public class UIMasterControl : BaseMonoBehaviour
     }
 
     /// <summary>
+    /// 打开指定列表UI 并关闭其它UI
+    /// </summary>
+    /// <param name="uiEnum"></param>
+    public void openUIByTypeAndCloseOther(List<UIEnum> uiEnumList)
+    {
+        if (listCanvas == null || listCanvas.Length == 0|| uiEnumList==null|| uiEnumList.Count==0)
+            return;
+        int canvasSize = listCanvas.Length;
+        for (int i = 0; i < canvasSize; i++)
+        {
+            bool isOpenUi = false;
+            BaseUIControl itemControl = listCanvas[i];
+            for (int j = 0; j < uiEnumList.Count; j++)
+            {
+                UIEnum uiEnum = uiEnumList[j];
+                string uiName = uiEnum.ToString();
+                if (itemControl.name.Equals(uiName))
+                    isOpenUi = true;
+            }
+            if (isOpenUi)
+            {
+                itemControl.openUI();
+            }
+            else {
+                itemControl.closeUI();
+            }
+        }
+    }
+    /// <summary>
     /// 打开指定UI
     /// </summary>
     /// <param name="uiEnum"></param>

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameOperateControl : BaseMonoBehaviour
 {
@@ -43,10 +44,11 @@ public class GameOperateControl : BaseMonoBehaviour
 
     private void baseShowUI(bool isShow,UIEnum uIEnum)
     {
-        if (isShow)
-            uiMasterControl.openUIByType(uIEnum);
+        if (isShow) {
+            uiMasterControl.openUIByTypeAndCloseOther(uIEnum);
+        }
         else
-            uiMasterControl.closeUIByType(uIEnum);
+            uiMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
     }
 }
 
