@@ -7,9 +7,13 @@ using System.Text;
 public class MHttpManagerFactory
 {
     //steam web API
-    public static SteamManagerImpl getSteamManager()
+    public static SteamManagerPartnerImpl getSteamManagerPartner()
     {
-        return SteamManagerImpl.getInstance();
+        return SteamManagerPartnerImpl.getInstance();
+    }
+    public static SteamManagerPoweredImpl getSteamManagerPowered()
+    {
+        return SteamManagerPoweredImpl.getInstance();
     }
 }
 

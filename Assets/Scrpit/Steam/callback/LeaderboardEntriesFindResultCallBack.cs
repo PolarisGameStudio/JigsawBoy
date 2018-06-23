@@ -10,6 +10,6 @@ public interface LeaderboardEntriesFindResultCallBack
     /// 排行榜值查询结果
     /// </summary>
     /// <param name="leaderboardId"></param>
-    void leaderboradEntriesFindResult(ulong leaderboardId);
+    void leaderboradEntriesFindResult(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList);
 }
 

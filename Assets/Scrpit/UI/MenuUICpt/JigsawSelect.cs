@@ -67,21 +67,13 @@ public class JigsawSelect : BaseMonoBehaviour
 
         List<PuzzlesCompleteStateBean> listCompleteData = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
         List<PuzzlesGameInfoBean> listData = PuzzlesDataUtil.MergePuzzlesInfoAndCompleteState(listInfoData, listCompleteData);
-
-        StartCoroutine(createSelect(listData));
-    }
-
-
-    IEnumerator createSelect(List<PuzzlesGameInfoBean> listData)
-    {
-        int resourcesListCount = listData.Count;
-        for (int itemPosition = 0; itemPosition < resourcesListCount; itemPosition++)
+        for (int itemPosition = 0; itemPosition < listData.Count; itemPosition++)
         {
             PuzzlesGameInfoBean itemInfo = listData[itemPosition];
-            yield return new WaitForEndOfFrame();
             createSelectItem(itemInfo);
         }
     }
+
 
     /// <summary>
     /// 创建相对应按钮
@@ -180,8 +172,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        Sprite backSp = ResourcesManager.loadData<Sprite>(filePath);
-        backImage.sprite = backSp;
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath, backImage));
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
@@ -226,7 +217,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadLocationImage(filePath, backImage));
+        StartCoroutine(ResourcesManager.loadAsyncLocationImage(filePath, backImage));
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
@@ -282,8 +273,8 @@ public class JigsawSelect : BaseMonoBehaviour
             levelIconPath = "Texture/UI/icon_level_2";
         else
             levelIconPath = "Texture/UI/icon_level_3";
-        Sprite levelSP = ResourcesManager.loadData<Sprite>(levelIconPath);
-        levelPic.sprite = levelSP;
+
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(levelIconPath, levelPic));
         levelText.text = "x" + level;
     }
 }

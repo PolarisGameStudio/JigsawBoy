@@ -15,6 +15,17 @@ public class ResourcesManager
         T resData = Resources.Load(resPath,typeof(T)) as T;
         return resData;
     }
+    /// <summary>
+    /// 异步加载资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="resPath"></param>
+    /// <returns></returns>
+    public static T loadAsyncData<T>(string resPath) where T : Object
+    {
+        T resData = Resources.LoadAsync(resPath, typeof(T)) as T;
+        return resData;
+    }
 
     /// <summary>
     /// 加载本地文件
@@ -36,11 +47,25 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator loadLocationImage(string imagePath, Image image)
+    public static IEnumerator loadAsyncLocationImage(string imagePath, Image image)
     {
         string filePath = "file://" + imagePath;
         WWW www = new WWW(filePath);
         yield return www;
-        image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f)); ;
+        image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f)); 
+    }
+
+    /// <summary>
+    /// 异步加载图片
+    /// </summary>
+    /// <param name="imagePath"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator loadAsyncDataImage(string imagePath, Image image)
+    {
+        ResourceRequest res = Resources.LoadAsync(imagePath);
+        yield return res;
+        Texture2D imageTX =  res.asset as Texture2D;
+        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f)); ;
     }
 }

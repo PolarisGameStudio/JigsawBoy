@@ -11,14 +11,14 @@ public class GetLeaderboardEntriesResult
     [Serializable]
     public class LeaderboardEntryInformation
     {
-        public long appID;//appid
+        public string appID;//appid
         public long leaderboardID;//排行榜ID
         public int totalLeaderBoardEntryCount;//条数
         public List<LeaderboardEntries> leaderboardEntries;//数据
     }
 
     [Serializable]
-    public class LeaderboardEntries
+    public  class LeaderboardEntries
     {
         public string steamID;//steamID
         public int score;//分数

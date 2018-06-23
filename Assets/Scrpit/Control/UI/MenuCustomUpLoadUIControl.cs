@@ -82,7 +82,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         inputHorizontalNumber.text = infoBean.Horizontal_number + "";
         inputVerticalNumber.text = infoBean.Vertical_number + "";
         uploadPath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadLocationImage(uploadPath, uploadImage));
+        StartCoroutine(ResourcesManager.loadAsyncLocationImage(uploadPath, uploadImage));
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         }
       
         uploadImage.color = Color.white;
-        StartCoroutine(ResourcesManager.loadLocationImage(uploadPath, uploadImage));
+        StartCoroutine(ResourcesManager.loadAsyncLocationImage(uploadPath, uploadImage));
     }
 
     /// <summary>

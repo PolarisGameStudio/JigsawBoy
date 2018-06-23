@@ -6,23 +6,24 @@ using Steamworks;
 
 public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, LeaderboardEntriesFindResultCallBack
 {
-    public void leaderboradEntriesFindResult(ulong leaderboardId)
+
+    public void leaderboradEntriesFindResult(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList)
     {
-        throw new System.NotImplementedException();
+        for (int i = 0; i < resultList.Count; i++) {
+            LogUtil.log("resultList Item：i=" + i+" steamId:"+resultList[i].steamID+" rank:"+resultList[i].rank);
+            List<ulong> listIds = new List<ulong>();
+            listIds.Add(ulong.Parse(resultList[i].steamID));
+            MHttpManagerFactory.getSteamManagerPowered().getSteamUserInfo(listIds, new TestCallBack());
+        }
     }
 
     public void leaderboradFindResult(ulong leaderboardId)
     {
-        //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-        //handle.findLeaderboardEntriesForUser(leaderboardId,this);
-        //GetLeaderboardEntriesParams baseParams = new GetLeaderboardEntriesParams();
-        //baseParams.key = CommonInfo.Steam_Key_All;
-        //baseParams.appid = CommonInfo.Steam_App_Id;
-
-        //baseParams.leaderboardid = leaderboardId;
-        //baseParams.steamid = SteamUser.GetSteamID().m_SteamID;
-        //baseParams.datarequest = "RequestAroundUser";
-        //MHttpManagerFactory.getSteamManager().getLeaderboardEntries(baseParams, new TestCallBack());
+        LogUtil.log("leaderboradFindResult：" + leaderboardId);
+        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+        handle.findLeaderboardEntriesForUser(leaderboardId,this);
+      // handle.uploadLeaderboardScore(leaderboardId,10);
+       // MHttpManagerFactory.getSteamManager().getLeaderboradEntriesForUser(leaderboardId, new TestCallBack());
     }
 
     void Start()
@@ -40,10 +41,10 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
         //baseParams.name = "testLeader";
         //MHttpManagerFactory.getSteamManager().deleteLeaderboard(baseParams, new TestHandle());
 
-        //LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-        //handle.findLeaderboard("test", this);
+        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+       handle.findLeaderboard("test", this);
 
-        DialogManager.createToastDialog();
+     
     }
 
     // Update is called once per frame
@@ -52,14 +53,14 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
 
     }
 
-    public class TestCallBack : HttpResponseHandler<GetLeaderboardEntriesResult>
+    public class TestCallBack : HttpResponseHandler<SteamUserInfoResult>
     {
         public override void onError(string message)
         {
 
         }
 
-        public override void onSuccess(GetLeaderboardEntriesResult result)
+        public override void onSuccess(SteamUserInfoResult result)
         {
 
         }

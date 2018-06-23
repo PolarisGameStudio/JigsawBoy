@@ -20,11 +20,30 @@ public interface ISteamLeaderboards
     /// <param name="responseHandler"></param>
     void deleteLeaderboard(DeleteLeaderboardParams baseParams, HttpResponseHandler<DeleteLeaderboardResult> responseHandler);
 
+
+    /// <summary>
+    /// 根据获取自己的排行榜数据
+    /// </summary>
+    /// <param name="leaderboardId"></param>
+    /// <param name="responseHandler"></param>
+    void getLeaderboradEntriesForUser(ulong leaderboardId, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler);
+
+
+    /// <summary>
+    /// 获取全球排名
+    /// </summary>
+    /// <param name="leaderboardId"></param>
+    /// <param name="responseHandler"></param>
+    void getLeaderboradEntriesForGlobal(ulong leaderboardId, int rangestart, int rangeend, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler);
+
     /// <summary>
     /// 获取排行榜数据
     /// </summary>
     /// <param name="baseParams"></param>
     /// <param name="responseHandler"></param>
     void getLeaderboardEntries(GetLeaderboardEntriesParams baseParams, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler);
+
+
+
 }
 
