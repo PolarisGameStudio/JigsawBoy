@@ -41,10 +41,8 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
         //baseParams.name = "testLeader";
         //MHttpManagerFactory.getSteamManager().deleteLeaderboard(baseParams, new TestHandle());
 
-        LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-       handle.findLeaderboard("test", this);
-
-     
+         LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+          handle.findLeaderboard("test", this);
     }
 
     // Update is called once per frame

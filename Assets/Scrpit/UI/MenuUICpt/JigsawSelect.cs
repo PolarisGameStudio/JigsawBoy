@@ -185,6 +185,8 @@ public class JigsawSelect : BaseMonoBehaviour
         scoreBT.onClick.AddListener(delegate ()
         {
 
+            DialogManager.createLeaderBoradDialog(1);
+
         });
 
         //设置文本信息

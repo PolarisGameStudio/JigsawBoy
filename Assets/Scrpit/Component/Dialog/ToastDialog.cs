@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class ToastDialog : MonoBehaviour
+public class ToastDialog : BaseMonoBehaviour
 {
 
     private Text mTVToast;
