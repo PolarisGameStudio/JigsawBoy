@@ -113,10 +113,10 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
 
             //设置位置
-            //jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            //jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            jigsawTF.position = jigsawItemPosition;
-            jigsawTF.rotation = transform.rotation;
+            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            //jigsawTF.position = jigsawItemPosition;
+            //jigsawTF.rotation = transform.rotation;
         }
         mergeDeal();
     }
