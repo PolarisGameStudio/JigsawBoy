@@ -19,12 +19,12 @@ public class SetLeaderboardScoreParams : BaseParams
     /// <summary>
     /// 表ID
     /// </summary>
-    public long leaderboardid { get; set; }
+    public ulong leaderboardid { get; set; }
 
     /// <summary>
     /// 用户steamID
     /// </summary>
-    public long steamid { get; set; }
+    public ulong steamid { get; set; }
 
     /// <summary>
     /// 分数

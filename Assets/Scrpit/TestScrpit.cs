@@ -11,20 +11,26 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
     {
         for (int i = 0; i < resultList.Count; i++) {
             LogUtil.log("resultList Item：i=" + i+" steamId:"+resultList[i].steamID+" rank:"+resultList[i].rank);
-            List<ulong> listIds = new List<ulong>();
-            listIds.Add(ulong.Parse(resultList[i].steamID));
+            List<string> listIds = new List<string>();
+            listIds.Add(resultList[i].steamID);
             MHttpManagerFactory.getSteamManagerPowered().getSteamUserInfo(listIds, new TestCallBack());
         }
     }
 
-    public void leaderboradFindResult(ulong leaderboardId)
+    public void leaderboradFindFail(string msg)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void leaderboradFindSuccess(ulong leaderboardId)
     {
         LogUtil.log("leaderboradFindResult：" + leaderboardId);
         LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-        handle.findLeaderboardEntriesForUser(leaderboardId,this);
-      // handle.uploadLeaderboardScore(leaderboardId,10);
+      //handle.findLeaderboardEntriesForUser(leaderboardId,this);
+      //handle.uploadLeaderboardScore(leaderboardId,1000);
        // MHttpManagerFactory.getSteamManager().getLeaderboradEntriesForUser(leaderboardId, new TestCallBack());
     }
+
 
     void Start()
     {
@@ -41,8 +47,11 @@ public class TestScrpit : BaseMonoBehaviour, LeaderboardFindResultCallBack, Lead
         //baseParams.name = "testLeader";
         //MHttpManagerFactory.getSteamManager().deleteLeaderboard(baseParams, new TestHandle());
 
-         LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
-          handle.findLeaderboard("test", this);
+        //    LeaderboardHandleImpl handle = new LeaderboardHandleImpl();
+        //    handle.findLeaderboard("test", this);
+        // handle.findOrCreateLeaderboardForTimeSeconds("Lady_With_An_Ermine");
+
+      //  DialogManager.createLeaderBoradDialog(1);
     }
 
     // Update is called once per frame

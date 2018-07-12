@@ -30,8 +30,12 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
             m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
             if (OnLeaderboardFindResultCallBack != null)
             {
-                OnLeaderboardFindResultCallBack.leaderboradFindResult(m_SteamLeaderboard.m_SteamLeaderboard);
+                OnLeaderboardFindResultCallBack.leaderboradFindSuccess(m_SteamLeaderboard.m_SteamLeaderboard);
             }
+        }
+        else
+        {
+            OnLeaderboardFindResultCallBack.leaderboradFindFail("查询失败");
         }
     }
 

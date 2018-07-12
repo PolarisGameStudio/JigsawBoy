@@ -60,5 +60,16 @@ public class SteamManagerPartnerImpl : BaseManagerImpl, ISteamLeaderboards
         requestGet("ISteamLeaderboards/GetLeaderboardEntries/v1", baseParams, responseHandler);
     }
 
+    public void updateLeaderboardData(ulong leaderboardId,int score, HttpResponseHandler<SetLeaderboardScoreResult> responseHandler)
+    {
+        SetLeaderboardScoreParams baseParams = new SetLeaderboardScoreParams();
+        baseParams.key = CommonInfo.Steam_Key_All;
+        baseParams.appid = CommonInfo.Steam_App_Id;
+        baseParams.leaderboardid = leaderboardId;
+        baseParams.steamid = SteamUser.GetSteamID().m_SteamID;
+        baseParams.score = score;
+        baseParams.scoremethod = "ForceUpdate";
+        requestPostForm("ISteamLeaderboards/SetLeaderboardScore/v1", baseParams, responseHandler);
+    }
 }
 
