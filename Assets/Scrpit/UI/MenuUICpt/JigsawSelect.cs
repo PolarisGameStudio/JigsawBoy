@@ -185,9 +185,8 @@ public class JigsawSelect : BaseMonoBehaviour
         scoreBT.onClick.AddListener(delegate ()
         {
             DialogManager
-            .createLeaderBoradDialog(0)
-            .setLeaderBoradName(infoBean.mark_file_name)
-            .setUserScore(998);
+            .createLeaderBoradDialog(1)
+            .setLeaderBoradName(infoBean.mark_file_name);
         });
 
         //设置文本信息

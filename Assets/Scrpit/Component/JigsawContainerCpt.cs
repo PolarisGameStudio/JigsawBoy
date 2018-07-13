@@ -372,7 +372,6 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             return;
         if (checkMerge(collisionJCC))
         {
-
             //设置不可在拖拽
             CommonData.IsDargMove = false;
             isSelect = false;

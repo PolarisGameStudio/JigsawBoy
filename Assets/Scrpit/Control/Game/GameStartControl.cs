@@ -241,7 +241,14 @@ public class GameStartControl : BaseMonoBehaviour
         GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
-        Tween cameraTW = DOTween.To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime);
+        Tween cameraTW = DOTween
+            .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
+            .OnComplete(
+            delegate () {
+                DialogManager
+                     .createLeaderBoradDialog(0)
+                     .setUserScore(completeTime.totalSeconds);
+            });
         //图像归位
         int containerListSize = containerList.Count;
         for (int i = 0; i < containerListSize; i++)

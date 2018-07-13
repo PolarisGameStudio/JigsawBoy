@@ -3,8 +3,9 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Threading;
 
-public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBack
+public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBack,LeaderboardEntriesFindResultCallBack
 {
     private int mDialogType;//1为普通查询模式  0为带成绩查询模式
     private string mCurrentScoreTitleStr;
@@ -12,6 +13,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     private string mRankTitleStr;
     private string mRankContentStr;
     private string mBestScoreTitleStr;
+    private int mBestScore;
     private string mBestScoreContentStr;
     private string mCancelStr;
     private string mSubmitStr;
@@ -82,7 +84,15 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         mCancelBT.onClick.AddListener(cancelOnClick);
         mSubmitBT.onClick.AddListener(submitOnClick);
         initData();
-        mLeaderboardHandle.findLeaderboard("test", this);
+        //设置本地最好分数
+        PuzzlesCompleteStateBean completeData = ((PuzzlesCompleteDSHandle)DataStorageManage.getPuzzlesCompleteDSHandle()).getDataByName(mLeaderboardName);
+        if (completeData != null && completeData.completeTime != null) {
+            mBestScore = completeData.completeTime.totalSeconds;
+            mBestScoreContentStr = getTimeStr(completeData.completeTime.totalSeconds);
+            mBestScoreContent.text = mBestScoreContentStr;
+        }
+        //查询网络数据
+        mLeaderboardHandle.findLeaderboard(mLeaderboardName, this);
     }
 
     /// <summary>
@@ -114,7 +124,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             mRankContent.text = mRankContentStr;
         if (mBestScoreTitle != null)
             mBestScoreTitle.text = mBestScoreTitleStr;
-        if (mBestScoreContent != null)
+        if (mBestScoreContent != null) 
             mBestScoreContent.text = mBestScoreContentStr;
         if (mCancelText != null)
             mCancelText.text = mCancelStr;
@@ -195,6 +205,11 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         return this;
     }
 
+    /// <summary>
+    /// 设置用户分数
+    /// </summary>
+    /// <param name="score"></param>
+    /// <returns></returns>
     public LeaderBoardDialog setUserScore(int score)
     {
         mUserScore = score;
@@ -212,7 +227,18 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         return this;
     }
 
-
+    /// <summary>
+    /// 设置提交按钮文字
+    /// </summary>
+    /// <param name="mSubmitStr"></param>
+    /// <returns></returns>
+    public LeaderBoardDialog setSubmitButtonStr(string mSubmitStr)
+    {
+        this.mSubmitStr = mSubmitStr;
+        if (mSubmitText != null)
+            mSubmitText.text = mSubmitStr;
+        return this;
+    }
 
     #region -------- 查询排行榜ID -------- 
     /// <summary>
@@ -242,7 +268,53 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     #region -------- 查询自己的排行榜数据 -------- 
     private void getSelfLeaderBoardEntries(ulong leaderboardId)
     {
-        MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForUser(leaderboardId, new SelfLeaderBoradEntriesCallBack(this));
+        mLeaderboardHandle.findLeaderboardEntriesForUser(leaderboardId,this);
+       // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForUser(leaderboardId, new SelfLeaderBoradEntriesCallBack(this));
+    }
+
+    public void leaderboradEntriesFindResultForSelf(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList)
+    {
+        checkLeaderboradEntriesResultListForSelf(resultList);
+    }
+
+    private void checkLeaderboradEntriesResultListForSelf(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList)
+    {
+        //如果当前类型为不带成绩查询 则
+        if (getDialogType() == 1)
+        {
+            if (resultList != null && resultList.Count != 0)
+            {
+                GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = resultList[0];
+                mBestScoreContent.text = getTimeStr(leaderBoardData.score);
+                mRankContent.text = leaderBoardData.rank + "";
+            }
+            getGlobalLeaderBoardEntries(mLeaderboardId);
+        }
+        //如果当前类型为带成绩查询
+        else
+        {
+
+            if (resultList == null || resultList.Count == 0)
+            {
+                //如果没有个人分数 则直接查询全球排名
+                getGlobalLeaderBoardEntries(mLeaderboardId);
+            }
+            else
+            {
+                GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = resultList[0];
+                mBestScoreContent.text = getTimeStr(leaderBoardData.score);
+                mRankContent.text = leaderBoardData.rank + "";
+                if (getUserScore() == 0)
+                {
+                    getGlobalLeaderBoardEntries(mLeaderboardId);
+                    return;
+                }
+                if (getUserScore() < leaderBoardData.score)
+                    updateLeaderBoard(getLeaderBoardId(), getUserScore());
+                else
+                    getGlobalLeaderBoardEntries(mLeaderboardId);
+            }
+        }
     }
 
     public class SelfLeaderBoradEntriesCallBack : HttpResponseHandler<GetLeaderboardEntriesResult>
@@ -260,53 +332,8 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         {
             if (result == null || result.leaderboardEntryInformation == null)
                 return;
-
-            //如果当前类型为不带成绩查询 则
-            if (leaderBoardDialog.getDialogType() == 1)
-            {
-
-                if (result.leaderboardEntryInformation.leaderboardEntries == null
-                    || result.leaderboardEntryInformation.leaderboardEntries.Count == 0)
-                {
-                    leaderBoardDialog.getGlobalLeaderBoardEntries(leaderBoardDialog.mLeaderboardId);
-                }
-                else
-                {
-                    GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = result.leaderboardEntryInformation.leaderboardEntries[0];
-                    leaderBoardDialog.mBestScoreContent.text = leaderBoardDialog.getTimeStr(leaderBoardData.score);
-                    leaderBoardDialog.mRankContent.text = leaderBoardData.rank + "";
-                }
-       
-            }
-            //如果当前类型为带成绩查询
-            else
-            {
-
-                if (result.leaderboardEntryInformation.leaderboardEntries == null
-                    || result.leaderboardEntryInformation.leaderboardEntries.Count == 0)
-                {
-                    //如果没有个人分数 则直接查询全球排名
-                    leaderBoardDialog.getGlobalLeaderBoardEntries(leaderBoardDialog.mLeaderboardId);
-                }
-                else {
-                    GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = result.leaderboardEntryInformation.leaderboardEntries[0];
-                    leaderBoardDialog.mBestScoreContent.text = leaderBoardDialog.getTimeStr(leaderBoardData.score);
-                    leaderBoardDialog.mRankContent.text = leaderBoardData.rank + "";
-                    if (leaderBoardDialog.getUserScore() == 0) {
-                        leaderBoardDialog.getGlobalLeaderBoardEntries(leaderBoardDialog.mLeaderboardId);
-                        return;
-                    }
-                    if (leaderBoardDialog.getUserScore() < leaderBoardData.score)
-                    {
-                        leaderBoardDialog.updateLeaderBoard(leaderBoardDialog.getLeaderBoardId(), leaderBoardDialog.getUserScore());
-                    }
-                    else
-                    {
-                        leaderBoardDialog.getGlobalLeaderBoardEntries(leaderBoardDialog.mLeaderboardId);
-                    }
-                }
-            
-            }
+            List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList = result.leaderboardEntryInformation.leaderboardEntries;
+            leaderBoardDialog.checkLeaderboradEntriesResultListForSelf(resultList);
         }
 
         /// <summary>
@@ -322,6 +349,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         }
     }
     #endregion
+
 
 
     #region -------- 更新用户分数 --------
@@ -354,12 +382,33 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     #endregion
 
 
+
     #region -------- 查询全球前20的排行榜数据 -------- 
     private void getGlobalLeaderBoardEntries(ulong leaderboardId)
     {
-        MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForGlobal(leaderboardId, 1, 20, new GlobalLeaderBoradEntriesCallBack(this));
+        mLeaderboardHandle.findLeaderboardEntriesForAll(leaderboardId, 1, 20 ,this);
+       // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForGlobal(leaderboardId, 1, 20, new GlobalLeaderBoradEntriesCallBack(this));
     }
 
+
+    public void leaderboradEntriesFindResultForAll(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList)
+    {
+        checkLeaderboradEntriesResultListForAll(resultList);
+    }
+
+    public void checkLeaderboradEntriesResultListForAll(List<GetLeaderboardEntriesResult.LeaderboardEntries> listUserInfo)
+    {
+        List<string> userIdList = new List<string>();
+        foreach (GetLeaderboardEntriesResult.LeaderboardEntries itemData in listUserInfo)
+        {
+            userIdList.Add(itemData.steamID);
+            LeaderBoardItemData itemLeaderBoardData = new LeaderBoardItemData();
+            itemLeaderBoardData.userId = itemData.steamID;
+            itemLeaderBoardData.leaderboardEntries = itemData;
+            mListLeaderBoardInfo.Add(itemLeaderBoardData);
+        }
+        getGlobalUserInfo(userIdList);
+    }
 
     public class GlobalLeaderBoradEntriesCallBack : HttpResponseHandler<GetLeaderboardEntriesResult>
     {
@@ -374,19 +423,10 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             if (result == null || result.leaderboardEntryInformation == null || result.leaderboardEntryInformation.leaderboardEntries == null)
                 return;
             List<GetLeaderboardEntriesResult.LeaderboardEntries> listUserInfo = result.leaderboardEntryInformation.leaderboardEntries;
-            List<string> userIdList = new List<string>();
-            foreach (GetLeaderboardEntriesResult.LeaderboardEntries itemData in listUserInfo)
-            {
-                userIdList.Add(itemData.steamID);
-                LeaderBoardItemData itemLeaderBoardData = new LeaderBoardItemData();
-                itemLeaderBoardData.userId = itemData.steamID;
-                itemLeaderBoardData.leaderboardEntries = itemData;
-                leaderBoardDialog.mListLeaderBoardInfo.Add(itemLeaderBoardData);
-            }
-            leaderBoardDialog.getGlobalUserInfo(userIdList);
+            leaderBoardDialog.checkLeaderboradEntriesResultListForAll(listUserInfo);
         }
 
- 
+
         public override void onError(string message)
         {
             DialogManager
