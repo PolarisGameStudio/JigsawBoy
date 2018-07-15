@@ -101,6 +101,18 @@ public class MenuSelectUIControl : BaseUIControl
     }
 
     /// <summary>
+    /// 刷新制定ITEM
+    /// </summary>
+    public void refreshItemJigsawSelectData(int position,GameObject itemObj, PuzzlesGameInfoBean itemInfo)
+    {
+        GameObject newItem= jigsawSelectContentSC.createNormalItem(itemInfo);
+        newItem.transform.SetParent(jigsawSelectContentTF);
+        newItem.transform.SetSiblingIndex(position);
+        Destroy(itemObj);
+   
+    }
+
+    /// <summary>
     /// 刷新拼图点数
     /// </summary>
     public void refreshPuzzlesPoint()

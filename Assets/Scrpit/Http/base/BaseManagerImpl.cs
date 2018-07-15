@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BaseManagerImpl 
 {
-    protected HttpRequestExecutor excutor = Camera.main.GetComponent<HttpRequestExecutor>();
+    protected HttpRequestExecutor excutor = CptUtil.getCptFormSceneByName<HttpRequestExecutor>("Steam");
     protected String baseUrl;
 
     public void requestGet<T, V>(string url, V baseParams, HttpResponseHandler<T> responseHandler) where V : BaseParams

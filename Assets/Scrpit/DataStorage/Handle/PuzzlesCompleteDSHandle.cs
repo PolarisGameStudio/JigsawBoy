@@ -59,7 +59,7 @@ public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStat
         List<PuzzlesCompleteStateBean> allData= getAllData();
         foreach (PuzzlesCompleteStateBean itemData in allData)
         {
-            if (itemData.puzzleName.Equals(puzzlesName))
+            if (itemData.puzzleName!=null&&itemData.puzzleName.Equals(puzzlesName))
             {
                 data = itemData;
                 break;
