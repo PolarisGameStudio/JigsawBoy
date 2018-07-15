@@ -20,16 +20,58 @@ public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStat
         return handle;
     }
 
+    /// <summary>
+    /// 获取所有数据
+    /// </summary>
+    /// <returns></returns>
     public List<PuzzlesCompleteStateBean> getAllData()
     {
         return startLoadDataForList(File_Name);
     }
 
-    public PuzzlesCompleteStateBean getData(long data)
+    /// <summary>
+    /// 通过ID获取完成拼图数据
+    /// </summary>
+    /// <param name="puzzlesId"></param>
+    /// <returns></returns>
+    public PuzzlesCompleteStateBean getData(long puzzlesId)
     {
-        throw new NotImplementedException();
+        PuzzlesCompleteStateBean data = null;
+        List<PuzzlesCompleteStateBean> allData = getAllData();
+        foreach (PuzzlesCompleteStateBean itemData in allData)
+        {
+            if (itemData.puzzleId.Equals(puzzlesId))
+            {
+                data = itemData;
+                break;
+            }
+        }
+        return data;
     }
 
+    /// <summary>
+    /// 通过名字获取完成拼图数据
+    /// </summary>
+    /// <param name="puzzlesName"></param>
+    /// <returns></returns>
+    public PuzzlesCompleteStateBean getDataByName(string puzzlesName) {
+        PuzzlesCompleteStateBean data = null;
+        List<PuzzlesCompleteStateBean> allData= getAllData();
+        foreach (PuzzlesCompleteStateBean itemData in allData)
+        {
+            if (itemData.puzzleName.Equals(puzzlesName))
+            {
+                data = itemData;
+                break;
+            }
+        }
+        return data;
+    }
+
+    /// <summary>
+    /// 保存所有数据
+    /// </summary>
+    /// <param name="data"></param>
     public void saveAllData(List<PuzzlesCompleteStateBean> data)
     {
         if (data == null || data.Count == 0)

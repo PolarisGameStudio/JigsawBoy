@@ -64,7 +64,6 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             rotateObject(RotationDirectionEnum.Clockwise);
         }
-
     }
 
 
@@ -82,6 +81,11 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             Collider2D jigsawCollider = hitRC.collider;
             Transform jigsawTransform = jigsawCollider.transform;
+            //让被选中的物体停止移动
+            Rigidbody2D baseRB = jigsawTransform.GetComponent<Rigidbody2D>();
+            baseRB.velocity = Vector3.zero;
+            baseRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            baseRB.constraints = RigidbodyConstraints2D.None;
             //在鼠标按下时，鼠标和物体在控件坐标在空间上的位置差    
             jigsawContainerCpt = jigsawTransform.GetComponent<JigsawContainerCpt>();
             if (jigsawContainerCpt != null)

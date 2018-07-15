@@ -121,9 +121,12 @@ public class MenuSelectUIControl : BaseUIControl
 
     public override void loadUIData()
     {
+        if (titleBarJigsawPointTV != null)
+            refreshPuzzlesPoint();
+
         if (resTypeSelectContentSC != null)
             resTypeSelectContentSC.loadResTypeData();
-
+   
         setJigsawSelectData(JigsawResourcesEnum.Painting);
     }
 

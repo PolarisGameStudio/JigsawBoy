@@ -17,6 +17,7 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
     private SteamLeaderboard_t m_SteamLeaderboard;
     private SteamLeaderboardEntries_t m_SteamLeaderboardEntries;
 
+    private int mFindDataType = 0;//0 自己 1所有
 
     /// <summary>
     /// 查询排行榜回调
@@ -30,8 +31,12 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
             m_SteamLeaderboard = pCallback.m_hSteamLeaderboard;
             if (OnLeaderboardFindResultCallBack != null)
             {
-                OnLeaderboardFindResultCallBack.leaderboradFindResult(m_SteamLeaderboard.m_SteamLeaderboard);
+                OnLeaderboardFindResultCallBack.leaderboradFindSuccess(m_SteamLeaderboard.m_SteamLeaderboard);
             }
+        }
+        else
+        {
+            OnLeaderboardFindResultCallBack.leaderboradFindFail("查询失败");
         }
     }
 
@@ -55,7 +60,15 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
             itemData.steamID = entry_T.m_steamIDUser.ToString();
             listData.Add(itemData);
         }
-        OnLeaderboardEntriesFindResultCallBack.leaderboradEntriesFindResult(listData);
+        if (mFindDataType == 0)
+        {
+            OnLeaderboardEntriesFindResultCallBack.leaderboradEntriesFindResultForSelf(listData);
+        }
+        else if (mFindDataType == 1)
+        {
+            OnLeaderboardEntriesFindResultCallBack.leaderboradEntriesFindResultForAll(listData);
+        }
+
     }
 
     /// <summary>
@@ -158,11 +171,13 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
     
     public void findLeaderboardEntriesForAll(ulong leaderboardId, int startRange, int endRange, LeaderboardEntriesFindResultCallBack callBack)
     {
+        mFindDataType = 1;
         findLeaderboardEntries(leaderboardId, startRange, endRange, ELeaderboardDataRequest.k_ELeaderboardDataRequestGlobal, callBack);
     }
 
     public void findLeaderboardEntriesForUser(ulong leaderboardId, LeaderboardEntriesFindResultCallBack callBack)
     {
+        mFindDataType = 0;
         OnLeaderboardEntriesFindResultCallBack = callBack;
         m_SteamLeaderboard = new SteamLeaderboard_t();
         m_SteamLeaderboard.m_SteamLeaderboard = leaderboardId;

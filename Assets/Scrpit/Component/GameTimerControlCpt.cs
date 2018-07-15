@@ -56,6 +56,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
         timeBean.hours = nowTimeSpan.Hours;
         timeBean.minutes = nowTimeSpan.Minutes;
         timeBean.seconds = nowTimeSpan.Seconds;
+        timeBean.totalSeconds =(int)nowTimeSpan.TotalSeconds;
         return timeBean;
     }
 

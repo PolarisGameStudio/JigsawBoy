@@ -9,5 +9,5 @@ public interface ISteamUserInfo
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="responseHandler"></param>
-    void getSteamUserInfo(List<ulong> userId, HttpResponseHandler<SteamUserInfoResult> responseHandler);
+    void getSteamUserInfo(List<string> userId, HttpResponseHandler<SteamUserInfoResult> responseHandler);
 }

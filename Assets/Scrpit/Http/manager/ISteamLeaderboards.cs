@@ -43,7 +43,13 @@ public interface ISteamLeaderboards
     /// <param name="responseHandler"></param>
     void getLeaderboardEntries(GetLeaderboardEntriesParams baseParams, HttpResponseHandler<GetLeaderboardEntriesResult> responseHandler);
 
-
+    /// <summary>
+    /// 更新排行榜数据
+    /// </summary>
+    /// <param name="leaderboardId"></param>
+    /// <param name="score"></param>
+    /// <param name="responseHandler"></param>
+    void updateLeaderboardData(ulong leaderboardId, int score, HttpResponseHandler<SetLeaderboardScoreResult> responseHandler);
 
 }
 

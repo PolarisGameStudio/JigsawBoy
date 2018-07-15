@@ -36,7 +36,8 @@ public class HttpRequestExecutor : BaseMonoBehaviour
             T result=default(T);
             if (postData.text != null)
             {
-                result= JsonUtil.FromJson<T>(postData.text);
+                LogUtil.log(postData.text);
+                result = JsonUtil.FromJson<T>(postData.text);
             }
             responseHandler.onSuccess(result);
         }

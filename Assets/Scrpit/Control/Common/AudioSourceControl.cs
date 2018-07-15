@@ -28,7 +28,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     }
     void Update()
     {
-        if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON))
+        if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON)&& listBGMInfo!=null)
         {
              if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
             {

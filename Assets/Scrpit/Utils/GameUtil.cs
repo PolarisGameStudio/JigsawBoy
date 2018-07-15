@@ -24,6 +24,7 @@ public class GameUtil
             PuzzlesCompleteStateBean tempCompleteBean = new PuzzlesCompleteStateBean();
             tempCompleteBean.puzzleId = puzzlesInfo.Id;
             tempCompleteBean.puzzleType = puzzlesInfo.Data_type;
+            tempCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
             tempCompleteBean.completeTime = completeTime;
             tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
             listCompleteState.Add(tempCompleteBean);
@@ -38,9 +39,16 @@ public class GameUtil
                 if (itemCompleteBean.puzzleId.Equals(puzzlesInfo.Id))
                 {
                     hasData = true;
-                    //存时间更快的
-                    if(TimeUtil.isFasterTime(itemCompleteBean.completeTime, completeTime))
+                    if (itemCompleteBean.completeTime.totalSeconds != 0
+                        &&!TimeUtil.isFasterTime(itemCompleteBean.completeTime, completeTime))
                     {
+                        //存时间更快的
+                    }
+                    else
+                    {
+                        itemCompleteBean.puzzleId = puzzlesInfo.Id;
+                        itemCompleteBean.puzzleType = puzzlesInfo.Data_type;
+                        itemCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
                         itemCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
                         itemCompleteBean.completeTime = completeTime;
                     }
@@ -51,6 +59,8 @@ public class GameUtil
             {
                 PuzzlesCompleteStateBean tempCompleteBean = new PuzzlesCompleteStateBean();
                 tempCompleteBean.puzzleId = puzzlesInfo.Id;
+                tempCompleteBean.puzzleType = puzzlesInfo.Data_type;
+                tempCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
                 tempCompleteBean.completeTime = completeTime;
                 tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
                 listCompleteState.Add(tempCompleteBean);

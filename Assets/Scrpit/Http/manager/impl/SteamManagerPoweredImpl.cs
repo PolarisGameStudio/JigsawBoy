@@ -24,7 +24,7 @@ public class SteamManagerPoweredImpl : BaseManagerImpl, ISteamUserInfo
     }
 
 
-    public void getSteamUserInfo(List<ulong> userId, HttpResponseHandler<SteamUserInfoResult> responseHandler)
+    public void getSteamUserInfo(List<string> userId, HttpResponseHandler<SteamUserInfoResult> responseHandler)
     {
         SteamUserInfoParams baseParams = new SteamUserInfoParams();
         string steamIds= DevUtil.listToStringBySplit(userId,",");

@@ -60,10 +60,6 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         jigsawGameObj.transform.parent = null;
         jigsawGameObj.transform.parent = transform;
         listJigsaw.Add(jigsawData);
-        //设置质量为拼图数量和
-        Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
-        if (thisRB != null)
-            thisRB.mass = listJigsaw.Count;
     }
 
     /// <summary>
@@ -76,6 +72,10 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         {
             addJigsaw(itemData);
         }
+        //设置质量为拼图数量和
+        Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
+        if (thisRB != null)
+            thisRB.mass = listJigsaw.Count;
     }
 
     /// <summary>
@@ -113,10 +113,10 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
 
             //设置位置
-            //jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            //jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            jigsawTF.position = jigsawItemPosition;
-            jigsawTF.rotation = transform.rotation;
+            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+            //jigsawTF.position = jigsawItemPosition;
+            //jigsawTF.rotation = transform.rotation;
         }
         mergeDeal();
     }
@@ -135,6 +135,10 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         CommonData.IsDargMove = true;
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
         {
+            //让缸体恢复移动
+            Rigidbody2D thisRB= transform.GetComponent<Rigidbody2D>();
+            thisRB.constraints= RigidbodyConstraints2D.None;
+            //检测是否完成游戏
             checkFinshGame();
         }
         );
@@ -368,10 +372,17 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             return;
         if (checkMerge(collisionJCC))
         {
-
             //设置不可在拖拽
             CommonData.IsDargMove = false;
             isSelect = false;
+            //设置质量为0 防止动画时错位
+            Rigidbody2D collisionRB = collisionJCC.GetComponent<Rigidbody2D>();
+            Rigidbody2D thisRB= gameObject.GetComponent<Rigidbody2D>();
+            collisionRB.velocity = Vector3.zero;
+            thisRB.velocity= Vector3.zero;
+            //顺便冻结缸体
+            collisionRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            thisRB.constraints = RigidbodyConstraints2D.FreezeAll;
             // 添加拼图碎片到碰撞容器里
             collisionJCC.addJigsawList(listJigsaw);
             collisionJCC.jigsawLocationCorrect();
