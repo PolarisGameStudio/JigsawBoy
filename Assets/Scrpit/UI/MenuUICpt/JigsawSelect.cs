@@ -118,7 +118,8 @@ public class JigsawSelect : BaseMonoBehaviour
 
         //设置按键
         Button unLockBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawUnLock");
-        unLockBT.onClick.AddListener(delegate ()
+        unLockBT.onClick.AddListener(
+        delegate ()
         {
             long userPoint = DataStorageManage.getUserInfoDSHandle().getData(0).puzzlesPoint;
             if (userPoint < infoBean.unlock_point)
