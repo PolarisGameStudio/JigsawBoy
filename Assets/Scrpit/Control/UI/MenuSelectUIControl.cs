@@ -155,6 +155,7 @@ public class MenuSelectUIControl : BaseUIControl
     /// </summary>
     public void addExitOnClick()
     {
+        StopAllCoroutines();
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }
 
