@@ -52,10 +52,6 @@ public class MenuSelectUIControl : BaseUIControl
         {
             titleBarExitBT.onClick.AddListener(addExitOnClick);
         }
-        if (titleBarJigsawPointTV != null)
-        {
-            refreshPuzzlesPoint();
-        }
 
         //按钮增加
         addCustomJigsaw = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "AddCustomJigsaw");
@@ -68,6 +64,8 @@ public class MenuSelectUIControl : BaseUIControl
         {
             addCustomJigsawBT.onClick.AddListener(addCustomJigsawOnClick);
         }
+
+        refreshUI();
     }
 
     /// <summary>
@@ -142,6 +140,13 @@ public class MenuSelectUIControl : BaseUIControl
         setJigsawSelectData(JigsawResourcesEnum.Painting);
     }
 
+    public override void refreshUI()
+    {
+        if (titleBarJigsawPointTV != null)
+        {
+            refreshPuzzlesPoint();
+        }
+    }
     /// <summary>
     /// 增加自定义拼图按钮监听
     /// </summary>

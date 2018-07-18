@@ -12,7 +12,41 @@ public class UIMasterControl : BaseMonoBehaviour
         listCanvas = FindObjectsOfType(typeof(BaseUIControl)) as BaseUIControl[];
     }
 
+    /// <summary>
+    /// 刷新所有UI
+    /// </summary>
+    public void refreshAllUI()
+    {
+        if (listCanvas == null || listCanvas.Length == 0)
+            return;
+        int canvasSize = listCanvas.Length;
+        for (int i = 0; i < canvasSize; i++)
+        {
+            BaseUIControl itemCanvas = listCanvas[i];
+            itemCanvas.refreshUI();
+        }
+    }
 
+    /// <summary>
+    /// 刷新指定UI
+    /// </summary>
+    /// <param name="uiEnum"></param>
+    public void refreshUI(UIEnum uiEnum)
+    {
+        if (listCanvas == null || listCanvas.Length == 0)
+            return ;
+        int canvasSize = listCanvas.Length;
+        for (int i = 0; i < canvasSize; i++)
+        {
+            BaseUIControl itemCanvas = listCanvas[i];
+            string uiName = uiEnum.ToString();
+            if (itemCanvas.name.Equals(uiName))
+            {
+                itemCanvas.refreshUI();
+                return;
+            }
+        }
+    }
     /// <summary>
     /// 获取UI
     /// </summary>

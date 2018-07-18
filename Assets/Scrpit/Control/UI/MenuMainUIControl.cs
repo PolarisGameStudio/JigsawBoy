@@ -27,25 +27,22 @@ public class MenuMainUIControl : BaseUIControl
       
         startGameBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "StartGameBT");
         startGameText = CptUtil.getCptFormParentByName<Button, Text>(startGameBT, "StartGameText");
-        startGameText.text = CommonData.getText(1);
-
+     
         customBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "CustomBT");
         customText = CptUtil.getCptFormParentByName<Button, Text>(customBT, "CustomText");
-        customText.text = CommonData.getText(2);
-
+ 
         settingBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "SettingBT");
         settingText = CptUtil.getCptFormParentByName<Button, Text>(settingBT, "SettingText");
-        settingText.text = CommonData.getText(3);
-
+   
         exitBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "ExitBT");
         exitText = CptUtil.getCptFormParentByName<Button, Text>(exitBT, "ExitText");
-        exitText.text = CommonData.getText(4);
 
         startGameBT.onClick.AddListener(startGameOnClick);
         customBT.onClick.AddListener(customOnClick);
         settingBT.onClick.AddListener(settingOnClick);
         exitBT.onClick.AddListener(exitOnClick);
 
+        refreshUI();
     }
 
     /// <summary>
@@ -63,7 +60,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void customOnClick()
     {
-
+        DialogManager.createToastDialog().setToastText(CommonData.getText(27));
     }
 
     /// <summary>
@@ -71,7 +68,9 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void settingOnClick()
     {
-
+        if (mUIMasterControl == null)
+            return;
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSettingUI);
     }
 
     /// <summary>
@@ -97,5 +96,16 @@ public class MenuMainUIControl : BaseUIControl
     public override void loadUIData()
     {
       
+    }
+    public override void refreshUI()
+    {
+        if(startGameText!=null)
+            startGameText.text = CommonData.getText(1);
+        if (startGameText != null)
+            customText.text = CommonData.getText(2);
+        if (startGameText != null)
+            settingText.text = CommonData.getText(3);
+        if (startGameText != null)
+            exitText.text = CommonData.getText(4);
     }
 }

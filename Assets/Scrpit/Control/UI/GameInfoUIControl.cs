@@ -130,4 +130,8 @@ public class GameInfoUIControl : BaseUIControl
     {
 
     }
+
+    public override void refreshUI()
+    {
+    }
 }

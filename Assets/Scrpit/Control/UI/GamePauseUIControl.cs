@@ -61,4 +61,7 @@ public class GamePauseUIControl : BaseUIControl
     {
    
     }
+    public override void refreshUI()
+    {
+    }
 }

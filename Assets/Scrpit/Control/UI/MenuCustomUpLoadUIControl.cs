@@ -70,7 +70,9 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     {
         throw new NotImplementedException();
     }
-
+    public override void refreshUI()
+    {
+    }
     /// <summary>
     /// 设置初始化数据
     /// </summary>

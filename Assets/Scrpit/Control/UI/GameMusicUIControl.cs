@@ -87,5 +87,9 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,lon
     {
             audioSourceControl.playBGMClip(data);
     }
+
+    public override void refreshUI()
+    {
+    }
 }
 

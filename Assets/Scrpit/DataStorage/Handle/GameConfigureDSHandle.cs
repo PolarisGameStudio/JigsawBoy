@@ -26,7 +26,10 @@ public class GameConfigureDSHandle : BaseDataStorageHandle<GameConfigureBean>, I
 
     public GameConfigureBean getData(long data)
     {
-        return startLoadData(File_Name);
+        GameConfigureBean dataBean= startLoadData(File_Name);
+        if (dataBean == null)
+            dataBean = new GameConfigureBean();
+        return dataBean;
     }
 
     public void saveAllData(List<GameConfigureBean> data)

@@ -43,5 +43,9 @@ public abstract class BaseUIControl : BaseMonoBehaviour
     /// 加载UI数据
     /// </summary>
     public abstract void loadUIData();
+    /// <summary>
+    /// 刷新UI元素
+    /// </summary>
+    public abstract void refreshUI();
 }
 

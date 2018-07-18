@@ -16,11 +16,14 @@ public class CommonData {
 
     static CommonData()
     {
-        UITextMap = new Dictionary<long, UITextBean>();
-
-        UITextMap= UITextManager.LoadAllUIText();
+        refreshData();
     }
 
+    public static void refreshData()
+    {
+        UITextMap = new Dictionary<long, UITextBean>();
+        UITextMap = UITextManager.LoadAllUIText();
+    }
     /// <summary>
     /// 获取文本信息 By ID
     /// </summary>

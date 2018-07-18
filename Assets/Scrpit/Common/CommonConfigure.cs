@@ -13,16 +13,18 @@ public class CommonConfigure
 
     static CommonConfigure()
     {
+        refreshData();
+    }
+
+    public static void refreshData()
+    {
         GameLanguage = GameLanguageEnum.English;
         isOpenBGM = EnabledEnum.ON;
-        GameConfigureBean configureBean=  DataStorageManage.getGameConfigureDSHandle().getData(0);
+        GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
             //游戏语言设置
-            if (configureBean.gameLanguage != 0)
-            {
-                GameLanguage = (GameLanguageEnum)Enum.ToObject(typeof(GameLanguageEnum), configureBean.gameLanguage);
-            }
+            GameLanguage = (GameLanguageEnum)Enum.ToObject(typeof(GameLanguageEnum), configureBean.gameLanguage);
             //是否开启BGM
             isOpenBGM = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenBGM);
         }
