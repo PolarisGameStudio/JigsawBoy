@@ -70,7 +70,7 @@ public class JigsawSelect : BaseMonoBehaviour
         for (int itemPosition = 0; itemPosition < listData.Count; itemPosition++)
         {
             PuzzlesGameInfoBean itemInfo = listData[itemPosition];
-            createSelectItem(itemInfo);
+            createSelectItem(itemPosition, itemInfo);
         }
     }
 
@@ -79,7 +79,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建相对应按钮
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createSelectItem(PuzzlesGameInfoBean itemInfo)
+    private void createSelectItem(int position,PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
@@ -92,7 +92,7 @@ public class JigsawSelect : BaseMonoBehaviour
         {
             if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
             {
-                createLockItem(itemInfo);
+                createLockItem(position,itemInfo);
             }
             else
             {
@@ -105,7 +105,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建未解锁样式
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createLockItem(PuzzlesGameInfoBean itemInfo)
+    private void createLockItem( int position,PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
@@ -118,7 +118,8 @@ public class JigsawSelect : BaseMonoBehaviour
 
         //设置按键
         Button unLockBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawUnLock");
-        unLockBT.onClick.AddListener(delegate ()
+        unLockBT.onClick.AddListener(
+        delegate ()
         {
             long userPoint = DataStorageManage.getUserInfoDSHandle().getData(0).puzzlesPoint;
             if (userPoint < infoBean.unlock_point)
@@ -141,7 +142,8 @@ public class JigsawSelect : BaseMonoBehaviour
                 }
                 completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
                 DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
-                menuSelectUIControl.refreshJigsawSelectData();
+                //menuSelectUIControl.refreshJigsawSelectData();
+                menuSelectUIControl.refreshItemJigsawSelectData(position,itemObj, itemInfo);
             }
 
 
@@ -158,7 +160,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// <summary>
     /// 创建正常样式
     /// </summary>
-    private void createNormalItem(PuzzlesGameInfoBean itemInfo)
+    public GameObject createNormalItem(PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
@@ -186,7 +188,8 @@ public class JigsawSelect : BaseMonoBehaviour
         {
             DialogManager
             .createLeaderBoradDialog(1)
-            .setLeaderBoradName(infoBean.mark_file_name);
+            .setLeaderBoardName(infoBean.name)
+            .setLeaderBoardMarkName(infoBean.mark_file_name);
         });
 
         //设置文本信息
@@ -199,6 +202,7 @@ public class JigsawSelect : BaseMonoBehaviour
 
         //设置拼图等级
         setLevel(itemObj, infoBean.level);
+        return itemObj;
     }
 
 
