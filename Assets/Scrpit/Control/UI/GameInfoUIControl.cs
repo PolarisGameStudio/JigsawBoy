@@ -26,7 +26,6 @@ public class GameInfoUIControl : BaseUIControl
         base.Awake();
         //初始化背景信息
         gameInfoUIBackground = GetComponent<Image>();
-
         //初始化信息介绍
         gameInfoDetailsBackground = CptUtil.getCptFormParentByName<Transform, Image>(transform, "GameInfoDetails");
         gameInfoDetails = CptUtil.getCptFormParentByName<Transform, ScrollRect>(transform, "GameInfoDetails");
@@ -133,5 +132,6 @@ public class GameInfoUIControl : BaseUIControl
 
     public override void refreshUI()
     {
+
     }
 }
