@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class ResourcesManager
 {
-
-
-
-
     /// <summary>
     /// 加载资源
     /// </summary>
@@ -100,10 +96,11 @@ public class ResourcesManager
     /// <returns></returns>
     public static IEnumerator loadAsyncDataImage(string imagePath, Image image)
     {
-        ResourceRequest res = Resources.LoadAsync<Texture2D>(imagePath);
+        ResourceRequest res = Resources.LoadAsync<Sprite>(imagePath);
         yield return res;
-        Texture2D imageTX = res.asset as Texture2D;
-        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
+        Sprite imageSp = res.asset as Sprite;
+        image.sprite = imageSp;
+       // image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
     }
 
     /// <summary>
@@ -114,9 +111,9 @@ public class ResourcesManager
     /// <returns></returns>
     public async static Task loadAsyncDataImageByAwait(string imagePath, Image image)
     {
-        var res = await Resources.LoadAsync<Texture2D>(imagePath);
-        Texture2D imageTX = res as Texture2D;
-        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
+        var res = await Resources.LoadAsync<Sprite>(imagePath);
+        Sprite imageSp= res as Sprite;
+        image.sprite = imageSp;
 
     }
 }
