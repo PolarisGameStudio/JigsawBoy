@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -279,7 +280,6 @@ public class JigsawSelect : BaseMonoBehaviour
             levelIconPath = "Texture/UI/icon_level_2";
         else
             levelIconPath = "Texture/UI/icon_level_3";
-
         StartCoroutine(ResourcesManager.loadAsyncDataImage(levelIconPath, levelPic));
         levelText.text = "x" + level;
     }
