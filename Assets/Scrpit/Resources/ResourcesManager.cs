@@ -1,9 +1,14 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResourcesManager
 {
+
+
+
+
     /// <summary>
     /// 加载资源
     /// </summary>
@@ -12,7 +17,8 @@ public class ResourcesManager
     /// <returns></returns>
     public static T loadData<T>(string resPath) where T : Object
     {
-        T resData = Resources.Load(resPath,typeof(T)) as T;
+
+        T resData = Resources.Load(resPath, typeof(T)) as T;
         return resData;
     }
 
@@ -60,17 +66,18 @@ public class ResourcesManager
     /// <returns></returns>
     public static IEnumerator loadAsyncHttpImage(string imagePath, Image image)
     {
-       return loadAsyncBaseImage(0, imagePath, image);
+        return loadAsyncBaseImage(0, imagePath, image);
     }
 
-   /// <summary>
-   /// 基础加载
-   /// </summary>
-   /// <param name="type">1.本地   0.网络</param>
-   /// <param name="imagePath"></param>
-   /// <param name="image"></param>
-   /// <returns></returns>
-    public static IEnumerator loadAsyncBaseImage(int type, string imagePath, Image image) {
+    /// <summary>
+    /// 基础加载
+    /// </summary>
+    /// <param name="type">1.本地   0.网络</param>
+    /// <param name="imagePath"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator loadAsyncBaseImage(int type, string imagePath, Image image)
+    {
         string filePath = "file://" + imagePath;
         if (type == 1)
         {
@@ -93,9 +100,23 @@ public class ResourcesManager
     /// <returns></returns>
     public static IEnumerator loadAsyncDataImage(string imagePath, Image image)
     {
-        ResourceRequest res = Resources.LoadAsync(imagePath);
+        ResourceRequest res = Resources.LoadAsync<Texture2D>(imagePath);
         yield return res;
-        Texture2D imageTX =  res.asset as Texture2D;
-        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f)); ;
+        Texture2D imageTX = res.asset as Texture2D;
+        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
+    }
+
+    /// <summary>
+    /// 异步加载资源图片
+    /// </summary>
+    /// <param name="imagePath"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public async static Task loadAsyncDataImageByAwait(string imagePath, Image image)
+    {
+        var res = await Resources.LoadAsync<Texture2D>(imagePath);
+        Texture2D imageTX = res as Texture2D;
+        image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
+
     }
 }
