@@ -15,10 +15,15 @@ public class JigsawSelect : BaseMonoBehaviour
     private static string JigsawSelectLockItemPath = "Prefab/UI/Menu/JigsawSelectLockItem";
     private static string JigsawSelectCustomItemPath = "Prefab/UI/Menu/JigsawSelectCustomItem";
 
+    private Sprite mLevel1;
+    private Sprite mLevel2;
+    private Sprite mLevel3;
     // Use this for initialization
     void Start()
     {
-
+        mLevel1 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_1");
+        mLevel2 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_2");
+        mLevel3 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_3");
     }
 
     // Update is called once per frame
@@ -175,7 +180,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath, backImage));
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath+"_Thumb", backImage));
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
@@ -273,14 +278,14 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置拼图等级
         Image levelPic = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawLevelPic");
         Text levelText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawLevelText");
-        string levelIconPath = "";
+        Sprite levelTX;
         if (level > 0 && level <= 10)
-            levelIconPath = "Texture/UI/icon_level_1";
+            levelTX = mLevel1;
         else if (level > 10 && level <= 20)
-            levelIconPath = "Texture/UI/icon_level_2";
+            levelTX = mLevel2;
         else
-            levelIconPath = "Texture/UI/icon_level_3";
-        StartCoroutine(ResourcesManager.loadAsyncDataImage(levelIconPath, levelPic));
+            levelTX = mLevel3;
+        levelPic.sprite = levelTX;
         levelText.text = "x" + level;
     }
 }
