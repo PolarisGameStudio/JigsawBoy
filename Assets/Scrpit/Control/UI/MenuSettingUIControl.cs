@@ -4,29 +4,43 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public class MenuSettingUIControl : BaseUIControl
+public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 {
-    public Transform jigsawSelectTiltebar;
-    public Button titleBarExitBT;
+    public Transform mJigsawSelectTiltebar;
+    public Button mTitleBarExitBT;
 
-    public Text languageSelectionTitle;
-    public Dropdown languageSelectionDropdown;
+    public Text mLanguageSelectionTitle;
+    public Dropdown mLanguageSelectionDropdown;
+
+    public Text mMusicSelectionTitle;
+    public SwitchButton mMusicSelectionSwith;
+
+    public Text mSoundSelectionTitle;
+    public SwitchButton mSoundSelectionSwitch;
+  
     
 
     private new void Awake()
     {
         base.Awake();
-
+       
         //初始化标题栏
-        jigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
-        titleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(jigsawSelectTiltebar, "ExitBT");
-        if (titleBarExitBT != null)
+        mJigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
+        mTitleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(mJigsawSelectTiltebar, "ExitBT");
+        if (mTitleBarExitBT != null)
         {
-            titleBarExitBT.onClick.AddListener(addExitOnClick);
+            mTitleBarExitBT.onClick.AddListener(addExitOnClick);
         }
         //初始化语言下拉
-        languageSelectionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "LanguageSelectionTitle");
-        languageSelectionDropdown = CptUtil.getCptFormParentByName<Transform, Dropdown>(transform, "LanguageSelectionDropdown");
+        mLanguageSelectionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "LanguageSelectionTitle");
+        mLanguageSelectionDropdown = CptUtil.getCptFormParentByName<Transform, Dropdown>(transform, "LanguageSelectionDropdown");
+
+        //初始化BGM
+        mMusicSelectionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "MusicSelectionTitle");
+        mMusicSelectionSwith= CptUtil.getCptFormParentByName<Transform, SwitchButton>(transform, "MusicSelectionSwitch");
+        //初始化音效
+        mSoundSelectionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "SoundSelectionTitle");
+        mSoundSelectionSwitch = CptUtil.getCptFormParentByName<Transform, SwitchButton>(transform, "SoundSelectionSwitch");
 
         refreshUI();
     }
@@ -75,14 +89,50 @@ public class MenuSettingUIControl : BaseUIControl
         listLanguageList.Add("中文");
         listLanguageList.Add("English");
 
-        if (languageSelectionTitle != null)
-            languageSelectionTitle.text = CommonData.getText(28);
-        if (languageSelectionDropdown != null)
+        if (mLanguageSelectionTitle != null)
+            mLanguageSelectionTitle.text = CommonData.getText(28);
+        if (mMusicSelectionTitle != null)
+            mMusicSelectionTitle.text = CommonData.getText(29);
+        if (mSoundSelectionTitle != null)
+            mSoundSelectionTitle.text = CommonData.getText(30);
+
+        if (mLanguageSelectionDropdown != null)
         {
-            languageSelectionDropdown.ClearOptions();
-            languageSelectionDropdown.AddOptions(listLanguageList);
-            languageSelectionDropdown.value = (int)CommonConfigure.GameLanguage;
-            languageSelectionDropdown.onValueChanged.AddListener(languageSelection);
+            mLanguageSelectionDropdown.ClearOptions();
+            mLanguageSelectionDropdown.AddOptions(listLanguageList);
+            mLanguageSelectionDropdown.value = (int)CommonConfigure.GameLanguage;
+            mLanguageSelectionDropdown.onValueChanged.AddListener(languageSelection);
         }
+        if (mMusicSelectionSwith != null) {
+            mMusicSelectionSwith.setStatus((int)CommonConfigure.isOpenBGM);
+            mMusicSelectionSwith.setCallBack(this);
+        }
+
+        if (mSoundSelectionSwitch != null) {
+            mSoundSelectionSwitch.setStatus((int)CommonConfigure.isOpenSound);
+            mSoundSelectionSwitch.setCallBack(this);
+        }
+  
+    }
+
+    /// <summary>
+    /// 开关切换
+    /// </summary>
+    /// <param name="view"></param>
+    /// <param name="status"></param>
+    public void onSwitchChange(GameObject view, int status)
+    {
+        GameConfigureBean configure = DataStorageManage.getGameConfigureDSHandle().getData(0);
+        if (view == mMusicSelectionSwith.gameObject)
+        {
+            configure.isOpenBGM = status;
+        }
+        else if (view == mSoundSelectionSwitch.gameObject)
+        {
+            configure.isOpenSound = status;
+        }
+        DataStorageManage.getGameConfigureDSHandle().saveData(configure);
+        CommonConfigure.refreshData();
+        CommonData.refreshData();
     }
 }
