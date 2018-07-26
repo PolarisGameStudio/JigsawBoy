@@ -37,7 +37,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         isSelect = false;
         mergeVectorOffset = 1f;
         mergeAnglesOffset = 25;
-        mergeAnimDuration = 0.1f;
+        mergeAnimDuration = 0.3f;
     }
 
     /// <summary>
@@ -126,15 +126,14 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void mergeDeal()
     {
-
-        //合并特效
-        if (gameParticleControl != null)
-            gameParticleControl.playMergeParticle(transform);
-        //摇晃镜头
-        shakeCamer();
         CommonData.IsDargMove = true;
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
         {
+            //合并特效
+            if (gameParticleControl != null)
+                gameParticleControl.playMergeParticle(transform);
+            //摇晃镜头
+            shakeCamer();
             //让缸体恢复移动
             Rigidbody2D thisRB= transform.GetComponent<Rigidbody2D>();
             thisRB.constraints= RigidbodyConstraints2D.None;
