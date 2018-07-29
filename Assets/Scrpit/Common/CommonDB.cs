@@ -18,6 +18,7 @@ public class CommonDB
     public static readonly string PuzzleInfoDB_Details_Other_Table = "details_other";
     public static readonly string PuzzleInfoDB_Details_Animal_Table = "details_animal";
     public static readonly string PuzzleInfoDB_Details_Scenery_Table = "details_scenery";
+    public static readonly string PuzzleInfoDB_Details_Food_Table = "details_food";
 
     //拼图信息数据库 BGM信息表
     public static readonly string PuzzleInfoDB_BGMInfo_Table = "sound_bgm";

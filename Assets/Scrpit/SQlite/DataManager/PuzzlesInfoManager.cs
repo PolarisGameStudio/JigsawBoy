@@ -26,6 +26,8 @@ public class PuzzlesInfoManager
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Animal_Table;
         else if (resourcesType.Equals(JigsawResourcesEnum.Scenery))
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Scenery_Table;
+        else if (resourcesType.Equals(JigsawResourcesEnum.Food))
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_Food_Table;
         else
             return null;
 
