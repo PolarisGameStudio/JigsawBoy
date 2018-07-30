@@ -22,7 +22,16 @@ public class MenuStartControl : BaseMonoBehaviour
 
     private void Start()
     {
-        uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
+        if (CommonData.SelectPuzzlesInfo != null)
+        {
+            uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
+        }
+        else
+        {
+            uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
+        }
+ 
+
         if (menuBackGround != null)
             menuBackGround.startCreateJigsaw();
     }

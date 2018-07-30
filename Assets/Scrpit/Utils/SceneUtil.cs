@@ -7,15 +7,21 @@ public class SceneUtil {
 
     public static void jumpGameScene()
     {
-        sceneChange("GameScene");
+        sceneChangeAsync("GameScene");
     }
     public static void jumpMainScene()
     {
-        sceneChange("MenuScene");
+        sceneChangeAsync("MenuScene");
     }
     public static void sceneChange(string scenenName)
     {
         SceneManager.LoadScene(scenenName);
+    }
+
+    public static void sceneChangeAsync(string sceneName)
+    {
+        SceneChangeData.NextSceneName = sceneName;
+        SceneManager.LoadScene("LoadingScene");
     }
 
 
