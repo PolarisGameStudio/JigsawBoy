@@ -36,7 +36,7 @@ public class GamePauseUIControl : BaseUIControl
     /// </summary>
     private void restartOnClick()
     {
-
+        SceneUtil.jumpGameScene();
     }
 
     /// <summary>

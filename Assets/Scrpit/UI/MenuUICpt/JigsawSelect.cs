@@ -181,12 +181,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        try {
-            StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath + "_Thumb", backImage));
-        }
-        catch (Exception e) {
-            StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath + "", backImage));
-        }
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath + "", backImage));
       
 
         //设置按键
