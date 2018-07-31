@@ -37,4 +37,19 @@ public class DialogManager : BaseMonoBehaviour
         dialog.setDialogType(dialogType);
         return dialog;
     }
+
+    /// <summary>
+    /// 创建解锁拼图弹窗动画
+    /// </summary>
+    /// <param name="puzzlesName"></param>
+    /// <param name="puzzlesUrl"></param>
+    /// <returns></returns>
+    public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName,string puzzlesUrl)
+    {
+        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));
+        PuzzlesUnlockDialog dialog= dialogObj.GetComponent<PuzzlesUnlockDialog>();
+        dialog.setPuzzlesName(puzzlesName);
+        dialog.setPuzzlesUrl(puzzlesUrl);
+        return dialog;
+    }
 }
