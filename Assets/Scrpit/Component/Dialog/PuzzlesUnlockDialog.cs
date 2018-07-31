@@ -65,6 +65,5 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         mPuzzlesImageUrl = puzzlesUrl;
         if (mUnlockPuzzlesImage != null)
             StartCoroutine(ResourcesManager.loadAsyncDataImage(mPuzzlesImageUrl, mUnlockPuzzlesImage));
-
     }
 }

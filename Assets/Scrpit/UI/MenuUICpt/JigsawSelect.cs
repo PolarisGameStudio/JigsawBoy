@@ -151,9 +151,10 @@ public class JigsawSelect : BaseMonoBehaviour
                 DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
                 //menuSelectUIControl.refreshJigsawSelectData();
                 menuSelectUIControl.refreshItemJigsawSelectData(position,itemObj, itemInfo);
+                //解锁成功动画
+                string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
+                DialogManager.createUnlockPuzzlesDialog(infoBean.name, filePath);
             }
-
-
         });
         //设置文本信息
         Text jigsawUnLockText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawUnLockText");
