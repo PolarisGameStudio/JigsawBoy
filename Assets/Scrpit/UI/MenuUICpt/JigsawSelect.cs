@@ -119,7 +119,7 @@ public class JigsawSelect : BaseMonoBehaviour
 
         GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectLockItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
-
+ 
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
 

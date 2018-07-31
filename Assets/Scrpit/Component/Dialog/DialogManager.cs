@@ -46,7 +46,7 @@ public class DialogManager : BaseMonoBehaviour
     /// <returns></returns>
     public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName,string puzzlesUrl)
     {
-        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));
+        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));  
         PuzzlesUnlockDialog dialog= dialogObj.GetComponent<PuzzlesUnlockDialog>();
         dialog.setPuzzlesName(puzzlesName);
         dialog.setPuzzlesUrl(puzzlesUrl);

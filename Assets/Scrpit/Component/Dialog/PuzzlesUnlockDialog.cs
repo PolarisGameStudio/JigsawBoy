@@ -18,7 +18,7 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         mDialogCanvas = GetComponent<Canvas>();
         mDialogCanvas.renderMode = RenderMode.ScreenSpaceCamera;
         mDialogCanvas.worldCamera = Camera.main;
-
+        mDialogCanvas.sortingLayerName = "UITop";
         mBTBackGround = CptUtil.getCptFormParentByName<Transform, Button>(transform, "DialogBackGround");
         mUnlockPuzzlesImage = CptUtil.getCptFormParentByName<Transform, Image>(transform, "UnlockPuzzlesImage");
         mUnlockPuzzlesName = CptUtil.getCptFormParentByName<Transform, Text>(transform, "UnlockPuzzlesName");
