@@ -245,9 +245,7 @@ public class GameStartControl : BaseMonoBehaviour
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
             delegate () {
-                DialogManager
-                     .createLeaderBoradDialog(0)
-                     .setUserScore(completeTime.totalSeconds);
+                DialogManager.createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo).setUserScore(completeTime.totalSeconds);
             });
         //图像归位
         int containerListSize = containerList.Count;

@@ -10,7 +10,7 @@ public class SceneChangeData
 
 public class LoadingSceneCpt : MonoBehaviour
 {
-    private float loadingSpeed = 1;
+    private float loadingSpeed = 2;
     private float targetValue;
     private bool isPrepare = false;
     private AsyncOperation operation;
@@ -58,7 +58,7 @@ public class LoadingSceneCpt : MonoBehaviour
     /// <returns></returns>
     IEnumerator prepareTime()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(loadingSpeed);
         isPrepare = true;
     }
 }

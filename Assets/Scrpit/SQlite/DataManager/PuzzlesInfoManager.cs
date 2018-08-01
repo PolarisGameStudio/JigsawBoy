@@ -2,6 +2,25 @@
 
 public class PuzzlesInfoManager
 {
+
+    /// <summary>
+    /// 查询指定拼图信息
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static List<PuzzlesInfoBean> LoadBasePuzzlesDataById(long id)
+    {
+        List<PuzzlesInfoBean> listData = new List<PuzzlesInfoBean>();
+        listData = SQliteHandle.LoadTableData<PuzzlesInfoBean>
+          (
+          CommonDB.PuzzleInfoDB_Name,
+          CommonDB.PuzzleInfoDB_PuzzlesBase_Table,
+          new string[] { " id " },
+          new string[] { " = " },
+          new string[] { id + "" }
+          );
+        return listData;
+    }
+
     /// <summary>
     /// 获取拼图图片数据
     /// </summary>

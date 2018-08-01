@@ -9,7 +9,7 @@ public class TestScrpit : BaseMonoBehaviour
 
     void Start()
     {
-        DialogManager.createUnlockPuzzlesDialog("勐拉里斯的微笑","PuzzlesPic/Animal/Animal_Cat_By_Pixabay");
+        LeaderBoardUtil.CreateLeaderBoardByPuzzlesType(JigsawResourcesEnum.Painting);
     }
     
 

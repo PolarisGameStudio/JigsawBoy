@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Threading;
 
-public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBack,LeaderboardEntriesFindResultCallBack
+public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBack, LeaderboardEntriesFindResultCallBack
 {
     private int mDialogType;//1为普通查询模式  0为带成绩查询模式
     private string mCurrentScoreTitleStr;
@@ -40,8 +40,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
 
     private List<LeaderBoardItemData> mListLeaderBoardInfo;
     private LeaderboardHandleImpl mLeaderboardHandle;
-    private string mLeaderboardName;
-    private string mLeaderboardMarkName;
+    private PuzzlesGameInfoBean mGameInfoBean;
 
     private CallBack mCallBack;
     private int mUserScore;
@@ -62,9 +61,6 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         mBestScoreContentStr = getTimeStr(0);
 
         mLeaderboardHandle = new LeaderboardHandleImpl();
-        mLeaderboardMarkName = "test";
-        mLeaderboardName = "xxx";
-
         mListLeaderBoardInfo = new List<LeaderBoardItemData>();
     }
 
@@ -78,7 +74,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         mRankContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "RankContent");
         mBestScoreTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "BestScoreTitle");
         mBestScoreContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "BestScoreContent");
-        mTrophyName = CptUtil.getCptFormParentByName<Transform, Text>(transform,"TrophyName");
+        mTrophyName = CptUtil.getCptFormParentByName<Transform, Text>(transform, "TrophyName");
 
         mCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "CancelBT");
         mCancelText = CptUtil.getCptFormParentByName<Button, Text>(mCancelBT, "Text");
@@ -88,20 +84,21 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
 
         mWorldRank = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "Content");
         mTrophy = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "Trophy");
-        mLoading = CptUtil.getCptFormParentByName<Transform, Transform>(transform,"Loading");
+        mLoading = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "Loading");
 
         mCancelBT.onClick.AddListener(cancelOnClick);
         mSubmitBT.onClick.AddListener(submitOnClick);
         initData();
         //设置本地最好分数
-        PuzzlesCompleteStateBean completeData = ((PuzzlesCompleteDSHandle)DataStorageManage.getPuzzlesCompleteDSHandle()).getDataByName(mLeaderboardMarkName);
-        if (completeData != null && completeData.completeTime != null) {
+        PuzzlesCompleteStateBean completeData = mGameInfoBean.completeStateInfo;
+        if (completeData != null && completeData.completeTime != null)
+        {
             mBestScore = completeData.completeTime.totalSeconds;
             mBestScoreContentStr = getTimeStr(completeData.completeTime.totalSeconds);
             mBestScoreContent.text = mBestScoreContentStr;
         }
         //查询网络数据
-        mLeaderboardHandle.findLeaderboard("test", this);
+        mLeaderboardHandle.findLeaderboard(mGameInfoBean.puzzlesInfo.Id + "_" + mGameInfoBean.puzzlesInfo.Mark_file_name, this);
     }
 
     /// <summary>
@@ -111,8 +108,8 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     {
         if (mDialogType == 1)
         {
-            mCancelStr = CommonData.getText(21);
-            mSubmitStr = CommonData.getText(23);
+            mCancelStr = CommonData.getText(20);
+            mSubmitStr = CommonData.getText(22);
             if (mCurrentScore != null)
                 mCurrentScore.gameObject.SetActive(false);
             if (mTrophy != null)
@@ -120,8 +117,8 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         }
         else
         {
-            mCancelStr = CommonData.getText(20);
-            mSubmitStr = CommonData.getText(22);
+            mCancelStr = CommonData.getText(21);
+            mSubmitStr = CommonData.getText(23);
             if (mCurrentScore != null)
                 mCurrentScore.gameObject.SetActive(true);
             if (mTrophy != null)
@@ -137,14 +134,24 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             mRankContent.text = mRankContentStr;
         if (mBestScoreTitle != null)
             mBestScoreTitle.text = mBestScoreTitleStr;
-        if (mBestScoreContent != null) 
+        if (mBestScoreContent != null)
             mBestScoreContent.text = mBestScoreContentStr;
         if (mCancelText != null)
             mCancelText.text = mCancelStr;
         if (mSubmitText != null)
             mSubmitText.text = mSubmitStr;
         if (mTrophyName != null)
-            mTrophyName.text = mLeaderboardName;
+            mTrophyName.text = mGameInfoBean.puzzlesInfo.Name;
+    }
+
+
+    /// <summary>
+    /// 设置拼图信息
+    /// </summary>
+    /// <param name="gameInfoBean"></param>
+    public void setPuzzlesInfo(PuzzlesGameInfoBean gameInfoBean)
+    {
+        mGameInfoBean = gameInfoBean;
     }
 
     /// <summary>
@@ -206,28 +213,6 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     {
         mDialogType = dialogType;
         initData();
-        return this;
-    }
-
-    /// <summary>
-    /// 设置排行榜标记名字
-    /// </summary>
-    /// <param name="leaderboradName"></param>
-    /// <returns></returns>
-    public LeaderBoardDialog setLeaderBoardMarkName(string leaderboradMarkName)
-    {
-        mLeaderboardMarkName = leaderboradMarkName;
-        return this;
-    }
-
-    /// <summary>
-    /// 设置排行榜名字
-    /// </summary>
-    /// <param name="leaderboradName"></param>
-    /// <returns></returns>
-    public LeaderBoardDialog setLeaderBoardName(string leaderboradName)
-    {
-        mLeaderboardName = leaderboradName;
         return this;
     }
 
@@ -294,8 +279,8 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     #region -------- 查询自己的排行榜数据 -------- 
     private void getSelfLeaderBoardEntries(ulong leaderboardId)
     {
-        mLeaderboardHandle.findLeaderboardEntriesForUser(leaderboardId,this);
-       // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForUser(leaderboardId, new SelfLeaderBoradEntriesCallBack(this));
+        mLeaderboardHandle.findLeaderboardEntriesForUser(leaderboardId, this);
+        // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForUser(leaderboardId, new SelfLeaderBoradEntriesCallBack(this));
     }
 
     public void leaderboradEntriesFindResultForSelf(List<GetLeaderboardEntriesResult.LeaderboardEntries> resultList)
@@ -322,8 +307,9 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
 
             if (resultList == null || resultList.Count == 0)
             {
-                //如果没有个人分数 则直接查询全球排名
-                getGlobalLeaderBoardEntries(mLeaderboardId);
+                //如果没有个人分数 增更新个人成绩
+                updateLeaderBoard(getLeaderBoardId(), getUserScore());
+                // getGlobalLeaderBoardEntries(mLeaderboardId);
             }
             else
             {
@@ -379,9 +365,9 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
 
 
     #region -------- 更新用户分数 --------
-    private void updateLeaderBoard(ulong leaderboardId ,int score)
+    private void updateLeaderBoard(ulong leaderboardId, int score)
     {
-        MHttpManagerFactory.getSteamManagerPartner().updateLeaderboardData(leaderboardId, score,new UpdateLeaderBoardCallBack(this));
+        MHttpManagerFactory.getSteamManagerPartner().updateLeaderboardData(leaderboardId, score, new UpdateLeaderBoardCallBack(this));
 
     }
 
@@ -412,8 +398,8 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     #region -------- 查询全球前20的排行榜数据 -------- 
     private void getGlobalLeaderBoardEntries(ulong leaderboardId)
     {
-        mLeaderboardHandle.findLeaderboardEntriesForAll(leaderboardId, 1, 20 ,this);
-       // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForGlobal(leaderboardId, 1, 20, new GlobalLeaderBoradEntriesCallBack(this));
+        mLeaderboardHandle.findLeaderboardEntriesForAll(leaderboardId, 1, 20, this);
+        // MHttpManagerFactory.getSteamManagerPartner().getLeaderboradEntriesForGlobal(leaderboardId, 1, 20, new GlobalLeaderBoradEntriesCallBack(this));
     }
 
 
@@ -467,8 +453,10 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     #region -------- 查询用户的个人资料 -------- 
     private void getGlobalUserInfo(List<string> userIdList)
     {
-        if (userIdList == null || userIdList.Count == 0)
+        if (userIdList == null || userIdList.Count == 0) {
+            mLoading.gameObject.SetActive(false);
             return;
+        }
         MHttpManagerFactory.getSteamManagerPowered().getSteamUserInfo(userIdList, new SteamUserInfoCallBack(this));
     }
 
@@ -479,7 +467,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         {
             this.leaderBoardDialog = leaderBoardDialog;
         }
- 
+
         public override void onSuccess(SteamUserInfoResult result)
         {
             leaderBoardDialog.mLoading.gameObject.SetActive(false);

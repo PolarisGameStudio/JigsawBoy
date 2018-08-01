@@ -66,4 +66,13 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         if (mUnlockPuzzlesImage != null)
             StartCoroutine(ResourcesManager.loadAsyncDataImage(mPuzzlesImageUrl, mUnlockPuzzlesImage));
     }
+
+    /// <summary>
+    /// 动画状态改变
+    /// </summary>
+    public void AnimChange()
+    {
+        Animator animator = GetComponent<Animator>();
+        animator.SetBool("isShow",true);
+    }
 }

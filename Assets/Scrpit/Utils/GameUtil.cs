@@ -20,14 +20,12 @@ public class GameUtil
         if (listCompleteState == null|| listCompleteState.Count==0)
         {
             listCompleteState = new List<PuzzlesCompleteStateBean>();
-
-            PuzzlesCompleteStateBean tempCompleteBean = new PuzzlesCompleteStateBean();
-            tempCompleteBean.puzzleId = puzzlesInfo.Id;
-            tempCompleteBean.puzzleType = puzzlesInfo.Data_type;
-            tempCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
-            tempCompleteBean.completeTime = completeTime;
-            tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
-            listCompleteState.Add(tempCompleteBean);
+            completeStateBean.puzzleId = puzzlesInfo.Id;
+            completeStateBean.puzzleType = puzzlesInfo.Data_type;
+            completeStateBean.puzzleName = puzzlesInfo.mark_file_name;
+            completeStateBean.completeTime = completeTime;
+            completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
+            listCompleteState.Add(completeStateBean);
         }
         else
         {
@@ -51,19 +49,19 @@ public class GameUtil
                         itemCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
                         itemCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
                         itemCompleteBean.completeTime = completeTime;
+                        completeStateBean = itemCompleteBean;
                     }
                     break;
                 }
             }
             if (!hasData)
             {
-                PuzzlesCompleteStateBean tempCompleteBean = new PuzzlesCompleteStateBean();
-                tempCompleteBean.puzzleId = puzzlesInfo.Id;
-                tempCompleteBean.puzzleType = puzzlesInfo.Data_type;
-                tempCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
-                tempCompleteBean.completeTime = completeTime;
-                tempCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
-                listCompleteState.Add(tempCompleteBean);
+                completeStateBean.puzzleId = puzzlesInfo.Id;
+                completeStateBean.puzzleType = puzzlesInfo.Data_type;
+                completeStateBean.puzzleName = puzzlesInfo.mark_file_name;
+                completeStateBean.completeTime = completeTime;
+                completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
+                listCompleteState.Add(completeStateBean);
             }
         }
         DataStorageManage.getPuzzlesCompleteDSHandle().saveAllData(listCompleteState);

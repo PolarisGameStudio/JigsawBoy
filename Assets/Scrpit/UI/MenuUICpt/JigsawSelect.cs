@@ -195,10 +195,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button scoreBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawScore");
         scoreBT.onClick.AddListener(delegate ()
         {
-            DialogManager
-            .createLeaderBoradDialog(1)
-            .setLeaderBoardName(infoBean.name)
-            .setLeaderBoardMarkName(infoBean.mark_file_name);
+            DialogManager.createLeaderBoradDialog(1,itemInfo);
         });
 
         //设置文本信息
