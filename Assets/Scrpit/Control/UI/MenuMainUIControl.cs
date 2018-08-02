@@ -50,6 +50,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void startGameOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         if (mUIMasterControl == null)
             return;
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
@@ -60,6 +61,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void customOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         DialogManager.createToastDialog().setToastText(CommonData.getText(27));
     }
 
@@ -68,6 +70,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void settingOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         if (mUIMasterControl == null)
             return;
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSettingUI);
@@ -78,6 +81,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void exitOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         SystemUtil.exitGame();
     }
 

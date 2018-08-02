@@ -28,9 +28,9 @@ public class AudioSourceControl : BaseMonoBehaviour
     }
     void Update()
     {
-        if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON)&& listBGMInfo!=null)
+        if (!isPlayBGMClip() && isOpenAudio.Equals(EnabledEnum.ON) && listBGMInfo != null)
         {
-             if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
+            if (playWay.Equals(AudioPlayWayEnum.Single_Cycle))
             {
                 playBeforeBGMClip();
             }
@@ -47,13 +47,22 @@ public class AudioSourceControl : BaseMonoBehaviour
     /// 播放按钮点击音效
     /// </summary>
     /// <param name="onClickEnum"></param>
-    public void playOnClickClip(AudioButtonOnClickEnum onClickEnum)
+    public void playSoundClip(AudioButtonOnClickEnum onClickEnum)
     {
         string soundPath = "Sound/Button/";
-        if (onClickEnum.Equals(AudioButtonOnClickEnum.def))
+        switch (onClickEnum)
         {
-            soundPath += "button_onclick_def";
+            case AudioButtonOnClickEnum.btn_sound_1:
+                soundPath += "btn_sound_1";
+                break;
+            case AudioButtonOnClickEnum.btn_sound_2:
+                soundPath += "btn_sound_2";
+                break;
+            case AudioButtonOnClickEnum.btn_sound_3:
+                soundPath += "btn_sound_3";
+                break;
         }
+
         AudioClip tempClip = ResourcesManager.loadData<AudioClip>(soundPath);
         if (tempClip != null)
             AudioSource.PlayClipAtPoint(tempClip, transform.position);
@@ -85,7 +94,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     {
         if (audioSource == null)
             return;
-        if (listBGMInfo != null&& listBGMInfo.Count>0&& position<listBGMInfo.Count-1)
+        if (listBGMInfo != null && listBGMInfo.Count > 0 && position <= listBGMInfo.Count - 1)
         {
             BGMInfoBean data = listBGMInfo[position];
             string audioPath = data.FilePath;

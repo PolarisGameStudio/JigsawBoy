@@ -17,7 +17,10 @@ public class BGMInfoManager
         listData = SQliteHandle.LoadTableData<BGMInfoBean>
           (
           CommonDB.PuzzleInfoDB_Name,
-          CommonDB.PuzzleInfoDB_BGMInfo_Table
+          CommonDB.PuzzleInfoDB_BGMInfo_Table,
+          new string[] { "valid"},
+          new string[] { " = " },
+          new string[] { "1" }
           );
         return listData;
     }

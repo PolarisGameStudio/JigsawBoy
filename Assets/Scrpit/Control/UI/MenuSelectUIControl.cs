@@ -160,6 +160,7 @@ public class MenuSelectUIControl : BaseUIControl
     /// </summary>
     public void addExitOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_2);
         StopAllCoroutines();
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }

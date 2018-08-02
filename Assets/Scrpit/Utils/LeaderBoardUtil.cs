@@ -38,5 +38,16 @@ public class LeaderBoardUtil
             CreateLeaderBoard(itemData.Id + "_" + itemData.Mark_file_name);
         }
     }
-   
+
+    /// <summary>
+    /// 通过ID列表创建排行榜
+    /// </summary>
+    /// <param name="id"></param>
+    public static void CreateLeaderBoardByIdList(List<long> idList)
+    {
+        foreach (long itemId in idList)
+        {
+            CreateLeaderBoardById(itemId);
+        }
+    }
 }

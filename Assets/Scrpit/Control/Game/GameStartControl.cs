@@ -28,6 +28,7 @@ public class GameStartControl : BaseMonoBehaviour
         gameFinshAnimTime = 3f;
         uiMasterControl = gameObject.AddComponent<UIMasterControl>();
         audioSourceControl = gameObject.AddComponent<AudioSourceControl>();
+        audioSourceControl.stopBGMClip();
         initData();
     }
 
@@ -237,7 +238,7 @@ public class GameStartControl : BaseMonoBehaviour
             gameMainUI.endTimer();
             completeTime = gameMainUI.getGameTimer();
         }
-        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level*10);
+        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
         GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);

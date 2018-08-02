@@ -23,6 +23,7 @@ public class SwitchButton : MonoBehaviour
     /// <param name="status"></param>
     public void setStatus(int status)
     {
+        mStatus = status;
         if(mListSwitchItem!=null)
         for (int i = 0; i < mListSwitchItem.Count; i++)
         {
