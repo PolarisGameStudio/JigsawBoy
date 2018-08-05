@@ -120,7 +120,7 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
     /// <param name="leaderboardName"></param>
     public void findOrCreateLeaderboardForTimeSeconds(string leaderboardName)
     {
-        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodDescending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeTimeSeconds);
+        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodAscending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeTimeSeconds);
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
     /// <param name="leaderboardName"></param>
     public void findOrCreateLeaderboardForTimeMilliSeconds(string leaderboardName)
     {
-        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodDescending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeTimeMilliSeconds);
+        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodAscending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeTimeMilliSeconds);
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
     /// <param name="leaderboardName"></param>
     public void findOrCreateLeaderboardForNumeric(string leaderboardName)
     {
-        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodDescending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeNumeric);
+        findOrCreateLeaderboard(leaderboardName, ELeaderboardSortMethod.k_ELeaderboardSortMethodAscending, ELeaderboardDisplayType.k_ELeaderboardDisplayTypeNumeric);
     }
 
     /// <summary>

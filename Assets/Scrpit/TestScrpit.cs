@@ -9,12 +9,7 @@ public class TestScrpit : BaseMonoBehaviour
 
     void Start()
     {
-        
     }
     
-    void Update()
-    {
-
-    }
 
 }

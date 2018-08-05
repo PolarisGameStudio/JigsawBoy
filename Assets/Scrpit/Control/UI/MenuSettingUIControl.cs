@@ -65,6 +65,7 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
     /// </summary>
     public void addExitOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_2);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }
 
@@ -122,10 +123,15 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
     /// <param name="status"></param>
     public void onSwitchChange(GameObject view, int status)
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
         GameConfigureBean configure = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (view == mMusicSelectionSwith.gameObject)
         {
             configure.isOpenBGM = status;
+            if (configure.isOpenBGM ==0)
+                SoundUtil.stopBGMClip();
+            else
+                SoundUtil.playBGMClip();
         }
         else if (view == mSoundSelectionSwitch.gameObject)
         {

@@ -28,6 +28,7 @@ public class GameStartControl : BaseMonoBehaviour
         gameFinshAnimTime = 3f;
         uiMasterControl = gameObject.AddComponent<UIMasterControl>();
         audioSourceControl = gameObject.AddComponent<AudioSourceControl>();
+        audioSourceControl.stopBGMClip();
         initData();
     }
 
@@ -237,7 +238,7 @@ public class GameStartControl : BaseMonoBehaviour
             gameMainUI.endTimer();
             completeTime = gameMainUI.getGameTimer();
         }
-        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level*10);
+        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
         GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
@@ -245,9 +246,7 @@ public class GameStartControl : BaseMonoBehaviour
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
             delegate () {
-                DialogManager
-                     .createLeaderBoradDialog(0)
-                     .setUserScore(completeTime.totalSeconds);
+                DialogManager.createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo).setUserScore(completeTime.totalSeconds);
             });
         //图像归位
         int containerListSize = containerList.Count;

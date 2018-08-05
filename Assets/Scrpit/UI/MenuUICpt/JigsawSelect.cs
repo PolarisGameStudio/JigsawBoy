@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -85,7 +86,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建相对应按钮
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createSelectItem(int position,PuzzlesGameInfoBean itemInfo)
+    private void createSelectItem(int position, PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
@@ -96,9 +97,12 @@ public class JigsawSelect : BaseMonoBehaviour
         }
         else
         {
-            if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
+            if ( completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
             {
-                createLockItem(position,itemInfo);
+                if (infoBean.level == 1)
+                    createNormalItem(itemInfo);
+                else
+                    createLockItem(position, itemInfo);
             }
             else
             {
@@ -111,10 +115,16 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建未解锁样式
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createLockItem( int position,PuzzlesGameInfoBean itemInfo)
+    private void createLockItem(int position, PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
+
+        //解锁点数处理
+        if (infoBean.unlock_point == 1)
+        {
+            infoBean.unlock_point = infoBean.level * infoBean.level;
+        }
 
         GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectLockItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
@@ -149,10 +159,11 @@ public class JigsawSelect : BaseMonoBehaviour
                 completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
                 DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
                 //menuSelectUIControl.refreshJigsawSelectData();
-                menuSelectUIControl.refreshItemJigsawSelectData(position,itemObj, itemInfo);
+                menuSelectUIControl.refreshItemJigsawSelectData(position, itemObj, itemInfo);
+                //解锁成功动画
+                string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
+                DialogManager.createUnlockPuzzlesDialog(infoBean.name, filePath);
             }
-
-
         });
         //设置文本信息
         Text jigsawUnLockText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawUnLockText");
@@ -180,7 +191,8 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath+"", backImage));
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath + "", backImage));
+
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
@@ -192,10 +204,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button scoreBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawScore");
         scoreBT.onClick.AddListener(delegate ()
         {
-            DialogManager
-            .createLeaderBoradDialog(1)
-            .setLeaderBoardName(infoBean.name)
-            .setLeaderBoardMarkName(infoBean.mark_file_name);
+            DialogManager.createLeaderBoradDialog(1, itemInfo);
         });
 
         //设置文本信息
