@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
 
 public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 {

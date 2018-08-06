@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
-using System.Threading;
 
 public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBack, LeaderboardEntriesFindResultCallBack
 {

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
+﻿
 public class CheckUtil {
     /// <summary>
     /// 检测是否是数字
