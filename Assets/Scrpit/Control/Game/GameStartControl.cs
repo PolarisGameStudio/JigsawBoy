@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 
-public class GameStartControl : BaseMonoBehaviour
+public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
 {
 
     public UIMasterControl uiMasterControl;
@@ -246,7 +246,10 @@ public class GameStartControl : BaseMonoBehaviour
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
             delegate () {
-                DialogManager.createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo).setUserScore(completeTime.totalSeconds);
+                DialogManager
+                .createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo)
+                .setUserScore(completeTime.totalSeconds)
+                .setCallBack(this);
             });
         //图像归位
         int containerListSize = containerList.Count;
@@ -265,5 +268,16 @@ public class GameStartControl : BaseMonoBehaviour
             }
         }
 
+    }
+
+    public void cancelOnClick()
+    {
+        SceneUtil.jumpMainScene();
+
+    }
+
+    public void submitOnClick()
+    {
+        SceneUtil.jumpGameScene();
     }
 }

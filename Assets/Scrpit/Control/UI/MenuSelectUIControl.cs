@@ -152,6 +152,7 @@ public class MenuSelectUIControl : BaseUIControl
     /// </summary>
     public void addCustomJigsawOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
     }
 

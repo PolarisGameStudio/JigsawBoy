@@ -92,6 +92,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     /// </summary>
     public void showUploadImage()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         uploadPath = FileUtil.OpenFileDialog();
         if (uploadPath == null || uploadPath.Length == 0) {
             uploadImage.color = new Color(0,0,0,0);
@@ -128,6 +129,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     {
         if (!checkData())
             return;
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
 
         string markFileName = SystemUtil.getUUID();
         PuzzlesInfoBean infoBean = new PuzzlesInfoBean();
@@ -248,6 +250,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     /// </summary>
     public void jumpSelectUI()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
         MenuSelectUIControl selectUIControl = mUIMasterControl.getUIByType<MenuSelectUIControl>(UIEnum.MenuSelectUI);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
         selectUIControl.setJigsawSelectData(JigsawResourcesEnum.Custom);
