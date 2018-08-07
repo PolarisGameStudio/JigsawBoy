@@ -97,14 +97,24 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         if (isDef)
             return;
        
-
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
+        TabButton tabButton = buttonObj.GetComponent<TabButton>();
         buttonObj.name = resType.ToString();
         buttonObj.transform.SetParent(transform);
+        buttonObj.transform.localScale = new Vector3(1, 1, 1);
+        tabButton.setResType(resType);
         //设置按键
         Button selectBT = buttonObj.GetComponent<Button>();
         selectBT.onClick.AddListener(delegate ()
         {
+          TabButton[] listTab= transform.GetComponentsInChildren<TabButton>();
+            foreach(TabButton itemTab in listTab)
+            {
+                if (tabButton != null && tabButton == itemTab)
+                    itemTab.setSelect(true);
+                else
+                    itemTab.setSelect(false);
+            }
             menuSelectUIControl.setJigsawSelectData(resType);
         });
 
@@ -114,9 +124,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
 
         //设置图片信息
         Image resTypeIcon= CptUtil.getCptFormParentByName<Transform, Image>(buttonObj.transform, "ResTypeIcon");
-        Sprite resTypeIconSp = ResourcesManager.loadData<Sprite>(resTypeIconPath);
-        resTypeIcon.sprite=resTypeIconSp;
-
+        StartCoroutine(ResourcesManager.loadAsyncDataImage(resTypeIconPath, resTypeIcon));
     }
 }
 

@@ -78,16 +78,21 @@ public class MenuSelectUIControl : BaseUIControl
         if (jigsawSelectContentSC == null)
             return;
         if (resourcesEnum.Equals(JigsawResourcesEnum.Custom))
-        {
             //展示自定义添加按钮
             showAddCustomJigsaw(true);
-        }
         else
-        {
             //不展示自定义添加按钮
             showAddCustomJigsaw(false);
-        }
         jigsawSelectContentSC.loadJigsaw(resourcesEnum);
+        if (resTypeSelectContentSC == null)
+            return;
+        TabButton[] tabList= resTypeSelectContentSC.GetComponentsInChildren<TabButton>();
+        foreach (TabButton item in tabList) {
+            if (item.getResType().Equals(resourcesEnum))
+                item.setSelect(true);
+            else
+                item.setSelect(false);
+        }
     }
 
     /// <summary>

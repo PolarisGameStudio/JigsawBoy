@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SwitchButton : MonoBehaviour
+public class SwitchButton : BaseMonoBehaviour
 {
 
     public List<Sprite> mListStatus;
