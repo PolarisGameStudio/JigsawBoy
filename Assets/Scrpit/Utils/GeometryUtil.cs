@@ -41,7 +41,6 @@ public class GeometryUtil
             float coordinateYcpt = (float)Math.Round(coordinateY, 2);
             circleVertices.Add(new Vector3(coordinateXcpt, coordinateYcpt, 0));
         }
-
         return circleVertices;
     }
 

@@ -53,7 +53,6 @@ public class JigsawObjBuilder
             return null;
         }
 
-
         //创建拼图的游戏对象
         String gameObjName = jigsawPic.name + "_X" + markLocation.x + "_Y" + markLocation.y;
         GameObject jigsawGameObj = createGameObjForJigsaw(gameObjName);
@@ -98,15 +97,6 @@ public class JigsawObjBuilder
             jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Right, JigsawMergeStatusEnum.Unincorporated);
             jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Below, JigsawMergeStatusEnum.Unincorporated);
         }
-    }
-
-    /// <summary>
-    /// 设置拼图的线框
-    /// </summary>
-    /// <param name="jigsawGameObj"></param>
-    private static void setWireFrame(GameObject jigsawGameObj)
-    {
-        jigsawGameObj.AddComponent<JigsawWireFrame>();
     }
 
     /// <summary>
@@ -215,7 +205,6 @@ public class JigsawObjBuilder
                 triangles[i * 3 + 2] = 1;
             else
                 triangles[i * 3 + 2] = i + 2;
-
         }
         return triangles;
     }
@@ -240,7 +229,4 @@ public class JigsawObjBuilder
         }
         return uvVertices;
     }
-
-
-
 }

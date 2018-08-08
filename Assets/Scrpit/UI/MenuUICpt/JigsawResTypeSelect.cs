@@ -51,52 +51,10 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     /// <param name="resType"></param>
     private void createSelectItem(JigsawResourcesEnum resType)
     {
-        String resTypeIconPath = "";
-        String resName = "";
-        bool isDef = false;
-        switch (resType)
-        {
-            case JigsawResourcesEnum.Painting:
-                resTypeIconPath = "Texture/UI/tab_painting";
-                resName = CommonData.getText(5);
-                break;
-            case JigsawResourcesEnum.Scenery:
-                resTypeIconPath = "Texture/UI/tab_scenery";
-                resName = CommonData.getText(6);
-                break;
-            case JigsawResourcesEnum.Custom:
-                resTypeIconPath = "Texture/UI/tab_custom";
-                resName = CommonData.getText(7);
-                break;
-            case JigsawResourcesEnum.Celebrity:
-                resTypeIconPath = "Texture/UI/tab_celebrity"; 
-                resName = CommonData.getText(8);
-                break;
-            case JigsawResourcesEnum.Other:
-                resTypeIconPath = "Texture/UI/tab_other";
-                resName = CommonData.getText(9);
-                break;
-            case JigsawResourcesEnum.Animal:
-                resTypeIconPath = "Texture/UI/tab_animal";
-                resName = CommonData.getText(10);
-                break;
-            case JigsawResourcesEnum.Food:
-                resTypeIconPath = "Texture/UI/tab_food";
-                resName = CommonData.getText(31);
-                break;
-            //case JigsawResourcesEnum.Movie:
-            //    resName = CommonData.getText(11);
-            //    break;
-            //case JigsawResourcesEnum.StarrySky:
-            //    resName = CommonData.getText(12);
-            //    break;
-            default:
-                isDef = true;
-                break;
-        }
-        if (isDef)
+        String resTypeIconPath = EnumUtil.getResTypeUIPath(resType);
+        String resName = EnumUtil.getResTypeName(resType);
+        if (resName == null || resName.Length == 0 || resTypeIconPath == null || resTypeIconPath.Length == 0)
             return;
-       
         GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
         TabButton tabButton = buttonObj.GetComponent<TabButton>();
         buttonObj.name = resType.ToString();

@@ -15,6 +15,7 @@ public class MenuSelectUIControl : BaseUIControl
     public Transform jigsawSelectTiltebar;
     public Button titleBarExitBT;
     public Text titleBarJigsawPointTV;
+    public Text titleBarTitleName;
 
 
     public Transform addCustomJigsaw;
@@ -48,6 +49,7 @@ public class MenuSelectUIControl : BaseUIControl
         jigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
         titleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(jigsawSelectTiltebar, "ExitBT");
         titleBarJigsawPointTV = CptUtil.getCptFormParentByName<Transform, Text>(jigsawSelectTiltebar, "PuzzlesPointText");
+        titleBarTitleName = CptUtil.getCptFormParentByName<Transform, Text>(jigsawSelectTiltebar,"TitleName");
         if (titleBarExitBT != null)
         {
             titleBarExitBT.onClick.AddListener(addExitOnClick);
@@ -74,6 +76,7 @@ public class MenuSelectUIControl : BaseUIControl
     /// <param name="resTypeSelectView"></param>
     public void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
     {
+        titleBarTitleName.text = EnumUtil.getResTypeName(resourcesEnum);
         this.currentResType = resourcesEnum;
         if (jigsawSelectContentSC == null)
             return;

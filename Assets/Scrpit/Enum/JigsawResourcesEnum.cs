@@ -9,5 +9,6 @@ public enum JigsawResourcesEnum
     StarrySky=6,//星空
     Food = 7,//食物
     Other =99,//其他
-    Custom = 100,//自定义
+    Custom = 100//自定义
+
 }

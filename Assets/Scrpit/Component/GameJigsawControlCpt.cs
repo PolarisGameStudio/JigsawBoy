@@ -22,7 +22,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     private float moveScale = 2f;
 
     //选择物体增量
-    public float rotateObjAngleAdd = 5;
+    public float rotateObjAngleAdd = 365;
 
     public GameParticleControl gameParticleControl;
 
@@ -93,7 +93,6 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
                 isSelect = true;
                 vec3Offset = jigsawTransform.position - new Vector3(mousePos.x, mousePos.y);
                 jigsawContainerCpt.setIsSelect(true);
-          
             }
         }
     }
@@ -154,13 +153,16 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
     /// <param name="rotationDirection"></param>
     private void rotateObject(RotationDirectionEnum rotationDirection)
     {
-        if (!isSelect)
+        Vector3 currMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 currMousePos2D = new Vector2(currMousePos.x, currMousePos.y);
+        RaycastHit2D currRH = Physics2D.Raycast(currMousePos2D, Vector2.zero);
+        if (currRH == false)
             return;
-        if (hitRC == false)
-            return;
-
-        Collider2D jigsawCollider = hitRC.collider;
+        Collider2D jigsawCollider = currRH.collider;
+ 
         GameObject jigsawGameObj = jigsawCollider.gameObject;
+        if (jigsawGameObj.GetComponent<JigsawContainerCpt>() == null)
+            return;
         Transform jigsawTransform = jigsawGameObj.transform;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -171,13 +173,12 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             if (rotationDirection.Equals(RotationDirectionEnum.Clockwise))
             {
-                jigsawTransform.Rotate(0,0, -rotateObjAngleAdd);
+                jigsawTransform.Rotate(0, 0, -rotateObjAngleAdd* Time.deltaTime);
             }
             else if (rotationDirection.Equals(RotationDirectionEnum.Anticlockwise))
             {
-                jigsawTransform.Rotate(0, 0, rotateObjAngleAdd);
+                jigsawTransform.Rotate(0, 0, rotateObjAngleAdd * Time.deltaTime);
             }
         }
-
     }
 }

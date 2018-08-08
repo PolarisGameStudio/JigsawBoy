@@ -324,19 +324,13 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     private void Start()
     {
         //获取镜头控制
-        GameObject cameraObj = GameObject.Find("/Main Camera");
+        GameObject cameraObj = Camera.main.gameObject;
         if (cameraObj != null)
         {
             mCameraControlCpt = cameraObj.GetComponent<GameCameraControlCpt>();
             gameParticleControl = cameraObj.GetComponent<GameParticleControl>();
             gameStartControl = cameraObj.GetComponent<GameStartControl>();
         }
-
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -359,12 +353,10 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// <param name="collision"></param>
     private void collisionCheck(Collider2D collision)
     {
-
         if (!isOpenMergeCheck)
             return;
         if (!isSelect)
             return;
-
         //获取被撞物体和其父对象
         JigsawContainerCpt collisionJCC = collision.gameObject.GetComponent<JigsawContainerCpt>();
         if (collisionJCC == null)

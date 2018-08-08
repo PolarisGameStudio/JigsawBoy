@@ -36,6 +36,7 @@ public class GamePauseUIControl : BaseUIControl
     /// </summary>
     private void restartOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         SceneUtil.jumpGameScene();
     }
 
@@ -44,6 +45,7 @@ public class GamePauseUIControl : BaseUIControl
     /// </summary>
     private void exitOnClick()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
         SceneUtil.jumpMainScene();
     }
 

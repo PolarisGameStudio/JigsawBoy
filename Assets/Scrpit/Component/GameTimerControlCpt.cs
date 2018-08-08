@@ -13,17 +13,26 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     //开始计时时间
     private DateTime startTime;
     private Text timeText;
+    //分针
+    private Image timeMinuteHand;
+    private Animator timeMinuteAnimaotr;
+    //秒针
+    private Image timeSecondHand;
+    private Animator timeSecondAnimaotr;
+
     //游戏进行时间
     private TimeSpan nowTimeSpan;
-    void Start()
+
+    private void Awake()
     {
-        timeText = CptUtil.getCptFormParentByName<Transform, Text>(transform,"GameTimerText");
-    }
-
-
-    void Update()
-    {
-
+        timeText = CptUtil.getCptFormParentByName<Transform, Text>(transform, "GameTimerText");
+        timeMinuteHand = CptUtil.getCptFormParentByName<Transform, Image>(transform, "TimeMinuteHand");
+        timeSecondHand = CptUtil.getCptFormParentByName<Transform, Image>(transform, "TimeSecondHand");
+        if(timeMinuteHand!=null)
+            timeMinuteAnimaotr= timeMinuteHand.GetComponent<Animator>();
+        if(timeSecondHand!=null)
+            timeSecondAnimaotr = timeSecondHand.GetComponent<Animator>();
+        gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -31,6 +40,11 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     /// </summary>
     public void startTimer()
     {
+        gameObject.SetActive(true);
+        if (timeMinuteAnimaotr != null)
+            timeMinuteAnimaotr.SetBool("isStart", true);
+        if (timeSecondAnimaotr != null)
+            timeSecondAnimaotr.SetBool("isStart", true);
         isStartTimer = true;
         startTime = TimeUtil.getNow();
         StartCoroutine(Timer());
@@ -42,6 +56,10 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     public void endTimer()
     {
         isStartTimer = false;
+        if (timeMinuteAnimaotr != null)
+            timeMinuteAnimaotr.SetBool("isStart", false);
+        if (timeSecondAnimaotr != null)
+            timeSecondAnimaotr.SetBool("isStart", false);
     }
 
     /// <summary>

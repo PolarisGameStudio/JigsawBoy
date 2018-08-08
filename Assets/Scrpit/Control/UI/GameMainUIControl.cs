@@ -24,11 +24,11 @@ public class GameMainUIControl : BaseUIControl
         }
         gameInfoBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameInfoBT");
         gamePauseBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GamePauseBT");
-        gameMusicBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameMusicBT");
+     //   gameMusicBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameMusicBT");
 
         gameInfoBT.onClick.AddListener(openGameInfo);
         gamePauseBT.onClick.AddListener(openPauseBT);
-        gameMusicBT.onClick.AddListener(openGameMusic);
+      //  gameMusicBT.onClick.AddListener(openGameMusic);
     }
 
     /// <summary>
@@ -36,6 +36,7 @@ public class GameMainUIControl : BaseUIControl
     /// </summary>
     public void openGameInfo()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameInfoUI);
     }
 
@@ -43,6 +44,7 @@ public class GameMainUIControl : BaseUIControl
     /// 打开游戏音乐
     /// </summary>
     public void openGameMusic() {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMusicUI);
     }
 
@@ -51,6 +53,7 @@ public class GameMainUIControl : BaseUIControl
     /// </summary>
     public void openPauseBT()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GamePauseUI);
     }
 
