@@ -20,7 +20,8 @@ public class JigsawSelect : BaseMonoBehaviour
     private Sprite mLevel2;
     private Sprite mLevel3;
     // Use this for initialization
-    void Start()
+
+    private void Awake()
     {
         mLevel1 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_1");
         mLevel2 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_2");

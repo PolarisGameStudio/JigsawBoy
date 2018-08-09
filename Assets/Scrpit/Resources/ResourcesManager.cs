@@ -100,7 +100,7 @@ public class ResourcesManager
         yield return res;
         Sprite imageSp = res.asset as Sprite;
         image.sprite = imageSp;
-       // image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
+        // image.sprite = Sprite.Create(imageTX, new Rect(0, 0, imageTX.width, imageTX.height), new Vector2(0.5f, 0.5f));
     }
 
     /// <summary>
@@ -112,8 +112,59 @@ public class ResourcesManager
     public async static Task loadAsyncDataImageByAwait(string imagePath, Image image)
     {
         var res = await Resources.LoadAsync<Sprite>(imagePath);
-        Sprite imageSp= res as Sprite;
+        Sprite imageSp = res as Sprite;
         image.sprite = imageSp;
 
+    }
+
+    /// <summary>
+    /// 异步加载asset资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public static IEnumerator LoadAsyncAssetBundles<T>(string objName, LoadCallBack<T> callBack) where T : Object
+    {
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/");
+        yield return assetRequest;
+        objName = objName.ToLower();
+        if (assetRequest == null&& callBack!=null) 
+            callBack.loadFail("加载失败：指定assetPath下没有该资源");
+        AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<T>(objName);
+        yield return objRequest;
+        if (objRequest == null && callBack != null)
+            callBack.loadFail("加载失败：指定assetPath下没有该名字的obj");
+        T obj = objRequest.asset as T;
+        if (obj != null && callBack != null)
+            callBack.loadSuccess(obj);
+    }
+
+    /// <summary>
+    /// 异步加载asset并设置图片
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator LoadAsyncAssetBundlesImage(string objName,Image image)
+    {
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/");
+        yield return assetRequest;
+        objName = objName.ToLower();
+        AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<Sprite>(objName);
+        yield return objRequest;
+        Sprite sp = objRequest.asset as Sprite;
+        image.sprite = sp;
+    }
+
+    /// <summary>
+    /// 异步加载回调
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface LoadCallBack<T>{
+        void loadSuccess(T data);
+        void loadFail(string msg);
     }
 }
