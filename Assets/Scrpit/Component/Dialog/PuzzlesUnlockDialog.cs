@@ -9,6 +9,7 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
     private Text mUnlockPuzzlesName;
 
     private string mPuzzlesNameStr;
+    private string mPuzzlesMarkName;
     private string mPuzzlesImageUrl;
 
     void Start()
@@ -30,9 +31,9 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
     {
         if (mUnlockPuzzlesName != null)
             mUnlockPuzzlesName.text = mPuzzlesNameStr;
-        if (mUnlockPuzzlesImage != null)
-           StartCoroutine(ResourcesManager.loadAsyncDataImage(mPuzzlesImageUrl, mUnlockPuzzlesImage)) ;
-       
+        if (mUnlockPuzzlesImage != null) {
+            mUnlockPuzzlesImage.sprite= ResourcesManager.LoadAssetBundles<Sprite>(mPuzzlesImageUrl, mPuzzlesMarkName);
+        }
     }
 
     /// <summary>
@@ -53,6 +54,14 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         if (mUnlockPuzzlesName != null)
             mUnlockPuzzlesName.text = mPuzzlesNameStr;
     }
+    /// <summary>
+    /// 设置拼图名字
+    /// </summary>
+    /// <param name="puzzlesMarkName"></param>
+    public void setPuzzlesMarkName(string puzzlesMarkName)
+    {
+        mPuzzlesMarkName = puzzlesMarkName;
+    }
 
     /// <summary>
     /// 设置拼图地址
@@ -61,8 +70,6 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
     public void setPuzzlesUrl(string puzzlesUrl)
     {
         mPuzzlesImageUrl = puzzlesUrl;
-        if (mUnlockPuzzlesImage != null)
-            StartCoroutine(ResourcesManager.loadAsyncDataImage(mPuzzlesImageUrl, mUnlockPuzzlesImage));
     }
 
     /// <summary>

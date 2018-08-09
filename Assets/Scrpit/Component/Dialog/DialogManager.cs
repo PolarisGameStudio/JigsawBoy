@@ -10,7 +10,7 @@ public class DialogManager : BaseMonoBehaviour
     /// <returns></returns>
     public static GeneralDialog createGeneralDialog()
     {
-        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/GeneralDialog"));
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/GeneralDialog"));
         GeneralDialog dialog = dialogObj.GetComponent<GeneralDialog>();
         return dialog;
     }
@@ -21,7 +21,7 @@ public class DialogManager : BaseMonoBehaviour
     /// <returns></returns>
     public static ToastDialog createToastDialog()
     {
-        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/ToastDialog"));
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/ToastDialog"));
         ToastDialog dialog = dialogObj.GetComponent<ToastDialog>();
         return dialog;
     }
@@ -35,7 +35,7 @@ public class DialogManager : BaseMonoBehaviour
     public static LeaderBoardDialog createLeaderBoradDialog(int dialogType,PuzzlesGameInfoBean gameInfoBean) {
         if (gameInfoBean == null || gameInfoBean.puzzlesInfo == null)
             return null;
-        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/LeaderBoardDialog"));
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/LeaderBoardDialog"));
         LeaderBoardDialog dialog = dialogObj.GetComponent<LeaderBoardDialog>();
         dialog.setDialogType(dialogType);
         dialog.setPuzzlesInfo(gameInfoBean);
@@ -46,13 +46,15 @@ public class DialogManager : BaseMonoBehaviour
     /// 创建解锁拼图弹窗动画
     /// </summary>
     /// <param name="puzzlesName"></param>
+    /// <param name="puzzlesMarkName"></param>
     /// <param name="puzzlesUrl"></param>
     /// <returns></returns>
-    public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName,string puzzlesUrl)
+    public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName,string puzzlesMarkName, string puzzlesUrl)
     {
-        GameObject dialogObj = Instantiate(ResourcesManager.loadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));  
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));  
         PuzzlesUnlockDialog dialog= dialogObj.GetComponent<PuzzlesUnlockDialog>();
         dialog.setPuzzlesName(puzzlesName);
+        dialog.setPuzzlesMarkName(puzzlesMarkName);
         dialog.setPuzzlesUrl(puzzlesUrl);
         return dialog;
     }

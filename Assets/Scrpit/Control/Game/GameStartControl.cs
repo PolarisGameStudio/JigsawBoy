@@ -64,12 +64,12 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         Texture2D pic2D;
         if (jigsawInfoData.Data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
-            WWW www= ResourcesManager.loadLocationData(resFilePath);
+            WWW www= ResourcesManager.LoadLocationData(resFilePath);
             pic2D = www.texture;
         }
         else
         {
-             pic2D = ResourcesManager.loadData<Texture2D>(resFilePath);
+             pic2D = ResourcesManager.LoadAssetBundles<Texture2D>(resFilePath, jigsawInfoData.Mark_file_name);
         }
      
         if (pic2D == null)

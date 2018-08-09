@@ -513,13 +513,13 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
 
     private void createLeaderBoardItem(LeaderBoardItemData itemData)
     {
-        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(LeaderBoardItemPath));
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(LeaderBoardItemPath));
         itemObj.name = itemData.userId;
         itemObj.transform.SetParent(mWorldRank);
         itemObj.transform.localScale = Vector3.one;
         //设置头像图片
         Image userIcon = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "UserIcon");
-        StartCoroutine(ResourcesManager.loadAsyncHttpImage(itemData.steamUserItemInfo.avatar, userIcon));
+        StartCoroutine(ResourcesManager.LoadAsyncHttpImage(itemData.steamUserItemInfo.avatar, userIcon));
         //设置名字
         Text userName = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "UserName");
         userName.text = itemData.steamUserItemInfo.personaname;

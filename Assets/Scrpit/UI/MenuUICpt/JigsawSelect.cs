@@ -23,9 +23,9 @@ public class JigsawSelect : BaseMonoBehaviour
 
     private void Awake()
     {
-        mLevel1 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_1");
-        mLevel2 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_2");
-        mLevel3 = ResourcesManager.loadData<Sprite>("Texture/UI/icon_level_3");
+        mLevel1 = ResourcesManager.LoadData<Sprite>("Texture/UI/icon_level_1");
+        mLevel2 = ResourcesManager.LoadData<Sprite>("Texture/UI/icon_level_2");
+        mLevel3 = ResourcesManager.LoadData<Sprite>("Texture/UI/icon_level_3");
     }
 
     // Update is called once per frame
@@ -127,7 +127,7 @@ public class JigsawSelect : BaseMonoBehaviour
             infoBean.unlock_point = infoBean.level * infoBean.level;
         }
 
-        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectLockItemPath));
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectLockItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
 
         itemObj.name = infoBean.Mark_file_name;
@@ -163,7 +163,7 @@ public class JigsawSelect : BaseMonoBehaviour
                 menuSelectUIControl.refreshItemJigsawSelectData(position, itemObj, itemInfo);
                 //解锁成功动画
                 string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-                DialogManager.createUnlockPuzzlesDialog(infoBean.name, filePath);
+                DialogManager.createUnlockPuzzlesDialog(infoBean.name,infoBean.mark_file_name, filePath);
             }
         });
         //设置文本信息
@@ -183,7 +183,7 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectItemPath));
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
 
         itemObj.name = infoBean.Mark_file_name;
@@ -192,7 +192,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadAsyncDataImage(filePath + "", backImage));
+        StartCoroutine(ResourcesManager.LoadAsyncAssetBundlesImage(filePath + "",infoBean.Mark_file_name, backImage));
 
 
         //设置按键
@@ -232,14 +232,14 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(JigsawSelectCustomItemPath));
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectCustomItemPath));
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
 
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.loadAsyncLocationImage(filePath, backImage));
+        StartCoroutine(ResourcesManager.LoadAsyncLocationImage(filePath, backImage));
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");

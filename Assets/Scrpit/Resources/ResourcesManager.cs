@@ -11,11 +11,28 @@ public class ResourcesManager
     /// <typeparam name="T"></typeparam>
     /// <param name="resPath"></param>
     /// <returns></returns>
-    public static T loadData<T>(string resPath) where T : Object
+    public static T LoadData<T>(string resPath) where T : Object
     {
 
         T resData = Resources.Load(resPath, typeof(T)) as T;
         return resData;
+    }
+
+    /// <summary>
+    /// 加载asset资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public static T LoadAssetBundles<T>(string assetPath, string objName) where T : Object
+    {
+        assetPath = assetPath.ToLower();
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath + "/AssetBundles/" + assetPath);
+        T data = assetBundle.LoadAsset<T>(objName);
+        assetBundle.Unload(false);
+        return data;
     }
 
     /// <summary>
@@ -24,7 +41,7 @@ public class ResourcesManager
     /// <typeparam name="T"></typeparam>
     /// <param name="resPath"></param>
     /// <returns></returns>
-    public static T loadAsyncData<T>(string resPath) where T : Object
+    public static T LoadAsyncData<T>(string resPath) where T : Object
     {
         T resData = Resources.LoadAsync(resPath, typeof(T)) as T;
         return resData;
@@ -36,7 +53,7 @@ public class ResourcesManager
     /// <typeparam name="T"></typeparam>
     /// <param name="resPath"></param>
     /// <returns></returns>
-    public static WWW loadLocationData(string resPath)
+    public static WWW LoadLocationData(string resPath)
     {
         string filePath = "file://" + resPath;
         WWW www = new WWW(filePath);
@@ -49,9 +66,9 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator loadAsyncLocationImage(string imagePath, Image image)
+    public static IEnumerator LoadAsyncLocationImage(string imagePath, Image image)
     {
-        return loadAsyncBaseImage(1, imagePath, image);
+        return LoadAsyncBaseImage(1, imagePath, image);
     }
 
     /// <summary>
@@ -60,9 +77,9 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator loadAsyncHttpImage(string imagePath, Image image)
+    public static IEnumerator LoadAsyncHttpImage(string imagePath, Image image)
     {
-        return loadAsyncBaseImage(0, imagePath, image);
+        return LoadAsyncBaseImage(0, imagePath, image);
     }
 
     /// <summary>
@@ -72,7 +89,7 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator loadAsyncBaseImage(int type, string imagePath, Image image)
+    public static IEnumerator LoadAsyncBaseImage(int type, string imagePath, Image image)
     {
         string filePath = "file://" + imagePath;
         if (type == 1)
@@ -94,7 +111,7 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator loadAsyncDataImage(string imagePath, Image image)
+    public static IEnumerator LoadAsyncDataImage(string imagePath, Image image)
     {
         ResourceRequest res = Resources.LoadAsync<Sprite>(imagePath);
         yield return res;
@@ -109,7 +126,7 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public async static Task loadAsyncDataImageByAwait(string imagePath, Image image)
+    public async static Task LoadAsyncDataImageByAwait(string imagePath, Image image)
     {
         var res = await Resources.LoadAsync<Sprite>(imagePath);
         Sprite imageSp = res as Sprite;
@@ -125,12 +142,12 @@ public class ResourcesManager
     /// <param name="objName"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    public static IEnumerator LoadAsyncAssetBundles<T>(string objName, LoadCallBack<T> callBack) where T : Object
+    public static IEnumerator LoadAsyncAssetBundles<T>(string assetPath, string objName, LoadCallBack<T> callBack) where T : Object
     {
-        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/");
+        assetPath = assetPath.ToLower();
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/" + assetPath);
         yield return assetRequest;
-        objName = objName.ToLower();
-        if (assetRequest == null&& callBack!=null) 
+        if (assetRequest == null && callBack != null)
             callBack.loadFail("加载失败：指定assetPath下没有该资源");
         AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<T>(objName);
         yield return objRequest;
@@ -139,6 +156,7 @@ public class ResourcesManager
         T obj = objRequest.asset as T;
         if (obj != null && callBack != null)
             callBack.loadSuccess(obj);
+        assetRequest.assetBundle.Unload(false);
     }
 
     /// <summary>
@@ -148,22 +166,24 @@ public class ResourcesManager
     /// <param name="objName"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator LoadAsyncAssetBundlesImage(string objName,Image image)
+    public static IEnumerator LoadAsyncAssetBundlesImage(string assetPath, string objName, Image image)
     {
-        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/");
+        assetPath = assetPath.ToLower();
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/" + assetPath);
         yield return assetRequest;
-        objName = objName.ToLower();
         AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<Sprite>(objName);
         yield return objRequest;
         Sprite sp = objRequest.asset as Sprite;
         image.sprite = sp;
+        assetRequest.assetBundle.Unload(false);
     }
 
     /// <summary>
     /// 异步加载回调
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface LoadCallBack<T>{
+    public interface LoadCallBack<T>
+    {
         void loadSuccess(T data);
         void loadFail(string msg);
     }

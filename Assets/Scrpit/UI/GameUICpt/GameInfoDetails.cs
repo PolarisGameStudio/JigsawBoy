@@ -90,7 +90,7 @@ public class GameInfoDetails : MonoBehaviour
     /// <param name="content"></param>
     private void createTextItem(string title, string content, int contentTextSize)
     {
-        GameObject textObj = Instantiate(ResourcesManager.loadData<GameObject>(GameInfoTextItem));
+        GameObject textObj = Instantiate(ResourcesManager.LoadData<GameObject>(GameInfoTextItem));
 
         Text titleText = CptUtil.getCptFormParentByName<Transform, Text>(textObj.transform, "GameInfoTextTitle");
         Text contentText = CptUtil.getCptFormParentByName<Transform, Text>(textObj.transform, "GameInfoTextContent");

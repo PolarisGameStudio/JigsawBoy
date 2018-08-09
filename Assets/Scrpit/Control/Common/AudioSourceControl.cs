@@ -63,7 +63,7 @@ public class AudioSourceControl : BaseMonoBehaviour
                 break;
         }
 
-        AudioClip tempClip = ResourcesManager.loadData<AudioClip>(soundPath);
+        AudioClip tempClip = ResourcesManager.LoadData<AudioClip>(soundPath);
         if (tempClip != null)
             AudioSource.PlayClipAtPoint(tempClip, transform.position);
     }
@@ -79,7 +79,7 @@ public class AudioSourceControl : BaseMonoBehaviour
         if (data != null)
         {
             string audioPath = data.FilePath;
-            aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            aduioClip = ResourcesManager.LoadData<AudioClip>(audioPath);
             audioSource.clip = aduioClip;
             audioSource.loop = false;
             audioSource.Play();
@@ -98,7 +98,7 @@ public class AudioSourceControl : BaseMonoBehaviour
         {
             BGMInfoBean data = listBGMInfo[position];
             string audioPath = data.FilePath;
-            aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+            aduioClip = ResourcesManager.LoadData<AudioClip>(audioPath);
             audioSource.clip = aduioClip;
             audioSource.loop = false;
             audioSource.Play();
@@ -118,7 +118,7 @@ public class AudioSourceControl : BaseMonoBehaviour
             if (dataList != null && dataList.Count > 0)
             {
                 string audioPath = dataList[0].FilePath;
-                aduioClip = ResourcesManager.loadData<AudioClip>(audioPath);
+                aduioClip = ResourcesManager.LoadData<AudioClip>(audioPath);
             }
             else
             {

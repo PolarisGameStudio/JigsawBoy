@@ -17,7 +17,7 @@ public class CreateParticleUtil : MonoBehaviour
         ParticleSystem particleSys = null;
         if (particleEnum.Equals(BackParticleEnum.Def))
         {
-            particleSys = Instantiate(ResourcesManager.loadData<ParticleSystem>(CommonParticleResPath.Back_Def_Path));
+            particleSys = Instantiate(ResourcesManager.LoadData<ParticleSystem>(CommonParticleResPath.Back_Def_Path));
         }
 
         //通用参数设置
@@ -54,7 +54,7 @@ public class CreateParticleUtil : MonoBehaviour
         ParticleSystem particleSys = null;
         if (particleEnum.Equals(MergeParticleEnum.Def))
         {
-            particleSys = Instantiate(ResourcesManager.loadData<ParticleSystem>(CommonParticleResPath.Merge_Def_Path));
+            particleSys = Instantiate(ResourcesManager.LoadData<ParticleSystem>(CommonParticleResPath.Merge_Def_Path));
 
         }
 
@@ -81,7 +81,7 @@ public class CreateParticleUtil : MonoBehaviour
         ParticleSystem particleSys = null;
         if (particleEnum.Equals(MoveParticleEnum.Def))
         {
-            particleSys = Instantiate(ResourcesManager.loadData<ParticleSystem>(CommonParticleResPath.Move_Def_Path));
+            particleSys = Instantiate(ResourcesManager.LoadData<ParticleSystem>(CommonParticleResPath.Move_Def_Path));
 
         }
 

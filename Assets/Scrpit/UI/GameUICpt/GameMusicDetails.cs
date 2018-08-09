@@ -34,7 +34,7 @@ public class GameMusicDetails : BaseMonoBehaviour
 
     private void createMusicSelectItem(BGMInfoBean itemData)
     {
-        GameObject itemObj = Instantiate(ResourcesManager.loadData<GameObject>(GameMusicSelectItem));
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(GameMusicSelectItem));
 
         Button itemBT = itemObj.GetComponent<Button>();
         itemBT.onClick.AddListener(() => changeMusic(itemBT, itemData));

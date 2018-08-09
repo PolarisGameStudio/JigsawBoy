@@ -55,7 +55,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         String resName = EnumUtil.getResTypeName(resType);
         if (resName == null || resName.Length == 0 || resTypeIconPath == null || resTypeIconPath.Length == 0)
             return;
-        GameObject buttonObj = Instantiate(ResourcesManager.loadData<GameObject>(ResTypeSelectItemPath));
+        GameObject buttonObj = Instantiate(ResourcesManager.LoadData<GameObject>(ResTypeSelectItemPath));
         TabButton tabButton = buttonObj.GetComponent<TabButton>();
         buttonObj.name = resType.ToString();
         buttonObj.transform.SetParent(transform);
@@ -82,7 +82,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
 
         //设置图片信息
         Image resTypeIcon= CptUtil.getCptFormParentByName<Transform, Image>(buttonObj.transform, "ResTypeIcon");
-        StartCoroutine(ResourcesManager.loadAsyncDataImage(resTypeIconPath, resTypeIcon));
+        StartCoroutine(ResourcesManager.LoadAsyncDataImage(resTypeIconPath, resTypeIcon));
     }
 }
 
