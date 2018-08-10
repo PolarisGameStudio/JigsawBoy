@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResourcesManager
 {
+
+    public static List<AssetBundle> AsyncListAssetBundle = new List<AssetBundle>();
     /// <summary>
     /// 加载资源
     /// </summary>
@@ -149,14 +152,17 @@ public class ResourcesManager
         yield return assetRequest;
         if (assetRequest == null && callBack != null)
             callBack.loadFail("加载失败：指定assetPath下没有该资源");
+        AsyncListAssetBundle.Add(assetRequest.assetBundle);
         AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<T>(objName);
         yield return objRequest;
+        AsyncListAssetBundle.Remove(assetRequest.assetBundle);
+        assetRequest.assetBundle.Unload(false);
         if (objRequest == null && callBack != null)
             callBack.loadFail("加载失败：指定assetPath下没有该名字的obj");
         T obj = objRequest.asset as T;
         if (obj != null && callBack != null)
             callBack.loadSuccess(obj);
-        assetRequest.assetBundle.Unload(false);
+
     }
 
     /// <summary>
@@ -171,13 +177,26 @@ public class ResourcesManager
         assetPath = assetPath.ToLower();
         AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/" + assetPath);
         yield return assetRequest;
+        AsyncListAssetBundle.Add(assetRequest.assetBundle);
         AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<Sprite>(objName);
         yield return objRequest;
+        AsyncListAssetBundle.Remove(assetRequest.assetBundle);
+        assetRequest.assetBundle.Unload(false);
         Sprite sp = objRequest.asset as Sprite;
         image.sprite = sp;
-        assetRequest.assetBundle.Unload(false);
+     
     }
 
+    /// <summary>
+    /// 卸载所有asset
+    /// </summary>
+    public static void clearAssetBundles()
+    {
+        foreach (AssetBundle itemAsset in AsyncListAssetBundle) {
+            itemAsset.Unload(false);
+        }
+        AsyncListAssetBundle.Clear();
+    }
     /// <summary>
     /// 异步加载回调
     /// </summary>
