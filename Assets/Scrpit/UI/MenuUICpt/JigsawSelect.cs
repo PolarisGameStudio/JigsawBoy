@@ -98,7 +98,7 @@ public class JigsawSelect : BaseMonoBehaviour
         }
         else
         {
-            if ( completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
+            if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
             {
                 if (infoBean.level == 1)
                     createNormalItem(itemInfo);
@@ -192,7 +192,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.LoadAsyncAssetBundlesImage(filePath + "",infoBean.Mark_file_name, backImage));
+        StartCoroutine(ResourcesManager.LoadAsyncDataImage(filePath + "_Thumb", backImage));
 
 
         //设置按键
