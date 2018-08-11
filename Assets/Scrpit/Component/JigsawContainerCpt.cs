@@ -126,7 +126,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void mergeDeal()
     {
-        CommonData.IsDargMove = true;
+
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
         {
             //合并特效
@@ -137,6 +137,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             //让缸体恢复移动
             Rigidbody2D thisRB= transform.GetComponent<Rigidbody2D>();
             thisRB.constraints= RigidbodyConstraints2D.None;
+            CommonData.IsDargMove = true;
             //检测是否完成游戏
             checkFinshGame();
         }

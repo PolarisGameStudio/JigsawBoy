@@ -156,10 +156,18 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         Vector3 currMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 currMousePos2D = new Vector2(currMousePos.x, currMousePos.y);
         RaycastHit2D currRH = Physics2D.Raycast(currMousePos2D, Vector2.zero);
+        Collider2D jigsawCollider;
         if (currRH == false)
             return;
-        Collider2D jigsawCollider = currRH.collider;
- 
+        if (isSelect)
+        {
+            jigsawCollider = hitRC.collider;
+        }
+        else
+        {
+            jigsawCollider = currRH.collider;
+        }
+       
         GameObject jigsawGameObj = jigsawCollider.gameObject;
         if (jigsawGameObj.GetComponent<JigsawContainerCpt>() == null)
             return;
