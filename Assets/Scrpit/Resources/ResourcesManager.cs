@@ -122,7 +122,10 @@ public class ResourcesManager
     {
         return LoadAsyncBaseImage(1, imagePath, image,null);
     }
-
+    public static IEnumerator LoadAsyncLocationTexture(string imagePath, LoadCallBack<Texture2D> callBack)
+    {
+        return LoadAsyncBaseTexture(1, imagePath, callBack);
+    }
     /// <summary>
     /// 异步加载网络图片
     /// </summary>
@@ -158,7 +161,29 @@ public class ResourcesManager
         if (callBack != null)
             callBack.loadSuccess(image.sprite);
     }
-
+    /// <summary>
+    /// 基础加载
+    /// </summary>
+    /// <param name="type">1.本地   0.网络</param>
+    /// <param name="imagePath"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator LoadAsyncBaseTexture(int type, string imagePath, LoadCallBack<Texture2D> callBack)
+    {
+        string filePath = "file://" + imagePath;
+        if (type == 1)
+        {
+            filePath = "file://" + imagePath;
+        }
+        else
+        {
+            filePath = imagePath;
+        }
+        WWW www = new WWW(filePath);
+        yield return www;
+        if (callBack != null)
+            callBack.loadSuccess(www.texture);
+    }
     /// <summary>
     /// 异步加载资源图片
     /// </summary>
@@ -268,6 +293,23 @@ public class ResourcesManager
             callBack.loadSuccess(image.sprite);
     }
 
+    public static IEnumerator LoadAsyncAssetBundlesTexture2DForBytes(string assetPath, string objName, LoadCallBack<Texture2D> callBack)
+    {
+        assetPath = assetPath.ToLower();
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/" + assetPath);
+        yield return assetRequest;
+        AsyncListAssetBundle.Add(assetRequest.assetBundle);
+        AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<TextAsset>(objName);
+        yield return objRequest;
+        AsyncListAssetBundle.Remove(assetRequest.assetBundle);
+        assetRequest.assetBundle.Unload(false);
+        TextAsset textAsset = objRequest.asset as TextAsset;
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(textAsset.bytes);
+        if (callBack != null)
+            callBack.loadSuccess(texture);
+    
+    }
     /// <summary>
     /// 卸载所有asset
     /// </summary>

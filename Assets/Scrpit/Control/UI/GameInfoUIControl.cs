@@ -56,7 +56,7 @@ public class GameInfoUIControl : BaseUIControl, ResourcesManager.LoadCallBack<Sp
             else
             {
                 StartCoroutine
-                    (ResourcesManager.LoadAsyncAssetBundlesImageForBytes(picPath, CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name, gameInfoPicImage,this));   
+                   (ResourcesManager.LoadAsyncAssetBundlesImageForBytes(picPath, CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name, gameInfoPicImage,this));   
             }
         }
 
