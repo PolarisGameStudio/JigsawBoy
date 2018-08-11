@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using System.Threading.Tasks;
 
 public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
 {
@@ -69,7 +69,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         }
         else
         {
-             pic2D = ResourcesManager.LoadAssetBundles<Texture2D>(resFilePath, jigsawInfoData.Mark_file_name);
+             pic2D = ResourcesManager.LoadAssetBundlesTexture2DForBytes(resFilePath, jigsawInfoData.Mark_file_name);
         }
      
         if (pic2D == null)

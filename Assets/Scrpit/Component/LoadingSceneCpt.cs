@@ -10,7 +10,7 @@ public class SceneChangeData
 
 public class LoadingSceneCpt : MonoBehaviour
 {
-    private float loadingSpeed = 2;
+    private float loadingSpeed = 1;
     private float targetValue;
     private bool isPrepare = false;
     private AsyncOperation operation;

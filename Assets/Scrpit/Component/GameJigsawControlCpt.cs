@@ -167,7 +167,8 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             jigsawCollider = currRH.collider;
         }
-       
+        if (jigsawCollider == null)
+            return;
         GameObject jigsawGameObj = jigsawCollider.gameObject;
         if (jigsawGameObj.GetComponent<JigsawContainerCpt>() == null)
             return;

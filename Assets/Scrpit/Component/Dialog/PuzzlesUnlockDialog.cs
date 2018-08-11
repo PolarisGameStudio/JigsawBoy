@@ -5,6 +5,7 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
 {
     private Canvas mDialogCanvas;
     private Button mBTBackGround;
+    private Button mBTUnlockPuzzles;
     private Image mUnlockPuzzlesImage;
     private Text mUnlockPuzzlesName;
 
@@ -20,9 +21,11 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         mDialogCanvas.sortingLayerName = "UITop";
         mBTBackGround = CptUtil.getCptFormParentByName<Transform, Button>(transform, "DialogBackGround");
         mUnlockPuzzlesImage = CptUtil.getCptFormParentByName<Transform, Image>(transform, "UnlockPuzzlesImage");
+        mBTUnlockPuzzles = CptUtil.getCptFormParentByName<Transform, Button>(transform, "UnlockPuzzles");
         mUnlockPuzzlesName = CptUtil.getCptFormParentByName<Transform, Text>(transform, "UnlockPuzzlesName");
 
         mBTBackGround.onClick.AddListener(cancel);
+        mBTUnlockPuzzles.onClick.AddListener(cancel);
         initData();
     }
 
@@ -32,7 +35,8 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
         if (mUnlockPuzzlesName != null)
             mUnlockPuzzlesName.text = mPuzzlesNameStr;
         if (mUnlockPuzzlesImage != null) {
-            mUnlockPuzzlesImage.sprite= ResourcesManager.LoadAssetBundles<Sprite>(mPuzzlesImageUrl, mPuzzlesMarkName);
+            //mUnlockPuzzlesImage.sprite= ResourcesManager.LoadAssetBundlesSpriteForBytes(mPuzzlesImageUrl, mPuzzlesMarkName);
+            StartCoroutine( ResourcesManager.LoadAsyncAssetBundlesImageForBytes(mPuzzlesImageUrl, mPuzzlesMarkName, mUnlockPuzzlesImage));
         }
     }
 

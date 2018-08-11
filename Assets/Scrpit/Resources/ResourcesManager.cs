@@ -39,6 +39,51 @@ public class ResourcesManager
     }
 
     /// <summary>
+    /// 加载  asset资源并设置图片
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="image"></param>
+    public static Texture2D LoadAssetBundlesTexture2DForBytes(string assetPath, string objName) 
+    {
+        TextAsset textAsset = LoadAssetBundlesBytes(assetPath, objName);
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(textAsset.bytes);
+        return texture;
+    }
+
+    /// <summary>
+    /// 加载  asset资源并设置图片
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="image"></param>
+    public static Sprite LoadAssetBundlesSpriteForBytes(string assetPath, string objName)
+    {
+        TextAsset textAsset = LoadAssetBundlesBytes( assetPath,  objName);
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(textAsset.bytes);
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+    /// <summary>
+    /// 加载  asset资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="image"></param>
+    public static TextAsset LoadAssetBundlesBytes(string assetPath, string objName)
+    {
+        assetPath = assetPath.ToLower();
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath + "/AssetBundles/" + assetPath);
+        TextAsset textAsset = assetBundle.LoadAsset(objName, typeof(TextAsset)) as TextAsset;
+        assetBundle.Unload(false);
+        return textAsset;
+    }
+
+    /// <summary>
     /// 异步加载资源
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -69,9 +114,13 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
+    public static IEnumerator LoadAsyncLocationImage(string imagePath, Image image, LoadCallBack<Sprite> callBack)
+    {
+        return LoadAsyncBaseImage(1, imagePath, image, callBack);
+    }
     public static IEnumerator LoadAsyncLocationImage(string imagePath, Image image)
     {
-        return LoadAsyncBaseImage(1, imagePath, image);
+        return LoadAsyncBaseImage(1, imagePath, image,null);
     }
 
     /// <summary>
@@ -82,7 +131,7 @@ public class ResourcesManager
     /// <returns></returns>
     public static IEnumerator LoadAsyncHttpImage(string imagePath, Image image)
     {
-        return LoadAsyncBaseImage(0, imagePath, image);
+        return LoadAsyncBaseImage(0, imagePath, image,null);
     }
 
     /// <summary>
@@ -92,7 +141,7 @@ public class ResourcesManager
     /// <param name="imagePath"></param>
     /// <param name="image"></param>
     /// <returns></returns>
-    public static IEnumerator LoadAsyncBaseImage(int type, string imagePath, Image image)
+    public static IEnumerator LoadAsyncBaseImage(int type, string imagePath, Image image, LoadCallBack<Sprite> callBack)
     {
         string filePath = "file://" + imagePath;
         if (type == 1)
@@ -106,6 +155,8 @@ public class ResourcesManager
         WWW www = new WWW(filePath);
         yield return www;
         image.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+        if (callBack != null)
+            callBack.loadSuccess(image.sprite);
     }
 
     /// <summary>
@@ -185,6 +236,36 @@ public class ResourcesManager
         Sprite sp = objRequest.asset as Sprite;
         image.sprite = sp;
      
+    }
+
+
+    /// <summary>
+    /// 异步加载asset并设置图片
+    /// </summary>
+    /// <param name="assetPath"></param>
+    /// <param name="objName"></param>
+    /// <param name="image"></param>
+    /// <returns></returns>
+    public static IEnumerator LoadAsyncAssetBundlesImageForBytes(string assetPath, string objName, Image image) {
+       return LoadAsyncAssetBundlesImageForBytes( assetPath,  objName,  image,null);
+    }
+
+    public static IEnumerator LoadAsyncAssetBundlesImageForBytes(string assetPath, string objName, Image image,LoadCallBack<Sprite> callBack)
+    {
+        assetPath = assetPath.ToLower();
+        AssetBundleCreateRequest assetRequest = AssetBundle.LoadFromFileAsync(Application.dataPath + "/AssetBundles/" + assetPath);
+        yield return assetRequest;
+        AsyncListAssetBundle.Add(assetRequest.assetBundle);
+        AssetBundleRequest objRequest = assetRequest.assetBundle.LoadAssetAsync<TextAsset>(objName);
+        yield return objRequest;
+        AsyncListAssetBundle.Remove(assetRequest.assetBundle);
+        assetRequest.assetBundle.Unload(false);
+        TextAsset textAsset = objRequest.asset as TextAsset;
+        Texture2D texture = new Texture2D(1, 1);
+        texture.LoadImage(textAsset.bytes);
+        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        if (callBack != null)
+            callBack.loadSuccess(image.sprite);
     }
 
     /// <summary>

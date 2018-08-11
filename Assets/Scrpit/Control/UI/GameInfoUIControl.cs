@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class GameInfoUIControl : BaseUIControl
+public class GameInfoUIControl : BaseUIControl, ResourcesManager.LoadCallBack<Sprite>
 {
     //背景
     public Image gameInfoUIBackground;
@@ -47,28 +47,29 @@ public class GameInfoUIControl : BaseUIControl
         if (gameInfoPicImage != null && CommonData.SelectPuzzlesInfo != null)
         {
             string picPath = CommonData.SelectPuzzlesInfo.puzzlesInfo.Data_file_path + CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name;
-            Sprite picSP;
+         
             if (CommonData.SelectPuzzlesInfo.puzzlesInfo.Data_type.Equals((int)JigsawResourcesEnum.Custom))
             {
-                WWW www = ResourcesManager.LoadLocationData(picPath);
-                picSP= Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+                StartCoroutine
+                    (ResourcesManager.LoadAsyncLocationImage(picPath,gameInfoPicImage,this));
             }
             else
             {
-                 picSP = ResourcesManager.LoadAssetBundles<Sprite>(picPath, CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name);
+                StartCoroutine
+                    (ResourcesManager.LoadAsyncAssetBundlesImageForBytes(picPath, CommonData.SelectPuzzlesInfo.puzzlesInfo.Mark_file_name, gameInfoPicImage,this));   
             }
-            float gameInfoPicImageH = gameInfoPicTF.rect.height * 0.9f;
-            float gameInfoPicImageW = (gameInfoPicTF.rect.height / picSP.texture.height) * picSP.texture.width * 0.9f;
-
-            gameInfoPicImageTF = gameInfoPicImage.GetComponent<RectTransform>();
-            gameInfoPicImageTF.sizeDelta = new Vector2(gameInfoPicImageW, gameInfoPicImageH);
-
-            gameInfoPicImage.sprite = picSP;
         }
 
 
         gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
         gameCancelBT.onClick.AddListener(cancelUI);
+    }
+
+    IEnumerator initPic(string assetPath, string objName, Image image) {
+        yield return ResourcesManager.LoadAsyncAssetBundlesImageForBytes(assetPath, objName, image);
+
+
+
     }
 
     /// <summary>
@@ -134,4 +135,21 @@ public class GameInfoUIControl : BaseUIControl
     {
 
     }
+
+    #region -------- 读取图片回调 --------
+    public void loadSuccess(Sprite data)
+    {
+        Sprite picSP = data;
+        float gameInfoPicImageH = gameInfoPicTF.rect.height * 0.9f;
+        float gameInfoPicImageW = (gameInfoPicTF.rect.height / picSP.texture.height) * picSP.texture.width * 0.9f;
+
+        gameInfoPicImageTF = gameInfoPicImage.GetComponent<RectTransform>();
+        gameInfoPicImageTF.sizeDelta = new Vector2(gameInfoPicImageW, gameInfoPicImageH);
+    }
+
+    public void loadFail(string msg)
+    {
+       
+    }
+    #endregion
 }
