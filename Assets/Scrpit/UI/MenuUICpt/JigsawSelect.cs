@@ -193,8 +193,21 @@ public class JigsawSelect : BaseMonoBehaviour
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
         StartCoroutine(ResourcesManager.LoadAsyncDataImage(filePath + "_Thumb", backImage));
-
-
+     
+        //设置状态
+        Text puzzleStatus = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawStatus");
+        if (completeStateBean == null || completeStateBean.completeTime == null|| completeStateBean.completeTime.totalSeconds==0)
+        {
+            Material material = new Material(Shader.Find("Custom/Gray"));
+            backImage.material = material;
+            puzzleStatus.gameObject.SetActive(true);
+            puzzleStatus.text = CommonData.getText(32);
+        }
+        else {
+            puzzleStatus.gameObject.SetActive(false);
+            puzzleStatus.text = CommonData.getText(32);
+        }
+     
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
         startBT.onClick.AddListener(delegate ()
