@@ -220,6 +220,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         {
             gameMainUI.startTimer();
         }
+        Camera.main.gameObject.AddComponent<SecretCodeCpt>();
     }
 
     /// <summary>
@@ -246,10 +247,17 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
             delegate () {
+                int leaderType = 0;
+                if (CommonData.IsCheating) {
+                    leaderType = 1;
+                }
                 DialogManager
-                .createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo)
+                .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
                 .setUserScore(completeTime.totalSeconds)
-                .setCallBack(this);
+                .setCallBack(this)
+                .setCancelButtonStr(CommonData.getText(21))
+                .setSubmitButtonStr(CommonData.getText(23));
+                CommonData.IsCheating = false;
             });
         //图像归位
         int containerListSize = containerList.Count;

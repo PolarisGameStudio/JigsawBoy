@@ -162,12 +162,15 @@ public class SecretCodeCpt : BaseMonoBehaviour
     /// </summary>
     private void completePuzzles()
     {
+        CommonData.IsCheating = true;
         JigsawContainerCpt[] cptList = FindObjectsOfType<JigsawContainerCpt>();
         if (cptList == null || cptList.Length == 0)
             return;
         //设置不可在拖拽
         CommonData.IsDargMove = false;
         JigsawContainerCpt tempCpt = cptList[0];
+        tempCpt.transform.position = tempCpt.startPosition;
+        tempCpt.transform.localRotation = tempCpt.startRotation;
         for (int i = 0; i < cptList.Length; i++)
         {
             JigsawContainerCpt itemCpt = cptList[i];
@@ -185,7 +188,6 @@ public class SecretCodeCpt : BaseMonoBehaviour
                 Destroy(itemCpt.gameObject);
             }
         }
-
         //位置纠正
         tempCpt.jigsawLocationCorrect(3);
     }
