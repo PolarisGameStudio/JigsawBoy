@@ -23,7 +23,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     public float mergeAnimDuration;
 
     //是否被选中
-    private bool isSelect;
+    public bool isSelect;
 
     //拼图容器起始位置
     public Vector3 startPosition;
@@ -81,7 +81,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// <summary>
     /// 位置纠正
     /// </summary>
-    public void jigsawLocationCorrect()
+    public void jigsawLocationCorrect(float mergeAnimDuration)
     {
         int jigsawListCount = listJigsaw.Count;
         if (jigsawListCount == 0)
@@ -118,13 +118,13 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             //jigsawTF.position = jigsawItemPosition;
             //jigsawTF.rotation = transform.rotation;
         }
-        mergeDeal();
+        mergeDeal(mergeAnimDuration);
     }
 
     /// <summary>
     /// 合并成功处理
     /// </summary>
-    public void mergeDeal()
+    public void mergeDeal(float mergeAnimDuration)
     {
 
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
@@ -377,7 +377,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             thisRB.constraints = RigidbodyConstraints2D.FreezeAll;
             // 添加拼图碎片到碰撞容器里
             collisionJCC.addJigsawList(listJigsaw);
-            collisionJCC.jigsawLocationCorrect();
+            collisionJCC.jigsawLocationCorrect(mergeAnimDuration);
             // 最后删除当前容器
             Destroy(gameObject);
         }

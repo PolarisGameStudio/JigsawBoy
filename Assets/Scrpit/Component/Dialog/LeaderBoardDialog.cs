@@ -248,7 +248,18 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             mSubmitText.text = mSubmitStr;
         return this;
     }
-
+    /// <summary>
+    /// 设置取消按钮文字
+    /// </summary>
+    /// <param name="mSubmitStr"></param>
+    /// <returns></returns>
+    public LeaderBoardDialog setCancelButtonStr(string mCancelStr)
+    {
+        this.mCancelStr = mCancelStr;
+        if (mCancelStr != null)
+            mCancelText.text = mCancelStr;
+        return this;
+    }
     #region -------- 查询排行榜ID -------- 
     /// <summary>
     /// 查询排行榜成功回调

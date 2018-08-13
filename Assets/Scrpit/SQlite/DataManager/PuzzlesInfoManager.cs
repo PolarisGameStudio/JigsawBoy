@@ -4,6 +4,19 @@ public class PuzzlesInfoManager
 {
 
     /// <summary>
+    /// 更新所有拼图状态为有效
+    /// </summary>
+    public static void UpdateAllPuzzlesToValid()
+    {
+        SQliteHandle.UpdateTableData
+          (
+          CommonDB.PuzzleInfoDB_Name,
+          CommonDB.PuzzleInfoDB_PuzzlesBase_Table,
+          new string[] { "valid" }, new string[] { "1" }
+          );
+    }
+
+    /// <summary>
     /// 查询指定拼图信息
     /// <param name="id"></param>
     /// <returns></returns>
@@ -21,6 +34,22 @@ public class PuzzlesInfoManager
         return listData;
     }
 
+
+    /// <summary>
+    /// 获取所有拼图数据
+    /// </summary>
+    /// <returns></returns>
+    public static List<PuzzlesInfoBean> LoadAllPuzzlesData()
+    {
+        List<PuzzlesInfoBean> listData = new List<PuzzlesInfoBean>();
+        listData = SQliteHandle.LoadTableData<PuzzlesInfoBean>
+    (
+    CommonDB.PuzzleInfoDB_Name,
+    CommonDB.PuzzleInfoDB_PuzzlesBase_Table
+    );
+        return listData;
+    }
+
     /// <summary>
     /// 获取拼图图片数据
     /// </summary>
@@ -30,7 +59,7 @@ public class PuzzlesInfoManager
     public static List<PuzzlesInfoBean> LoadAllPuzzlesDataByType(JigsawResourcesEnum resourcesType)
     {
         List<PuzzlesInfoBean> listData = new List<PuzzlesInfoBean>();
-        GameLanguageEnum language =CommonConfigure.GameLanguage;
+        GameLanguageEnum language = CommonConfigure.GameLanguage;
 
         string detailsTableName = "";
         if (resourcesType.Equals(JigsawResourcesEnum.Painting))
@@ -49,8 +78,6 @@ public class PuzzlesInfoManager
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Food_Table;
         else
             return null;
-
-
 
         if (language.Equals(GameLanguageEnum.Chinese))
             detailsTableName += "_cn";

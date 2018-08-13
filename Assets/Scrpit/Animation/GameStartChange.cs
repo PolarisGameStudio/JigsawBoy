@@ -74,7 +74,7 @@ public class GameStartChange : BaseAnimation
         }
 
         Tweener gameStartTweener = gameStartControl.transform
-                                                .DOScale(new Vector3(1, 1, 1), changeTime)
+                                                .DOScale(new Vector3(1, 1, 1), changeTime+ prependTime)
                                                 .OnComplete(delegate ()
                                                     {
                                                           gameStartControl.gameStart();
