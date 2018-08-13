@@ -8,7 +8,8 @@ public class SecretCodeCpt : BaseMonoBehaviour
 
     private string[] mSecretCode = new string[]
     {
-        "ADDPUZZLESPOINT"
+        "ADDPUZZLESPOINT",
+        "ILOVEPUZZLES"
     };
     private int mSecretCodeMax;
     private bool isOpenSecretCode = false;
@@ -36,9 +37,16 @@ public class SecretCodeCpt : BaseMonoBehaviour
     /// <returns></returns>
     private bool checkIsOpenSecretCode()
     {
-        MenuStartControl uiControl = GetComponent<MenuStartControl>();
-        if (uiControl != null && uiControl.uiMasterControl != null)
-            return uiControl.uiMasterControl.isShowUI(UIEnum.MenuMainUI);
+        UIMasterControl uiControl = GetComponent<UIMasterControl>();
+        if (uiControl != null) {
+            bool isOpen = false;
+            if (uiControl.isShowUI(UIEnum.MenuMainUI)
+            || uiControl.isShowUI(UIEnum.GameMainUI))
+            {
+                isOpen = true;
+            }
+            return isOpen;
+        }
         else
             return false;
     }
@@ -77,6 +85,7 @@ public class SecretCodeCpt : BaseMonoBehaviour
         }
         else
         {
+            LogUtil.log(mTempCode+"");
             mTempCode += itemCode;
         }
         if(mTempCode.Length> mSecretCodeMax)
@@ -91,13 +100,16 @@ public class SecretCodeCpt : BaseMonoBehaviour
     /// <param name="secretCode"></param>
     private void secretCodeHandler(string secretCode)
     {
-        LogUtil.log("SecretCode:" + secretCode);
         switch (secretCode)
         {
             case "ADDPUZZLESPOINT":
                 addPuzzlesPoint();
                 break;
+            case "ILOVEPUZZLES":
+                completePuzzles();
+                break;
         }
+        DialogManager.createToastDialog().setToastText("secretCode");
     }
 
 
@@ -109,5 +121,37 @@ public class SecretCodeCpt : BaseMonoBehaviour
         ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(1000);
     }
 
+
+    /// <summary>
+    /// 自动完成拼图
+    /// </summary>
+    private void completePuzzles()
+    {
+        JigsawContainerCpt[] cptList = FindObjectsOfType<JigsawContainerCpt>();
+        if (cptList == null || cptList.Length == 0)
+            return;
+        //设置不可在拖拽
+        CommonData.IsDargMove = false;
+        JigsawContainerCpt tempCpt = cptList[0];
+        for (int i = 0; i < cptList.Length; i++) {
+            JigsawContainerCpt itemCpt = cptList[i];
+            itemCpt.isSelect = false;
+            //设置质量为0 防止动画时错位
+            Rigidbody2D itemRB = itemCpt.GetComponent<Rigidbody2D>();
+            itemRB.velocity = Vector3.zero;
+            //顺便冻结缸体
+            itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            // 添加拼图碎片到容器里
+            if (i > 0)
+            {
+                tempCpt.addJigsawList(itemCpt.listJigsaw);
+                // 最后删除当前容器
+                Destroy(itemCpt.gameObject);
+            }
+        }
+ 
+        //位置纠正
+        tempCpt.jigsawLocationCorrect(3);
+    }
 
 }

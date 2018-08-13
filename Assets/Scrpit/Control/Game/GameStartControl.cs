@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 
-public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
+public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
 {
 
     public UIMasterControl uiMasterControl;
@@ -64,14 +64,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         Texture2D pic2D;
         if (jigsawInfoData.Data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
-            WWW www= ResourcesManager.LoadLocationData(resFilePath);
+            WWW www = ResourcesManager.LoadLocationData(resFilePath);
             pic2D = www.texture;
         }
         else
         {
-             pic2D = ResourcesManager.LoadAssetBundles<Texture2D>(resFilePath, jigsawInfoData.Mark_file_name);
+            pic2D = ResourcesManager.LoadAssetBundles<Texture2D>(resFilePath, jigsawInfoData.Mark_file_name);
         }
-     
+
         if (pic2D == null)
         {
             LogUtil.log("没有源图片");
@@ -220,6 +220,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         {
             gameMainUI.startTimer();
         }
+        Camera camera = Camera.main;
+        camera.gameObject.AddComponent<SecretCodeCpt>();
     }
 
     /// <summary>
@@ -245,7 +247,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         Tween cameraTW = DOTween
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
-            delegate () {
+            delegate ()
+            {
                 DialogManager
                 .createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo)
                 .setUserScore(completeTime.totalSeconds)
@@ -256,16 +259,21 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         for (int i = 0; i < containerListSize; i++)
         {
             GameObject container = containerList[i];
-            if (container != null)
-            {
-                JigsawContainerCpt containerCpt = container.GetComponent<JigsawContainerCpt>();
-                Rigidbody2D containerRB = container.GetComponent<Rigidbody2D>();
-                containerRB.Sleep();
-
-                container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
-                container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
-                return;
+            if (container == null)
+                continue;
+            JigsawContainerCpt containerCpt = container.GetComponent<JigsawContainerCpt>();
+            if (containerCpt == null)
+                continue;
+            Rigidbody2D containerRB = container.GetComponent<Rigidbody2D>();
+            if (containerRB != null) {
+                //顺便冻结缸体
+                containerRB.velocity = Vector3.zero;
+                containerRB.constraints = RigidbodyConstraints2D.FreezeAll;
             }
+            container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
+            container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
+            return;
+
         }
 
     }
