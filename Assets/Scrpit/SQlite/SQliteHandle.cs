@@ -56,6 +56,44 @@ public class SQliteHandle : ScriptableObject
         }
     }
 
+
+    /// <summary>
+    /// 更新数据
+    /// </summary>
+    /// <param name="dbName"></param>
+    /// <param name="mainTable"></param>
+    /// <param name="dataNames"></param>
+    /// <param name="dataValue"></param>
+    /// <param name="key"></param>
+    /// <param name="operation"></param>
+    /// <param name="value"></param>
+    public static void UpdateTableData(string dbName,string mainTable,string[] dataNames,string[] dataValue,string key,string operation,string value)
+    {
+        if (key == null|| operation==null|| value==null) {
+            key = "id";
+            operation = "!=";
+            value = "0";
+        }
+        SQLiteHelper sql = GetSQLiteHelper(dbName);
+        try
+        {
+            sql.UpdateValues(mainTable, dataNames, dataValue, key, operation, value);
+        }
+        catch (Exception e)
+        {
+            LogUtil.log("更新数据是啊比-" + e.Message);
+        }
+        finally
+        {
+            if (sql != null)
+                sql.CloseConnection();
+        }
+    }
+    public static void UpdateTableData(string dbName, string mainTable, string[] dataNames, string[] dataValue)
+    {
+        UpdateTableData( dbName,  mainTable,  dataNames,  dataValue, null, null, null);
+    }
+
     /// <summary>
     /// 读取表数据
     /// </summary>

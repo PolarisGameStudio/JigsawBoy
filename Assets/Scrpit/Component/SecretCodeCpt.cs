@@ -8,8 +8,10 @@ public class SecretCodeCpt : BaseMonoBehaviour
 
     private string[] mSecretCode = new string[]
     {
-        "ADDPUZZLESPOINT",
-        "ILOVEPUZZLES"
+        "SHOWMETHEPUZZLESPOINT",//增加1000PP
+        "ILOVEPUZZLES",//游戏进行中完成拼图
+        "IAMLAZY",//解锁所有拼图
+        "MYLITTLEFAIRY"//开启隐藏拼图
     };
     private int mSecretCodeMax;
     private bool isOpenSecretCode = false;
@@ -17,8 +19,10 @@ public class SecretCodeCpt : BaseMonoBehaviour
     public SecretCodeCpt()
     {
         mSecretCodeMax = 0;
-        foreach (string itemCode in mSecretCode) {
-            if (itemCode.Length > mSecretCodeMax) {
+        foreach (string itemCode in mSecretCode)
+        {
+            if (itemCode.Length > mSecretCodeMax)
+            {
                 mSecretCodeMax = itemCode.Length;
             }
         }
@@ -38,7 +42,8 @@ public class SecretCodeCpt : BaseMonoBehaviour
     private bool checkIsOpenSecretCode()
     {
         UIMasterControl uiControl = GetComponent<UIMasterControl>();
-        if (uiControl != null) {
+        if (uiControl != null)
+        {
             bool isOpen = false;
             if (uiControl.isShowUI(UIEnum.MenuMainUI)
             || uiControl.isShowUI(UIEnum.GameMainUI))
@@ -71,7 +76,8 @@ public class SecretCodeCpt : BaseMonoBehaviour
     {
         if (itemCode.Equals("Return"))
         {
-            if (checkIsOpenSecretCode()) {
+            if (checkIsOpenSecretCode())
+            {
                 foreach (string itemSecretCode in mSecretCode)
                 {
                     if (itemSecretCode.Equals(mTempCode))
@@ -85,10 +91,9 @@ public class SecretCodeCpt : BaseMonoBehaviour
         }
         else
         {
-            LogUtil.log(mTempCode+"");
             mTempCode += itemCode;
         }
-        if(mTempCode.Length> mSecretCodeMax)
+        if (mTempCode.Length > mSecretCodeMax)
         {
             mTempCode = "";
         }
@@ -102,16 +107,46 @@ public class SecretCodeCpt : BaseMonoBehaviour
     {
         switch (secretCode)
         {
-            case "ADDPUZZLESPOINT":
+            case "SHOWMETHEPUZZLESPOINT":
                 addPuzzlesPoint();
                 break;
             case "ILOVEPUZZLES":
                 completePuzzles();
                 break;
+            case "IAMLAZY":
+                unlockPuzzles();
+                break;
+            case "MYLITTLEFAIRY":
+                showSecretPuzzles();
+                break;
         }
-        DialogManager.createToastDialog().setToastText("secretCode");
+        DialogManager.createToastDialog().setToastText(secretCode);
     }
 
+    /// <summary>
+    /// 展示隐藏拼图
+    /// </summary>
+    private void showSecretPuzzles()
+    {
+        PuzzlesInfoManager.UpdateAllPuzzlesToValid();
+    }
+
+    /// <summary>
+    /// 解锁所有拼图
+    /// </summary>
+    private void unlockPuzzles()
+    {
+        List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesData();
+        foreach (PuzzlesInfoBean itemData in listData)
+        {
+            PuzzlesCompleteStateBean completeStateBean = new PuzzlesCompleteStateBean();
+            completeStateBean = new PuzzlesCompleteStateBean();
+            completeStateBean.puzzleId = itemData.id;
+            completeStateBean.puzzleType = itemData.data_type;
+            completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
+            DataStorageManage.getPuzzlesCompleteDSHandle().saveData(completeStateBean);
+        }
+    }
 
     /// <summary>
     /// 增加拼图点数
@@ -133,7 +168,8 @@ public class SecretCodeCpt : BaseMonoBehaviour
         //设置不可在拖拽
         CommonData.IsDargMove = false;
         JigsawContainerCpt tempCpt = cptList[0];
-        for (int i = 0; i < cptList.Length; i++) {
+        for (int i = 0; i < cptList.Length; i++)
+        {
             JigsawContainerCpt itemCpt = cptList[i];
             itemCpt.isSelect = false;
             //设置质量为0 防止动画时错位
@@ -149,7 +185,7 @@ public class SecretCodeCpt : BaseMonoBehaviour
                 Destroy(itemCpt.gameObject);
             }
         }
- 
+
         //位置纠正
         tempCpt.jigsawLocationCorrect(3);
     }

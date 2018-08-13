@@ -8,6 +8,8 @@ public class CommonData {
     public static bool IsDargMove = false;
     //是否能移动摄像头
     public static bool IsMoveCamera = false;
+    //是否作弊
+    public static bool IsCheating = false;
     //选择的拼图信息
     public static PuzzlesGameInfoBean SelectPuzzlesInfo;
 

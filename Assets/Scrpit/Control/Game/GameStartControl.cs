@@ -249,10 +249,17 @@ public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
             .OnComplete(
             delegate ()
             {
+                int leaderDialogType = 0;
+                if (CommonData.IsCheating)
+                    leaderDialogType = 1;      
+                else
+                    leaderDialogType = 0;
                 DialogManager
-                .createLeaderBoradDialog(0, CommonData.SelectPuzzlesInfo)
+                .createLeaderBoradDialog(leaderDialogType, CommonData.SelectPuzzlesInfo)
                 .setUserScore(completeTime.totalSeconds)
-                .setCallBack(this);
+                .setCallBack(this)
+                .setCancelButtonStr(CommonData.getText(21))
+                .setSubmitButtonStr(CommonData.getText(23));
             });
         //图像归位
         int containerListSize = containerList.Count;
