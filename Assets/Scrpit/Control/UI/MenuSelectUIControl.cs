@@ -17,9 +17,7 @@ public class MenuSelectUIControl : BaseUIControl
     public Text titleBarJigsawPointTV;
     public Text titleBarTitleName;
 
-
-    public Transform addCustomJigsaw;
-    public Button addCustomJigsawBT;
+   
 
     private JigsawResourcesEnum currentResType;//当前选择数据类型
 
@@ -55,18 +53,6 @@ public class MenuSelectUIControl : BaseUIControl
             titleBarExitBT.onClick.AddListener(addExitOnClick);
         }
 
-        //按钮增加
-        addCustomJigsaw = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "AddCustomJigsaw");
-        addCustomJigsawBT = addCustomJigsaw.GetComponent<Button>();
-        if (addCustomJigsaw != null)
-        {
-            addCustomJigsaw.gameObject.SetActive(false);
-        }
-        if (addCustomJigsaw != null)
-        {
-            addCustomJigsawBT.onClick.AddListener(addCustomJigsawOnClick);
-        }
-
         refreshUI();
     }
 
@@ -80,12 +66,6 @@ public class MenuSelectUIControl : BaseUIControl
         this.currentResType = resourcesEnum;
         if (jigsawSelectContentSC == null)
             return;
-        if (resourcesEnum.Equals(JigsawResourcesEnum.Custom))
-            //展示自定义添加按钮
-            showAddCustomJigsaw(true);
-        else
-            //不展示自定义添加按钮
-            showAddCustomJigsaw(false);
         jigsawSelectContentSC.loadJigsaw(resourcesEnum);
         if (resTypeSelectContentSC == null)
             return;
@@ -155,14 +135,6 @@ public class MenuSelectUIControl : BaseUIControl
             refreshPuzzlesPoint();
         }
     }
-    /// <summary>
-    /// 增加自定义拼图按钮监听
-    /// </summary>
-    public void addCustomJigsawOnClick()
-    {
-        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
-        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
-    }
 
     /// <summary>
     /// 增加退出按钮监听
@@ -172,18 +144,6 @@ public class MenuSelectUIControl : BaseUIControl
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_2);
         StopAllCoroutines();
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
-    }
-
-    /// <summary>
-    /// 是否展示自定义按钮
-    /// </summary>
-    /// <param name="isShow"></param>
-    public void showAddCustomJigsaw(bool isShow)
-    {
-        if (addCustomJigsaw != null)
-        {
-            addCustomJigsaw.gameObject.SetActive(isShow);
-        }
     }
 
 

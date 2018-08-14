@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Profiling;
+using System.Diagnostics;
 
 public class JigsawContainerCpt : BaseMonoBehaviour
 {
@@ -78,47 +80,54 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             thisRB.mass = listJigsaw.Count;
     }
 
+
     /// <summary>
     /// 位置纠正
     /// </summary>
-    public void jigsawLocationCorrect(float mergeAnimDuration)
+    /// <param name="mergeAnimDuration">纠正时间</param>
+    /// <param name="addListJigsaw">需要纠正位置的拼图</param>
+    public void jigsawLocationCorrect(float mergeAnimDuration,List<JigsawBean> addListJigsaw)
     {
-        int jigsawListCount = listJigsaw.Count;
-        if (jigsawListCount == 0)
-            return;
-        JigsawBean baseJigsawItem = listJigsaw[0];
-        Transform baseTF = baseJigsawItem.JigsawGameObj.transform;
-        //获取基准拼图的标记位
-        Vector2 baseMarkLocation = baseJigsawItem.MarkLocation;
-        //获取基准拼图的世界坐标
-        Vector3 basePosition = baseTF.position;
-        //获取基准拼图的本地坐标
-        Vector3 baseLocationPosition = baseTF.InverseTransformPoint(basePosition);
+        int jigsawListCount = addListJigsaw.Count;
+        if (jigsawListCount != 0) {
+            JigsawBean baseJigsawItem = listJigsaw[0];
+            Transform baseTF = baseJigsawItem.JigsawGameObj.transform;
+            //获取基准拼图的标记位
+            Vector2 baseMarkLocation = baseJigsawItem.MarkLocation;
+            //获取基准拼图的世界坐标
+            Vector3 basePosition = baseTF.position;
+            //获取基准拼图的本地坐标
+            Vector3 baseLocationPosition = baseTF.InverseTransformPoint(basePosition);
+            for (int listPosition = 0; listPosition < jigsawListCount; listPosition++)
+            {
+                //获取纠正拼图数据
+                JigsawBean jigsawItem = addListJigsaw[listPosition];
+                //获取纠正拼图的标记坐标
+                Vector2 itemMarkLocation = jigsawItem.MarkLocation;
+                //获取纠正拼图的对象
+                Transform jigsawTF = jigsawItem.JigsawGameObj.transform;
+                //获取纠正于基准拼图的标记偏移量
+                Vector2 offsetMarkLocation = baseMarkLocation - itemMarkLocation;
+                //获取纠正于基准拼图的本地位置偏移量
+                Vector3 offsetPosition = new Vector2(offsetMarkLocation.x * jigsawItem.JigsawWith, offsetMarkLocation.y * jigsawItem.JigsawHigh);
+                //获取纠正拼图的本地位置
+                Vector3 jigsawItemLocationPosition = baseLocationPosition - offsetPosition;
+                //获取纠正拼图的世界坐标
+                Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
 
-        for (int listPosition = 1; listPosition < jigsawListCount; listPosition++)
-        {
-            //获取其他拼图数据
-            JigsawBean jigsawItem = listJigsaw[listPosition];
-            //获取其他拼图的标记坐标
-            Vector2 itemMarkLocation = jigsawItem.MarkLocation;
-            //获取其他拼图的对象
-            Transform jigsawTF = jigsawItem.JigsawGameObj.transform;
-            //获取相对于基准拼图的标记偏移量
-            Vector2 offsetMarkLocation = baseMarkLocation - itemMarkLocation;
-            //获取相对于基准拼图的本地位置偏移量
-            Vector3 offsetPosition = new Vector2(offsetMarkLocation.x * jigsawItem.JigsawWith, offsetMarkLocation.y * jigsawItem.JigsawHigh);
-            //获取其他拼图的本地位置
-            Vector3 jigsawItemLocationPosition = baseLocationPosition - offsetPosition;
-            //获取其他拼图的世界坐标
-            Vector3 jigsawItemPosition = baseTF.TransformPoint(jigsawItemLocationPosition);
-
-            //设置位置
-            jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
-            jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
-            //jigsawTF.position = jigsawItemPosition;
-            //jigsawTF.rotation = transform.rotation;
-        }
-        mergeDeal(mergeAnimDuration);
+                //设置位置
+                if (mergeAnimDuration <= 0)
+                {
+                    jigsawTF.position = jigsawItemPosition;
+                    jigsawTF.rotation = transform.rotation;
+                }
+                else
+                {
+                    jigsawTF.DOMove(jigsawItemPosition, mergeAnimDuration);
+                    jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
+                }
+            }
+        }   
     }
 
     /// <summary>
@@ -126,17 +135,22 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     public void mergeDeal(float mergeAnimDuration)
     {
-
-        transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete(delegate ()
+        transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete
+        (delegate ()
         {
+            gameObject.AddComponent<CompositeCollider2D>();
             //合并特效
             if (gameParticleControl != null)
-                gameParticleControl.playMergeParticle(transform);
+            {
+                //gameParticleControl.playMergeParticle(transform);
+            }
             //摇晃镜头
             shakeCamer();
             //让缸体恢复移动
-            Rigidbody2D thisRB= transform.GetComponent<Rigidbody2D>();
-            thisRB.constraints= RigidbodyConstraints2D.None;
+            Rigidbody2D thisRB = transform.GetComponent<Rigidbody2D>();
+            if (thisRB != null) {
+                thisRB.constraints = RigidbodyConstraints2D.None;
+            }
             CommonData.IsDargMove = true;
             //检测是否完成游戏
             checkFinshGame();
@@ -369,15 +383,18 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             isSelect = false;
             //设置质量为0 防止动画时错位
             Rigidbody2D collisionRB = collisionJCC.GetComponent<Rigidbody2D>();
-            Rigidbody2D thisRB= gameObject.GetComponent<Rigidbody2D>();
-            collisionRB.velocity = Vector3.zero;
-            thisRB.velocity= Vector3.zero;
-            //顺便冻结缸体
-            collisionRB.constraints = RigidbodyConstraints2D.FreezeAll;
-            thisRB.constraints = RigidbodyConstraints2D.FreezeAll;
-            // 添加拼图碎片到碰撞容器里
-            collisionJCC.addJigsawList(listJigsaw);
-            collisionJCC.jigsawLocationCorrect(mergeAnimDuration);
+            Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
+            if (collisionRB != null && thisRB != null) {
+                collisionRB.velocity = Vector3.zero;
+                thisRB.velocity = Vector3.zero;
+                //顺便冻结缸体
+                collisionRB.constraints = RigidbodyConstraints2D.FreezeAll;
+                thisRB.constraints = RigidbodyConstraints2D.FreezeAll;
+                // 添加拼图碎片到碰撞容器里
+                collisionJCC.addJigsawList(listJigsaw);
+                collisionJCC.jigsawLocationCorrect(mergeAnimDuration, listJigsaw);
+            }   
+            collisionJCC.mergeDeal(mergeAnimDuration);
             // 最后删除当前容器
             Destroy(gameObject);
         }
