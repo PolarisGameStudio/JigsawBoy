@@ -9,18 +9,43 @@ public class GamePauseUIControl : BaseUIControl
     public Button exitBT;
 
     public Button gameCancelBT;
+
+    //退出观看
+    public Button replayBT;
+    public Text replayText;
+
     private new void Awake()
     {
         base.Awake();
         restartBT= CptUtil.getCptFormParentByName<Transform, Button>(transform, "RestartButton");
         exitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "ExitButton");
 
+        replayBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "ReplayButton");
+        replayText= CptUtil.getCptFormParentByName<Transform, Text>(transform, "ReplayText");
+
         restartBT.onClick.AddListener(restartOnClick);
         exitBT.onClick.AddListener(exitOnClick);
+        replayBT.onClick.AddListener(replayOnClick);
 
         gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
         gameCancelBT.onClick.AddListener(cancelUI);
     }
+
+    /// <summary>
+    /// 完成拼图
+    /// </summary>
+    public void replayOnClick()
+    {
+        if (CommonData.GameStatus == 1)
+        {
+            mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
+            GameUtil.CompletePuzzles(this);
+        }
+        else {
+            DialogManager.createToastDialog().setToastText("不能进行此操作");
+        }
+    }
+
 
     /// <summary>
     /// 关闭当前页面

@@ -86,10 +86,11 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     /// </summary>
     /// <param name="mergeAnimDuration">纠正时间</param>
     /// <param name="addListJigsaw">需要纠正位置的拼图</param>
-    public void jigsawLocationCorrect(float mergeAnimDuration,List<JigsawBean> addListJigsaw)
+    public void jigsawLocationCorrect(float mergeAnimDuration, List<JigsawBean> addListJigsaw)
     {
         int jigsawListCount = addListJigsaw.Count;
-        if (jigsawListCount != 0) {
+        if (jigsawListCount != 0)
+        {
             JigsawBean baseJigsawItem = listJigsaw[0];
             Transform baseTF = baseJigsawItem.JigsawGameObj.transform;
             //获取基准拼图的标记位
@@ -127,7 +128,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
                     jigsawTF.DORotate(transform.rotation.eulerAngles, mergeAnimDuration);
                 }
             }
-        }   
+        }
     }
 
     /// <summary>
@@ -138,7 +139,8 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete
         (delegate ()
         {
-            gameObject.AddComponent<CompositeCollider2D>();
+            if (gameObject.GetComponent<CompositeCollider2D>() == null)
+                gameObject.AddComponent<CompositeCollider2D>();
             //合并特效
             if (gameParticleControl != null)
             {
@@ -148,7 +150,8 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             shakeCamer();
             //让缸体恢复移动
             Rigidbody2D thisRB = transform.GetComponent<Rigidbody2D>();
-            if (thisRB != null) {
+            if (thisRB != null)
+            {
                 thisRB.constraints = RigidbodyConstraints2D.None;
             }
             CommonData.IsDargMove = true;
@@ -384,7 +387,8 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             //设置质量为0 防止动画时错位
             Rigidbody2D collisionRB = collisionJCC.GetComponent<Rigidbody2D>();
             Rigidbody2D thisRB = gameObject.GetComponent<Rigidbody2D>();
-            if (collisionRB != null && thisRB != null) {
+            if (collisionRB != null && thisRB != null)
+            {
                 collisionRB.velocity = Vector3.zero;
                 thisRB.velocity = Vector3.zero;
                 //顺便冻结缸体
@@ -393,7 +397,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
                 // 添加拼图碎片到碰撞容器里
                 collisionJCC.addJigsawList(listJigsaw);
                 collisionJCC.jigsawLocationCorrect(mergeAnimDuration, listJigsaw);
-            }   
+            }
             collisionJCC.mergeDeal(mergeAnimDuration);
             // 最后删除当前容器
             Destroy(gameObject);

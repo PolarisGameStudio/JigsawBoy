@@ -25,6 +25,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     public float gameFinshAnimTime;
     private void Awake()
     {
+        CommonData.GameStatus = 0;
         gameFinshAnimTime = 3f;
         uiMasterControl = gameObject.AddComponent<UIMasterControl>();
         audioSourceControl = gameObject.AddComponent<AudioSourceControl>();
@@ -214,6 +215,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     public void gameStart()
     {
+        CommonData.GameStatus = 1;
         CommonData.IsDargMove = true;
         GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
         if (gameMainUI != null)
@@ -228,6 +230,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     public void gameFinsh()
     {
+        CommonData.GameStatus = 2;
         CommonData.IsDargMove = false;
         CommonData.IsMoveCamera = false;
         float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;

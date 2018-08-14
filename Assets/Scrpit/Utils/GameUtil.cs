@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class GameUtil
 {
@@ -65,6 +67,58 @@ public class GameUtil
             }
         }
         DataStorageManage.getPuzzlesCompleteDSHandle().saveAllData(listCompleteState);
+    }
+
+    /// <summary>
+    /// 自动完成拼图
+    /// </summary>
+    public static void CompletePuzzles(BaseMonoBehaviour content)
+    {
+        CommonData.GameStatus = 3;
+        CommonData.IsCheating = true;
+        JigsawContainerCpt[] cptList = UnityEngine.Object.FindObjectsOfType<JigsawContainerCpt>();
+        if (cptList == null || cptList.Length == 0)
+            return;
+        //设置不可在拖拽
+        CommonData.IsDargMove = false;
+        JigsawContainerCpt tempCpt = cptList[0];
+
+        content.StartCoroutine(delayComplete(content,cptList, tempCpt));
+    }
+
+    static IEnumerator delayComplete(BaseMonoBehaviour content,JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
+    {
+        float mergeTime = 10f;
+        Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
+        if (itemRB != null)
+        {
+            //设置质量为0 防止动画时错位
+            itemRB.velocity = Vector3.zero;
+            //顺便冻结缸体
+            itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        CompositeCollider2D itemCollider = tempCpt.GetComponent<CompositeCollider2D>();
+        UnityEngine.Object.Destroy(itemCollider);
+        yield return new WaitForEndOfFrame();
+
+        for (int i = 0; i < cptList.Length; i++)
+        {
+            tempCpt.transform.position = tempCpt.startPosition;
+            tempCpt.transform.localRotation = tempCpt.startRotation;
+            JigsawContainerCpt itemCpt = cptList[i];
+            itemCpt.isSelect = false;
+            // 添加拼图碎片到容器里
+            if (i > 0)
+            {
+                tempCpt.addJigsawList(itemCpt.listJigsaw);
+                //位置纠正
+                tempCpt.jigsawLocationCorrect(mergeTime, itemCpt.listJigsaw);
+                // 最后删除当前容器
+                UnityEngine.Object.Destroy(itemCpt.gameObject);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        tempCpt.mergeDeal(mergeTime);
     }
 }
 

@@ -163,52 +163,10 @@ public class SecretCodeCpt : BaseMonoBehaviour
     /// </summary>
     private void completePuzzles()
     {
-        CommonData.IsCheating = true;
-        JigsawContainerCpt[] cptList = FindObjectsOfType<JigsawContainerCpt>();
-        if (cptList == null || cptList.Length == 0)
-            return;
-        //设置不可在拖拽
-        CommonData.IsDargMove = false;
-        JigsawContainerCpt tempCpt = cptList[0];
-
-        StartCoroutine(delayComplete(cptList, tempCpt));
+        GameUtil.CompletePuzzles(this);
     }
 
-    IEnumerator delayComplete(JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
-    {
-     
-        Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
-        if (itemRB != null)
-        {
-            //设置质量为0 防止动画时错位
-            itemRB.velocity = Vector3.zero;
-            //顺便冻结缸体
-            itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
-        }
-        CompositeCollider2D itemCollider = tempCpt.GetComponent<CompositeCollider2D>();
-        Destroy(itemCollider);
-        yield return new WaitForEndOfFrame();
-
-        for (int i = 0; i < cptList.Length; i++)
-        {
-            tempCpt.transform.position = tempCpt.startPosition;
-            tempCpt.transform.localRotation = tempCpt.startRotation;
-            JigsawContainerCpt itemCpt = cptList[i];
-            itemCpt.isSelect = false;
-            // 添加拼图碎片到容器里
-            if (i > 0)
-            {
-                tempCpt.addJigsawList(itemCpt.listJigsaw);
-                //位置纠正
-                tempCpt.jigsawLocationCorrect(3f, itemCpt.listJigsaw);
-                // 最后删除当前容器
-                Destroy(itemCpt.gameObject);
-            }
-            yield return new WaitForEndOfFrame();
-        }
-        tempCpt.mergeDeal(3f);
-    }
-
+  
 
 
 }

@@ -14,6 +14,7 @@ public class GameMainUIControl : BaseUIControl
     public Button gameInfoBT;
     public Button gamePauseBT;
     public Button gameMusicBT;
+
     private new void Awake()
     {
         base.Awake();
@@ -24,7 +25,7 @@ public class GameMainUIControl : BaseUIControl
         }
         gameInfoBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameInfoBT");
         gamePauseBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GamePauseBT");
-     //   gameMusicBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameMusicBT");
+        //   gameMusicBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameMusicBT");
 
         gameInfoBT.onClick.AddListener(openGameInfo);
         gamePauseBT.onClick.AddListener(openPauseBT);
