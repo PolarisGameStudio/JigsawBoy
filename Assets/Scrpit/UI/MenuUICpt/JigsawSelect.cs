@@ -15,6 +15,7 @@ public class JigsawSelect : BaseMonoBehaviour
     private static string JigsawSelectItemPath = "Prefab/UI/Menu/JigsawSelectItem";
     private static string JigsawSelectLockItemPath = "Prefab/UI/Menu/JigsawSelectLockItem";
     private static string JigsawSelectCustomItemPath = "Prefab/UI/Menu/JigsawSelectCustomItem";
+    private static string JigsawSelectAddItemPath = "Prefab/UI/Menu/JigsawSelectAddItem";
 
     private Sprite mLevel1;
     private Sprite mLevel2;
@@ -63,6 +64,7 @@ public class JigsawSelect : BaseMonoBehaviour
         if (resourcesEnum.Equals(JigsawResourcesEnum.Custom))
         {
             listInfoData = DataStorageManage.getCustomPuzzlesInfoDSHandle().getAllData();
+            createAddItem();
         }
         else
         {
@@ -292,6 +294,34 @@ public class JigsawSelect : BaseMonoBehaviour
         });
     }
 
+    /// <summary>
+    /// 创建自定义增加拼图样式
+    /// </summary>
+    public void createAddItem()
+    {
+        GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectAddItemPath));
+
+        itemObj.name ="Add";
+        itemObj.transform.SetParent(transform);
+
+        //设置按键
+        Button addTextBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawAdd");
+        Button addPicBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawPic");
+        addTextBT.onClick.AddListener(jumpAddCustomUI);
+        addPicBT.onClick.AddListener(jumpAddCustomUI);
+        //设置文本信息
+        Text jigsawAddText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawAddText");
+        jigsawAddText.text = CommonData.getText(7);
+    }
+
+    /// <summary>
+    /// 跳转自定义拼图界面
+    /// </summary>
+    private void jumpAddCustomUI()
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+    }
 
     /// <summary>
     /// 设置拼图等级

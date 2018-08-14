@@ -256,7 +256,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     public LeaderBoardDialog setCancelButtonStr(string mCancelStr)
     {
         this.mCancelStr = mCancelStr;
-        if (mCancelStr != null)
+        if (mCancelText != null)
             mCancelText.text = mCancelStr;
         return this;
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SecretCodeCpt : BaseMonoBehaviour
 {
@@ -169,27 +170,45 @@ public class SecretCodeCpt : BaseMonoBehaviour
         //设置不可在拖拽
         CommonData.IsDargMove = false;
         JigsawContainerCpt tempCpt = cptList[0];
-        tempCpt.transform.position = tempCpt.startPosition;
-        tempCpt.transform.localRotation = tempCpt.startRotation;
-        for (int i = 0; i < cptList.Length; i++)
+
+        StartCoroutine(delayComplete(cptList, tempCpt));
+    }
+
+    IEnumerator delayComplete(JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
+    {
+     
+        Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
+        if (itemRB != null)
         {
-            JigsawContainerCpt itemCpt = cptList[i];
-            itemCpt.isSelect = false;
             //设置质量为0 防止动画时错位
-            Rigidbody2D itemRB = itemCpt.GetComponent<Rigidbody2D>();
             itemRB.velocity = Vector3.zero;
             //顺便冻结缸体
             itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        CompositeCollider2D itemCollider = tempCpt.GetComponent<CompositeCollider2D>();
+        Destroy(itemCollider);
+        yield return new WaitForEndOfFrame();
+
+        for (int i = 0; i < cptList.Length; i++)
+        {
+            tempCpt.transform.position = tempCpt.startPosition;
+            tempCpt.transform.localRotation = tempCpt.startRotation;
+            JigsawContainerCpt itemCpt = cptList[i];
+            itemCpt.isSelect = false;
             // 添加拼图碎片到容器里
             if (i > 0)
             {
                 tempCpt.addJigsawList(itemCpt.listJigsaw);
+                //位置纠正
+                tempCpt.jigsawLocationCorrect(3f, itemCpt.listJigsaw);
                 // 最后删除当前容器
                 Destroy(itemCpt.gameObject);
             }
+            yield return new WaitForEndOfFrame();
         }
-        //位置纠正
-        tempCpt.jigsawLocationCorrect(3);
+        tempCpt.mergeDeal(3f);
     }
+
+
 
 }
