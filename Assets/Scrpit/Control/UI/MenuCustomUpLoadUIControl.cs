@@ -17,6 +17,11 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     public InputField inputHorizontalNumber;
     public InputField inputVerticalNumber;
 
+    public Text inputNameTitle;
+    public Text inputHorizontalNumberTitle;
+    public Text inputVerticalNumberTitle;
+    public Text tvCancel;
+    public Text tvSubmit;
     private string uploadPath;
 
     /// <summary>
@@ -35,12 +40,23 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         inputHorizontalNumber = CptUtil.getCptFormParentByName<Transform, InputField>(transform, "InputHorizontalNumber");
         inputVerticalNumber = CptUtil.getCptFormParentByName<Transform, InputField>(transform, "InputVerticalNumber");
 
+        inputNameTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "InputNameTitle");
+        inputHorizontalNumberTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "InputHorizontalNumberTitle");
+        inputVerticalNumberTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "InputVerticalNumberTitle");
+        tvCancel = CptUtil.getCptFormParentByName<Transform, Text>(transform, "CancelText");
+        tvSubmit = CptUtil.getCptFormParentByName<Transform, Text>(transform, "SubmitText");
+
         submitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "SubmitBT");
         cancelBT= CptUtil.getCptFormParentByName<Transform, Button>(transform, "CancelBT");
 
         cancelBT.onClick.AddListener(delegate{
             jumpSelectUI();
         });
+        inputNameTitle.text = CommonData.getText(33);
+        inputHorizontalNumberTitle.text = CommonData.getText(34);
+        inputVerticalNumberTitle.text = CommonData.getText(35);
+        tvCancel.text = CommonData.getText(36);
+        tvSubmit.text = CommonData.getText(37);
     }
 
     public override void openUI()
