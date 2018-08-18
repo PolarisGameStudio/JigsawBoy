@@ -94,7 +94,7 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
-        if (infoBean.Data_type.Equals((int)JigsawResourcesEnum.Custom))
+        if (infoBean.data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
             createCustomItem(itemInfo);
         }
@@ -263,15 +263,23 @@ public class JigsawSelect : BaseMonoBehaviour
             CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
-        Button scoreBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawScore");
-        scoreBT.onClick.AddListener(delegate ()
+        //最好分数
+        Transform bestScoreTF = CptUtil.getCptFormParentByName<Transform, Transform>(itemObj.transform, "JigsawBestScore");
+        Text bestScore= CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawBestScoreText");
+        if (completeStateBean != null && completeStateBean.completeTime != null)
         {
-
-        });
-
-
+            bestScore.text = GameUtil.GetTimeStr(completeStateBean.completeTime.totalSeconds);
+        }
+        else
+        {
+            bestScoreTF.gameObject.SetActive(false);
+        }
+ 
         //设置文本信息
         Text jigsawNameText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawName");
+        Text startBTText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawStartText");
+
+        startBTText.text = CommonData.getText(14);
         jigsawNameText.text = infoBean.Name;
 
         //设置按钮信息

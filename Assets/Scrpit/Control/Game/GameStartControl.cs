@@ -215,6 +215,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     public void gameStart()
     {
+        CommonData.IsCheating = false;
         CommonData.GameStatus = 1;
         CommonData.IsDargMove = true;
         GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
@@ -234,7 +235,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         CommonData.IsDargMove = false;
         CommonData.IsMoveCamera = false;
         float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;
-        //保存数据
+        //结束游戏时间
         GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
         TimeBean completeTime = null;
         if (gameMainUI != null)
@@ -242,7 +243,18 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             gameMainUI.endTimer();
             completeTime = gameMainUI.getGameTimer();
         }
-        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
+
+        if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+        {
+         
+        }
+        else
+        {
+            //增加PP
+            ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
+        }
+
+        //保存数据
         GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
@@ -250,16 +262,24 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
             .OnComplete(
             delegate () {
-                int leaderType = 0;
-                if (CommonData.IsCheating) {
-                    leaderType = 1;
+                if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+                {
+                    SceneUtil.jumpMainScene();
                 }
-                DialogManager
-                .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
-                .setUserScore(completeTime.totalSeconds)
-                .setCallBack(this)
-                .setCancelButtonStr(CommonData.getText(21))
-                .setSubmitButtonStr(CommonData.getText(23));
+                else
+                {
+                    int leaderType = 0;
+                    if (CommonData.IsCheating)
+                    {
+                        leaderType = 1;
+                    }
+                    DialogManager
+                    .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
+                    .setUserScore(completeTime.totalSeconds)
+                    .setCallBack(this)
+                    .setCancelButtonStr(CommonData.getText(21))
+                    .setSubmitButtonStr(CommonData.getText(23));
+                }
                 CommonData.IsCheating = false;
             });
         //图像归位
@@ -278,13 +298,13 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                 return;
             }
         }
+       
 
     }
 
     public void cancelOnClick()
     {
         SceneUtil.jumpMainScene();
-
     }
 
     public void submitOnClick()

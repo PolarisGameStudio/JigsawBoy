@@ -50,13 +50,13 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         mLeaderboardId = 0;
 
         mCurrentScoreTitleStr = CommonData.getText(17);
-        mCurrentScoreContentStr = getTimeStr(0);
+        mCurrentScoreContentStr = GameUtil.GetTimeStr(0);
 
         mRankTitleStr = CommonData.getText(18);
         mRankContentStr = "0";
 
         mBestScoreTitleStr = CommonData.getText(19);
-        mBestScoreContentStr = getTimeStr(0);
+        mBestScoreContentStr = GameUtil.GetTimeStr(0);
 
         mLeaderboardHandle = new LeaderboardHandleImpl();
         mListLeaderBoardInfo = new List<LeaderBoardItemData>();
@@ -92,7 +92,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         if (completeData != null && completeData.completeTime != null)
         {
             mBestScore = completeData.completeTime.totalSeconds;
-            mBestScoreContentStr = getTimeStr(completeData.completeTime.totalSeconds);
+            mBestScoreContentStr =GameUtil.GetTimeStr(completeData.completeTime.totalSeconds);
             mBestScoreContent.text = mBestScoreContentStr;
         }
         //查询网络数据
@@ -152,19 +152,6 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         mGameInfoBean = gameInfoBean;
     }
 
-    /// <summary>
-    /// 根据秒获取具体时间
-    /// </summary>
-    /// <param name="score"></param>
-    /// <returns></returns>
-    public string getTimeStr(int score)
-    {
-        TimeSpan timeSpan = new TimeSpan(0, 0, score);
-        return
-            timeSpan.Hours + CommonData.getText(24) + " " +
-            timeSpan.Minutes + CommonData.getText(25) + " " +
-            timeSpan.Seconds + CommonData.getText(26) + " ";
-    }
 
     /// <summary>
     /// 获取排行榜类型
@@ -222,7 +209,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     public LeaderBoardDialog setUserScore(int score)
     {
         mUserScore = score;
-        mCurrentScoreContentStr = getTimeStr(score);
+        mCurrentScoreContentStr = GameUtil.GetTimeStr(score);
         return this;
     }
     /// <summary>
@@ -305,7 +292,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             if (resultList != null && resultList.Count != 0)
             {
                 GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = resultList[0];
-                mBestScoreContent.text = getTimeStr(leaderBoardData.score);
+                mBestScoreContent.text = GameUtil.GetTimeStr(leaderBoardData.score);
                 mRankContent.text = leaderBoardData.rank + "";
             }
             getGlobalLeaderBoardEntries(mLeaderboardId);
@@ -323,7 +310,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
             else
             {
                 GetLeaderboardEntriesResult.LeaderboardEntries leaderBoardData = resultList[0];
-                mBestScoreContent.text = getTimeStr(leaderBoardData.score);
+                mBestScoreContent.text = GameUtil.GetTimeStr(leaderBoardData.score);
                 mRankContent.text = leaderBoardData.rank + "";
                 if (getUserScore() == 0)
                 {
@@ -539,7 +526,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         userRank.text = itemData.leaderboardEntries.rank + "";
         //设置分数
         Text userScore = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "UserScore");
-        userScore.text = getTimeStr(itemData.leaderboardEntries.score);
+        userScore.text = GameUtil.GetTimeStr(itemData.leaderboardEntries.score);
     }
     #endregion
 

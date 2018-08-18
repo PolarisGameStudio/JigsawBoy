@@ -16,15 +16,17 @@ public class GameUtil
     {
         PuzzlesInfoBean puzzlesInfo = selectItem.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = selectItem.completeStateInfo;
-
+        if (completeStateBean == null)
+            completeStateBean = new PuzzlesCompleteStateBean();
         List<PuzzlesCompleteStateBean> listCompleteState = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
 
         if (listCompleteState == null|| listCompleteState.Count==0)
         {
             listCompleteState = new List<PuzzlesCompleteStateBean>();
-            completeStateBean.puzzleId = puzzlesInfo.Id;
-            completeStateBean.puzzleType = puzzlesInfo.Data_type;
-            completeStateBean.puzzleName = puzzlesInfo.mark_file_name;
+            completeStateBean.puzzleId = puzzlesInfo.id;
+            completeStateBean.puzzleType = puzzlesInfo.data_type;
+            completeStateBean.puzzleName = puzzlesInfo.name;
+            completeStateBean.puzzleMarkName = puzzlesInfo.mark_file_name;
             completeStateBean.completeTime = completeTime;
             completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
             listCompleteState.Add(completeStateBean);
@@ -36,7 +38,21 @@ public class GameUtil
             for(int i = 0; i < listCompleteSize; i++)
             {
                 PuzzlesCompleteStateBean itemCompleteBean= listCompleteState[i];
-                if (itemCompleteBean.puzzleId.Equals(puzzlesInfo.Id))
+                bool isThisPuzzles = false;
+                if (itemCompleteBean.puzzleType.Equals((int)JigsawResourcesEnum.Custom))
+                {
+                    if (itemCompleteBean.puzzleMarkName.Equals(puzzlesInfo.mark_file_name))
+                    {
+                        isThisPuzzles = true;
+                    }
+                }
+                else
+                {
+                    if (itemCompleteBean.puzzleId.Equals(puzzlesInfo.Id)) {
+                        isThisPuzzles = true;
+                    }
+                }
+                if (isThisPuzzles)
                 {
                     hasData = true;
                     if (itemCompleteBean.completeTime.totalSeconds != 0
@@ -46,9 +62,10 @@ public class GameUtil
                     }
                     else
                     {
-                        itemCompleteBean.puzzleId = puzzlesInfo.Id;
-                        itemCompleteBean.puzzleType = puzzlesInfo.Data_type;
-                        itemCompleteBean.puzzleName = puzzlesInfo.mark_file_name;
+                        itemCompleteBean.puzzleId = puzzlesInfo.id;
+                        itemCompleteBean.puzzleType = puzzlesInfo.data_type;
+                        completeStateBean.puzzleName = puzzlesInfo.name;
+                        completeStateBean.puzzleMarkName = puzzlesInfo.mark_file_name;
                         itemCompleteBean.unlockState = JigsawUnlockEnum.UnLock;
                         itemCompleteBean.completeTime = completeTime;
                         completeStateBean = itemCompleteBean;
@@ -58,9 +75,10 @@ public class GameUtil
             }
             if (!hasData)
             {
-                completeStateBean.puzzleId = puzzlesInfo.Id;
-                completeStateBean.puzzleType = puzzlesInfo.Data_type;
-                completeStateBean.puzzleName = puzzlesInfo.mark_file_name;
+                completeStateBean.puzzleId = puzzlesInfo.id;
+                completeStateBean.puzzleType = puzzlesInfo.data_type;
+                completeStateBean.puzzleName = puzzlesInfo.name;
+                completeStateBean.puzzleMarkName = puzzlesInfo.mark_file_name;
                 completeStateBean.completeTime = completeTime;
                 completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
                 listCompleteState.Add(completeStateBean);
@@ -88,7 +106,7 @@ public class GameUtil
 
     static IEnumerator delayComplete(BaseMonoBehaviour content,JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
     {
-        float mergeTime = 10f;
+        float mergeTime = 20f;
         Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
         if (itemRB != null)
         {
@@ -119,6 +137,21 @@ public class GameUtil
             yield return new WaitForEndOfFrame();
         }
         tempCpt.mergeDeal(mergeTime);
+    }
+
+
+    /// <summary>
+    /// 根据秒获取具体时间
+    /// </summary>
+    /// <param name="score"></param>
+    /// <returns></returns>
+    public static string GetTimeStr(int score)
+    {
+        TimeSpan timeSpan = new TimeSpan(0, 0, score);
+        return
+            timeSpan.Hours + CommonData.getText(24) + " " +
+            timeSpan.Minutes + CommonData.getText(25) + " " +
+            timeSpan.Seconds + CommonData.getText(26) + " ";
     }
 }
 

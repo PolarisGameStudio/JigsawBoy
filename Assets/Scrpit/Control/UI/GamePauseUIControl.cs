@@ -5,20 +5,28 @@ using UnityEngine.UI;
 
 public class GamePauseUIControl : BaseUIControl
 {
+    //重新开始
     public Button restartBT;
-    public Button exitBT;
+    public Text restartText;
 
-    public Button gameCancelBT;
+    //离开
+    public Button exitBT;
+    public Text exitText;
 
     //退出观看
     public Button replayBT;
     public Text replayText;
 
+    public Button gameCancelBT;
+
     private new void Awake()
     {
         base.Awake();
         restartBT= CptUtil.getCptFormParentByName<Transform, Button>(transform, "RestartButton");
+        restartText = CptUtil.getCptFormParentByName<Transform, Text>(transform, "RestartText");
+
         exitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "ExitButton");
+        exitText = CptUtil.getCptFormParentByName<Transform, Text>(transform, "ExitText");
 
         replayBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "ReplayButton");
         replayText= CptUtil.getCptFormParentByName<Transform, Text>(transform, "ReplayText");
@@ -29,6 +37,10 @@ public class GamePauseUIControl : BaseUIControl
 
         gameCancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameCancelBT");
         gameCancelBT.onClick.AddListener(cancelUI);
+
+        restartText.text = CommonData.getText(38);
+        exitText.text = CommonData.getText(39);
+        replayText.text = CommonData.getText(40);
     }
 
     /// <summary>

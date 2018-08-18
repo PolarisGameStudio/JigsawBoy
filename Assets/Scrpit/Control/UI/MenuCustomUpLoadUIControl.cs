@@ -149,7 +149,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
 
         string markFileName = SystemUtil.getUUID();
         PuzzlesInfoBean infoBean = new PuzzlesInfoBean();
-        infoBean.id = 0;
+        infoBean.id = -1;
         infoBean.Name = inputName.text;
         infoBean.Horizontal_number = Convert.ToInt32(inputHorizontalNumber.text);
         infoBean.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);

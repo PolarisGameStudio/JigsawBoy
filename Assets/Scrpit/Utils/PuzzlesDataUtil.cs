@@ -27,9 +27,18 @@ public class PuzzlesDataUtil
                 for(int f=0;f< listCompleteStateSize; f++)
                 {
                     PuzzlesCompleteStateBean tempCompleteState = listCompleteState[f];
-                    if (tempInfo.Id.Equals(tempCompleteState.puzzleId) && tempInfo.Data_type.Equals(tempCompleteState.puzzleType))
+                    if (tempInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
                     {
-                        itemData.completeStateInfo = tempCompleteState;
+                        if (tempInfo.mark_file_name.Equals(tempCompleteState.puzzleMarkName) && tempInfo.Data_type.Equals(tempCompleteState.puzzleType))
+                        {
+                            itemData.completeStateInfo = tempCompleteState;
+                        }
+                    }
+                    else {
+                        if (tempInfo.Id.Equals(tempCompleteState.puzzleId) && tempInfo.Data_type.Equals(tempCompleteState.puzzleType))
+                        {
+                            itemData.completeStateInfo = tempCompleteState;
+                        }
                     }
                 }
             }

@@ -21,6 +21,7 @@ public class PuzzlesInfoDetailsBean
     public string country;//国家
     public string known_for;//职业
     public string works;//主要作品
+    
 
     public string Introduction_content
     {

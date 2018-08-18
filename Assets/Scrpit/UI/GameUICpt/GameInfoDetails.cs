@@ -38,39 +38,39 @@ public class GameInfoDetails : MonoBehaviour
         string works = selectJigsawInfo.Works;
 
         if (name != null && name.Length != 0)
-            createTextItem("名称", name,nameTextSize);
+            createTextItem(CommonData.getText(41), name,nameTextSize);
         else
-            createTextItem("名称", "未知", nameTextSize);
+            createTextItem(CommonData.getText(41), CommonData.getText(42), nameTextSize);
 
         if (workOfCreator != null && workOfCreator.Length != 0)
-            createTextItem("作品作者", workOfCreator);
+            createTextItem(CommonData.getText(43), workOfCreator);
         if (storageArea != null && storageArea.Length != 0)
-            createTextItem("作品所在", storageArea);
+            createTextItem(CommonData.getText(44), storageArea);
         if (specifications != null && specifications.Length != 0)
-            createTextItem("作品规格", specifications);
+            createTextItem(CommonData.getText(45), specifications);
         if (timeOfCreation != null && timeOfCreation.Length != 0)
-            createTextItem("创作时间", timeOfCreation);
+            createTextItem(CommonData.getText(46), timeOfCreation);
 
         if (moveOfDirector != null && moveOfDirector.Length != 0)
-            createTextItem("电影导演", moveOfDirector);
+            createTextItem(CommonData.getText(47), moveOfDirector);
         if (stars != null && stars.Length != 0)
-            createTextItem("电影主演", stars);
+            createTextItem(CommonData.getText(48), stars);
         if (length != null && length.Length != 0)
-            createTextItem("电影片长", length);
+            createTextItem(CommonData.getText(49), length);
         if (releaseDate != null && releaseDate.Length != 0)
-            createTextItem("上映日期", releaseDate);
+            createTextItem(CommonData.getText(50), releaseDate);
 
         if (knownFor != null && knownFor.Length != 0)
-            createTextItem("职业", knownFor);
+            createTextItem(CommonData.getText(51), knownFor);
         if (bornAndDeath != null && bornAndDeath.Length != 0)
-            createTextItem("出生逝世", bornAndDeath);
+            createTextItem(CommonData.getText(52), bornAndDeath);
         if (country != null && country.Length != 0)
-            createTextItem("所在国家", country);
+            createTextItem(CommonData.getText(53), country);
         if (works != null && works.Length != 0)
-            createTextItem("主要成就", works);
+            createTextItem(CommonData.getText(54), works);
 
         if (introductionContent != null && introductionContent.Length != 0)
-            createTextItem("简介", introductionContent);
+            createTextItem(CommonData.getText(55), introductionContent);
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public class GameInfoDetails : MonoBehaviour
 
 
         //设置内容
-        titleText.text = title + ":";
+        titleText.text = title;
         contentText.text = content;
         //设置样式
         if (contentTextSize != 0)
