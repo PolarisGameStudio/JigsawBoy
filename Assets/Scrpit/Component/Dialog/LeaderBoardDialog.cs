@@ -106,8 +106,10 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     {
         if (mDialogType == 1)
         {
-            mCancelStr = CommonData.getText(20);
-            mSubmitStr = CommonData.getText(22);
+            if (mCancelStr == null)
+                mCancelStr = CommonData.getText(20);
+            if (mSubmitStr == null)
+                mSubmitStr = CommonData.getText(22);
             if (mCurrentScore != null)
                 mCurrentScore.gameObject.SetActive(false);
             if (mTrophy != null)
@@ -115,8 +117,10 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         }
         else
         {
-            mCancelStr = CommonData.getText(21);
-            mSubmitStr = CommonData.getText(23);
+            if (mCancelStr == null)
+                mCancelStr = CommonData.getText(21);
+            if (mSubmitStr == null)
+                mSubmitStr = CommonData.getText(23);
             if (mCurrentScore != null)
                 mCurrentScore.gameObject.SetActive(true);
             if (mTrophy != null)

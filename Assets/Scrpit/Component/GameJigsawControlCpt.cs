@@ -77,7 +77,7 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
         hitRC = Physics2D.Raycast(mousePos2D, Vector2.zero);
-        if (hitRC.collider != null)
+        if (hitRC.collider != null&& hitRC.transform.GetComponent< JigsawContainerCpt>()!=null)
         {
             Collider2D jigsawCollider = hitRC.collider;
             Transform jigsawTransform = jigsawCollider.transform;

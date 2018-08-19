@@ -61,6 +61,7 @@ public class GameMusicUIControl : BaseUIControl, IRadioButtonCallBack<Toggle,lon
     /// </summary>
     public void cancelUI()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
     }
 

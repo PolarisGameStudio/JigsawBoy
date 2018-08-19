@@ -77,6 +77,7 @@ public class GameInfoUIControl : BaseUIControl, ResourcesManager.LoadCallBack<Sp
     /// </summary>
     public void cancelUI()
     {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameMainUI);
     }
 

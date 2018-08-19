@@ -87,10 +87,10 @@ public class GameTimerControlCpt : BaseMonoBehaviour
             if (timeText != null)
             {
                 string gameTime = ""
-                    + nowTimeSpan.Days + "天"
-                    + nowTimeSpan.Hours + "小时"
-                    + nowTimeSpan.Minutes + "分"
-                    + nowTimeSpan.Seconds + "秒";
+                    + nowTimeSpan.Days + CommonData.getText(59)
+                    + nowTimeSpan.Hours + CommonData.getText(58)
+                    + nowTimeSpan.Minutes + CommonData.getText(57)
+                    + nowTimeSpan.Seconds + CommonData.getText(56);
                 timeText.text = gameTime;
             }
             yield return new WaitForSeconds(1f);

@@ -244,18 +244,20 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             completeTime = gameMainUI.getGameTimer();
         }
 
-        if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
-        {
-         
-        }
-        else
-        {
-            //增加PP
-            ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
-        }
+        if (!CommonData.IsCheating){
+            if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+            {
 
-        //保存数据
-        GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
+            }
+            else
+            {
+                //增加PP
+                ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
+            }
+            //保存数据
+            GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
+        }
+    
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
         Tween cameraTW = DOTween

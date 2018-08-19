@@ -65,6 +65,7 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         Button selectBT = buttonObj.GetComponent<Button>();
         selectBT.onClick.AddListener(delegate ()
         {
+          SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
           TabButton[] listTab= transform.GetComponentsInChildren<TabButton>();
             foreach(TabButton itemTab in listTab)
             {

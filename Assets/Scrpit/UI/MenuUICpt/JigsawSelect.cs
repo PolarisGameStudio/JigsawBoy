@@ -140,6 +140,7 @@ public class JigsawSelect : BaseMonoBehaviour
         unLockBT.onClick.AddListener(
         delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             long userPoint = DataStorageManage.getUserInfoDSHandle().getData(0).puzzlesPoint;
             if (userPoint < infoBean.unlock_point)
             {
@@ -214,12 +215,14 @@ public class JigsawSelect : BaseMonoBehaviour
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
         startBT.onClick.AddListener(delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
         Button scoreBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawScore");
         scoreBT.onClick.AddListener(delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             DialogManager.createLeaderBoradDialog(1, itemInfo);
         });
 
@@ -260,6 +263,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
         startBT.onClick.AddListener(delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             CommonData.SelectPuzzlesInfo = itemInfo;
             SceneUtil.jumpGameScene();
         });
@@ -287,6 +291,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button editBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawEdit");
         editBT.onClick.AddListener(delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             MenuCustomUpLoadUIControl upLoadUIControl = menuSelectUIControl.mUIMasterControl.getUIByType<MenuCustomUpLoadUIControl>(UIEnum.MenuCustomUpLoadUI);
             upLoadUIControl.setInitData(infoBean);
             menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
@@ -295,6 +300,7 @@ public class JigsawSelect : BaseMonoBehaviour
         Button deleteBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawDelete");
         deleteBT.onClick.AddListener(delegate ()
         {
+            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
             FileUtil.DeleteFile(filePath);
             CustomPuzzlesInfoDSHandle handle = (CustomPuzzlesInfoDSHandle)DataStorageManage.getCustomPuzzlesInfoDSHandle();
             handle.removeData(infoBean);
