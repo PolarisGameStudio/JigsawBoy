@@ -204,9 +204,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     private void startAnim()
     {
-        int animInt = DevUtil.getRandomInt(1, 3);
-        GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
-        GameStartAnimationManager.startAnimation(this, containerList, animEnum);
+        GameStartAnimationManager.StartAnimation(this, containerList);
     }
 
     //---------------------------------------------------------------------------------------------

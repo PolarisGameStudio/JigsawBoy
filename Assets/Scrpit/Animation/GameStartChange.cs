@@ -7,46 +7,32 @@ using DG.Tweening;
 
 
 
-public class GameStartChange : BaseAnimation
+public class GameStartChange : BaseGameStartAnimation
 {
-    //游戏控制器
-    public GameStartControl gameStartControl;
-    //所有的拼图对象
-    private List<GameObject> listObj;
-    //准备时间
-    public float prependTime;
     //变换时间
     public float changeTime;
 
-    //xy方向的分散力大小
-    public int xForceMax = 100;
-    public int yForceMax = 100;
-
-    public GameStartChange(List<GameObject> listObj, GameStartControl gameStartControl)
+    public GameStartChange(List<GameObject> listObj, GameStartControl startControl) : base(listObj, startControl)
     {
-        this.listObj = listObj;
-        this.gameStartControl = gameStartControl;
-
-        prependTime = 3f;
         changeTime = 3f;
     }
 
-    public void startAnim()
+    public override void startAnim()
     {
         changeAnim();
-
     }
+
     private void changeAnim()
     {
-        int listCount = listObj.Count;
+        int listCount = mListObj.Count;
         List<Vector3> otherListPosition = new List<Vector3>();
         for (int i = 0; i < listCount; i++)
         {
-            otherListPosition.Add(listObj[i].transform.position);
+            otherListPosition.Add(mListObj[i].transform.position);
         }
         for (int i = 0; i < listCount; i++)
         {
-            GameObject itemObj = listObj[i];
+            GameObject itemObj = mListObj[i];
             Transform itemTF = itemObj.transform;
 
             //设置层级
@@ -59,25 +45,21 @@ public class GameStartChange : BaseAnimation
             Vector3 changePosition = otherListPosition[changeRandom];
             itemTF
                 .DOMove(changePosition, changeTime)
-                .SetDelay(prependTime)
+                .SetDelay(mPrependTime)
                 .OnComplete(delegate() {
-                    JigsawContainerGameObjBuilder.addRigidbody(itemObj);
-                    JigsawContainerGameObjBuilder.addCollider(itemObj);
-                    Rigidbody2D itemRB = itemTF.GetComponent<Rigidbody2D>();
-                    int xForce = DevUtil.getRandomInt(-xForceMax, xForceMax);
-                    int yForce = DevUtil.getRandomInt(-yForceMax, yForceMax);
-                    itemRB.AddForce(new Vector2(xForce, yForce), ForceMode2D.Impulse);
+                    GameStartAnimationManager.PuzzlesStartPre(itemObj);
                 });
             otherListPosition.Remove(changePosition);
         }
 
-        Tweener gameStartTweener = gameStartControl.transform
-                                                .DOScale(new Vector3(1, 1, 1), changeTime+ prependTime)
+        Tweener gameStartTweener = mGameStartControl.transform
+                                                .DOScale(new Vector3(1, 1, 1), changeTime+ mPrependTime)
                                                 .OnComplete(delegate ()
                                                     {
-                                                          gameStartControl.gameStart();
+                                                        mGameStartControl.gameStart();
                                                     });
     }
 
+ 
 }
 
