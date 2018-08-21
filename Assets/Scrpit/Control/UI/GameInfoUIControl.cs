@@ -67,9 +67,6 @@ public class GameInfoUIControl : BaseUIControl, ResourcesManager.LoadCallBack<Sp
 
     IEnumerator initPic(string assetPath, string objName, Image image) {
         yield return ResourcesManager.LoadAsyncAssetBundlesImageForBytes(assetPath, objName, image);
-
-
-
     }
 
     /// <summary>

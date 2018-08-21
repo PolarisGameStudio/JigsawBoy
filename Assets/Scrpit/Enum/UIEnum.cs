@@ -8,5 +8,6 @@
     GameMusicUI = 6,//游戏音乐UI
     MenuCustomUpLoadUI=7,//菜单 自定义拼图上传界面
     MenuSettingUI=8,//菜单 设置界面
+    GameOIUI=9// 游戏操作说明UI
 }
 

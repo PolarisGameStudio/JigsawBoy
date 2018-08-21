@@ -69,8 +69,6 @@ public class GameStartChange : BaseAnimation
                     itemRB.AddForce(new Vector2(xForce, yForce), ForceMode2D.Impulse);
                 });
             otherListPosition.Remove(changePosition);
-
-
         }
 
         Tweener gameStartTweener = gameStartControl.transform
