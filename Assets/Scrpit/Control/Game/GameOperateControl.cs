@@ -24,9 +24,13 @@ public class GameOperateControl : BaseMonoBehaviour
         };
         if (Input.GetKeyDown(KeyCode.M))
         {
-            bool isShow = uiMasterControl.isShowUI(UIEnum.GameMusicUI);
-            showGameMusicUI(!isShow);
+          //  bool isShow = uiMasterControl.isShowUI(UIEnum.GameMusicUI);
+         //   showGameMusicUI(!isShow);
         };
+        if (Input.GetKeyDown(KeyCode.O)) {
+           bool isShow = uiMasterControl.isShowUI(UIEnum.GameOIUI);
+            showGameOIUI(!isShow);
+        }
     }
 
     private void showGameInfoUI(bool isShow)
@@ -40,6 +44,10 @@ public class GameOperateControl : BaseMonoBehaviour
     private void showGameMusicUI(bool isShow)
     {
         baseShowUI(isShow, UIEnum.GameMusicUI);
+    }
+    private void showGameOIUI(bool isShow)
+    {
+        baseShowUI(isShow, UIEnum.GameOIUI);
     }
 
     private void baseShowUI(bool isShow,UIEnum uIEnum)

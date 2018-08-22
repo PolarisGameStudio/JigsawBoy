@@ -12,7 +12,7 @@ public class GameStartDispersed : BaseGameStartAnimation
 
     public GameStartDispersed(List<GameObject> listObj, GameStartControl startControl) : base(listObj, startControl)
     {
-        animOffsetTime = 0.1f;
+        animOffsetTime = 0.05f;
     }
 
     public override void startAnim()

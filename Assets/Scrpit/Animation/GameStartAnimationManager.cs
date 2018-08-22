@@ -11,7 +11,7 @@ public class GameStartAnimationManager
 
     public static void StartAnimation(GameStartControl gameStartControl, List<GameObject> listObj)
     {
-        int animInt = DevUtil.getRandomInt(1, 4);
+        int animInt = DevUtil.getRandomInt(1, 5);
         GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
 
         BaseGameStartAnimation animation = null;
@@ -31,6 +31,10 @@ public class GameStartAnimationManager
         {
             animation = new GameStartDispersed(listObj, gameStartControl);
         }
+        else if (animEnum.Equals(GameStartAnimationEnum.Funnel))
+        {
+            animation = new GameStartFunnel(listObj, gameStartControl);
+        }
         if (animation != null)
             animation.startAnim();
     }
@@ -40,11 +44,18 @@ public class GameStartAnimationManager
     /// </summary>
     public static void PuzzlesStartPre(GameObject itemObj)
     {
+        int xForce = DevUtil.getRandomInt(-xForceMax, xForceMax);
+        int yForce = DevUtil.getRandomInt(-yForceMax, yForceMax);
+        PuzzlesStartPre(itemObj, xForce, yForce);
+    }
+    /// <summary>
+    /// 拼图开始的准备工作  动画结束之后需要调用一次
+    /// </summary>
+    public static void PuzzlesStartPre(GameObject itemObj,int xForce,int yForce)
+    {
         JigsawContainerGameObjBuilder.addRigidbody(itemObj);
         JigsawContainerGameObjBuilder.addCollider(itemObj);
         Rigidbody2D itemRB = itemObj.GetComponent<Rigidbody2D>();
-        int xForce = DevUtil.getRandomInt(-xForceMax, xForceMax);
-        int yForce = DevUtil.getRandomInt(-yForceMax, yForceMax);
         itemRB.AddForce(new Vector2(xForce, yForce), ForceMode2D.Impulse);
     }
 }

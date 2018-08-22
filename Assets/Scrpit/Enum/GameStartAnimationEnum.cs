@@ -10,5 +10,6 @@ public enum GameStartAnimationEnum
     Decompose_Rotate = 2,//分解-旋转
     Change=3,//变换
     Dispersed=4,//分散
+    Funnel = 5,//漏斗
 }
 
