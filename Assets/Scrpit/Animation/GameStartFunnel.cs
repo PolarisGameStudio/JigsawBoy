@@ -9,6 +9,7 @@ public class GameStartFunnel : BaseGameStartAnimation
     private float mBuildFunnelTime;//创建漏斗时间
     private float mMoveToMouthTime;//移动到发射口时间
     private float mLaunchOffTime;//发射延迟时间
+
     public GameStartFunnel(List<GameObject> listObj, GameStartControl startControl) : base(listObj, startControl)
     {
         mBuildFunnelTime = 2f;
