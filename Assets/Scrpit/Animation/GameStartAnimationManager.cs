@@ -11,7 +11,7 @@ public class GameStartAnimationManager
 
     public static void StartAnimation(GameStartControl gameStartControl, List<GameObject> listObj)
     {
-        int animInt = DevUtil.getRandomInt(1, 5);
+        int animInt = DevUtil.getRandomInt(6, 6);
         GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
 
         BaseGameStartAnimation animation = null;
@@ -32,6 +32,10 @@ public class GameStartAnimationManager
             animation = new GameStartDispersed(listObj, gameStartControl);
         }
         else if (animEnum.Equals(GameStartAnimationEnum.Funnel))
+        {
+            animation = new GameStartFunnel(listObj, gameStartControl);
+        }
+        else if (animEnum.Equals(GameStartAnimationEnum.CircularRun))
         {
             animation = new GameStartFunnel(listObj, gameStartControl);
         }
