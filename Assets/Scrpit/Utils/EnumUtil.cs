@@ -33,12 +33,12 @@ public class EnumUtil
             case JigsawResourcesEnum.Food:
                 resName = CommonData.getText(31);
                 break;
-        //    case JigsawResourcesEnum.Movie:
-         //       resName = CommonData.getText(11);
-          //      break;
-         //   case JigsawResourcesEnum.StarrySky:
-         //       resName = CommonData.getText(12);
-         //       break;
+            case JigsawResourcesEnum.StarrySky:
+                resName = CommonData.getText(12);
+                break;
+            //    case JigsawResourcesEnum.Movie:
+            //       resName = CommonData.getText(11);
+            //      break;
             default:
                 break;
         }
@@ -76,10 +76,12 @@ public class EnumUtil
             case JigsawResourcesEnum.Food:
                 resTypeIconPath = "Texture/UI/tab_food";
                 break;
-         //   case JigsawResourcesEnum.Movie:
-           //     break;
-         //   case JigsawResourcesEnum.StarrySky:
-          //      break;
+            case JigsawResourcesEnum.StarrySky:
+                resTypeIconPath = "Texture/UI/tab_food";
+                break;
+            //   case JigsawResourcesEnum.Movie:
+            //     break;
+
             default:
                 break;
         }

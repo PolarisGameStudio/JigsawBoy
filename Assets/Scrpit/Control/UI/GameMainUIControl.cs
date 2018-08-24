@@ -14,6 +14,7 @@ public class GameMainUIControl : BaseUIControl
     public Button gameInfoBT;
     public Button gamePauseBT;
     public Button gameMusicBT;
+    public Button gameOIBT;
 
     private new void Awake()
     {
@@ -25,11 +26,22 @@ public class GameMainUIControl : BaseUIControl
         }
         gameInfoBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameInfoBT");
         gamePauseBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GamePauseBT");
+        gameOIBT=CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameOIBT");
         //   gameMusicBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "GameMusicBT");
 
         gameInfoBT.onClick.AddListener(openGameInfo);
         gamePauseBT.onClick.AddListener(openPauseBT);
+        gameOIBT.onClick.AddListener(openOI);
       //  gameMusicBT.onClick.AddListener(openGameMusic);
+    }
+
+    /// <summary>
+    /// 打开游戏操作说明
+    /// </summary>
+    public void openOI()
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.GameOIUI);
     }
 
     /// <summary>

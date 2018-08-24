@@ -58,4 +58,9 @@ public class DialogManager : BaseMonoBehaviour
         dialog.setPuzzlesUrl(puzzlesUrl);
         return dialog;
     }
+
+   public static void createPuzzlesPointAddDialog(int addPuzzlesPoint)
+    {
+
+    }
 }
