@@ -36,7 +36,8 @@ public class PuzzlesUnlockDialog : BaseMonoBehaviour
             mUnlockPuzzlesName.text = mPuzzlesNameStr;
         if (mUnlockPuzzlesImage != null) {
             //mUnlockPuzzlesImage.sprite= ResourcesManager.LoadAssetBundlesSpriteForBytes(mPuzzlesImageUrl, mPuzzlesMarkName);
-            StartCoroutine( ResourcesManager.LoadAsyncAssetBundlesImageForBytes(mPuzzlesImageUrl, mPuzzlesMarkName, mUnlockPuzzlesImage));
+            StartCoroutine(ResourcesManager.LoadAsyncDataImage(mPuzzlesImageUrl+"_Thumb", mUnlockPuzzlesImage));
+          //  StartCoroutine( ResourcesManager.LoadAsyncAssetBundlesImageForBytes(mPuzzlesImageUrl, mPuzzlesMarkName, mUnlockPuzzlesImage));
         }
     }
 

@@ -37,7 +37,7 @@ public class GameStartAnimationManager
         }
         else if (animEnum.Equals(GameStartAnimationEnum.CircularRun))
         {
-            animation = new GameStartFunnel(listObj, gameStartControl);
+            animation = new GameStartCircularRun(listObj, gameStartControl);
         }
         if (animation != null)
             animation.startAnim();

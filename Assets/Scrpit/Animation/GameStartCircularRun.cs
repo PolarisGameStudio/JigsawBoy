@@ -3,17 +3,20 @@ using UnityEditor;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class GameStartRun : BaseGameStartAnimation
+public class GameStartCircularRun : BaseGameStartAnimation
 {
     //起始位置
     private Vector3 mStartPosition;
 
     private float mRunTime;
+    private int mListMoveCount;
 
-    public GameStartRun(List<GameObject> listObj, GameStartControl startControl) : base(listObj, startControl)
+
+    public GameStartCircularRun(List<GameObject> listObj, GameStartControl startControl) : base(listObj, startControl)
     {
         mStartPosition = new Vector3(0,0,0);
         mRunTime = 6f;
+        mListMoveCount = 10;
     }
 
     public override void startAnim()
@@ -35,9 +38,9 @@ public class GameStartRun : BaseGameStartAnimation
                 continue;
             containerCpt.setSortingOrder(listCount - i);
 
-            int listMoveCount=  DevUtil.getRandomInt(1, circleCount);
-            Vector3[] listMove = new Vector3[listMoveCount];
-            for (int f = 0; f < listMoveCount; f++) {
+            //  int mListMoveCount=  DevUtil.getRandomInt(1, circleCount);
+            Vector3[] listMove = new Vector3[mListMoveCount];
+            for (int f = 0; f < mListMoveCount; f++) {
                 int randomPosition = DevUtil.getRandomInt(0, circleCount-1);
                 listMove[f]=listCircleVec[randomPosition];
             }
