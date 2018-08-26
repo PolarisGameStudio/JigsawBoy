@@ -76,6 +76,8 @@ public class PuzzlesInfoManager
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Scenery_Table;
         else if (resourcesType.Equals(JigsawResourcesEnum.Food))
             detailsTableName = CommonDB.PuzzleInfoDB_Details_Food_Table;
+        else if (resourcesType.Equals(JigsawResourcesEnum.StarrySky))
+            detailsTableName = CommonDB.PuzzleInfoDB_Details_StarrySky_Table;
         else
             return null;
 

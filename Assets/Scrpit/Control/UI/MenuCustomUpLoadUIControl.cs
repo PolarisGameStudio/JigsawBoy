@@ -181,58 +181,49 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     {
         if (uploadImage.sprite == null)
         {
-            LogUtil.log("没有图片");
-            DialogManager.createToastDialog().setToastText("没有图片");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(68));
             return false;
         }
         if (uploadPath == null && uploadPath.Length == 0)
         {
-            LogUtil.log("没有路径");
-            DialogManager.createToastDialog().setToastText("没有路径");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(69));
             return false;
         }
         if (inputName.text == null || inputName.text.Length == 0)
         {
-            LogUtil.log("没有拼图名字");
-            DialogManager.createToastDialog().setToastText("没有拼图名字");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(70));
             return false;
         }
         if (inputHorizontalNumber.text == null || inputHorizontalNumber.text.Length == 0)
         {
-            LogUtil.log("没有拼图横向块数");
-            DialogManager.createToastDialog().setToastText("没有拼图横向块数");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(71));
             return false;
         }
         if (inputVerticalNumber.text == null || inputVerticalNumber.text.Length == 0)
         {
-            LogUtil.log("没有拼图纵向块数");
-            DialogManager.createToastDialog().setToastText("没有拼图纵向块数");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(72));
             return false;
         }
         if (!CheckUtil.checkIsNumber(inputHorizontalNumber.text))
         {
-            LogUtil.log("横向块数 数据类型错误");
-            DialogManager.createToastDialog().setToastText("横向块数 数据类型错误");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(73));
             return false;
         }
         if (!CheckUtil.checkIsNumber(inputVerticalNumber.text))
         {
-            LogUtil.log("纵向块数 数据类型错误");
-            DialogManager.createToastDialog().setToastText("纵向块数 数据类型错误");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(74));
             return false;
         }
         int horizontalNumber = Convert.ToInt32(inputHorizontalNumber.text);
         int verticalNumber = Convert.ToInt32(inputVerticalNumber.text);
         if (horizontalNumber > 50 || horizontalNumber < 2)
         {
-            LogUtil.log("拼图横向块数必须小于等于50并且大于2");
-            DialogManager.createToastDialog().setToastText("拼图横向块数必须小于等于50并且大于2");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(75));
             return false;
         }
         if (verticalNumber > 50 || verticalNumber < 2)
         {
-            LogUtil.log("拼图纵向块数必须小于等于50并且大于2");
-            DialogManager.createToastDialog().setToastText("拼图纵向块数必须小于等于50并且大于2");
+            DialogManager.createToastDialog().setToastText(CommonData.getText(76));
             return false;
         }
         return true;

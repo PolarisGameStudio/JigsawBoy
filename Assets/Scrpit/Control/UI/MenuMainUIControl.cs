@@ -20,6 +20,11 @@ public class MenuMainUIControl : BaseUIControl
     public Button exitBT;
     public Text exitText;
 
+    public Image mLogoTitle1;
+    public Image mLogoTitle2;
+
+
+
 
     private new void Awake()
     {
@@ -36,6 +41,9 @@ public class MenuMainUIControl : BaseUIControl
    
         exitBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "ExitBT");
         exitText = CptUtil.getCptFormParentByName<Button, Text>(exitBT, "ExitText");
+
+        mLogoTitle1= CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle1");
+        mLogoTitle2 = CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle2");
 
         startGameBT.onClick.AddListener(startGameOnClick);
         customBT.onClick.AddListener(customOnClick);
@@ -111,5 +119,25 @@ public class MenuMainUIControl : BaseUIControl
             settingText.text = CommonData.getText(3);
         if (startGameText != null)
             exitText.text = CommonData.getText(4);
+        if (mLogoTitle1 != null) {
+            if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.Chinese))
+            {
+                mLogoTitle1.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_1_cn");
+            }
+            else if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.English))
+            {
+                mLogoTitle1.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_1_en");
+            }
+        }
+        if (mLogoTitle2 != null) {
+            if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.Chinese))
+            {
+                mLogoTitle2.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_2_cn");
+            }
+            else if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.English))
+            {
+                mLogoTitle2.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_2_en");
+            }
+        }
     }
 }

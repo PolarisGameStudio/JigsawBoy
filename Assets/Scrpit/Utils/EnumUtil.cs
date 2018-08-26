@@ -77,7 +77,7 @@ public class EnumUtil
                 resTypeIconPath = "Texture/UI/tab_food";
                 break;
             case JigsawResourcesEnum.StarrySky:
-                resTypeIconPath = "Texture/UI/tab_food";
+                resTypeIconPath = "Texture/UI/tab_starrysky";
                 break;
             //   case JigsawResourcesEnum.Movie:
             //     break;
