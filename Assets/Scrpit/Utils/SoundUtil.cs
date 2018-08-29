@@ -1,7 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class SoundUtil 
+public class SoundUtil
 {
+    /// <summary>
+    /// 合成音效集合
+    /// </summary>
+    public static AudioButtonOnClickEnum[] listMergeClip = new AudioButtonOnClickEnum[]
+    {
+            AudioButtonOnClickEnum.merge_sound_1,
+            AudioButtonOnClickEnum.merge_sound_2,
+            AudioButtonOnClickEnum.merge_sound_3,
+            AudioButtonOnClickEnum.merge_sound_4
+     };
+
     /// <summary>
     /// 播放音乐片段
     /// </summary>
@@ -10,9 +22,18 @@ public class SoundUtil
     {
         if (CommonConfigure.isOpenSound == EnabledEnum.OFF)
             return;
-        AudioSourceControl control= Camera.main.GetComponent<AudioSourceControl>();
-        if(control!=null)
-        control.playSoundClip(onClickEnum);
+        AudioSourceControl control = Camera.main.GetComponent<AudioSourceControl>();
+        if (control != null)
+            control.playSoundClip(onClickEnum);
+    }
+
+    /// <summary>
+    /// 播放合并音乐片段
+    /// </summary>
+    /// <param name="onClickEnum"></param>
+    public static void playSoundClipForMerge()
+    {
+        playSoundClip(listMergeClip[DevUtil.getRandomInt(0, 3)]);
     }
 
     /// <summary>

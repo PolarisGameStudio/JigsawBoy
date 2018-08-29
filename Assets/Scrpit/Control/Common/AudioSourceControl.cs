@@ -49,7 +49,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     /// <param name="onClickEnum"></param>
     public void playSoundClip(AudioButtonOnClickEnum onClickEnum)
     {
-        string soundPath = "Sound/Button/";
+        string soundPath = "Sound/Clip/";
         switch (onClickEnum)
         {
             case AudioButtonOnClickEnum.btn_sound_1:
@@ -60,6 +60,18 @@ public class AudioSourceControl : BaseMonoBehaviour
                 break;
             case AudioButtonOnClickEnum.btn_sound_3:
                 soundPath += "btn_sound_3";
+                break;
+            case AudioButtonOnClickEnum.merge_sound_1:
+                soundPath += "merge_sound_1";
+                break;
+            case AudioButtonOnClickEnum.merge_sound_2:
+                soundPath += "merge_sound_2";
+                break;
+            case AudioButtonOnClickEnum.merge_sound_3:
+                soundPath += "merge_sound_3";
+                break;
+            case AudioButtonOnClickEnum.merge_sound_4:
+                soundPath += "merge_sound_4";
                 break;
         }
 

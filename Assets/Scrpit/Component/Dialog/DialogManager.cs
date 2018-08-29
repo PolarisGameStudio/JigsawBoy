@@ -32,7 +32,8 @@ public class DialogManager : BaseMonoBehaviour
     /// <param name="dialogType">0有当前成绩 1无当前成绩</param>
     /// <param name="gameInfoBean">拼图相关数据</param>
     /// <returns></returns>
-    public static LeaderBoardDialog createLeaderBoradDialog(int dialogType,PuzzlesGameInfoBean gameInfoBean) {
+    public static LeaderBoardDialog createLeaderBoradDialog(int dialogType, PuzzlesGameInfoBean gameInfoBean)
+    {
         if (gameInfoBean == null || gameInfoBean.puzzlesInfo == null)
             return null;
         GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/LeaderBoardDialog"));
@@ -49,18 +50,27 @@ public class DialogManager : BaseMonoBehaviour
     /// <param name="puzzlesMarkName"></param>
     /// <param name="puzzlesUrl"></param>
     /// <returns></returns>
-    public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName,string puzzlesMarkName, string puzzlesUrl)
+    public static PuzzlesUnlockDialog createUnlockPuzzlesDialog(string puzzlesName, string puzzlesMarkName, string puzzlesUrl)
     {
-        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));  
-        PuzzlesUnlockDialog dialog= dialogObj.GetComponent<PuzzlesUnlockDialog>();
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/PuzzlesUnlockDialog"));
+        PuzzlesUnlockDialog dialog = dialogObj.GetComponent<PuzzlesUnlockDialog>();
         dialog.setPuzzlesName(puzzlesName);
         dialog.setPuzzlesMarkName(puzzlesMarkName);
         dialog.setPuzzlesUrl(puzzlesUrl);
         return dialog;
     }
 
-   public static void createPuzzlesPointAddDialog(int addPuzzlesPoint)
+    /// <summary>
+    /// 创建增加分数弹窗
+    /// </summary>
+    /// <param name="addPuzzlesPoint"></param>
+    public static AddPuzzlesPointDialog createPuzzlesPointAddDialog(int addPuzzlesPoint)
     {
-
+        if (addPuzzlesPoint == 0)
+            return null;
+        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/UI/Common/AddPuzzlesPointDialog"));
+        AddPuzzlesPointDialog dialog= dialogObj.GetComponent<AddPuzzlesPointDialog>();
+        dialog.setAddPoint(addPuzzlesPoint);
+        return dialog;
     }
 }
