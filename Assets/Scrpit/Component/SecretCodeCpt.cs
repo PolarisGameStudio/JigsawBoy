@@ -154,7 +154,8 @@ public class SecretCodeCpt : BaseMonoBehaviour
     /// </summary>
     private void addPuzzlesPoint()
     {
-        ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(1000);
+        DialogManager.createPuzzlesPointAddDialog(1000);
+        //((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(1000);
     }
 
 

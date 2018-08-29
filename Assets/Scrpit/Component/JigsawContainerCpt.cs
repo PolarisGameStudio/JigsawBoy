@@ -148,6 +148,7 @@ public class JigsawContainerCpt : BaseMonoBehaviour
             }
             //摇晃镜头
             shakeCamer();
+            SoundUtil.playSoundClipForMerge();
             //让缸体恢复移动
             Rigidbody2D thisRB = transform.GetComponent<Rigidbody2D>();
             if (thisRB != null)
@@ -363,7 +364,6 @@ public class JigsawContainerCpt : BaseMonoBehaviour
     {
         collisionCheck(collision);
     }
-
 
     /// <summary>
     /// 碰撞处理

@@ -250,7 +250,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             else
             {
                 //增加PP
-                ((UserInfoDSHandle)DataStorageManage.getUserInfoDSHandle()).increaseUserPuzzlesPoint(CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level);
+                int addPuzzlesPoint = CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level;
+                DialogManager.createPuzzlesPointAddDialog(addPuzzlesPoint);
             }
             //保存数据
             GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
@@ -272,6 +273,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                     if (CommonData.IsCheating)
                     {
                         leaderType = 1;
+                    }
+                    else
+                    {
+                        //没有作弊 放烟花
+                        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
+                        Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
+                        gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                        gameFinshCanvas.worldCamera = Camera.main;
                     }
                     DialogManager
                     .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
