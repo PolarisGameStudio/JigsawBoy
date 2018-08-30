@@ -9,7 +9,7 @@ public class TestScrpit : BaseMonoBehaviour
 
     void Start()
     {
-        DialogManager.createPuzzlesPointAddDialog(100);
+   
     }
     
 
