@@ -106,7 +106,7 @@ public class GameUtil
 
     static IEnumerator delayComplete(BaseMonoBehaviour content,JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
     {
-        float mergeTime = 20f;
+        float mergeTime = 10f;
         Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
         if (itemRB != null)
         {
@@ -134,7 +134,7 @@ public class GameUtil
                 // 最后删除当前容器
                 UnityEngine.Object.Destroy(itemCpt.gameObject);
             }
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
         }
         tempCpt.mergeDeal(mergeTime);
     }
