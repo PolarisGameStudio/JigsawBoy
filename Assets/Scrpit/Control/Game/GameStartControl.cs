@@ -277,10 +277,10 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                     else
                     {
                         //没有作弊 放烟花
-                        GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
-                        Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
-                        gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
-                        gameFinshCanvas.worldCamera = Camera.main;
+                        //GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
+                        //Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
+                        //gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                        //gameFinshCanvas.worldCamera = Camera.main;
                     }
                     DialogManager
                     .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
