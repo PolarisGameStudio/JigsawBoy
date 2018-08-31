@@ -20,7 +20,7 @@ public class SoundUtil
     /// <param name="onClickEnum"></param>
     public static void playSoundClip(AudioButtonOnClickEnum onClickEnum)
     {
-        if (CommonConfigure.isOpenSound == EnabledEnum.OFF)
+        if (CommonConfigure.IsOpenSound == EnabledEnum.OFF)
             return;
         AudioSourceControl control = Camera.main.GetComponent<AudioSourceControl>();
         if (control != null)

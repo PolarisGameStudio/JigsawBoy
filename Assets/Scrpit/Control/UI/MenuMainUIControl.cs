@@ -22,10 +22,8 @@ public class MenuMainUIControl : BaseUIControl
 
     public Image mLogoTitle1;
     public Image mLogoTitle2;
-
-
-
-
+    public Button mLogoTitleBT1;
+    public Button mLogoTitleBT2;
     private new void Awake()
     {
         base.Awake();
@@ -44,13 +42,25 @@ public class MenuMainUIControl : BaseUIControl
 
         mLogoTitle1= CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle1");
         mLogoTitle2 = CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle2");
+        mLogoTitleBT1 = CptUtil.getCptFormParentByName<Transform, Button>(transform, "LogoTitle1");
+        mLogoTitleBT2 = CptUtil.getCptFormParentByName<Transform, Button>(transform, "LogoTitle2");
 
         startGameBT.onClick.AddListener(startGameOnClick);
         customBT.onClick.AddListener(customOnClick);
         settingBT.onClick.AddListener(settingOnClick);
         exitBT.onClick.AddListener(exitOnClick);
 
+        mLogoTitleBT1.onClick.AddListener(makerOnClick);
+        mLogoTitleBT2.onClick.AddListener(makerOnClick);
         refreshUI();
+    }
+
+    private void makerOnClick()
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        if (mUIMasterControl == null)
+            return;
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMakerUI);
     }
 
     /// <summary>

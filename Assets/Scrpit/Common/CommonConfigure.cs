@@ -9,9 +9,11 @@ public class CommonConfigure
     //游戏语言
     public static GameLanguageEnum GameLanguage;
     //是否开启BGM
-    public static EnabledEnum isOpenBGM;
+    public static EnabledEnum IsOpenBGM;
     //是否开启音效
-    public static EnabledEnum isOpenSound;
+    public static EnabledEnum IsOpenSound;
+    //屏幕状态
+    public static ScreenModeEnum SceenMode;
 
     static CommonConfigure()
     {
@@ -21,17 +23,20 @@ public class CommonConfigure
     public static void refreshData()
     {
         GameLanguage = GameLanguageEnum.English;
-        isOpenBGM = EnabledEnum.ON;
-        isOpenSound= EnabledEnum.ON;
+        IsOpenBGM = EnabledEnum.ON;
+        IsOpenSound = EnabledEnum.ON;
+        SceenMode = ScreenModeEnum.Full;
         GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
             //游戏语言设置
             GameLanguage = (GameLanguageEnum)Enum.ToObject(typeof(GameLanguageEnum), configureBean.gameLanguage);
             //是否开启BGM
-            isOpenBGM = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenBGM);
+            IsOpenBGM = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenBGM);
             //是否开启音效
-            isOpenSound = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenSound);
+            IsOpenSound = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenSound);
+            //屏幕模式
+            SceenMode= (ScreenModeEnum)Enum.ToObject(typeof(ScreenModeEnum), configureBean.screenMode);
         }
     }
 }
