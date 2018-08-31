@@ -118,7 +118,7 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建未解锁样式
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createLockItem(int position, PuzzlesGameInfoBean itemInfo)
+    private GameObject createLockItem(int position, PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
@@ -131,10 +131,12 @@ public class JigsawSelect : BaseMonoBehaviour
 
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectLockItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
+        //设置大小
+        setItemSize(itemObj);
 
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
-
+      
         //设置按键
         Button unLockBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawUnLock");
         unLockBT.onClick.AddListener(
@@ -175,6 +177,7 @@ public class JigsawSelect : BaseMonoBehaviour
 
         //设置拼图等级
         setLevel(itemObj, infoBean.level);
+        return itemObj;
     }
 
 
@@ -188,10 +191,12 @@ public class JigsawSelect : BaseMonoBehaviour
 
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectItemPath));
         Button itemBT = itemObj.GetComponent<Button>();
+        //设置大小
+        setItemSize(itemObj);
 
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
-
+     
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
         string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
@@ -245,12 +250,15 @@ public class JigsawSelect : BaseMonoBehaviour
     /// 创建自定义样式
     /// </summary>
     /// <param name="itemInfo"></param>
-    private void createCustomItem(PuzzlesGameInfoBean itemInfo)
+    private GameObject createCustomItem(PuzzlesGameInfoBean itemInfo)
     {
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectCustomItemPath));
+        //设置大小
+        setItemSize(itemObj);
+
         itemObj.name = infoBean.Mark_file_name;
         itemObj.transform.SetParent(transform);
 
@@ -306,18 +314,21 @@ public class JigsawSelect : BaseMonoBehaviour
             handle.removeData(infoBean);
             menuSelectUIControl.setJigsawSelectData(JigsawResourcesEnum.Custom);
         });
+        return itemObj;
     }
 
     /// <summary>
     /// 创建自定义增加拼图样式
     /// </summary>
-    public void createAddItem()
+    public GameObject createAddItem()
     {
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectAddItemPath));
+        //设置大小
+        setItemSize(itemObj);
 
         itemObj.name ="Add";
         itemObj.transform.SetParent(transform);
-
+ 
         //设置按键
         Button addTextBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawAdd");
         Button addPicBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawPic");
@@ -326,6 +337,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //设置文本信息
         Text jigsawAddText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawAddText");
         jigsawAddText.text = CommonData.getText(7);
+        return itemObj;
     }
 
     /// <summary>
@@ -335,6 +347,21 @@ public class JigsawSelect : BaseMonoBehaviour
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+    }
+
+    /// <summary>
+    /// 设置ITEM大小
+    /// </summary>
+    /// <param name="itemObj"></param>
+    private void setItemSize(GameObject itemObj)
+    {
+        //因为用的gird 并且宽度个数自适应 所以这里设置大小不会起作用。
+        //如果想要自定义高宽 可以取消自适应配置
+        //RectTransform rect= itemObj.GetComponent<RectTransform>();
+        //if (rect == null)
+        //    return;
+        //float parentWithSize = transform.GetComponent<RectTransform>().rect.width;
+        //rect.sizeDelta = new Vector2(parentWithSize/6f, parentWithSize/3f);
     }
 
     /// <summary>

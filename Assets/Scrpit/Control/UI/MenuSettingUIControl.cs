@@ -15,8 +15,12 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 
     public Text mSoundSelectionTitle;
     public SwitchButton mSoundSelectionSwitch;
-  
-    
+
+    public Text mScreenModeTitle;
+    public Dropdown mScreenModeDropdown;
+
+    public Text mScreenResolutionTitle;
+    public Dropdown mScreenResolutionDropdown;
 
     private new void Awake()
     {
@@ -40,22 +44,14 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         mSoundSelectionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "SoundSelectionTitle");
         mSoundSelectionSwitch = CptUtil.getCptFormParentByName<Transform, SwitchButton>(transform, "SoundSelectionSwitch");
 
-        refreshUI();
-    }
+        //初始化模式选择
+        mScreenModeTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "ScreenModeTitle");
+        mScreenModeDropdown = CptUtil.getCptFormParentByName<Transform, Dropdown>(transform, "ScreenModeDropdown");
+        //初始化分辨率选择
+        //mScreenResolutionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "ScreenResolutionTitle");
+        //mScreenResolutionDropdown = CptUtil.getCptFormParentByName<Transform, Dropdown>(transform, "ScreenResolutionDropdown");
 
-    /// <summary>
-    /// 语言选择
-    /// </summary>
-    /// <param name="position"></param>
-    private void languageSelection(int position)
-    {
-        GameConfigureBean configure= DataStorageManage.getGameConfigureDSHandle().getData(0);
-        configure.gameLanguage = position;
-        DataStorageManage.getGameConfigureDSHandle().saveData(configure);
-        CommonConfigure.refreshData();
-        CommonData.refreshData();
-   
-        mUIMasterControl.refreshAllUI();
+        refreshUI();
     }
 
     /// <summary>
@@ -84,9 +80,9 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 
     public override void refreshUI()
     {
-        List<string>  listLanguageList = new List<string>();
-        listLanguageList.Add("中文");
-        listLanguageList.Add("English");
+        List<string>  languageList = new List<string>();
+        languageList.Add("中文");
+        languageList.Add("English");
 
         if (mLanguageSelectionTitle != null)
             mLanguageSelectionTitle.text = CommonData.getText(28);
@@ -98,20 +94,61 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         if (mLanguageSelectionDropdown != null)
         {
             mLanguageSelectionDropdown.ClearOptions();
-            mLanguageSelectionDropdown.AddOptions(listLanguageList);
+            mLanguageSelectionDropdown.AddOptions(languageList);
             mLanguageSelectionDropdown.value = (int)CommonConfigure.GameLanguage;
             mLanguageSelectionDropdown.onValueChanged.AddListener(languageSelection);
         }
         if (mMusicSelectionSwith != null) {
-            mMusicSelectionSwith.setStatus((int)CommonConfigure.isOpenBGM);
+            mMusicSelectionSwith.setStatus((int)CommonConfigure.IsOpenBGM);
             mMusicSelectionSwith.setCallBack(this);
         }
-
         if (mSoundSelectionSwitch != null) {
-            mSoundSelectionSwitch.setStatus((int)CommonConfigure.isOpenSound);
+            mSoundSelectionSwitch.setStatus((int)CommonConfigure.IsOpenSound);
             mSoundSelectionSwitch.setCallBack(this);
         }
-  
+
+        List<string> listScreenMode = new List<string>();
+        listScreenMode.Add("全屏");
+        listScreenMode.Add("窗口");
+        if (mScreenModeDropdown != null) {
+            mScreenModeDropdown.ClearOptions();
+            mScreenModeDropdown.AddOptions(listScreenMode);
+            mScreenModeDropdown.value = (int)CommonConfigure.SceenMode;
+            mScreenModeDropdown.onValueChanged.AddListener(screenModeSelection);
+        }
+    }
+
+    /// <summary>
+    /// 屏幕模式
+    /// </summary>
+    /// <param name="position"></param>
+    private void screenModeSelection(int position)
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
+        if (position == 0) {
+            Screen.fullScreen = true;
+        }
+        else {
+            Screen.fullScreen = false;
+        }
+        GameConfigureBean configure = DataStorageManage.getGameConfigureDSHandle().getData(0);
+        configure.screenMode = position;
+        DataStorageManage.getGameConfigureDSHandle().saveData(configure);
+    }
+
+    /// <summary>
+    /// 语言选择
+    /// </summary>
+    /// <param name="position"></param>
+    private void languageSelection(int position)
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
+        GameConfigureBean configure = DataStorageManage.getGameConfigureDSHandle().getData(0);
+        configure.gameLanguage = position;
+        DataStorageManage.getGameConfigureDSHandle().saveData(configure);
+        CommonConfigure.refreshData();
+        CommonData.refreshData();
+        mUIMasterControl.refreshAllUI();
     }
 
     /// <summary>

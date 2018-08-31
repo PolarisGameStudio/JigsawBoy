@@ -19,7 +19,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     {
         playWay = AudioPlayWayEnum.Random_Play;
         listBGMInfo = BGMInfoManager.LoadAllBGMInfo();
-        isOpenAudio = CommonConfigure.isOpenBGM;
+        isOpenAudio = CommonConfigure.IsOpenBGM;
     }
 
     void Start()

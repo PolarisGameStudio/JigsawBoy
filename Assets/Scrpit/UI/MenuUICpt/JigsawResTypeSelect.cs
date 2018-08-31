@@ -56,6 +56,13 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
         if (resName == null || resName.Length == 0 || resTypeIconPath == null || resTypeIconPath.Length == 0)
             return;
         GameObject buttonObj = Instantiate(ResourcesManager.LoadData<GameObject>(ResTypeSelectItemPath));
+
+        //设置大小
+        RectTransform rect= buttonObj.GetComponent<RectTransform>();
+        float itemWith = transform.GetComponent<RectTransform>().rect.width;
+        float itemHight = transform.GetComponent<RectTransform>().rect.width * 0.5f;
+        rect.sizeDelta=new Vector2(itemWith, itemHight);
+        
         TabButton tabButton = buttonObj.GetComponent<TabButton>();
         buttonObj.name = resType.ToString();
         buttonObj.transform.SetParent(transform);
