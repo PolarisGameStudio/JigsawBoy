@@ -74,7 +74,7 @@ public class GameCameraControlCpt : BaseMonoBehaviour
         //Zoom in
         if (Input.GetAxis(MouseScrollWheel) > 0)
         {
-            if (Camera.main.orthographicSize >= zoomInMax)
+            if (Camera.main.orthographicSize >= zoomInMax && Camera.main.orthographicSize> zoomInMax)
                 Camera.main.orthographicSize -= zoomInMaxAdd;
         }
         //CameraMove

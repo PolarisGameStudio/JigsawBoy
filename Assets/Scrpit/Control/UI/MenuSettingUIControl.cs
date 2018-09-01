@@ -90,6 +90,8 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
             mMusicSelectionTitle.text = CommonData.getText(29);
         if (mSoundSelectionTitle != null)
             mSoundSelectionTitle.text = CommonData.getText(30);
+        if (mScreenModeTitle != null)
+            mScreenModeTitle.text = CommonData.getText(77);
 
         if (mLanguageSelectionDropdown != null)
         {
@@ -108,8 +110,8 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         }
 
         List<string> listScreenMode = new List<string>();
-        listScreenMode.Add("全屏");
-        listScreenMode.Add("窗口");
+        listScreenMode.Add(CommonData.getText(78));
+        listScreenMode.Add(CommonData.getText(79));
         if (mScreenModeDropdown != null) {
             mScreenModeDropdown.ClearOptions();
             mScreenModeDropdown.AddOptions(listScreenMode);
