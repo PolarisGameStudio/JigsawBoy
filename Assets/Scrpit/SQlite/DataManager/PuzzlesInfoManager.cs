@@ -93,9 +93,9 @@ public class PuzzlesInfoManager
             new string[] { detailsTableName },
             "id",
             new string[] { "puzzles_id" },
-            new string[] { "data_type" },
-            new string[] { "=" },
-            new string[] { (int)resourcesType + "" }
+            new string[] { "data_type" ,"valid"},
+            new string[] { "=" ,"="},
+            new string[] { (int)resourcesType + "","1" }
             );
 
         return listData;

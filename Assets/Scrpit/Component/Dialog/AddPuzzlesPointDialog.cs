@@ -19,7 +19,7 @@ public class AddPuzzlesPointDialog : BaseMonoBehaviour
 
     void Awake()
     {
-        mAddAnimTime = 8f;
+        mAddAnimTime = 6f;
         UserInfoBean userInfo = DataStorageManage.getUserInfoDSHandle().getData(0);
         if (userInfo != null)
             mCurrentPoint = userInfo.puzzlesPoint;
@@ -47,7 +47,7 @@ public class AddPuzzlesPointDialog : BaseMonoBehaviour
         if (mPuzzlesPointAddContent != null)
             mPuzzlesPointAddContent.text = mAddPoint + "PP";
         if (mPuzzelsPointContent != null)
-            mPuzzelsPointContent.text = "x "+ mCurrentPoint + " PP";
+            mPuzzelsPointContent.text = ""+ mCurrentPoint + " PP";
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class AddPuzzlesPointDialog : BaseMonoBehaviour
         DOTween.To(() => mCurrentPoint,
             newPoint => {
                 int newPointInt = (int)newPoint;
-                mPuzzelsPointContent.text ="x "+ newPointInt + " PP";
+                mPuzzelsPointContent.text =""+ newPointInt + " PP";
             },
             mAddPoint + mCurrentPoint,
             mAddAnimTime);

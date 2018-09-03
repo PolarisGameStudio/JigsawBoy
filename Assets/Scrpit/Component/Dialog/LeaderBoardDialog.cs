@@ -516,6 +516,13 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
     private void createLeaderBoardItem(LeaderBoardItemData itemData)
     {
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(LeaderBoardItemPath));
+
+        //设置大小
+        RectTransform rect = itemObj.GetComponent<RectTransform>();
+        float itemWith = mWorldRank.GetComponent<RectTransform>().rect.width;
+        float itemHight = mWorldRank.GetComponent<RectTransform>().rect.width * 0.1f;
+        rect.sizeDelta = new Vector2(itemWith, itemHight);
+
         itemObj.name = itemData.userId;
         itemObj.transform.SetParent(mWorldRank);
         itemObj.transform.localScale = Vector3.one;
