@@ -234,7 +234,7 @@ public class SQLiteHelper : ScriptableObject
             {
                 for (int i = 1; i < mainColNames.Length; i++)
                 {
-                    whereStr += " AND " + mainColNames[i] + " " + mainColNames[i] + " " + mainColNames[i] + " ";
+                    whereStr += " AND " + mainColNames[i] + " " + mainOperations[i] + " " + mainColValues[i] + " ";
                 }
             }
         }

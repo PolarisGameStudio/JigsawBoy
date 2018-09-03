@@ -21,7 +21,7 @@ public class NomralJigsawBuilder : IBaseJigsawBuilder
     {
         mJigsawScale = 1f;
         mJigsawUnitSize = 3f * mJigsawScale;
-        mJigsawTriangleNumber = 90;
+        mJigsawTriangleNumber = 360;
         mJigsawBulgeR = mJigsawUnitSize / 3f;
     }
 

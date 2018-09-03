@@ -52,11 +52,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         cancelBT.onClick.AddListener(delegate{
             jumpSelectUI();
         });
-        inputNameTitle.text = CommonData.getText(33);
-        inputHorizontalNumberTitle.text = CommonData.getText(34);
-        inputVerticalNumberTitle.text = CommonData.getText(35);
-        tvCancel.text = CommonData.getText(36);
-        tvSubmit.text = CommonData.getText(37);
+        refreshUI();
     }
 
     public override void openUI()
@@ -86,8 +82,14 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     {
         throw new NotImplementedException();
     }
+
     public override void refreshUI()
     {
+        inputNameTitle.text = CommonData.getText(33);
+        inputHorizontalNumberTitle.text = CommonData.getText(34);
+        inputVerticalNumberTitle.text = CommonData.getText(35);
+        tvCancel.text = CommonData.getText(36);
+        tvSubmit.text = CommonData.getText(37);
     }
     /// <summary>
     /// 设置初始化数据
