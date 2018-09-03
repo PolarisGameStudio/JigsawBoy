@@ -520,7 +520,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         //设置大小
         RectTransform rect = itemObj.GetComponent<RectTransform>();
         float itemWith = mWorldRank.GetComponent<RectTransform>().rect.width;
-        float itemHight = mWorldRank.GetComponent<RectTransform>().rect.width * 0.1f;
+        float itemHight = mWorldRank.GetComponent<RectTransform>().rect.width * 0.05f;
         rect.sizeDelta = new Vector2(itemWith, itemHight);
 
         itemObj.name = itemData.userId;
