@@ -147,8 +147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000036570716}
-  m_SizeDelta: {x: 0, y: -351.78302}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -416.11304}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &13346036
 MonoBehaviour:
@@ -961,7 +961,7 @@ RectTransform:
   m_Father: {fileID: 829967097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000000059604645}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.9999999}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2089,8 +2089,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000018470257, y: 0}
-  m_SizeDelta: {x: 0, y: 50.017}
+  m_AnchoredPosition: {x: -0.0000018470257, y: 0.000030505245}
+  m_SizeDelta: {x: 0, y: -244.31302}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &657847628
 MonoBehaviour:
@@ -2165,8 +2165,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000060531306}
-  m_SizeDelta: {x: 0, y: -312.983}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -377.31302}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &660934182
 MonoBehaviour:
@@ -2885,12 +2885,12 @@ Prefab:
     - target: {fileID: 224323944153974258, guid: 32751c03b22afff45a9f0e207b6e83f4,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 85
+      value: 565
       objectReference: {fileID: 0}
     - target: {fileID: 224323944153974258, guid: 32751c03b22afff45a9f0e207b6e83f4,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -350
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 224323944153974258, guid: 32751c03b22afff45a9f0e207b6e83f4,
         type: 2}
@@ -3701,8 +3701,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 215971558}
   m_HandleRect: {fileID: 215971557}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
