@@ -80,7 +80,10 @@ public class MenuMainUIControl : BaseUIControl
     private void customOnClick()
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
-        DialogManager.createToastDialog().setToastText(CommonData.getText(27));
+        // DialogManager.createToastDialog().setToastText(CommonData.getText(27));
+        if (mUIMasterControl == null)
+            return;
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuEquipUI);
     }
 
     /// <summary>
