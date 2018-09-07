@@ -126,6 +126,7 @@ public class ResourcesManager
     {
         return LoadAsyncBaseTexture(1, imagePath, callBack);
     }
+
     /// <summary>
     /// 异步加载网络图片
     /// </summary>
@@ -161,6 +162,7 @@ public class ResourcesManager
         if (callBack != null)
             callBack.loadSuccess(image.sprite);
     }
+
     /// <summary>
     /// 基础加载
     /// </summary>
@@ -184,6 +186,7 @@ public class ResourcesManager
         if (callBack != null)
             callBack.loadSuccess(www.texture);
     }
+
     /// <summary>
     /// 异步加载资源图片
     /// </summary>
