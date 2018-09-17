@@ -80,10 +80,10 @@ public class MenuMainUIControl : BaseUIControl
     private void customOnClick()
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
-        // DialogManager.createToastDialog().setToastText(CommonData.getText(27));
-        if (mUIMasterControl == null)
-            return;
-        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuEquipUI);
+        DialogManager.createToastDialog().setToastText(CommonData.getText(27));
+        //if (mUIMasterControl == null)
+        //    return;
+        //mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuEquipUI);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ public class MenuMainUIControl : BaseUIControl
             {
                 mLogoTitle1.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_1_cn");
             }
-            else if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.English))
+            else
             {
                 mLogoTitle1.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_1_en");
             }
@@ -147,7 +147,7 @@ public class MenuMainUIControl : BaseUIControl
             {
                 mLogoTitle2.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_2_cn");
             }
-            else if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.English))
+            else
             {
                 mLogoTitle2.sprite = ResourcesManager.LoadData<Sprite>("Texture/UI/main_logo_2_en");
             }

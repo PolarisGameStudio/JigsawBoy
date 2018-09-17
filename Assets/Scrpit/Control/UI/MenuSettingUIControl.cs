@@ -83,6 +83,11 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         List<string>  languageList = new List<string>();
         languageList.Add("中文");
         languageList.Add("English");
+        languageList.Add("Deutsch");
+        languageList.Add("日本語");
+        languageList.Add("русский");
+        languageList.Add("Français");
+        languageList.Add("Polski");
 
         if (mLanguageSelectionTitle != null)
             mLanguageSelectionTitle.text = CommonData.getText(28);
@@ -97,14 +102,17 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         {
             mLanguageSelectionDropdown.ClearOptions();
             mLanguageSelectionDropdown.AddOptions(languageList);
+            mLanguageSelectionDropdown.onValueChanged.RemoveAllListeners();
             mLanguageSelectionDropdown.value = (int)CommonConfigure.GameLanguage;
             mLanguageSelectionDropdown.onValueChanged.AddListener(languageSelection);
         }
         if (mMusicSelectionSwith != null) {
+            mMusicSelectionSwith.setCallBack(null);
             mMusicSelectionSwith.setStatus((int)CommonConfigure.IsOpenBGM);
             mMusicSelectionSwith.setCallBack(this);
         }
         if (mSoundSelectionSwitch != null) {
+            mSoundSelectionSwitch.setCallBack(null);
             mSoundSelectionSwitch.setStatus((int)CommonConfigure.IsOpenSound);
             mSoundSelectionSwitch.setCallBack(this);
         }
@@ -115,6 +123,7 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         if (mScreenModeDropdown != null) {
             mScreenModeDropdown.ClearOptions();
             mScreenModeDropdown.AddOptions(listScreenMode);
+            mScreenModeDropdown.onValueChanged.RemoveAllListeners();
             mScreenModeDropdown.value = (int)CommonConfigure.SceenMode;
             mScreenModeDropdown.onValueChanged.AddListener(screenModeSelection);
         }
@@ -150,6 +159,7 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         DataStorageManage.getGameConfigureDSHandle().saveData(configure);
         CommonConfigure.refreshData();
         CommonData.refreshData();
+        refreshUI();
         mUIMasterControl.refreshAllUI();
     }
 
