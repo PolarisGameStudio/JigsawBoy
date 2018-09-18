@@ -528,7 +528,7 @@ public class LeaderBoardDialog : BaseMonoBehaviour, LeaderboardFindResultCallBac
         itemObj.transform.localScale = Vector3.one;
         //设置头像图片
         Image userIcon = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "UserIcon");
-        StartCoroutine(ResourcesManager.LoadAsyncHttpImage(itemData.steamUserItemInfo.avatar, userIcon));
+        StartCoroutine(ResourcesManager.LoadAsyncHttpImage(itemData.steamUserItemInfo.avatarmedium, userIcon));
         //设置名字
         Text userName = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "UserName");
         userName.text = itemData.steamUserItemInfo.personaname;
