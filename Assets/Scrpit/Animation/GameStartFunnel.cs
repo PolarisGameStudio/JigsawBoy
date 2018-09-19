@@ -76,7 +76,7 @@ public class GameStartFunnel : BaseGameStartAnimation
                });
         }
         mGameStartControl.transform
-             .DOScale(new Vector3(1, 1, 1), mLaunchOffTime * listCount)
+             .DOScale(new Vector3(1, 1, 1), mLaunchOffTime * listCount+ mMoveToMouthTime)
              .OnComplete(delegate ()
                 {
                      mGameStartControl.gameStart();

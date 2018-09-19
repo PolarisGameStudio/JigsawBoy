@@ -139,8 +139,12 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         transform.DOScale(new Vector3(1, 1, 1), mergeAnimDuration).OnComplete
         (delegate ()
         {
-            if (gameObject.GetComponent<CompositeCollider2D>() == null)
-                gameObject.AddComponent<CompositeCollider2D>();
+            if (gameObject.GetComponent<CompositeCollider2D>() == null) {
+                CompositeCollider2D collider2D= gameObject.AddComponent<CompositeCollider2D>();
+                collider2D.geometryType = CompositeCollider2D.GeometryType.Polygons;
+                collider2D.generationType = CompositeCollider2D.GenerationType.Synchronous;
+            }
+             
             //合并特效
             if (gameParticleControl != null)
             {

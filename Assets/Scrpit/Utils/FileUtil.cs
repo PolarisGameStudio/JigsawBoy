@@ -16,7 +16,9 @@ public class FileUtil : ScriptableObject
         StreamWriter writer = null;
         try
         {
-            writer = File.CreateText(filePath + "/" + fileName);
+            String filePathName = filePath + "/" + fileName;
+            DeleteFile(filePathName);
+            writer = File.CreateText(filePathName);
             writer.Write(strData);
         }
         catch (Exception e)

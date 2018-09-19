@@ -60,7 +60,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     /// <summary>
     /// 开始计时
     /// </summary>
-    public void startTimer()
+    public void startTimer(TimeBean timeBean)
     {
         gameObject.SetActive(true);
         if (timeMinuteAnimaotr != null)
@@ -69,6 +69,12 @@ public class GameTimerControlCpt : BaseMonoBehaviour
             timeSecondAnimaotr.SetBool("isStart", true);
         isStartTimer = true;
         startTime = TimeUtil.getNow();
+        if (timeBean != null) {
+            startTime = startTime.AddDays(-timeBean.days);
+            startTime = startTime.AddHours(-timeBean.hours);
+            startTime = startTime.AddMinutes(-timeBean.minutes);
+            startTime = startTime.AddSeconds(-timeBean.seconds);
+        }
         StartCoroutine(Timer());
     }
 

@@ -73,10 +73,10 @@ public class GameMainUIControl : BaseUIControl
     /// <summary>
     /// 开始游戏时间
     /// </summary>
-    public void startTimer()
+    public void startTimer(TimeBean timeBean)
     {
         if (gameTimerControlCpt != null)
-            gameTimerControlCpt.startTimer();
+            gameTimerControlCpt.startTimer(timeBean);
     }
     
     /// <summary>
