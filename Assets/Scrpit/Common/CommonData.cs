@@ -16,7 +16,7 @@ public class CommonData {
     public static PuzzlesGameInfoBean SelectPuzzlesInfo;
 
     //UI文本信息
-    static Dictionary<long, UITextBean> UITextMap;
+    public static Dictionary<long, UITextBean> UITextMap;
 
     static CommonData()
     {

@@ -89,6 +89,7 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         languageList.Add("Français");
         languageList.Add("Polski");
 
+        int count = CommonData.UITextMap.Count;
         if (mLanguageSelectionTitle != null)
             mLanguageSelectionTitle.text = CommonData.getText(28);
         if (mMusicSelectionTitle != null)
@@ -159,7 +160,6 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         DataStorageManage.getGameConfigureDSHandle().saveData(configure);
         CommonConfigure.refreshData();
         CommonData.refreshData();
-        refreshUI();
         mUIMasterControl.refreshAllUI();
     }
 

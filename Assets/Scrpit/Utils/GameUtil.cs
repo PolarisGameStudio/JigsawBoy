@@ -127,7 +127,7 @@ public class GameUtil
             {
                 //设置不可在拖拽
                 CommonData.IsDargMove = false;
-                content.StartCoroutine(delayComplete(content, tempArraryCpt, tempCpt, 0.5f));
+                content.StartCoroutine(delayComplete(content, tempArraryCpt, tempCpt, 1f));
             }
         }
     }
@@ -197,8 +197,11 @@ public class GameUtil
 
         for (int i = 0; i < cptList.Length; i++)
         {
-           // tempCpt.transform.position = tempCpt.startPosition;
-           // tempCpt.transform.localRotation = tempCpt.startRotation;
+            if (mergeTime > 5)
+            {
+               tempCpt.transform.position = tempCpt.startPosition;
+               tempCpt.transform.localRotation = tempCpt.startRotation;
+            }
             JigsawContainerCpt itemCpt = cptList[i];
             itemCpt.isSelect = false;
             // 添加拼图碎片到容器里

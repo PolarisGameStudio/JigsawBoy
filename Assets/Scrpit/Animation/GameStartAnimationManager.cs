@@ -11,7 +11,7 @@ public class GameStartAnimationManager
 
     public static void StartAnimation(GameStartControl gameStartControl, List<GameObject> listObj)
     {
-        int animInt = DevUtil.getRandomInt(5, 5);
+        int animInt = DevUtil.getRandomInt(1, 6);
         GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
 
         BaseGameStartAnimation animation = null;
