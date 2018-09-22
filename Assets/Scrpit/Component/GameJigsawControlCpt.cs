@@ -143,7 +143,8 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
             {
                 nowOffset.y = 0f;
             }
-            jigsawTransform.position = movePos + nowOffset;
+            jigsawTransform.position = Vector3.Lerp(jigsawTransform.position, movePos + nowOffset,20f * Time.deltaTime) ;
+           // jigsawTransform.position = movePos + nowOffset;
         }
     }
 
@@ -182,11 +183,12 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             if (rotationDirection.Equals(RotationDirectionEnum.Clockwise))
             {
-                jigsawTransform.Rotate(0, 0, -rotateObjAngleAdd* Time.deltaTime);
+               jigsawTransform.Rotate(0, 0, -rotateObjAngleAdd* Time.deltaTime);
             }
             else if (rotationDirection.Equals(RotationDirectionEnum.Anticlockwise))
             {
-                jigsawTransform.Rotate(0, 0, rotateObjAngleAdd * Time.deltaTime);
+              
+               jigsawTransform.Rotate(0, 0, rotateObjAngleAdd * Time.deltaTime);
             }
         }
     }

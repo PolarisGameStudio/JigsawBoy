@@ -10,13 +10,13 @@ public class CommonData {
     public static bool IsMoveCamera = false;
     //是否作弊
     public static bool IsCheating = false;
-    //游戏状态 0未开始  1开始  2结束 3放弃回放
+    //游戏状态 0未开始  1开始  2结束 3放弃回放 4保存退出
     public static int GameStatus;
     //选择的拼图信息
     public static PuzzlesGameInfoBean SelectPuzzlesInfo;
 
     //UI文本信息
-    static Dictionary<long, UITextBean> UITextMap;
+    public static Dictionary<long, UITextBean> UITextMap;
 
     static CommonData()
     {

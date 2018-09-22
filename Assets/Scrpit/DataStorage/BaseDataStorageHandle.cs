@@ -65,6 +65,8 @@ public abstract class BaseDataStorageHandle<T>
         if (strData == null)
             return null;
         ListHandleBean<T> handBean=  JsonUtil.FromJson<ListHandleBean<T>>(strData);
+        if (handBean == null)
+            return null;
         return handBean.listData;
     }
 }

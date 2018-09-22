@@ -85,6 +85,16 @@ public class PuzzlesInfoManager
             detailsTableName += "_cn";
         else if (language.Equals(GameLanguageEnum.English))
             detailsTableName += "_en";
+        else if (language.Equals(GameLanguageEnum.French))
+            detailsTableName += "_fn";
+        else if (language.Equals(GameLanguageEnum.German))
+            detailsTableName += "_gn";
+        else if (language.Equals(GameLanguageEnum.Japanese))
+            detailsTableName += "_jn";
+        else if (language.Equals(GameLanguageEnum.Polish))
+            detailsTableName += "_pn";
+        else if (language.Equals(GameLanguageEnum.Russian))
+            detailsTableName += "_rn";
 
         listData = SQliteHandle.LoadTableData<PuzzlesInfoBean>
             (

@@ -20,7 +20,7 @@ public class GameUtil
             completeStateBean = new PuzzlesCompleteStateBean();
         List<PuzzlesCompleteStateBean> listCompleteState = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
 
-        if (listCompleteState == null|| listCompleteState.Count==0)
+        if (listCompleteState == null || listCompleteState.Count == 0)
         {
             listCompleteState = new List<PuzzlesCompleteStateBean>();
             completeStateBean.puzzleId = puzzlesInfo.id;
@@ -35,9 +35,9 @@ public class GameUtil
         {
             int listCompleteSize = listCompleteState.Count;
             bool hasData = false;
-            for(int i = 0; i < listCompleteSize; i++)
+            for (int i = 0; i < listCompleteSize; i++)
             {
-                PuzzlesCompleteStateBean itemCompleteBean= listCompleteState[i];
+                PuzzlesCompleteStateBean itemCompleteBean = listCompleteState[i];
                 bool isThisPuzzles = false;
                 if (itemCompleteBean.puzzleType.Equals((int)JigsawResourcesEnum.Custom))
                 {
@@ -48,7 +48,8 @@ public class GameUtil
                 }
                 else
                 {
-                    if (itemCompleteBean.puzzleId.Equals(puzzlesInfo.Id)) {
+                    if (itemCompleteBean.puzzleId.Equals(puzzlesInfo.Id))
+                    {
                         isThisPuzzles = true;
                     }
                 }
@@ -56,7 +57,7 @@ public class GameUtil
                 {
                     hasData = true;
                     if (itemCompleteBean.completeTime.totalSeconds != 0
-                        &&!TimeUtil.isFasterTime(itemCompleteBean.completeTime, completeTime))
+                        && !TimeUtil.isFasterTime(itemCompleteBean.completeTime, completeTime))
                     {
                         //存时间更快的
                     }
@@ -88,6 +89,78 @@ public class GameUtil
     }
 
     /// <summary>
+    /// 读取拼图进度
+    /// </summary>
+    /// <param name="content"></param>
+    /// <param name="progressBean"></param>
+    public static void setGameProgress(BaseMonoBehaviour content, PuzzlesProgressBean progressBean)
+    {
+        JigsawContainerCpt[] cptList = UnityEngine.Object.FindObjectsOfType<JigsawContainerCpt>();
+        if (cptList == null || cptList.Length == 0)
+            return;
+
+        List<PuzzlesProgressItemBean> progress = progressBean.progress;
+        foreach (PuzzlesProgressItemBean itemProgress in progress)
+        {
+            JigsawContainerCpt tempCpt = null;
+
+            //其次需要合并的子对象
+            List<JigsawContainerCpt> tempListCpt = new List<JigsawContainerCpt>();
+            foreach (JigsawContainerCpt itemCpt in cptList)
+            {
+                //首先获取父对象
+                if (itemCpt.listJigsaw[0].MarkLocation == itemProgress.markPostion)
+                {
+                    tempCpt = itemCpt;
+                }
+
+                foreach (Vector2 listPuzzleItem in itemProgress.listPuzzles)
+                {
+                    if (listPuzzleItem == itemCpt.listJigsaw[0].MarkLocation)
+                    {
+                        tempListCpt.Add(itemCpt);
+                    }
+                }
+            }
+            JigsawContainerCpt[] tempArraryCpt = DevUtil.listToArray(tempListCpt);
+            if (tempCpt != null)
+            {
+                //设置不可在拖拽
+                CommonData.IsDargMove = false;
+                content.StartCoroutine(delayComplete(content, tempArraryCpt, tempCpt, 1f));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 获取拼图进度
+    /// </summary>
+    /// <returns></returns>
+    public static List<PuzzlesProgressItemBean> getGameProgress()
+    {
+        JigsawContainerCpt[] cptList = UnityEngine.Object.FindObjectsOfType<JigsawContainerCpt>();
+        List<PuzzlesProgressItemBean> progress = new List<PuzzlesProgressItemBean>();
+        foreach (JigsawContainerCpt itemCpt in cptList)
+        {
+            List<JigsawBean> itemListJigsaw = itemCpt.listJigsaw;
+            //要子拼图再1个以上时才保存
+            if (itemListJigsaw != null && itemListJigsaw.Count > 1)
+            {
+                PuzzlesProgressItemBean itemProgress = new PuzzlesProgressItemBean();
+                List<Vector2> listCenter = new List<Vector2>();
+                foreach (JigsawBean itemBean in itemListJigsaw)
+                {
+                    listCenter.Add(itemBean.MarkLocation);
+                }
+                itemProgress.markPostion = itemListJigsaw[0].MarkLocation;
+                itemProgress.listPuzzles = listCenter;
+                progress.Add(itemProgress);
+            }
+        }
+        return progress;
+    }
+
+    /// <summary>
     /// 自动完成拼图
     /// </summary>
     public static void CompletePuzzles(BaseMonoBehaviour content)
@@ -101,32 +174,38 @@ public class GameUtil
         CommonData.IsDargMove = false;
         JigsawContainerCpt tempCpt = cptList[0];
 
-        content.StartCoroutine(delayComplete(content,cptList, tempCpt));
+        content.StartCoroutine(delayComplete(content, cptList, tempCpt, 10f));
     }
 
-    static IEnumerator delayComplete(BaseMonoBehaviour content,JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt)
+    static IEnumerator delayComplete(BaseMonoBehaviour content, JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt, float mergeTime)
     {
-        float mergeTime = 10f;
-        Rigidbody2D itemRB = tempCpt.GetComponent<Rigidbody2D>();
-        if (itemRB != null)
+        foreach (JigsawContainerCpt itemCpt in cptList )
         {
-            //设置质量为0 防止动画时错位
-            itemRB.velocity = Vector3.zero;
-            //顺便冻结缸体
-            itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            Rigidbody2D itemRB = itemCpt.GetComponent<Rigidbody2D>();
+            if (itemCpt != null)
+            {
+                //设置质量为0 防止动画时错位
+                itemRB.velocity = Vector3.zero;
+                //顺便冻结缸体
+                itemRB.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+            CompositeCollider2D itemCollider = itemCpt.GetComponent<CompositeCollider2D>();
+            if (itemCollider != null)
+                UnityEngine.Object.Destroy(itemCollider);
         }
-        CompositeCollider2D itemCollider = tempCpt.GetComponent<CompositeCollider2D>();
-        UnityEngine.Object.Destroy(itemCollider);
         yield return new WaitForEndOfFrame();
 
         for (int i = 0; i < cptList.Length; i++)
         {
-            tempCpt.transform.position = tempCpt.startPosition;
-            tempCpt.transform.localRotation = tempCpt.startRotation;
+            if (mergeTime > 5)
+            {
+               tempCpt.transform.position = tempCpt.startPosition;
+               tempCpt.transform.localRotation = tempCpt.startRotation;
+            }
             JigsawContainerCpt itemCpt = cptList[i];
             itemCpt.isSelect = false;
             // 添加拼图碎片到容器里
-            if (i > 0)
+            if (cptList[i] != tempCpt)
             {
                 tempCpt.addJigsawList(itemCpt.listJigsaw);
                 //位置纠正

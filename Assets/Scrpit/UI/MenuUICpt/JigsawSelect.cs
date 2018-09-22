@@ -76,7 +76,8 @@ public class JigsawSelect : BaseMonoBehaviour
         listInfoData.Sort((x, y) => x.Level.CompareTo(y.Level));
 
         List<PuzzlesCompleteStateBean> listCompleteData = DataStorageManage.getPuzzlesCompleteDSHandle().getAllData();
-        List<PuzzlesGameInfoBean> listData = PuzzlesDataUtil.MergePuzzlesInfoAndCompleteState(listInfoData, listCompleteData);
+        List<PuzzlesProgressBean> listProgressData = DataStorageManage.getPuzzlesProgressDSHandle().getAllData();
+        List<PuzzlesGameInfoBean> listData = PuzzlesDataUtil.MergePuzzlesInfo(listInfoData, listCompleteData, listProgressData);
         for (int itemPosition = 0; itemPosition < listData.Count; itemPosition++)
         {
             PuzzlesGameInfoBean itemInfo = listData[itemPosition];
@@ -236,9 +237,12 @@ public class JigsawSelect : BaseMonoBehaviour
         Text startBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawStartText");
         Text scoreBTText = CptUtil.getCptFormParentByName<Button, Text>(itemBT, "JigsawScoreText");
         jigsawNameText.text = infoBean.Name;
-        startBTText.text = CommonData.getText(14);
-        scoreBTText.text = CommonData.getText(15);
 
+        scoreBTText.text = CommonData.getText(15);
+        if (itemInfo.progressInfo != null)
+            startBTText.text = CommonData.getText(85);
+        else
+            startBTText.text = CommonData.getText(14);
         //设置拼图等级
         setLevel(itemObj, infoBean.level);
         return itemObj;
@@ -291,19 +295,24 @@ public class JigsawSelect : BaseMonoBehaviour
         Text jigsawNameText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawName");
         Text startBTText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawStartText");
 
-        startBTText.text = CommonData.getText(14);
+        if (itemInfo.progressInfo != null)
+            startBTText.text = CommonData.getText(85);
+        else
+            startBTText.text = CommonData.getText(14);
+        
+       
         jigsawNameText.text = infoBean.Name;
 
         //设置按钮信息
         //编辑按钮
-        Button editBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawEdit");
-        editBT.onClick.AddListener(delegate ()
-        {
-            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
-            MenuCustomUpLoadUIControl upLoadUIControl = menuSelectUIControl.mUIMasterControl.getUIByType<MenuCustomUpLoadUIControl>(UIEnum.MenuCustomUpLoadUI);
-            upLoadUIControl.setInitData(infoBean);
-            menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
-        });
+        //Button editBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawEdit");
+        //editBT.onClick.AddListener(delegate ()
+        //{
+        //    SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        //    MenuCustomUpLoadUIControl upLoadUIControl = menuSelectUIControl.mUIMasterControl.getUIByType<MenuCustomUpLoadUIControl>(UIEnum.MenuCustomUpLoadUI);
+        //    upLoadUIControl.setInitData(infoBean);
+        //    menuSelectUIControl.mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuCustomUpLoadUI);
+        //});
         //删除按钮
         Button deleteBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawDelete");
         deleteBT.onClick.AddListener(delegate ()

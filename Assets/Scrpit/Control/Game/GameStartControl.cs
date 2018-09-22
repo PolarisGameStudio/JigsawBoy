@@ -213,15 +213,30 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     public void gameStart()
     {
+        //判断是否有存档
+        PuzzlesProgressBean paramsData = new PuzzlesProgressBean();
+        paramsData.puzzleId = CommonData.SelectPuzzlesInfo.puzzlesInfo.id;
+        paramsData.markFileName = CommonData.SelectPuzzlesInfo.puzzlesInfo.mark_file_name;
+        PuzzlesProgressBean progressData = DataStorageManage.getPuzzlesProgressDSHandle().getData(paramsData);
+     
+        TimeBean gameTime = null;
+        if (progressData != null)
+        {
+            gameTime = progressData.gameTime;
+            GameUtil.setGameProgress(this, progressData);
+        }
+        else {
+            
+        }
         CommonData.IsCheating = false;
         CommonData.GameStatus = 1;
         CommonData.IsDargMove = true;
+        Camera.main.gameObject.AddComponent<SecretCodeCpt>();
         GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);
         if (gameMainUI != null)
         {
-            gameMainUI.startTimer();
+            gameMainUI.startTimer(gameTime);
         }
-        Camera.main.gameObject.AddComponent<SecretCodeCpt>();
     }
 
     /// <summary>
@@ -232,6 +247,12 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         CommonData.GameStatus = 2;
         CommonData.IsDargMove = false;
         CommonData.IsMoveCamera = false;
+        //删除游戏进度
+        PuzzlesProgressBean progressTemp = new PuzzlesProgressBean();
+        progressTemp.puzzleId = CommonData.SelectPuzzlesInfo.puzzlesInfo.id;
+        progressTemp.markFileName = CommonData.SelectPuzzlesInfo.puzzlesInfo.mark_file_name;
+        ((PuzzlesProgressDSHandle)DataStorageManage.getPuzzlesProgressDSHandle()).deleteData(progressTemp);
+
         float startCameraOrthographicSize = cameraControl.startCameraOrthographicSize;
         //结束游戏时间
         GameMainUIControl gameMainUI = uiMasterControl.getUIByType<GameMainUIControl>(UIEnum.GameMainUI);

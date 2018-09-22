@@ -47,6 +47,7 @@ public class MenuMakerUIControl : BaseUIControl
             mTitleBarExitBT.onClick.AddListener(addExitOnClick);
         }
     }
+
     /// <summary>
     /// 增加退出按钮监听
     /// </summary>

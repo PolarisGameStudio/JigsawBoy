@@ -45,7 +45,8 @@ public class JigsawContainerGameObjBuilder
     public static void addRigidbody(GameObject jigsawContainerObj)
     {
         Rigidbody2D jigsawContainerRB = jigsawContainerObj.AddComponent<Rigidbody2D>();
-        jigsawContainerRB.gravityScale = 0f;
+        if (jigsawContainerRB != null)
+            jigsawContainerRB.gravityScale = 0f;
     }
 
     /// <summary>
@@ -54,26 +55,28 @@ public class JigsawContainerGameObjBuilder
     /// <param name="jigsawContainerObj"></param>
     public static CompositeCollider2D addCollider(GameObject jigsawContainerObj)
     {
-        Transform[] childsTFs= jigsawContainerObj.GetComponentsInChildren<Transform>();
+        Transform[] childsTFs = jigsawContainerObj.GetComponentsInChildren<Transform>();
         if (childsTFs != null)
         {
             int childsTFsSize = childsTFs.Length;
             for (int childPosition = 0; childPosition < childsTFsSize; childPosition++)
             {
                 Transform childsItemTF = childsTFs[childPosition];
-                NormalJigsawCpt jigsawItem= childsItemTF.GetComponent<NormalJigsawCpt>();
+                NormalJigsawCpt jigsawItem = childsItemTF.GetComponent<NormalJigsawCpt>();
                 if (jigsawItem == null)
                     continue;
-                JigsawBean jigsawData= jigsawItem.getJigsawData();
+                JigsawBean jigsawData = jigsawItem.getJigsawData();
                 if (jigsawData == null)
                     continue;
-                JigsawObjBuilder.setCollider2D(childsItemTF.gameObject, jigsawData.CenterVector,jigsawData.JigsawWith,jigsawData.JigsawHigh);
+                JigsawObjBuilder.setCollider2D(childsItemTF.gameObject, jigsawData.CenterVector, jigsawData.JigsawWith, jigsawData.JigsawHigh);
             };
         }
 
         CompositeCollider2D jigsawContainerCollider = jigsawContainerObj.AddComponent<CompositeCollider2D>();
-        jigsawContainerCollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
-        jigsawContainerCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
+        if (jigsawContainerCollider != null) {
+            jigsawContainerCollider.geometryType = CompositeCollider2D.GeometryType.Polygons;
+            jigsawContainerCollider.generationType = CompositeCollider2D.GenerationType.Synchronous;
+        }
         return jigsawContainerCollider;
     }
 

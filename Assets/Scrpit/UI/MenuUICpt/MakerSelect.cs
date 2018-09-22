@@ -32,7 +32,7 @@ public class MakerSelect : BaseMonoBehaviour
         List<MakerDataBean> listItemData = new List<MakerDataBean>();
         new MakerDataBean("Game Design", "Apple Coffee", listItemData);
         new MakerDataBean("Game Programmer", "Apple Coffee", listItemData);
-        new MakerDataBean("Game Tester", "Apple Coffee , JaimeInes , 番茄", listItemData);
+        new MakerDataBean("Game Tester", "Apple Coffee , Emma , JaimeInes , 番茄 ", listItemData);
         new MakerDataBean("Game Publicizer", "Apple Coffee , 番茄", listItemData);
         new MakerDataBean("UI Design", "Apple Coffee", listItemData);
         return listItemData;

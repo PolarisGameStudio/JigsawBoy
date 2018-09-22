@@ -74,7 +74,7 @@ public class GameCameraControlCpt : BaseMonoBehaviour
         //Zoom in
         if (Input.GetAxis(MouseScrollWheel) > 0)
         {
-            if (Camera.main.orthographicSize >= zoomInMax && Camera.main.orthographicSize> zoomInMax)
+            if (Camera.main.orthographicSize >= zoomInMax && Camera.main.orthographicSize > zoomInMax)
                 Camera.main.orthographicSize -= zoomInMaxAdd;
         }
         //CameraMove
@@ -138,6 +138,7 @@ public class GameCameraControlCpt : BaseMonoBehaviour
         {
             move.y = 0f;
         }
+        move = Vector3.Lerp(Vector3.zero, move, 20f * Time.deltaTime);
         gameCamera.transform.Translate(move);
 
     }

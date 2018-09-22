@@ -60,7 +60,7 @@ public class GameTimerControlCpt : BaseMonoBehaviour
     /// <summary>
     /// 开始计时
     /// </summary>
-    public void startTimer()
+    public void startTimer(TimeBean timeBean)
     {
         gameObject.SetActive(true);
         if (timeMinuteAnimaotr != null)
@@ -69,6 +69,12 @@ public class GameTimerControlCpt : BaseMonoBehaviour
             timeSecondAnimaotr.SetBool("isStart", true);
         isStartTimer = true;
         startTime = TimeUtil.getNow();
+        if (timeBean != null) {
+            startTime = startTime.AddDays(-timeBean.days);
+            startTime = startTime.AddHours(-timeBean.hours);
+            startTime = startTime.AddMinutes(-timeBean.minutes);
+            startTime = startTime.AddSeconds(-timeBean.seconds);
+        }
         StartCoroutine(Timer());
     }
 
@@ -110,26 +116,27 @@ public class GameTimerControlCpt : BaseMonoBehaviour
             DateTime nowTime = TimeUtil.getNow();
             nowTimeSpan = TimeUtil.getTimeDifference(startTime, nowTime);
             if (mTimeSeoundText != null) {
-                mTimeSeoundText.text = nowTimeSpan.Seconds + CommonData.getText(56);
+                mTimeSeoundText.text = nowTimeSpan.Seconds + "S";//CommonData.getText(56);
+
                 //mTimeSeoundText.transform.DOScale(new Vector3(1.2f, 1.2f, 1), 0.8f).OnComplete(delegate ()
                 //{
                 //    mTimeSeoundText.transform.DORewind();
                 //});
             }
             if (mTimeMinuteText != null) {
-                mTimeMinuteText.text = nowTimeSpan.Minutes + CommonData.getText(57);
+                mTimeMinuteText.text = nowTimeSpan.Minutes + "M";// CommonData.getText(57);
                 if(mMinuteAnimaotr!=null&&! nowTimeSpan.Minutes.Equals(oldMinutes))
                 mMinuteAnimaotr.SetTrigger("Trigger");
             }
             if (mTimeHoursText != null)
             {
-                mTimeHoursText.text = nowTimeSpan.Hours + CommonData.getText(58);
+                mTimeHoursText.text = nowTimeSpan.Hours + "H";// CommonData.getText(58);
                 if (mHourAnimaotr != null && !nowTimeSpan.Hours.Equals(oldHours))
                     mHourAnimaotr.SetTrigger("Trigger");
             }
             if (mTimeDayText != null)
             {
-                mTimeDayText.text = nowTimeSpan.Days + CommonData.getText(59);
+                mTimeDayText.text = nowTimeSpan.Days + "D";// CommonData.getText(59);
                 if (mDayAnimaotr != null && !nowTimeSpan.Days.Equals(oldDay))
                     mDayAnimaotr.SetTrigger("Trigger");
             }
