@@ -22,6 +22,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     public Text inputVerticalNumberTitle;
     public Text tvCancel;
     public Text tvSubmit;
+    public Text tvHint;
     private string uploadPath;
 
     /// <summary>
@@ -45,11 +46,13 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
         inputVerticalNumberTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "InputVerticalNumberTitle");
         tvCancel = CptUtil.getCptFormParentByName<Transform, Text>(transform, "CancelText");
         tvSubmit = CptUtil.getCptFormParentByName<Transform, Text>(transform, "SubmitText");
+        tvHint = CptUtil.getCptFormParentByName<Transform, Text>(transform, "UploadHint");
 
         submitBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "SubmitBT");
-        cancelBT= CptUtil.getCptFormParentByName<Transform, Button>(transform, "CancelBT");
+        cancelBT = CptUtil.getCptFormParentByName<Transform, Button>(transform, "CancelBT");
 
-        cancelBT.onClick.AddListener(delegate{
+        cancelBT.onClick.AddListener(delegate
+        {
             jumpSelectUI();
         });
         refreshUI();
@@ -112,13 +115,40 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         uploadPath = FileUtil.OpenFileDialog();
-        if (uploadPath == null || uploadPath.Length == 0) {
-            uploadImage.color = new Color(0,0,0,0);
+        if (uploadPath == null || uploadPath.Length == 0)
+        {
+            uploadImage.color = new Color(0, 0, 0, 0);
             return;
         }
-      
+
         uploadImage.color = Color.white;
-        StartCoroutine(ResourcesManager.LoadAsyncLocationImage(uploadPath, uploadImage));
+        SelectCallBack callBack = new SelectCallBack(this);
+        StartCoroutine(ResourcesManager.LoadAsyncLocationImage(uploadPath, uploadImage, callBack));
+    }
+
+    /// <summary>
+    /// 选择图片成功回调
+    /// </summary>
+    public class SelectCallBack : ResourcesManager.LoadCallBack<Sprite>
+    {
+        public MenuCustomUpLoadUIControl customUI;
+        public SelectCallBack(MenuCustomUpLoadUIControl customUI)
+        {
+            this.customUI = customUI;
+        }
+        public void loadFail(string msg)
+        {
+
+        }
+
+        public void loadSuccess(Sprite data)
+        {
+            if (data == null)
+                return;
+            int textureWidth = data.texture.width;
+            int textureHigh = data.texture.height;
+            customUI.tvHint.text = CommonData.getText(87)+":"+ textureWidth/200 +" "+CommonData.getText(88) + ":" + textureHigh/200;
+        }
     }
 
     /// <summary>
@@ -251,6 +281,8 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
             inputVerticalNumber.text = null;
         if (oldInfoBean != null)
             oldInfoBean = null;
+        if (tvHint != null)
+            tvHint.text = "";
     }
 
 

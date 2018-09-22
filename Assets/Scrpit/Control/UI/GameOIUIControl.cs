@@ -12,6 +12,7 @@ public class GameOIUIControl : BaseUIControl
     public Text mTVPauseContent;
     public Text mTVPuzzlesInfoContent;
     public Text mTVPuzzlesOIContent;
+    public Text mTVKeyRotateContent;
 
 
     private new void Awake()
@@ -29,6 +30,7 @@ public class GameOIUIControl : BaseUIControl
         mTVPauseContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "GameOIPauseText");
         mTVPuzzlesInfoContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "GameOIPuzzlesInfoText");
         mTVPuzzlesOIContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "GameOIOperatingInstructionsText");
+        mTVKeyRotateContent = CptUtil.getCptFormParentByName<Transform, Text>(transform, "GameOIKeyRotateText"); 
 
         loadUIData();
     }
@@ -68,6 +70,8 @@ public class GameOIUIControl : BaseUIControl
             mTVPuzzlesInfoContent.text = CommonData.getText(66);
         if (mTVPuzzlesOIContent != null)
             mTVPuzzlesOIContent.text = CommonData.getText(67);
+        if (mTVKeyRotateContent != null)
+            mTVKeyRotateContent.text = CommonData.getText(86);
     }
 
     /// <summary>
