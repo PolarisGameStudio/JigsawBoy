@@ -369,6 +369,19 @@ public class JigsawContainerCpt : BaseMonoBehaviour
         collisionCheck(collision);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collisionCheck(collision.collider);
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        collisionCheck(collision.collider);
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        collisionCheck(collision.collider);
+    }
+
     /// <summary>
     /// 碰撞处理
     /// </summary>

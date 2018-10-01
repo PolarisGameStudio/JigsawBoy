@@ -2,7 +2,6 @@
 
 public class PuzzlesInfoManager
 {
-
     /// <summary>
     /// 更新所有拼图状态为有效
     /// </summary>
@@ -33,7 +32,6 @@ public class PuzzlesInfoManager
           );
         return listData;
     }
-
 
     /// <summary>
     /// 获取所有拼图数据
