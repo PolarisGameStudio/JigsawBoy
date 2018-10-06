@@ -23,6 +23,8 @@ public class MenuEquipUIControl : BaseUIControl
 
     public Transform mEquipContent;
 
+    public EquipSelect equipSelect;
+
     private new void Awake()
     {
         base.Awake();
@@ -54,6 +56,9 @@ public class MenuEquipUIControl : BaseUIControl
         mBTBorderShape.onClick.AddListener(addBorderShapeOnClick);
         mBTBorderColor.onClick.AddListener(addBorderColorOnClick);
         mBTBackgroundColor.onClick.AddListener(addBackgroundOnClick);
+
+        equipSelect = gameObject.AddComponent<EquipSelect>();
+        equipSelect.setMenuSelectUIControl(this);
         refreshUI();
     }
     public override void closeUI()
@@ -69,6 +74,7 @@ public class MenuEquipUIControl : BaseUIControl
     public override void openUI()
     {
         mUICanvas.enabled = true;
+        refreshPuzzlesPoint();
     }
 
     public override void refreshUI()
@@ -107,6 +113,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addPuzzlesShapeOnClick()
     {
         cleanItem();
+        equipSelect.selectPuzzlesShape(mEquipContent);
     }
 
     /// <summary>
@@ -115,6 +122,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBorderShapeOnClick()
     {
         cleanItem();
+        equipSelect.selectBorderShape(mEquipContent);
     }
 
     /// <summary>
@@ -123,6 +131,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBorderColorOnClick()
     {
         cleanItem();
+        equipSelect.selectBorderColor(mEquipContent);
     }
 
     /// <summary>
@@ -131,6 +140,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBackgroundOnClick()
     {
         cleanItem();
+        equipSelect.selectBackground(mEquipContent);
     }
 
     /// <summary>

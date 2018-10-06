@@ -126,6 +126,8 @@ public class MenuSelectUIControl : BaseUIControl
             resTypeSelectContentSC.loadResTypeData();
    
         setJigsawSelectData(JigsawResourcesEnum.Painting);
+
+        refreshPuzzlesPoint();
     }
 
     public override void refreshUI()

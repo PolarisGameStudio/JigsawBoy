@@ -15,6 +15,14 @@ public class CommonConfigure
     public static EnabledEnum IsOpenSound;
     //屏幕状态
     public static ScreenModeEnum SceenMode;
+    //拼图形状
+    public static int PuzzlesShape;
+    //边框形状
+    public static int BorderShape;
+    //边框颜色
+    public static int BorderColor;
+    //背景
+    public static int Background;
 
     static CommonConfigure()
     {
@@ -27,6 +35,10 @@ public class CommonConfigure
         IsOpenBGM = EnabledEnum.ON;
         IsOpenSound = EnabledEnum.ON;
         SceenMode = ScreenModeEnum.Full;
+        PuzzlesShape = 0;
+        BorderShape = 0;
+        BorderColor =0;
+        Background = 0;
         GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
@@ -38,6 +50,11 @@ public class CommonConfigure
             IsOpenSound = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenSound);
             //屏幕模式
             SceenMode= (ScreenModeEnum)Enum.ToObject(typeof(ScreenModeEnum), configureBean.screenMode);
+
+            PuzzlesShape = configureBean.puzzlesShape;
+            BorderShape = configureBean.borderShape;
+            BorderColor = configureBean.borderColor;
+            Background = configureBean.background;
         }
     }
 }

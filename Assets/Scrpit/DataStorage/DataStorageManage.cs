@@ -50,5 +50,14 @@ public class DataStorageManage
     {
         return PuzzlesProgressDSHandle.getInstance();
     }
+
+    /// <summary>
+    /// 装扮数据
+    /// </summary>
+    /// <returns></returns>
+    public static IBaseDataStorage<EquipInfoBean, EquipInfoBean> getEquipDSHandle()
+    {
+        return EquipDSHandle.getInstance();
+    }
 }
 
