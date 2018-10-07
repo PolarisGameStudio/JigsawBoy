@@ -25,6 +25,8 @@ public class MenuEquipUIControl : BaseUIControl
 
     public EquipSelect equipSelect;
 
+    public TabCpt tabCpt;
+
     private new void Awake()
     {
         base.Awake();
@@ -51,6 +53,7 @@ public class MenuEquipUIControl : BaseUIControl
         mTVBackgroundColor = CptUtil.getCptFormParentByName<Transform, Text>(transform, "BackgroundColorTitle");
 
         mEquipContent = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "EquipContent");
+        tabCpt= CptUtil.getCptFormParentByName<Transform, TabCpt>(transform, "TypeSelect");
 
         mBTPuzzlesShape.onClick.AddListener(addPuzzlesShapeOnClick);
         mBTBorderShape.onClick.AddListener(addBorderShapeOnClick);
@@ -113,6 +116,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addPuzzlesShapeOnClick()
     {
         cleanItem();
+        tabCpt.selectTab(mBTPuzzlesShape);
         equipSelect.selectPuzzlesShape(mEquipContent);
     }
 
@@ -122,6 +126,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBorderShapeOnClick()
     {
         cleanItem();
+        tabCpt.selectTab(mBTBorderShape);
         equipSelect.selectBorderShape(mEquipContent);
     }
 
@@ -131,6 +136,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBorderColorOnClick()
     {
         cleanItem();
+        tabCpt.selectTab(mBTBorderColor);
         equipSelect.selectBorderColor(mEquipContent);
     }
 
@@ -140,6 +146,7 @@ public class MenuEquipUIControl : BaseUIControl
     public void addBackgroundOnClick()
     {
         cleanItem();
+        tabCpt.selectTab(mBTBackgroundColor);
         equipSelect.selectBackground(mEquipContent);
     }
 
