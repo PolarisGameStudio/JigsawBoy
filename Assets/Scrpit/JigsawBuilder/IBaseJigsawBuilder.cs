@@ -34,7 +34,7 @@ interface IBaseJigsawBuilder
     /// <summary>
     /// 设置当前样式
     /// </summary>
-    void setJigsawStyle(JigsawBean jigsaw);
+    void setJigsawStyle(JigsawBean jigsaw, JigsawStyleEnum style);
 
     /// <summary>
     /// 设置当前拼图碎片相对图片的坐标

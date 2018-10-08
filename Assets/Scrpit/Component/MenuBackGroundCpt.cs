@@ -38,7 +38,7 @@ public class MenuBackGroundCpt : BaseMonoBehaviour
         while (isCreateJigsaw)
         {
             Texture2D texture2D = Texture2D.blackTexture;
-            JigsawBean jigsawBean = CreateJigsawDataUtils.createJigsaw(JigsawStyleEnum.Normal, 1f, 1f, texture2D);
+            JigsawBean jigsawBean = CreateJigsawDataUtils.createJigsaw(JigsawStyleEnum.Def, 1f, 1f, texture2D);
 
             GameObject jigsawObj = JigsawObjBuilder.buildJigsawGameObj(jigsawBean, texture2D);
             float startX = DevUtil.getRandomFloat(-(int)(DevUtil.GetScreenWith() / 2f), (int)(DevUtil.GetScreenWith() / 2f));

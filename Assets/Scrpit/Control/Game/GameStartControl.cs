@@ -78,9 +78,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             LogUtil.log("没有源图片");
             return;
         }
-
         //生成拼图
-        createJigsaw(pic2D, horizontalNumber, verticalJigsawNumber);
+        createJigsaw(CommonConfigure.PuzzlesShape,pic2D, horizontalNumber, verticalJigsawNumber);
         //获取图片的高和宽
         if (listJigsawBean != null && listJigsawBean.Count > 0)
         {
@@ -89,7 +88,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
         }
         //生成围墙
-        createWall(picAllWith, picAllHigh);
+        createWall(CommonConfigure.BorderShape, picAllWith, picAllHigh);
         //生成背景
         createBackground(picAllWith, picAllHigh);
         //增加镜头控制
@@ -105,12 +104,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// 创建拼图
     /// </summary>
     /// <param name="jigsawInfoData"></param>
-    private void createJigsaw(Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
+    private void createJigsaw(JigsawStyleEnum jigsawStyle,Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
     {
-        listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(JigsawStyleEnum.Normal, horizontalNumber, verticalJigsawNumber, pic2D);
+        //创建拼图数据
+        listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(jigsawStyle, horizontalNumber, verticalJigsawNumber, pic2D);
+        //创建拼图
         CreateJigsawGameObjUtil.createJigsawGameObjList(listJigsawBean, pic2D);
-
         containerList = CreateJigsawContainerObjUtil.createJigsawContainerObjList(listJigsawBean);
+        //初始化拼图位置
         for (int i = 0; i < listJigsawBean.Count; i++)
         {
             JigsawBean item = listJigsawBean[i];
@@ -136,14 +137,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="wallWith"></param>
     /// <param name="wallHigh"></param>
-    private void createWall(float picAllWith, float picAllHigh)
+    private void createWall(GameWallEnum gameWallEnum, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成围墙，缺少高和宽");
             return;
         }
-        CreateGameWallUtil.createWall(picAllWith, picAllHigh);
+        CreateGameWallUtil.createWall(gameWallEnum, picAllWith, picAllHigh);
     }
 
     /// <summary>

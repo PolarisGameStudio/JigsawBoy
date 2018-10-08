@@ -16,9 +16,9 @@ public class CommonConfigure
     //屏幕状态
     public static ScreenModeEnum SceenMode;
     //拼图形状
-    public static int PuzzlesShape;
+    public static JigsawStyleEnum PuzzlesShape;
     //边框形状
-    public static int BorderShape;
+    public static GameWallEnum BorderShape;
     //边框颜色
     public static int BorderColor;
     //背景
@@ -35,8 +35,9 @@ public class CommonConfigure
         IsOpenBGM = EnabledEnum.ON;
         IsOpenSound = EnabledEnum.ON;
         SceenMode = ScreenModeEnum.Full;
-        PuzzlesShape = 0;
-        BorderShape = 0;
+
+        PuzzlesShape = JigsawStyleEnum.Def;
+        BorderShape = GameWallEnum.Def;
         BorderColor =0;
         Background = 0;
         GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
@@ -51,8 +52,8 @@ public class CommonConfigure
             //屏幕模式
             SceenMode= (ScreenModeEnum)Enum.ToObject(typeof(ScreenModeEnum), configureBean.screenMode);
 
-            PuzzlesShape = configureBean.puzzlesShape;
-            BorderShape = configureBean.borderShape;
+            PuzzlesShape = (JigsawStyleEnum)Enum.ToObject(typeof(JigsawStyleEnum), configureBean.puzzlesShape);
+            BorderShape = (GameWallEnum)Enum.ToObject(typeof(GameWallEnum), configureBean.borderShape);
             BorderColor = configureBean.borderColor;
             Background = configureBean.background;
         }
