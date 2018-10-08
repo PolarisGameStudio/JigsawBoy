@@ -62,7 +62,7 @@ public class MenuEquipUIControl : BaseUIControl
 
         equipSelect = gameObject.AddComponent<EquipSelect>();
         equipSelect.setMenuSelectUIControl(this);
-        refreshUI();
+        refreshUI();   
     }
     public override void closeUI()
     {
@@ -78,6 +78,7 @@ public class MenuEquipUIControl : BaseUIControl
     {
         mUICanvas.enabled = true;
         refreshPuzzlesPoint();
+        addPuzzlesShapeOnClick();
     }
 
     public override void refreshUI()

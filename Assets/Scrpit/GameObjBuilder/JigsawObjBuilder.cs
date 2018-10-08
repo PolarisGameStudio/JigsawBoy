@@ -89,14 +89,12 @@ public class JigsawObjBuilder
     private static void setJigsawCpt(GameObject jigsawGameObj, JigsawBean jigsawData)
     {
         JigsawStyleEnum jigsawStyle = jigsawData.JigsawStyle; 
-        if (jigsawStyle == JigsawStyleEnum.Normal) {
-            NormalJigsawCpt jigsawCpt= jigsawGameObj.AddComponent<NormalJigsawCpt>();
-            jigsawCpt.setJigsawData(jigsawData);
-            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Left,JigsawMergeStatusEnum.Unincorporated);
-            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Above, JigsawMergeStatusEnum.Unincorporated);
-            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Right, JigsawMergeStatusEnum.Unincorporated);
-            jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Below, JigsawMergeStatusEnum.Unincorporated);
-        }
+        NormalJigsawCpt jigsawCpt = jigsawGameObj.AddComponent<NormalJigsawCpt>();
+        jigsawCpt.setJigsawData(jigsawData);
+        jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Left, JigsawMergeStatusEnum.Unincorporated);
+        jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Above, JigsawMergeStatusEnum.Unincorporated);
+        jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Right, JigsawMergeStatusEnum.Unincorporated);
+        jigsawCpt.setEdgeMergeStatus(JigsawStyleNormalEdgeEnum.Below, JigsawMergeStatusEnum.Unincorporated);
     }
 
     /// <summary>

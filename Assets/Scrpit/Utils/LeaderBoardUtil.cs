@@ -48,4 +48,21 @@ public class LeaderBoardUtil
             CreateLeaderBoardById(itemId);
         }
     }
+
+    /// <summary>
+    /// 通过ID区间创建排行榜
+    /// </summary>
+    /// <param name="startId"></param>
+    /// <param name="endId"></param>
+    public static void CreateLeaderBoardByInterval(long startId,long endId )
+    {
+        if (startId > endId)
+            return;
+        List<long> idList = new List<long>();
+        for(long i = startId; i <= endId; i++)
+        {
+            idList.Add(i);
+        }
+        CreateLeaderBoardByIdList(idList);
+    }
 }

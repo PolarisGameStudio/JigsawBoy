@@ -19,7 +19,8 @@ public class CreateJigsawDataUtils
     {
         List<JigsawBean> listJigsawBean = new List<JigsawBean>();
 
-        if (horizontalJigsawNumber == 0) {
+        if (horizontalJigsawNumber == 0)
+        {
             LogUtil.logError("横向块数为0");
             return listJigsawBean;
         }
@@ -36,8 +37,18 @@ public class CreateJigsawDataUtils
 
         //按样式生成不同的拼图碎片
         IBaseJigsawBuilder jigsawBuilder;
-        if (jigsawStyle == JigsawStyleEnum.Normal)
+        if (jigsawStyle == JigsawStyleEnum.Def)
+        {
             jigsawBuilder = new NomralJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Smooth)
+        {
+            jigsawBuilder = new SmoothJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Triangle)
+        {
+            jigsawBuilder = new TriangleJigsawBuilder();
+        }
         else
         {
             LogUtil.logError("没有相对于样式的拼图");
@@ -50,7 +61,7 @@ public class CreateJigsawDataUtils
         {
             LogUtil.logError("生成拼图碎片数据失败");
         }
-            return listJigsawBean;
+        return listJigsawBean;
 
     }
 
@@ -61,23 +72,24 @@ public class CreateJigsawDataUtils
     /// <param name="jigsawW"></param>
     /// <param name="jigsawH"></param>
     /// <returns></returns>
-    public static JigsawBean createJigsaw(JigsawStyleEnum jigsawStyle, float jigsawW, float jigsawH,Texture2D jigsawPic)
+    public static JigsawBean createJigsaw(JigsawStyleEnum jigsawStyle, float jigsawW, float jigsawH, Texture2D jigsawPic)
     {
         JigsawBean jigsawBean = new JigsawBean();
         //按样式生成不同的拼图碎片
         IBaseJigsawBuilder jigsawBuilder;
         JigsawBulgeEnum[] bulge;
-   
-        if (jigsawStyle == JigsawStyleEnum.Normal) {
+
+        if (jigsawStyle == JigsawStyleEnum.Def)
+        {
             jigsawBuilder = new NomralJigsawBuilder();
-            bulge= new JigsawBulgeEnum[4]
+            bulge = new JigsawBulgeEnum[4]
             {
                 (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
                 (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
                 (JigsawBulgeEnum)DevUtil.getRandomInt(0,2),
                 (JigsawBulgeEnum)DevUtil.getRandomInt(0,2)
             };
-        }   
+        }
         else
         {
             LogUtil.logError("没有相对于样式的拼图");
