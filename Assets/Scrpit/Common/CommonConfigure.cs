@@ -20,9 +20,9 @@ public class CommonConfigure
     //边框形状
     public static GameWallEnum BorderShape;
     //边框颜色
-    public static int BorderColor;
+    public static EquipColorEnum BorderColor;
     //背景
-    public static int Background;
+    public static EquipColorEnum Background;
 
     static CommonConfigure()
     {
@@ -38,8 +38,8 @@ public class CommonConfigure
 
         PuzzlesShape = JigsawStyleEnum.Def;
         BorderShape = GameWallEnum.Def;
-        BorderColor =0;
-        Background = 0;
+        BorderColor = EquipColorEnum.Def;
+        Background = EquipColorEnum.Def;
         GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
@@ -54,8 +54,8 @@ public class CommonConfigure
 
             PuzzlesShape = (JigsawStyleEnum)Enum.ToObject(typeof(JigsawStyleEnum), configureBean.puzzlesShape);
             BorderShape = (GameWallEnum)Enum.ToObject(typeof(GameWallEnum), configureBean.borderShape);
-            BorderColor = configureBean.borderColor;
-            Background = configureBean.background;
+            BorderColor = (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum), configureBean.borderColor);
+            Background = (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum), configureBean.background);
         }
     }
 }

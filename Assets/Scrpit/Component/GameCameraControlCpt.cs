@@ -130,6 +130,15 @@ public class GameCameraControlCpt : BaseMonoBehaviour
         float moveAfterX = transform.position.x + move.x;
         float moveAfterY = transform.position.y + move.y;
 
+        if(cameraMoveWithMax> cameraMoveHighMax)
+        {
+            cameraMoveHighMax = cameraMoveWithMax;
+        }
+        else
+        {
+            cameraMoveWithMax = cameraMoveHighMax;
+        }
+
         if (Mathf.Abs(moveAfterX) >= ((cameraMoveWithMax / 2f) * cameraMoveScale))
         {
             move.x = 0f;
@@ -150,7 +159,6 @@ public class GameCameraControlCpt : BaseMonoBehaviour
     {
         Camera.main.DOShakePosition(shakeDuration, shakeStrength, shakeVibrato, shakeRandomness);
     }
-
 
     /// <summary>
     /// 当鼠标按下时触发(其实就是初始化_vec3Offset值，需要注意的是一切的位置坐标都是为了得到这个差值)

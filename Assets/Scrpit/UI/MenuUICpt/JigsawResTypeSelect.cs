@@ -51,8 +51,9 @@ public class JigsawResTypeSelect : BaseMonoBehaviour
     /// <param name="resType"></param>
     private void createSelectItem(JigsawResourcesEnum resType)
     {
-        String resTypeIconPath = EnumUtil.getResTypeUIPath(resType);
-        String resName = EnumUtil.getResTypeName(resType);
+        string resTypeIconPath;
+        string resName;
+        EnumUtil.getResTypeInfo(resType, out resName,out resTypeIconPath);
         if (resName == null || resName.Length == 0 || resTypeIconPath == null || resTypeIconPath.Length == 0)
             return;
         GameObject buttonObj = Instantiate(ResourcesManager.LoadData<GameObject>(ResTypeSelectItemPath));

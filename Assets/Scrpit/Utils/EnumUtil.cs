@@ -2,90 +2,127 @@
 
 public class EnumUtil 
 {
+
+    public static void getResTypeInfoForName(JigsawResourcesEnum resourcesEnum, out string resName)
+    {
+        string resTypeIconPath;
+        getResTypeInfo(resourcesEnum, out resName, out resTypeIconPath);
+    }
+    public static void getResTypeInfoForPath(JigsawResourcesEnum resourcesEnum, out string resTypeIconPath)
+    {
+        string resName;
+        getResTypeInfo(resourcesEnum, out resName, out resTypeIconPath);
+    }
     /// <summary>
-    /// 获取资源类型名称
+    /// 获取资源类型
     /// </summary>
     /// <param name="resourcesEnum"></param>
     /// <returns></returns>
-    public static string getResTypeName(JigsawResourcesEnum resourcesEnum)
+    public static void getResTypeInfo(JigsawResourcesEnum resourcesEnum,out string resName,out string resTypeIconPath)
     {
-        string resName = "";
         switch (resourcesEnum)
         {
             case JigsawResourcesEnum.Painting:
                 resName = CommonData.getText(5);
+                resTypeIconPath = "Texture/UI/tab_painting";
                 break;
             case JigsawResourcesEnum.Scenery:
                 resName = CommonData.getText(6);
+                resTypeIconPath = "Texture/UI/tab_scenery";
                 break;
             case JigsawResourcesEnum.Custom:
                 resName = CommonData.getText(7);
+                resTypeIconPath = "Texture/UI/tab_custom";
                 break;
             case JigsawResourcesEnum.Celebrity:
                 resName = CommonData.getText(8);
+                resTypeIconPath = "Texture/UI/tab_celebrity";
                 break;
             case JigsawResourcesEnum.Other:
                 resName = CommonData.getText(9);
+                resTypeIconPath = "Texture/UI/tab_other";
                 break;
             case JigsawResourcesEnum.Animal:
                 resName = CommonData.getText(10);
+                resTypeIconPath = "Texture/UI/tab_animal";
                 break;
             case JigsawResourcesEnum.Food:
                 resName = CommonData.getText(31);
+                resTypeIconPath = "Texture/UI/tab_food";
                 break;
             case JigsawResourcesEnum.StarrySky:
                 resName = CommonData.getText(12);
+                resTypeIconPath = "Texture/UI/tab_starrysky";
                 break;
             //    case JigsawResourcesEnum.Movie:
             //       resName = CommonData.getText(11);
             //      break;
             default:
+                resName = "未知";
+                resTypeIconPath = "";
                 break;
         }
-        return resName;
     }
 
-    /// <summary>
-    /// 获取资源类型地址
-    /// </summary>
-    /// <param name="resourcesEnum"></param>
-    /// <returns></returns>
-    public static string getResTypeUIPath(JigsawResourcesEnum resourcesEnum)
+    public static void getEquipColor(EquipInfoBean data,EquipColorEnum colorEnum)
     {
-        string resTypeIconPath = "";
-        switch (resourcesEnum)
+        if (data == null)
+            return;
+        string colorStr=null;
+        string colorName = null;
+        switch (colorEnum)
         {
-            case JigsawResourcesEnum.Painting:
-                resTypeIconPath = "Texture/UI/tab_painting";
+            case EquipColorEnum.Def:
+                colorStr = "#FFFFFF";
+                colorName = CommonData.getText(91);
                 break;
-            case JigsawResourcesEnum.Scenery:
-                resTypeIconPath = "Texture/UI/tab_scenery";
+            case EquipColorEnum.Black:
+                colorStr = "#000000";
+                colorName = CommonData.getText(96);
                 break;
-            case JigsawResourcesEnum.Custom:
-                resTypeIconPath = "Texture/UI/tab_custom";
+            case EquipColorEnum.Twilight:
+                colorStr = "#f7acbc";
+                colorName = CommonData.getText(97);
                 break;
-            case JigsawResourcesEnum.Celebrity:
-                resTypeIconPath = "Texture/UI/tab_celebrity";
+            case EquipColorEnum.Rose:
+                colorStr = "#f05b72";
+                colorName = CommonData.getText(98);
                 break;
-            case JigsawResourcesEnum.Other:
-                resTypeIconPath = "Texture/UI/tab_other";
+            case EquipColorEnum.Coral:
+                colorStr = "#f8aba6";
+                colorName = CommonData.getText(99);
                 break;
-            case JigsawResourcesEnum.Animal:
-                resTypeIconPath = "Texture/UI/tab_animal";
+            case EquipColorEnum.Red:
+                colorStr = "#d71345";
+                colorName = CommonData.getText(100);
                 break;
-            case JigsawResourcesEnum.Food:
-                resTypeIconPath = "Texture/UI/tab_food";
+            case EquipColorEnum.Vermilion:
+                colorStr = "#f26522";
+                colorName = CommonData.getText(101);
                 break;
-            case JigsawResourcesEnum.StarrySky:
-                resTypeIconPath = "Texture/UI/tab_starrysky";
+            case EquipColorEnum.Sunflower:
+                colorStr = "#ffc20e";
+                colorName = CommonData.getText(102);
                 break;
-            //   case JigsawResourcesEnum.Movie:
-            //     break;
-
-            default:
+            case EquipColorEnum.YellowGreen:
+                colorStr = "#b2d235";
+                colorName = CommonData.getText(103);
+                break;
+            case EquipColorEnum.Green:
+                colorStr = "#45b97c";
+                colorName = CommonData.getText(104);
+                break;
+            case EquipColorEnum.Blue:
+                colorStr = "#009ad6";
+                colorName = CommonData.getText(105);
+                break;
+            case EquipColorEnum.Purple:
+                colorStr = "#8552a1";
+                colorName = CommonData.getText(106);
                 break;
         }
-        return resTypeIconPath;
+        data.equipImageColor = colorStr;
+        data.equipName = colorName;
     }
 }
 

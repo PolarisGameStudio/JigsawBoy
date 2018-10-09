@@ -88,9 +88,9 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
         }
         //生成围墙
-        createWall(CommonConfigure.BorderShape, picAllWith, picAllHigh);
+        createWall(CommonConfigure.BorderShape,CommonConfigure.BorderColor, picAllWith, picAllHigh);
         //生成背景
-        createBackground(picAllWith, picAllHigh);
+        createBackground(CommonConfigure.Background, picAllWith, picAllHigh);
         //增加镜头控制
         addCameraControl(picAllWith, picAllHigh);
         //增加拼图控制
@@ -137,14 +137,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="wallWith"></param>
     /// <param name="wallHigh"></param>
-    private void createWall(GameWallEnum gameWallEnum, float picAllWith, float picAllHigh)
+    private void createWall(GameWallEnum gameWallEnum,EquipColorEnum gameWallColor, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成围墙，缺少高和宽");
             return;
         }
-        CreateGameWallUtil.createWall(gameWallEnum, picAllWith, picAllHigh);
+        CreateGameWallUtil.createWall(gameWallEnum, gameWallColor,picAllWith, picAllHigh);
     }
 
     /// <summary>
@@ -152,14 +152,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="picAllWith"></param>
     /// <param name="picAllHigh"></param>
-    private void createBackground(float picAllWith, float picAllHigh)
+    private void createBackground(EquipColorEnum backgroundColor, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成背景，缺少高和宽");
             return;
         }
-        CreateGameBackgroundUtil.createBackground(picAllWith, picAllHigh);
+        CreateGameBackgroundUtil.createBackground(backgroundColor,picAllWith, picAllHigh);
     }
 
 
