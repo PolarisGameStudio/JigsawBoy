@@ -140,8 +140,9 @@ public class SecretCodeCpt : BaseMonoBehaviour
         List<PuzzlesInfoBean> listData = PuzzlesInfoManager.LoadAllPuzzlesData();
         foreach (PuzzlesInfoBean itemData in listData)
         {
-            PuzzlesCompleteStateBean completeStateBean = new PuzzlesCompleteStateBean();
-            completeStateBean = new PuzzlesCompleteStateBean();
+            PuzzlesCompleteStateBean completeStateBean = DataStorageManage.getPuzzlesCompleteDSHandle().getData(itemData.id);
+            if (completeStateBean == null)
+                completeStateBean = new PuzzlesCompleteStateBean();
             completeStateBean.puzzleId = itemData.id;
             completeStateBean.puzzleType = itemData.data_type;
             completeStateBean.unlockState = JigsawUnlockEnum.UnLock;
@@ -167,7 +168,7 @@ public class SecretCodeCpt : BaseMonoBehaviour
         GameUtil.CompletePuzzles(this);
     }
 
-  
+
 
 
 }

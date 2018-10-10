@@ -47,6 +47,14 @@ public class EquipSelect : BaseMonoBehaviour
         triangleEquip.unlockPoint = 998;
         triangleEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, triangleEquip);
+
+        //EquipInfoBean trapezoidEquip = new EquipInfoBean();
+        //trapezoidEquip.equipName = "梯形";
+        //trapezoidEquip.equipType = (int)m_CurrentType;
+        //trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
+        //trapezoidEquip.unlockPoint = 998;
+        //trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        //createEquipItem(content, trapezoidEquip);
     }
 
     /// <summary>

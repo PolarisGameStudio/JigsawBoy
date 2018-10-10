@@ -2,16 +2,20 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class TriangleJigsawBuilder : BaseJigsawBuilder
+public class TrapezoidJigsawBuilder : BaseJigsawBuilder
 {
-    private float m_TriangleHigh;
-    private float m_TriangleWith;
-    public TriangleJigsawBuilder() : base()
+    //梯形 上边长度
+    private float m_Trapezoid_TopWith;
+    //梯形 下边长度
+    private float m_Trapezoid_BottomWith;
+    //梯形  高
+    private float m_Trapezoid_High;
+
+    public TrapezoidJigsawBuilder() : base()
     {
-        m_TriangleWith = 1.5f;
-        //m_TriangleHigh = Mathf.Sqrt(Mathf.Pow(m_TriangleWith,2)- Mathf.Pow(m_TriangleWith/2f, 2));
-        //m_TriangleHigh = Mathf.Sin(Mathf.PI * 60 / 180) * m_TriangleWith;
-        m_TriangleHigh = 0.8f;
+        m_Trapezoid_TopWith = 0.8f;
+        m_Trapezoid_BottomWith = 1.5f;
+        m_Trapezoid_High = 0.6f;
     }
 
     public override JigsawBean buildJigsaw(float jigsawWith, float jigsawHigh, JigsawBulgeEnum[] bulgeEnums, Texture2D jigsawPic)
@@ -21,7 +25,7 @@ public class TriangleJigsawBuilder : BaseJigsawBuilder
 
     public override List<JigsawBean> buildJigsawList(int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic)
     {
-        return base.baseBuildJigsawList(JigsawStyleEnum.Triangle, horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
+        return base.baseBuildJigsawList(JigsawStyleEnum.Trapezoid, horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
     }
 
     public override void setListUVPosition(JigsawBean jigsawItem)
@@ -51,35 +55,45 @@ public class TriangleJigsawBuilder : BaseJigsawBuilder
 
         //添加左下角点
         listVertices.Add(new Vector3(-withX, -highY));
-        //添加左边三角点
-        getTriangleVertices(listVertices, leftBulge, Direction2DEnum.Left, withX, highY);
+        //添加左边点
+        getTrapezoidVertices(listVertices, leftBulge, Direction2DEnum.Left, withX, highY);
 
         //添加左上角点
         listVertices.Add(new Vector3(-withX, highY));
-        //添加上边三角形
-        getTriangleVertices(listVertices, aboveBulge, Direction2DEnum.Above, withX, highY);
+        //添加上边点
+        getTrapezoidVertices(listVertices, aboveBulge, Direction2DEnum.Above, withX, highY);
 
         //添加右上角点
         listVertices.Add(new Vector3(withX, highY));
-        //添加右边三角形
-        getTriangleVertices(listVertices, rightBulge, Direction2DEnum.Right, withX, highY);
+        //添加右边
+        getTrapezoidVertices(listVertices, rightBulge, Direction2DEnum.Right, withX, highY);
 
         //添加右下角点
         listVertices.Add(new Vector3(withX, -highY));
-        //添加下边三角形
-        getTriangleVertices(listVertices, belowBulge, Direction2DEnum.Below, withX, highY);
+        //添加下边
+        getTrapezoidVertices(listVertices, belowBulge, Direction2DEnum.Below, withX, highY);
 
         setListVertices(jigsawItem, listVertices);
     }
 
-    private void getTriangleVertices(List<Vector3> listVertices, JigsawBulgeEnum jigsawBulge,Direction2DEnum direction ,float withX, float highY)
+    /// <summary>
+    /// 获取梯形上坐标
+    /// </summary>
+    /// <param name="listVertices"></param>
+    /// <param name="jigsawBulge"></param>
+    /// <param name="direction"></param>
+    /// <param name="withX"></param>
+    /// <param name="highY"></param>
+    private void getTrapezoidVertices(List<Vector3> listVertices, JigsawBulgeEnum jigsawBulge, Direction2DEnum direction, float withX, float highY)
     {
+
         List<Vector3> convex;
         List<Vector3> concave;
         List<Vector3> leftConcavePositionList = new List<Vector3>();
-        leftConcavePositionList.Add(new Vector3(-withX, -m_TriangleWith / 2f));
-        leftConcavePositionList.Add(new Vector3(-withX + -m_TriangleHigh, 0));
-        leftConcavePositionList.Add(new Vector3(-withX, m_TriangleWith / 2f));
+        leftConcavePositionList.Add(new Vector3(-withX, -m_Trapezoid_BottomWith / 2f));
+        leftConcavePositionList.Add(new Vector3(-withX + -m_Trapezoid_High, -m_Trapezoid_TopWith / 2f));
+        leftConcavePositionList.Add(new Vector3(-withX + -m_Trapezoid_High, m_Trapezoid_TopWith / 2f));
+        leftConcavePositionList.Add(new Vector3(-withX, m_Trapezoid_BottomWith / 2f));
 
         GameUtil.getJigsawPuzzlescCCPositon(leftConcavePositionList, direction, withX, highY, out convex, out concave);
 
