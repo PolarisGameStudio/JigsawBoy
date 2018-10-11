@@ -12,7 +12,9 @@ public class SecretCodeCpt : BaseMonoBehaviour
         "SHOWMETHEPUZZLESPOINT",//增加1000PP
         "ILOVEPUZZLES",//游戏进行中完成拼图
         "IAMLAZY",//解锁所有拼图
-        "MYLITTLEFAIRY"//开启隐藏拼图
+        "IAMTOOLAZY",//解锁所有成就
+        "MYLITTLEFAIRY",//开启隐藏拼图
+        "IDONOTLIKEJIGSAWPUZZLES",//取消所有成就
     };
     private int mSecretCodeMax;
     private bool isOpenSecretCode = false;
@@ -120,8 +122,33 @@ public class SecretCodeCpt : BaseMonoBehaviour
             case "MYLITTLEFAIRY":
                 showSecretPuzzles();
                 break;
+            case "IDONOTLIKEJIGSAWPUZZLES":
+                removeAchievement();
+                break;
+            case "IAMTOOLAZY":
+                unlockAllAchievement();
+                break;
         }
         DialogManager.createToastDialog().setToastText(secretCode);
+    }
+
+    /// <summary>
+    /// 解锁所有成就
+    /// </summary>
+    private void unlockAllAchievement()
+    {
+        IUserAchievementHandle achievementHandle = new UserStatsHandleImpl();
+        achievementHandle.userCompleteNumberChange(10000);
+
+    }
+
+    /// <summary>
+    /// 移除所有成就
+    /// </summary>
+    private void removeAchievement()
+    {
+        IUserAchievementHandle achievementHandle = new UserStatsHandleImpl();
+        achievementHandle.resetAllAchievement();
     }
 
     /// <summary>

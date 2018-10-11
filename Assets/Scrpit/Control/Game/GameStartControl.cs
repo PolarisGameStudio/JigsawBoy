@@ -277,6 +277,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             }
             //保存数据
             GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
+     
         }
     
         //镜头移动
@@ -329,8 +330,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                 return;
             }
         }
-       
 
+        //设置成就
+        List<PuzzlesCompleteStateBean> listCompleteState = ((PuzzlesCompleteDSHandle)DataStorageManage.getPuzzlesCompleteDSHandle()).getDefAllData();
+        if (listCompleteState != null && listCompleteState.Count != 0)
+        {
+            IUserAchievementHandle userAchievement = new UserStatsHandleImpl();
+            userAchievement.userCompleteNumberChange(listCompleteState.Count);
+        }
     }
 
     public void cancelOnClick()

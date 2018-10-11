@@ -40,18 +40,22 @@ public class TrapezoidJigsawBuilder : BaseJigsawBuilder
 
     public override void setListVerticesForItem(JigsawBean jigsawItem)
     {
-        List<Vector3> listVertices = new List<Vector3>();
-        base.baseSetListVerticesForItem(jigsawItem, listVertices);
+        base.baseSetListVerticesForItem(jigsawItem);
 
         float withX = jigsawItem.JigsawWith / 2f;
         float highY = jigsawItem.JigsawHigh / 2f;
 
         //根据凹凸属性生成坐标点
+        List<Vector3> listVertices = new List<Vector3>();
+
         JigsawBulgeEnum[] listBulge = jigsawItem.ListBulge;
         JigsawBulgeEnum leftBulge = listBulge[0];
         JigsawBulgeEnum aboveBulge = listBulge[1];
         JigsawBulgeEnum rightBulge = listBulge[2];
         JigsawBulgeEnum belowBulge = listBulge[3];
+
+        //添加起始点
+        listVertices.Add(jigsawItem.CenterVector);
 
         //添加左下角点
         listVertices.Add(new Vector3(-withX, -highY));

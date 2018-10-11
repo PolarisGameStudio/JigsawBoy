@@ -107,12 +107,11 @@ public abstract class BaseJigsawBuilder : IBaseJigsawBuilder
     /// 基础-设置item坐标点
     /// </summary>
     /// <param name="jigsawItem"></param>
-    public void baseSetListVerticesForItem(JigsawBean jigsawItem, List<Vector3> listVertices)
+    public void baseSetListVerticesForItem(JigsawBean jigsawItem)
     {
         //添加中心点坐标
         Vector3 centerVector = new Vector3(0, 0);
         setCenterVector(jigsawItem, centerVector);
-        listVertices.Add(centerVector);
     }
 
 
