@@ -53,6 +53,10 @@ public class CreateJigsawDataUtils
         {
             jigsawBuilder = new TrapezoidJigsawBuilder();
         }
+        else if (jigsawStyle == JigsawStyleEnum.Square)
+        {
+            jigsawBuilder = new SquareJigsawBuilder();
+        }
         else
         {
             LogUtil.logError("没有相对于样式的拼图");

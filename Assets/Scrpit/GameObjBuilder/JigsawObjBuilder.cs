@@ -218,8 +218,8 @@ public class JigsawObjBuilder
         //复杂的图形算法
         else
         {
-            TriangulationUtil triangulationUtil = new TriangulationUtil(listVertices);
-            return triangulationUtil.GetTriangles();
+            int[] triangles = TriangulationUtil.GetTriangles(listVertices);
+            return triangles;
         }
     }
 

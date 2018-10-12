@@ -48,13 +48,21 @@ public class EquipSelect : BaseMonoBehaviour
         triangleEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, triangleEquip);
 
-        //EquipInfoBean trapezoidEquip = new EquipInfoBean();
-        //trapezoidEquip.equipName = "梯形";
-        //trapezoidEquip.equipType = (int)m_CurrentType;
-        //trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
-        //trapezoidEquip.unlockPoint = 998;
-        //trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
-        //createEquipItem(content, trapezoidEquip);
+        EquipInfoBean trapezoidEquip = new EquipInfoBean();
+        trapezoidEquip.equipName = "梯形";
+        trapezoidEquip.equipType = (int)m_CurrentType;
+        trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
+        trapezoidEquip.unlockPoint = 998;
+        trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        createEquipItem(content, trapezoidEquip);
+
+        EquipInfoBean squareEquip = new EquipInfoBean();
+        squareEquip.equipName = "方形";
+        squareEquip.equipType = (int)m_CurrentType;
+        squareEquip.equipTypeId = (int)JigsawStyleEnum.Square;
+        squareEquip.unlockPoint = 998;
+        squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        createEquipItem(content, squareEquip);
     }
 
     /// <summary>
