@@ -63,6 +63,23 @@ public class EquipSelect : BaseMonoBehaviour
         squareEquip.unlockPoint = 998;
         squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, squareEquip);
+
+        EquipInfoBean heartEquip = new EquipInfoBean();
+        heartEquip.equipName = "心形";
+        heartEquip.equipType = (int)m_CurrentType;
+        heartEquip.equipTypeId = (int)JigsawStyleEnum.Heart;
+        heartEquip.unlockPoint = 998;
+        heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        createEquipItem(content, heartEquip);
+
+        EquipInfoBean pentagramEquip = new EquipInfoBean();
+        pentagramEquip.equipName = "五角星";
+        pentagramEquip.equipType = (int)m_CurrentType;
+        pentagramEquip.equipTypeId = (int)JigsawStyleEnum.Pentagram;
+        pentagramEquip.unlockPoint = 998;
+        pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        createEquipItem(content, pentagramEquip);
+
     }
 
     /// <summary>

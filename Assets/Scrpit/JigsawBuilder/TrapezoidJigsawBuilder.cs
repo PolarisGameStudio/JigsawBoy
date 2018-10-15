@@ -33,11 +33,6 @@ public class TrapezoidJigsawBuilder : BaseJigsawBuilder
         throw new System.NotImplementedException();
     }
 
-    public override void setListUVPositionForItem(JigsawBean jigsawItem)
-    {
-        base.baseSetListUVPositionForItem(jigsawItem);
-    }
-
     public override void setListVerticesForItem(JigsawBean jigsawItem)
     {
         base.baseSetListVerticesForItem(jigsawItem);

@@ -20,7 +20,6 @@ public abstract class BaseJigsawBuilder : IBaseJigsawBuilder
     public abstract List<JigsawBean> buildJigsawList(int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic);
 
     public abstract void setListVerticesForItem(JigsawBean jigsawItem);
-    public abstract void setListUVPositionForItem(JigsawBean jigsawItem);
     public abstract void setListUVPosition(JigsawBean jigsawItem);
 
     /// <summary>
@@ -96,7 +95,7 @@ public abstract class BaseJigsawBuilder : IBaseJigsawBuilder
             setBulgeEdgeForItem(listJigsawBean, jigsawItem);
             //确认拼图顶点坐标和UVposition
             setListVerticesForItem(jigsawItem);
-            setListUVPositionForItem(jigsawItem);
+            baseSetListUVPositionForItem(jigsawItem);
 
         }
         return listJigsawBean;

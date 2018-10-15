@@ -279,7 +279,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
      
         }
-    
+
         //镜头移动
         cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
         Tween cameraTW = DOTween
@@ -327,7 +327,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
 
                 container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
                 container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
-                return;
+                break;
             }
         }
 
@@ -335,8 +335,16 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         List<PuzzlesCompleteStateBean> listCompleteState = ((PuzzlesCompleteDSHandle)DataStorageManage.getPuzzlesCompleteDSHandle()).getDefAllData();
         if (listCompleteState != null && listCompleteState.Count != 0)
         {
+            int completeNumber = 0;
+            foreach (PuzzlesCompleteStateBean itemState in listCompleteState)
+            {
+                if (itemState.completeTime !=null && itemState.completeTime.totalSeconds!=0 )
+                {
+                    completeNumber++;
+                }
+            }
             IUserAchievementHandle userAchievement = new UserStatsHandleImpl();
-            userAchievement.userCompleteNumberChange(listCompleteState.Count);
+            userAchievement.userCompleteNumberChange(completeNumber);
         }
     }
 

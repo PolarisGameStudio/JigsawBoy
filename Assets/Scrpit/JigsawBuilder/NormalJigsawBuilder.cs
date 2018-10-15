@@ -107,15 +107,6 @@ public class NomralJigsawBuilder : BaseJigsawBuilder
         setListVertices(jigsawItem, listVertices);
     }
 
-   /// <summary>
-   /// 设置UV坐标
-   /// </summary>
-   /// <param name="jigsawItem"></param>
-    public override void setListUVPositionForItem(JigsawBean jigsawItem)
-    {
-        base.baseSetListUVPositionForItem(jigsawItem);
-    }
-
     /// <summary>
     /// 设置UV坐标集
     /// </summary>

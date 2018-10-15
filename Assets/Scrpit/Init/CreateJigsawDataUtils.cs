@@ -57,6 +57,14 @@ public class CreateJigsawDataUtils
         {
             jigsawBuilder = new SquareJigsawBuilder();
         }
+        else if (jigsawStyle == JigsawStyleEnum.Heart)
+        {
+            jigsawBuilder = new HeartJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Pentagram)
+        {
+            jigsawBuilder = new PentagramJigsawBuilder();
+        }
         else
         {
             LogUtil.logError("没有相对于样式的拼图");
