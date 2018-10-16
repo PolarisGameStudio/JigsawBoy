@@ -49,35 +49,35 @@ public class EquipSelect : BaseMonoBehaviour
         createEquipItem(content, triangleEquip);
 
         EquipInfoBean trapezoidEquip = new EquipInfoBean();
-        trapezoidEquip.equipName = "梯形";
+        trapezoidEquip.equipName = CommonData.getText(108);
         trapezoidEquip.equipType = (int)m_CurrentType;
         trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
         trapezoidEquip.unlockPoint = 998;
-        trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_trapezoid";
         createEquipItem(content, trapezoidEquip);
 
         EquipInfoBean squareEquip = new EquipInfoBean();
-        squareEquip.equipName = "方形";
+        squareEquip.equipName = CommonData.getText(107);
         squareEquip.equipType = (int)m_CurrentType;
         squareEquip.equipTypeId = (int)JigsawStyleEnum.Square;
         squareEquip.unlockPoint = 998;
-        squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_square";
         createEquipItem(content, squareEquip);
 
         EquipInfoBean heartEquip = new EquipInfoBean();
-        heartEquip.equipName = "心形";
+        heartEquip.equipName = CommonData.getText(109);
         heartEquip.equipType = (int)m_CurrentType;
         heartEquip.equipTypeId = (int)JigsawStyleEnum.Heart;
         heartEquip.unlockPoint = 998;
-        heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_heart";
         createEquipItem(content, heartEquip);
 
         EquipInfoBean pentagramEquip = new EquipInfoBean();
-        pentagramEquip.equipName = "五角星";
+        pentagramEquip.equipName = CommonData.getText(110);
         pentagramEquip.equipType = (int)m_CurrentType;
         pentagramEquip.equipTypeId = (int)JigsawStyleEnum.Pentagram;
         pentagramEquip.unlockPoint = 998;
-        pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
+        pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_pentagram";
         createEquipItem(content, pentagramEquip);
 
     }
