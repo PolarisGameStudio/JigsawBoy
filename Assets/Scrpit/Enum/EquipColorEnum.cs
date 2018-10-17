@@ -15,4 +15,10 @@ public enum EquipColorEnum
     Green = 9,//绿
     Blue = 10,//青
     Purple = 11,//紫
+    Skin=12,//肌色
+    Orange=13,//橙色
+    Oil=14,//油色
+    Tea=15,//蓝海松茶
+    WhiteGreen=16,//白绿
+    Grape=17,//葡萄
 }

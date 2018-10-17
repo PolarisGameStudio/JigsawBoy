@@ -120,6 +120,30 @@ public class EnumUtil
                 colorStr = "#8552a1";
                 colorName = CommonData.getText(106);
                 break;
+            case EquipColorEnum.Skin:
+                colorStr = "#fedcbd";
+                colorName = CommonData.getText(111);
+                break;
+            case EquipColorEnum.Orange:
+                colorStr = "#faa755";
+                colorName = CommonData.getText(112);
+                break;
+            case EquipColorEnum.Oil:
+                colorStr = "#817936";
+                colorName = CommonData.getText(113);
+                break;
+            case EquipColorEnum.Tea:
+                colorStr = "#2e3a1f";
+                colorName = CommonData.getText(114);
+                break;
+            case EquipColorEnum.WhiteGreen:
+                colorStr = "#cde6c7";
+                colorName = CommonData.getText(115);
+                break;
+            case EquipColorEnum.Grape:
+                colorStr = "#472d56";
+                colorName = CommonData.getText(116);
+                break;
         }
         data.equipImageColor = colorStr;
         data.equipName = colorName;
