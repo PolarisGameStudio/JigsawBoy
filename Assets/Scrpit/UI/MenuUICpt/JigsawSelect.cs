@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class JigsawSelect : BaseMonoBehaviour
 {
@@ -95,24 +96,32 @@ public class JigsawSelect : BaseMonoBehaviour
         PuzzlesInfoBean infoBean = itemInfo.puzzlesInfo;
         PuzzlesCompleteStateBean completeStateBean = itemInfo.completeStateInfo;
 
+        GameObject selectItem;
         if (infoBean.data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
-            createCustomItem(itemInfo);
+            selectItem= createCustomItem(itemInfo);
         }
         else
         {
             if (completeStateBean == null || completeStateBean.unlockState.Equals(JigsawUnlockEnum.Lock))
             {
                 if (infoBean.level == 1)
-                    createNormalItem(itemInfo);
+                    selectItem= createNormalItem(itemInfo);
                 else
-                    createLockItem(position, itemInfo);
+                    selectItem= createLockItem(position, itemInfo);
             }
             else
             {
-                createNormalItem(itemInfo);
+                selectItem= createNormalItem(itemInfo);
             }
         }
+        //添加动画
+        //if(selectItem!=null)
+        //{
+        //    CanvasGroup itemCG= selectItem.GetComponent<CanvasGroup>();
+        //    itemCG.alpha = 0;
+        //    itemCG.DOFade(1, 1);
+        //}
     }
 
     /// <summary>

@@ -11,4 +11,5 @@ public enum JigsawStyleEnum
     Square = 4,//方形
     Heart=5,//心型
     Pentagram=6,//五角星
+    Traditional=7,//传统
 }

@@ -280,40 +280,42 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
      
         }
 
-        //镜头移动
-        cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
-        Tween cameraTW = DOTween
-            .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
-            .OnComplete(
-            delegate () {
-                if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+        //动画结束后显示排行榜
+        transform.DOScale(new Vector3(1, 1), gameFinshAnimTime).OnComplete(delegate ()
+        {
+            if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+            {
+                SceneUtil.jumpMainScene();
+            }
+            else
+            {
+                int leaderType = 0;
+                if (CommonData.IsCheating)
                 {
-                    SceneUtil.jumpMainScene();
+                    leaderType = 1;
                 }
                 else
                 {
-                    int leaderType = 0;
-                    if (CommonData.IsCheating)
-                    {
-                        leaderType = 1;
-                    }
-                    else
-                    {
-                        //没有作弊 放烟花
-                        //GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
-                        //Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
-                        //gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
-                        //gameFinshCanvas.worldCamera = Camera.main;
-                    }
-                    DialogManager
-                    .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
-                    .setUserScore(completeTime.totalSeconds)
-                    .setCallBack(this)
-                    .setCancelButtonStr(CommonData.getText(21))
-                    .setSubmitButtonStr(CommonData.getText(23));
+                    //没有作弊 放烟花
+                    //GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
+                    //Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
+                    //gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                    //gameFinshCanvas.worldCamera = Camera.main;
                 }
-                CommonData.IsCheating = false;
-            });
+                DialogManager
+                .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
+                .setUserScore(completeTime.totalSeconds)
+                .setCallBack(this)
+                .setCancelButtonStr(CommonData.getText(21))
+                .setSubmitButtonStr(CommonData.getText(23));
+            }
+            CommonData.IsCheating = false;
+        });
+
+        //镜头移动
+        cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
+        Tween cameraTW = DOTween
+            .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime);
         //图像归位
         int containerListSize = containerList.Count;
         for (int i = 0; i < containerListSize; i++)
@@ -338,7 +340,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             int completeNumber = 0;
             foreach (PuzzlesCompleteStateBean itemState in listCompleteState)
             {
-                if (itemState.completeTime !=null && itemState.completeTime.totalSeconds!=0 )
+                if (itemState.completeTime != null && itemState.completeTime.totalSeconds != 0)
                 {
                     completeNumber++;
                 }

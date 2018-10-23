@@ -24,17 +24,23 @@ public class UserStatsHandleImpl : IUserAchievementHandle
     public void userCompleteNumberChange(int changeNumber)
     {
         string completeNumberApi = "COMPLETE_NUMBER";
+        if (SteamManager.Initialized)
+        {
+            bool isSetStat = SteamUserStats.SetStat(completeNumberApi, changeNumber);
+            LogUtil.log("isSetStat:" + isSetStat);
 
-        bool isSetStat = SteamUserStats.SetStat(completeNumberApi, changeNumber);
-        LogUtil.log("isSetStat:" + isSetStat);
-
-        bool isUpdateStat = SteamUserStats.StoreStats();
-        LogUtil.log("isUpdateStat:" + isUpdateStat);
+            bool isUpdateStat = SteamUserStats.StoreStats();
+            LogUtil.log("isUpdateStat:" + isUpdateStat);
+        }
+      
     }
 
     public void resetAllAchievement()
     {
-        bool isResetAll=   SteamUserStats.ResetAllStats(true);
-        LogUtil.log("isResetAll:" + isResetAll);
+        if (SteamManager.Initialized)
+        {
+            bool isResetAll = SteamUserStats.ResetAllStats(true);
+            LogUtil.log("isResetAll:" + isResetAll);
+        }
     }
 }
