@@ -18,7 +18,7 @@ public class UserStatsHandleImpl : IUserAchievementHandle
     /// <param name="bIOFailure"></param>
     void onUserStatsReceived(UserStatsReceived_t pCallback, bool bIOFailure)
     {
-        LogUtil.log("userStatasInit:" + pCallback.m_nGameID + " " + pCallback.m_steamIDUser);
+
     }
 
     public void userCompleteNumberChange(int changeNumber)
@@ -27,10 +27,7 @@ public class UserStatsHandleImpl : IUserAchievementHandle
         if (SteamManager.Initialized)
         {
             bool isSetStat = SteamUserStats.SetStat(completeNumberApi, changeNumber);
-            LogUtil.log("isSetStat:" + isSetStat);
-
             bool isUpdateStat = SteamUserStats.StoreStats();
-            LogUtil.log("isUpdateStat:" + isUpdateStat);
         }
       
     }
@@ -40,7 +37,6 @@ public class UserStatsHandleImpl : IUserAchievementHandle
         if (SteamManager.Initialized)
         {
             bool isResetAll = SteamUserStats.ResetAllStats(true);
-            LogUtil.log("isResetAll:" + isResetAll);
         }
     }
 }

@@ -44,7 +44,7 @@ public class EquipSelect : BaseMonoBehaviour
         triangleEquip.equipName = CommonData.getText(93);
         triangleEquip.equipType = (int)m_CurrentType;
         triangleEquip.equipTypeId = (int)JigsawStyleEnum.Triangle;
-        triangleEquip.unlockPoint = 998;
+        triangleEquip.unlockPoint = 99;
         triangleEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, triangleEquip);
 
@@ -52,7 +52,7 @@ public class EquipSelect : BaseMonoBehaviour
         trapezoidEquip.equipName = CommonData.getText(108);
         trapezoidEquip.equipType = (int)m_CurrentType;
         trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
-        trapezoidEquip.unlockPoint = 998;
+        trapezoidEquip.unlockPoint = 99;
         trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_trapezoid";
         createEquipItem(content, trapezoidEquip);
 
@@ -60,7 +60,7 @@ public class EquipSelect : BaseMonoBehaviour
         squareEquip.equipName = CommonData.getText(107);
         squareEquip.equipType = (int)m_CurrentType;
         squareEquip.equipTypeId = (int)JigsawStyleEnum.Square;
-        squareEquip.unlockPoint = 998;
+        squareEquip.unlockPoint = 199;
         squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_square";
         createEquipItem(content, squareEquip);
 
@@ -68,7 +68,7 @@ public class EquipSelect : BaseMonoBehaviour
         heartEquip.equipName = CommonData.getText(109);
         heartEquip.equipType = (int)m_CurrentType;
         heartEquip.equipTypeId = (int)JigsawStyleEnum.Heart;
-        heartEquip.unlockPoint = 998;
+        heartEquip.unlockPoint = 233;
         heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_heart";
         createEquipItem(content, heartEquip);
 
@@ -76,10 +76,42 @@ public class EquipSelect : BaseMonoBehaviour
         pentagramEquip.equipName = CommonData.getText(110);
         pentagramEquip.equipType = (int)m_CurrentType;
         pentagramEquip.equipTypeId = (int)JigsawStyleEnum.Pentagram;
-        pentagramEquip.unlockPoint = 998;
+        pentagramEquip.unlockPoint = 666;
         pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_pentagram";
         createEquipItem(content, pentagramEquip);
 
+        EquipInfoBean traditionalEquip = new EquipInfoBean();
+        traditionalEquip.equipName = CommonData.getText(117);
+        traditionalEquip.equipType = (int)m_CurrentType;
+        traditionalEquip.equipTypeId = (int)JigsawStyleEnum.Bodkin;
+        traditionalEquip.unlockPoint = 199;
+        traditionalEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_bodkin";
+        createEquipItem(content, traditionalEquip);
+
+
+        EquipInfoBean sawtoothEquip = new EquipInfoBean();
+        sawtoothEquip.equipName = CommonData.getText(118);
+        sawtoothEquip.equipType = (int)m_CurrentType;
+        sawtoothEquip.equipTypeId = (int)JigsawStyleEnum.Sawtooth;
+        sawtoothEquip.unlockPoint = 99;
+        sawtoothEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_sawtooth";
+        createEquipItem(content, sawtoothEquip);
+
+        EquipInfoBean shurikenEquip = new EquipInfoBean();
+        shurikenEquip.equipName = CommonData.getText(119);
+        shurikenEquip.equipType = (int)m_CurrentType;
+        shurikenEquip.equipTypeId = (int)JigsawStyleEnum.Shuriken;
+        shurikenEquip.unlockPoint = 99;
+        shurikenEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_shuriken";
+        createEquipItem(content, shurikenEquip);
+
+        EquipInfoBean crossEquip = new EquipInfoBean();
+        crossEquip.equipName = CommonData.getText(120);
+        crossEquip.equipType = (int)m_CurrentType;
+        crossEquip.equipTypeId = (int)JigsawStyleEnum.Cross;
+        crossEquip.unlockPoint = 99;
+        crossEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_cross";
+        createEquipItem(content, crossEquip);
     }
 
     /// <summary>

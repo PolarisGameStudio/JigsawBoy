@@ -128,7 +128,6 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                 containerCpt.startPosition = jigsawPosition;
                 containerCpt.startRotation = containerList[i].transform.rotation;
             }
-
         }
     }
 

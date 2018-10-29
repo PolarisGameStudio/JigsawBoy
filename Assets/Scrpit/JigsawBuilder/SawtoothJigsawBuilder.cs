@@ -2,8 +2,14 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class TraditionalJigsawBuilder : BaseJigsawBuilder
+public class SawtoothJigsawBuilder : BaseJigsawBuilder
 {
+    private float sawtoothHigh;
+    public SawtoothJigsawBuilder() : base()
+    {
+        sawtoothHigh = 0.22f;
+    }
+
     public override JigsawBean buildJigsaw(float jigsawWith, float jigsawHigh, JigsawBulgeEnum[] bulgeEnums, Texture2D jigsawPic)
     {
         throw new System.NotImplementedException();
@@ -11,7 +17,7 @@ public class TraditionalJigsawBuilder : BaseJigsawBuilder
 
     public override List<JigsawBean> buildJigsawList(int horizontalJigsawNumber, int verticalJigsawNumber, Texture2D jigsawPic)
     {
-       return base.baseBuildJigsawList(JigsawStyleEnum.Traditional, horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
+        return base.baseBuildJigsawList(JigsawStyleEnum.Sawtooth, horizontalJigsawNumber, verticalJigsawNumber, jigsawPic);
     }
 
     public override void setListUVPosition(JigsawBean jigsawItem)
@@ -36,34 +42,49 @@ public class TraditionalJigsawBuilder : BaseJigsawBuilder
         //添加左下角点
         listVertices.Add(new Vector3(-withX, -highY));
         //添加左边点
-        getTraditionalVertices(listVertices, leftBulge, Direction2DEnum.Left, withX, highY);
+        getBulgeVertices(listVertices, leftBulge, Direction2DEnum.Left, withX, highY);
 
         //添加左上角点
         listVertices.Add(new Vector3(-withX, highY));
         //添加上边
-        getTraditionalVertices(listVertices, aboveBulge, Direction2DEnum.Above, withX, highY);
+        getBulgeVertices(listVertices, aboveBulge, Direction2DEnum.Above, withX, highY);
 
         //添加右上角点
         listVertices.Add(new Vector3(withX, highY));
         //添加右边
-        getTraditionalVertices(listVertices, rightBulge, Direction2DEnum.Right, withX, highY);
+        getBulgeVertices(listVertices, rightBulge, Direction2DEnum.Right, withX, highY);
 
         //添加右下角点
         listVertices.Add(new Vector3(withX, -highY));
         //添加下边
-        getTraditionalVertices(listVertices, belowBulge, Direction2DEnum.Below, withX, highY);
+        getBulgeVertices(listVertices, belowBulge, Direction2DEnum.Below, withX, highY);
 
         setListVertices(jigsawItem, listVertices);
     }
 
-    private void getTraditionalVertices(List<Vector3> listVertices, JigsawBulgeEnum jigsawBulge, Direction2DEnum direction, float withX, float highY)
+    private void getBulgeVertices(List<Vector3> listVertices, JigsawBulgeEnum jigsawBulge, Direction2DEnum direction, float withX, float highY)
     {
         List<Vector3> convex;
         List<Vector3> concave;
         List<Vector3> leftConcavePositionList = new List<Vector3>();
 
-        //TODO 添加传统拼图形状
+        leftConcavePositionList.Add(new Vector3(-withX, -1.4f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, -1.2f));
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, -1f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, -0.8f));
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, -0.6f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, -0.4f));
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, -0.2f));
 
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, 0f));
+
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, 0.2f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, 0.4f));
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, 0.6f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, 0.8f));
+        leftConcavePositionList.Add(new Vector3(-withX - sawtoothHigh, 1f));
+        leftConcavePositionList.Add(new Vector3(-withX + sawtoothHigh, 1.2f));
+        leftConcavePositionList.Add(new Vector3(-withX, 1.4f));
 
         GameUtil.getJigsawPuzzlescCCPositon(leftConcavePositionList, direction, withX, highY, out convex, out concave);
 

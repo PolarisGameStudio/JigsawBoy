@@ -11,5 +11,8 @@ public enum JigsawStyleEnum
     Square = 4,//方形
     Heart=5,//心型
     Pentagram=6,//五角星
-    Traditional=7,//传统
+    Bodkin = 7,//锥子
+    Sawtooth = 8,//锯齿
+    Shuriken=9,//忍者镖
+    Cross=10,//十字架
 }
