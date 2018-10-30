@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
 
-public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
+public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
 {
 
     public UIMasterControl uiMasterControl;
@@ -65,21 +65,21 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         Texture2D pic2D;
         if (jigsawInfoData.Data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
-            WWW www= ResourcesManager.LoadLocationData(resFilePath);
+            WWW www = ResourcesManager.LoadLocationData(resFilePath);
             pic2D = www.texture;
         }
         else
         {
-             pic2D = ResourcesManager.LoadAssetBundlesTexture2DForBytes(resFilePath, jigsawInfoData.Mark_file_name);
+            pic2D = ResourcesManager.LoadAssetBundlesTexture2DForBytes(resFilePath, jigsawInfoData.Mark_file_name);
         }
-     
+
         if (pic2D == null)
         {
             LogUtil.log("没有源图片");
             return;
         }
         //生成拼图
-        createJigsaw(CommonConfigure.PuzzlesShape,pic2D, horizontalNumber, verticalJigsawNumber);
+        createJigsaw(CommonConfigure.PuzzlesShape, pic2D, horizontalNumber, verticalJigsawNumber);
         //获取图片的高和宽
         if (listJigsawBean != null && listJigsawBean.Count > 0)
         {
@@ -88,7 +88,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
         }
         //生成围墙
-        createWall(CommonConfigure.BorderShape,CommonConfigure.BorderColor, picAllWith, picAllHigh);
+        createWall(CommonConfigure.BorderShape, CommonConfigure.BorderColor, picAllWith, picAllHigh);
         //生成背景
         createBackground(CommonConfigure.Background, picAllWith, picAllHigh);
         //增加镜头控制
@@ -104,7 +104,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// 创建拼图
     /// </summary>
     /// <param name="jigsawInfoData"></param>
-    private void createJigsaw(JigsawStyleEnum jigsawStyle,Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
+    private void createJigsaw(JigsawStyleEnum jigsawStyle, Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
     {
         //创建拼图数据
         listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(jigsawStyle, horizontalNumber, verticalJigsawNumber, pic2D);
@@ -136,14 +136,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="wallWith"></param>
     /// <param name="wallHigh"></param>
-    private void createWall(GameWallEnum gameWallEnum,EquipColorEnum gameWallColor, float picAllWith, float picAllHigh)
+    private void createWall(GameWallEnum gameWallEnum, EquipColorEnum gameWallColor, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成围墙，缺少高和宽");
             return;
         }
-        CreateGameWallUtil.createWall(gameWallEnum, gameWallColor,picAllWith, picAllHigh);
+        CreateGameWallUtil.createWall(gameWallEnum, gameWallColor, picAllWith, picAllHigh);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             LogUtil.log("无法生成背景，缺少高和宽");
             return;
         }
-        CreateGameBackgroundUtil.createBackground(backgroundColor,picAllWith, picAllHigh);
+        CreateGameBackgroundUtil.createBackground(backgroundColor, picAllWith, picAllHigh);
     }
 
 
@@ -218,15 +218,16 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         paramsData.puzzleId = CommonData.SelectPuzzlesInfo.puzzlesInfo.id;
         paramsData.markFileName = CommonData.SelectPuzzlesInfo.puzzlesInfo.mark_file_name;
         PuzzlesProgressBean progressData = DataStorageManage.getPuzzlesProgressDSHandle().getData(paramsData);
-     
+
         TimeBean gameTime = null;
         if (progressData != null)
         {
             gameTime = progressData.gameTime;
             GameUtil.setGameProgress(this, progressData);
         }
-        else {
-            
+        else
+        {
+
         }
         CommonData.IsCheating = false;
         CommonData.GameStatus = 1;
@@ -263,7 +264,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             completeTime = gameMainUI.getGameTimer();
         }
 
-        if (!CommonData.IsCheating){
+        if (!CommonData.IsCheating)
+        {
             if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
             {
 
@@ -271,12 +273,12 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             else
             {
                 //增加PP
-                int addPuzzlesPoint = CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level;
+                int addPuzzlesPoint = (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1) * (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1);
                 DialogManager.createPuzzlesPointAddDialog(addPuzzlesPoint);
             }
             //保存数据
             GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
-     
+
         }
 
         //动画结束后显示排行榜

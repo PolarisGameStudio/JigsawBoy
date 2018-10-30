@@ -9,7 +9,7 @@ public class TestScrpit : BaseMonoBehaviour
 
     void Start()
     {
-        LeaderBoardUtil.CreateLeaderBoardByInterval(338,346);
+        LeaderBoardUtil.CreateLeaderBoardByInterval(347,358);
     }
 
 
