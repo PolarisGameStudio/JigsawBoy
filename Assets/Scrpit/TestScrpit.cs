@@ -30,8 +30,8 @@ public class TestScrpit : BaseMonoBehaviour
             string pchFolder;
             uint cchFolderSize;
             uint punTimeStamp;
-            SteamUGC.GetItemInstallInfo(details.m_nPublishedFileId,out punSizeOnDisk, out  pchFolder, details.m_nFileSize,out punTimeStamp);
-            LogUtil.log()
+           // SteamUGC.GetItemInstallInfo(details.m_nPublishedFileId,out punSizeOnDisk, out  pchFolder, details.m_nFileSize,out punTimeStamp);
+     
         }
     
     }
