@@ -10,30 +10,23 @@ public class TestScrpit : BaseMonoBehaviour
 
     void Start()
     {
-        AppId_t  mAppId = new AppId_t(uint.Parse(CommonInfo.Steam_App_Id));
-        UGCQueryHandle_t handle= SteamUGC.CreateQueryUserUGCRequest(SteamUser.GetSteamID().GetAccountID(),EUserUGCList.k_EUserUGCList_Published,EUGCMatchingUGCType.k_EUGCMatchingUGCType_All,EUserUGCListSortOrder.k_EUserUGCListSortOrder_CreationOrderAsc, mAppId, mAppId,1);
-
-        CallResult<SteamUGCQueryCompleted_t> callResult = CallResult<SteamUGCQueryCompleted_t>.Create(query);
-       SteamAPICall_t c= SteamUGC.SendQueryUGCRequest(handle);
-        callResult.Set(c);
+        SteamWorkshopHandle.QueryInstallInfo(this,1,new CallBackTest());
     }
 
-    public void query(SteamUGCQueryCompleted_t call ,bool bi)
+    public class CallBackTest : ISteamWorkshopQueryInstallInfoCallBack
     {
-        for(uint i = 0; i < call.m_unNumResultsReturned; i++)
+        public void GetInstallInfoFail(SteamWorkshopQueryImpl.SteamWorkshopQueryFailEnum failEnum)
         {
-            SteamUGCDetails_t details;
-            SteamUGC.GetQueryUGCResult(call.m_handle,i,out details);
-
-            LogUtil.log("item :" + i + " " + details.m_rgchTitle+ " m_hFile" + details.m_hFile+ " m_hPreviewFile" + details.m_hPreviewFile+ " m_pchFileName" + details.m_pchFileName);
-            ulong punSizeOnDisk;
-            string pchFolder;
-            uint cchFolderSize;
-            uint punTimeStamp;
-           // SteamUGC.GetItemInstallInfo(details.m_nPublishedFileId,out punSizeOnDisk, out  pchFolder, details.m_nFileSize,out punTimeStamp);
-     
+            throw new System.NotImplementedException();
         }
-    
-    }
 
+        public void GetInstallInfoSuccess(List<SteamWorkshopQueryInstallInfoBean> listData)
+        {
+            foreach (SteamWorkshopQueryInstallInfoBean item in listData)
+            {
+                LogUtil.log("pchFolder:" + item.pchFolder+ "punSizeOnDisk:" + item.punSizeOnDisk);
+            }
+
+        }
+    }
 }

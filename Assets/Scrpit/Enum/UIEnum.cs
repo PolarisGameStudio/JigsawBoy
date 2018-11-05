@@ -10,6 +10,8 @@
     MenuSettingUI=8,//菜单 设置界面
     GameOIUI=9,// 游戏操作说明UI
     MenuMakerUI = 10,// 游戏制作人介绍界面
-    MenuEquipUI=11//装备选择界面
+    MenuEquipUI=11,//装备选择界面
+    MenuWorkshop=12,//创意工坊界面
+    MenuWorkshopCreate = 13,//创意工坊创建界面
 }
 
