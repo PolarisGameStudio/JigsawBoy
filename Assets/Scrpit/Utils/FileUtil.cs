@@ -116,4 +116,47 @@ public class FileUtil : ScriptableObject
             File.Delete(filePath);
         }
     }
+
+    /// <summary>
+    /// 删除指定文件目录下的所有文件
+    /// </summary>
+    /// <param name="fullPath">文件路径</param>
+    public static bool DeleteAllFile(string fullPath)
+    {
+        //获取指定路径下面的所有资源文件  然后进行删除
+        if (Directory.Exists(fullPath))
+        {
+            DirectoryInfo direction = new DirectoryInfo(fullPath);
+            FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
+
+            Debug.Log(files.Length);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (files[i].Name.EndsWith(".meta"))
+                {
+                    continue;
+                }
+                string FilePath = fullPath + "/" + files[i].Name;
+                File.Delete(FilePath);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 保存图片到本地
+    /// </summary>
+    /// <param name="filePathName"></param>
+    /// <param name="tex"></param>
+    public static void ImageSaveLocal(string filePathName, Texture tex)
+    {
+        Texture2D saveImageTex = tex as Texture2D;
+        FileStream newFs = new FileStream(filePathName, FileMode.Create, FileAccess.Write);
+        byte[] bytes = saveImageTex.EncodeToJPG();
+        newFs.Write(bytes, 0, bytes.Length);
+        newFs.Close();
+        newFs.Dispose();
+    }
 }
