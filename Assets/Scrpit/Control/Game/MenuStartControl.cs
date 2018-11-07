@@ -24,7 +24,15 @@ public class MenuStartControl : BaseMonoBehaviour
     {
         if (CommonData.SelectPuzzlesInfo != null)
         {
-            uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
+            if (CommonData.SelectPuzzlesInfo.puzzlesInfo.mark_file_name.Contains("workshop_pic"))
+            {
+                uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuWorkshop);
+            }
+            else
+            {
+                uiMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuSelectUI);
+            }
+          
         }
         else
         {

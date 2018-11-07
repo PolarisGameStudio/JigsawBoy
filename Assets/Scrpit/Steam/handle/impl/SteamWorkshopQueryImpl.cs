@@ -28,7 +28,7 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
         this.mQueryInstallInfoCallBack = callBack;
 
         UGCQueryHandle_t handle = SteamUGC.CreateQueryUserUGCRequest(SteamUser.GetSteamID().GetAccountID(), EUserUGCList.k_EUserUGCList_Published, EUGCMatchingUGCType.k_EUGCMatchingUGCType_All, EUserUGCListSortOrder.k_EUserUGCListSortOrder_CreationOrderAsc, mAppId, mAppId, pageNumber);
-
+        SteamUGC.SetReturnMetadata(handle,true);
         CallResult<SteamUGCQueryCompleted_t> callResult = CallResult<SteamUGCQueryCompleted_t>.Create(QueryUserUGCCallBack);
         SteamAPICall_t apiCall = SteamUGC.SendQueryUGCRequest(handle);
         callResult.Set(apiCall);
@@ -57,13 +57,15 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
             string pchFolder;
             uint punTimeStamp;
             SteamUGC.GetItemInstallInfo(detailsInfo.m_nPublishedFileId, out punSizeOnDisk, out pchFolder, (uint)detailsInfo.m_nFileSize, out punTimeStamp);
-            if (punSizeOnDisk == 0 || punTimeStamp == 0 || CheckUtil.StringIsNull(pchFolder))
-            {
-                continue;
-            }
+            string metaData;
+            SteamUGC.GetQueryUGCMetadata(itemResult.m_handle ,i , out metaData, 1000);
+            //if (punSizeOnDisk == 0 || punTimeStamp == 0 || CheckUtil.StringIsNull(pchFolder))
+            //{
+            //    continue;
+            //}
             //添加缩略图地址
             string previewUrl;
-            SteamUGC.GetQueryUGCPreviewURL(itemResult.m_handle, 0, out previewUrl, (uint)detailsInfo.m_nPreviewFileSize);
+            SteamUGC.GetQueryUGCPreviewURL(itemResult.m_handle, i, out previewUrl, (uint)detailsInfo.m_nPreviewFileSize);
 
             SteamWorkshopQueryInstallInfoBean installInfoBean = new SteamWorkshopQueryInstallInfoBean
             {
@@ -71,7 +73,8 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
                 pchFolder = pchFolder,
                 punTimeStamp = punTimeStamp,
                 detailsInfo = detailsInfo,
-                previewUrl= previewUrl
+                previewUrl = previewUrl,
+                metaData = metaData
             };
         
             listInstallInfo.Add(installInfoBean);

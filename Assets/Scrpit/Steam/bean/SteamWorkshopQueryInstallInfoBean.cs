@@ -18,6 +18,9 @@ public class SteamWorkshopQueryInstallInfoBean
     //缩略图地址
     public string previewUrl;
 
+    //原数据
+    public string metaData;
+
     //详细信息
     public SteamUGCDetails_t detailsInfo;
 }

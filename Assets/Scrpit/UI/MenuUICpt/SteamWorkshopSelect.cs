@@ -34,10 +34,16 @@ public class SteamWorkshopSelect : BaseMonoBehaviour
         List<PuzzlesInfoBean> listInfoData = new List<PuzzlesInfoBean>();
         foreach (SteamWorkshopQueryInstallInfoBean itemData in listData)
         {
-            PuzzlesInfoBean infoData = new PuzzlesInfoBean();
-            infoData.id = 0;
+            if (CheckUtil.StringIsNull(itemData.metaData))
+                continue;
+            PuzzlesInfoBean infoData = JsonUtil.FromJson<PuzzlesInfoBean>(itemData.metaData);
+            infoData.id = -1;
+            infoData.name = itemData.detailsInfo.m_rgchTitle;
+            infoData.introduction_content= itemData.detailsInfo.m_rgchDescription;
+            infoData.data_file_path = itemData.pchFolder + "\\";
             infoData.data_type = (int)JigsawResourcesEnum.Custom;
-        
+            infoData.thumb_file_path = itemData.previewUrl;
+            listInfoData.Add(infoData);
         }
         return listInfoData;
     }
@@ -61,17 +67,33 @@ public class SteamWorkshopSelect : BaseMonoBehaviour
 
         //设置背景图片
         Image backImage = CptUtil.getCptFormParentByName<Transform, Image>(itemObj.transform, "JigsawPic");
-        string filePath = infoBean.Data_file_path + infoBean.Mark_file_name;
-        StartCoroutine(ResourcesManager.LoadAsyncLocationImage(filePath, backImage));
+        string filePath = infoBean.thumb_file_path;
+        StartCoroutine(ResourcesManager.LoadAsyncHttpImage(filePath, backImage));
 
         //设置按键
         Button startBT = CptUtil.getCptFormParentByName<Transform, Button>(itemObj.transform, "JigsawStart");
-        startBT.onClick.AddListener(delegate ()
+        Text startBTText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawStartText");
+
+        if (!CheckUtil.StringIsNull(infoBean.data_file_path))
         {
-            SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
-            CommonData.SelectPuzzlesInfo = itemInfo;
-            SceneUtil.jumpGameScene();
-        });
+            startBT.onClick.AddListener(delegate ()
+            {
+                SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+                CommonData.SelectPuzzlesInfo = itemInfo;
+                SceneUtil.jumpGameScene();
+            });
+
+            if (itemInfo.progressInfo != null)
+                startBTText.text = CommonData.getText(85);
+            else
+                startBTText.text = CommonData.getText(14);
+        }
+        else
+        {
+            startBTText.text = CommonData.getText(130);
+        }
+
+
         //最好分数
         Transform bestScoreTF = CptUtil.getCptFormParentByName<Transform, Transform>(itemObj.transform, "JigsawBestScore");
         Text bestScore = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawBestScoreText");
@@ -86,14 +108,6 @@ public class SteamWorkshopSelect : BaseMonoBehaviour
 
         //设置文本信息
         Text jigsawNameText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawName");
-        Text startBTText = CptUtil.getCptFormParentByName<Transform, Text>(itemObj.transform, "JigsawStartText");
-
-        if (itemInfo.progressInfo != null)
-            startBTText.text = CommonData.getText(85);
-        else
-            startBTText.text = CommonData.getText(14);
-
-
         jigsawNameText.text = infoBean.Name;
         return itemObj;
     }

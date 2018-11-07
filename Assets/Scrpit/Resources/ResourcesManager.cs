@@ -103,6 +103,7 @@ public class ResourcesManager
     /// <returns></returns>
     public static WWW LoadLocationData(string resPath)
     {
+        resPath= resPath.Replace("\\","/");
         string filePath = "file://" + resPath;
         WWW www = new WWW(filePath);
         return www;

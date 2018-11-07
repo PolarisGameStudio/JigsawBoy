@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System;
 using Steamworks;
+using System.Collections.Generic;
 
 public class MenuWorkshopCreateUIControl : BaseUIControl
 {
@@ -24,6 +25,13 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
     public Text inputDescriptionTitle;
     public Text inputHorizontalNumberTitle;
     public Text inputVerticalNumberTitle;
+    public Text uploadLoadingTitle;
+
+    public GameObject tagsGroup;
+    public GameObject tagModel;
+    public Text tagTitle;
+
+    public List<Toggle> listTag;
 
     public Image uploadImage;
     public string uploadPath;
@@ -32,11 +40,14 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
     public string fileNamePath;
     public string fileSavePath;
 
+    public Button loadingBT;
+
     private new void Awake()
     {
         base.Awake();
         fileSavePath = UnityEngine.Application.streamingAssetsPath + "/SteamWorkshopPicUpdate";
 
+        InitTags();
         exitBt.onClick.AddListener(ExitOnClick);
         uploadBT.onClick.AddListener(ShowUploadImageOnClick);
         submitBT.onClick.AddListener(SubmitOnClick);
@@ -66,6 +77,37 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         inputVerticalNumberTitle.text = CommonData.getText(35);
         tvCancel.text = CommonData.getText(36);
         tvSubmit.text = CommonData.getText(37);
+        tagTitle.text = CommonData.getText(128);
+        uploadLoadingTitle.text = CommonData.getText(129);
+    }
+
+    private void InitTags()
+    {
+        if (tagsGroup == null)
+            return;
+        List<string> tags = new List<string>();
+        tags.Add("other");
+        tags.Add("painting");
+        tags.Add("anime");
+        tags.Add("life");
+        tags.Add("movie");
+        tags.Add("people");
+        tags.Add("animal");
+        tags.Add("scenery");
+        tags.Add("starrysky");
+        tags.Add("food");
+        listTag = new List<Toggle>();
+        for (int i=0;i< tags.Count; i++)
+        {
+            GameObject tagObj = Instantiate(tagModel);
+            tagObj.name = tags[i];
+            tagObj.SetActive(true);
+            tagObj.transform.parent = tagsGroup.transform;
+            tagObj.transform.localScale = new Vector3(1f, 1f, 1f);
+            Text tagText= CptUtil.getCptFormParentByName<Transform, Text>(tagObj.transform,"Label");
+            tagText.text= tags[i];
+            listTag.Add(tagObj.GetComponent<Toggle>());
+        }
     }
 
     /// <summary>
@@ -95,20 +137,29 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         {
             return;
         }
-
-        SteamWorkshopUpdateBean updateData = new SteamWorkshopUpdateBean();
-        updateData.title = inputName.text;
-        updateData.description = inputDescription.text;
-
         PuzzlesInfoBean infoBean = new PuzzlesInfoBean();
         infoBean.mark_file_name = fileName;
         infoBean.horizontal_number= Convert.ToInt32(inputHorizontalNumber.text);
         infoBean.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);
         string infoStr=  JsonUtil.ToJson(infoBean);
+
+        List<string> selectedTags = new List<string>();
+        foreach (  Toggle item in listTag)
+        {
+            if (item.isOn)
+            {
+                selectedTags.Add(item.gameObject.name);
+            }
+        }
+        SteamWorkshopUpdateBean updateData = new SteamWorkshopUpdateBean();
+        updateData.title = inputName.text;
+        updateData.description = inputDescription.text;
         updateData.metadata = infoStr;
         updateData.content = fileSavePath;
         updateData.preview = fileNamePath + "_Thumb";
-        //SteamWorkshopHandle.CreateWorkshopItem(this, updateData,new UpdateCallBack(this));
+        updateData.tags = selectedTags;
+        loadingBT.gameObject.SetActive(true);
+        SteamWorkshopHandle.CreateWorkshopItem(this, updateData,new UpdateCallBack(this));
     }
 
     /// <summary>
@@ -132,7 +183,10 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         }
         public void UpdateFail(SteamWorkshopUpdateImpl.SteamWorkshopUpdateFailEnum failEnum)
         {
-            DialogManager.createToastDialog().setToastText(CommonData.getText(125));
+            customUI.loadingBT.gameObject.SetActive(false);
+            ToastDialog dialog = DialogManager.createToastDialog();
+            dialog.setToastTime(5);
+            dialog.setToastText(CommonData.getText(125));
         }
 
         public void UpdateProgress(EItemUpdateStatus status, ulong progressBytes, ulong totalBytes)
@@ -142,6 +196,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
 
         public void UpdateSuccess()
         {
+            customUI.loadingBT.gameObject.SetActive(false);
             DialogManager.createToastDialog().setToastText(CommonData.getText(124));
             this.customUI.ExitOnClick();
         }
@@ -160,7 +215,6 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
 
         public void loadFail(string msg)
         {
-
         }
 
         public void loadSuccess(Sprite data)
@@ -177,9 +231,21 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             FileUtil.CreateDirectory(customUI.fileSavePath);
             FileUtil.CopyFile(customUI.uploadPath, customUI.fileNamePath, true);
 
-            Texture thumb=  TextureUtil.ScaleTexture(data.texture,100,100);
+            int thumbWidth = textureWidth/10;
+            int thumbHigh = textureHigh/10;
+            if (thumbWidth <= 0)
+            {
+                thumbWidth = 1;
+            }
+            if (thumbHigh <= 0)
+            {
+                thumbHigh = 1;
+            }
+            Texture thumb=  TextureUtil.ScaleTexture(data.texture, thumbWidth, thumbHigh);
             FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", thumb);
         }
+
+ 
     }
 
     /// <summary>
@@ -204,8 +270,11 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             inputDescription.text = null;
         if (tvHint != null)
             tvHint.text = null;
+        if (fileName != null)
+            fileName = null;
         if (fileNamePath != null)
             fileNamePath = null;
+        
     }
 
 
@@ -265,6 +334,18 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         if (verticalNumber > 50 || verticalNumber < 2)
         {
             DialogManager.createToastDialog().setToastText(CommonData.getText(76));
+            return false;
+        }
+        bool isToggleSelected = false;
+        if(listTag!=null)
+            foreach (Toggle item in  listTag)
+            {
+                if (item.isOn)
+                    isToggleSelected = true;
+            }
+        if (!isToggleSelected)
+        {
+            DialogManager.createToastDialog().setToastText(CommonData.getText(127));
             return false;
         }
         return true;

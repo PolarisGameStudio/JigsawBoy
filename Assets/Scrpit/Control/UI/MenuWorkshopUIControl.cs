@@ -9,6 +9,7 @@ public class MenuWorkshopUIControl : BaseUIControl
     public Button exitBt;
     //标题
     public Text workshopTitleText;
+    public Text workshopCreateText;
     //增加按钮
     public Button workshoCreateBt;
 
@@ -46,7 +47,7 @@ public class MenuWorkshopUIControl : BaseUIControl
     {
         mUICanvas.enabled = true;
         refreshUI();
-        loadUIData(); 
+        loadUIData();
     }
 
     public override void refreshUI()
@@ -54,9 +55,11 @@ public class MenuWorkshopUIControl : BaseUIControl
         if (workshopTitleText != null)
             workshopTitleText.text = CommonData.getText(122);
         if (pageNumberText != null)
-            pageNumberText.text =currentPage+"";
+            pageNumberText.text = currentPage + "";
+        if (workshopCreateText != null)
+            workshopCreateText.text = CommonData.getText(131);
     }
-    
+
     public void CreateOnClick()
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
@@ -93,18 +96,17 @@ public class MenuWorkshopUIControl : BaseUIControl
             refreshUI();
             loadUIData();
         }
-  
     }
 
     public void GetInstallItemInfo(uint page)
     {
-        SteamWorkshopHandle.QueryInstallInfo(this,page,new InstallItemListCallBack(this));
+        SteamWorkshopHandle.QueryInstallInfo(this, page, new InstallItemListCallBack(this));
     }
 
 
     public class InstallItemListCallBack : ISteamWorkshopQueryInstallInfoCallBack
     {
-       private readonly MenuWorkshopUIControl mMenuWorkshopUI;
+        private readonly MenuWorkshopUIControl mMenuWorkshopUI;
 
         public InstallItemListCallBack(MenuWorkshopUIControl menuWorkshopUI)
         {
