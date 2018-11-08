@@ -27,7 +27,8 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
     {
         this.mQueryInstallInfoCallBack = callBack;
 
-        UGCQueryHandle_t handle = SteamUGC.CreateQueryUserUGCRequest(SteamUser.GetSteamID().GetAccountID(), EUserUGCList.k_EUserUGCList_Published, EUGCMatchingUGCType.k_EUGCMatchingUGCType_All, EUserUGCListSortOrder.k_EUserUGCListSortOrder_CreationOrderAsc, mAppId, mAppId, pageNumber);
+        //UGCQueryHandle_t handle = SteamUGC.CreateQueryAllUGCRequest(EUGCQuery.k_EUGCQuery_RankedByVote,EUGCMatchingUGCType.k_EUGCMatchingUGCType_All,mAppId, mAppId, pageNumber);
+        UGCQueryHandle_t handle = SteamUGC.CreateQueryUserUGCRequest(SteamUser.GetSteamID().GetAccountID(), EUserUGCList.k_EUserUGCList_Subscribed, EUGCMatchingUGCType.k_EUGCMatchingUGCType_All, EUserUGCListSortOrder.k_EUserUGCListSortOrder_CreationOrderAsc, mAppId, mAppId, pageNumber);
         SteamUGC.SetReturnMetadata(handle,true);
         CallResult<SteamUGCQueryCompleted_t> callResult = CallResult<SteamUGCQueryCompleted_t>.Create(QueryUserUGCCallBack);
         SteamAPICall_t apiCall = SteamUGC.SendQueryUGCRequest(handle);
@@ -47,8 +48,8 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
                 mQueryInstallInfoCallBack.GetInstallInfoFail(SteamWorkshopQueryFailEnum.REQUEST_FAIL);
             return;
         }
-
         List<SteamWorkshopQueryInstallInfoBean> listInstallInfo = new List<SteamWorkshopQueryInstallInfoBean>();
+
         for (uint i = 0; i < itemResult.m_unNumResultsReturned; i++)
         {
             SteamUGCDetails_t detailsInfo;
