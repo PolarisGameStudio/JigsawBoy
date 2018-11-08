@@ -40,7 +40,10 @@ public class SteamWorkshopSelect : BaseMonoBehaviour
             infoData.id = -1;
             infoData.name = itemData.detailsInfo.m_rgchTitle;
             infoData.introduction_content= itemData.detailsInfo.m_rgchDescription;
-            infoData.data_file_path = itemData.pchFolder + "\\";
+            if (!CheckUtil.StringIsNull(itemData.pchFolder))
+            {
+                infoData.data_file_path = itemData.pchFolder + "\\";
+            }
             infoData.data_type = (int)JigsawResourcesEnum.Custom;
             infoData.thumb_file_path = itemData.previewUrl;
             listInfoData.Add(infoData);

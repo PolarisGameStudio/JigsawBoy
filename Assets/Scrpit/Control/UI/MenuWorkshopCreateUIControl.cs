@@ -41,6 +41,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
     public string fileSavePath;
 
     public Button loadingBT;
+    public Button loadingCancelBT;
 
     private new void Awake()
     {
@@ -48,6 +49,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         fileSavePath = UnityEngine.Application.streamingAssetsPath + "/SteamWorkshopPicUpdate";
 
         InitTags();
+        loadingCancelBT.onClick.AddListener(ExitOnClick);
         exitBt.onClick.AddListener(ExitOnClick);
         uploadBT.onClick.AddListener(ShowUploadImageOnClick);
         submitBT.onClick.AddListener(SubmitOnClick);
@@ -96,6 +98,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         tags.Add("scenery");
         tags.Add("starrysky");
         tags.Add("food");
+        tags.Add("game");
         listTag = new List<Toggle>();
         for (int i=0;i< tags.Count; i++)
         {
@@ -167,6 +170,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
     /// </summary>
     private void ExitOnClick()
     {
+        loadingBT.gameObject.SetActive(false);
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_2);
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuWorkshop);
     }
@@ -196,9 +200,12 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
 
         public void UpdateSuccess()
         {
-            customUI.loadingBT.gameObject.SetActive(false);
-            DialogManager.createToastDialog().setToastText(CommonData.getText(124));
-            this.customUI.ExitOnClick();
+            if (customUI.loadingBT.IsActive())
+            {
+                customUI.loadingBT.gameObject.SetActive(false);
+                DialogManager.createToastDialog().setToastText(CommonData.getText(124));
+                this.customUI.ExitOnClick();
+            }
         }
     }
 
