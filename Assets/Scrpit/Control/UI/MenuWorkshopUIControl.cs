@@ -31,6 +31,7 @@ public class MenuWorkshopUIControl : BaseUIControl
         pageNumberSubBt.onClick.AddListener(SubPageOnClick);
         workshoCreateBt.onClick.AddListener(CreateOnClick);
         refreshUI();
+       
     }
 
     public override void closeUI()

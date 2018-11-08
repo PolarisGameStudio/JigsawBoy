@@ -50,6 +50,7 @@ public class SteamWorkshopQueryImpl : ISteamWorkshopQuery
         }
         List<SteamWorkshopQueryInstallInfoBean> listInstallInfo = new List<SteamWorkshopQueryInstallInfoBean>();
 
+        LogUtil.log("itemResult.m_unNumResultsReturned:"+ itemResult.m_unNumResultsReturned);
         for (uint i = 0; i < itemResult.m_unNumResultsReturned; i++)
         {
             SteamUGCDetails_t detailsInfo;
