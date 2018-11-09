@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class JigsawObjBuilder
 {
@@ -142,6 +143,7 @@ public class JigsawObjBuilder
             jigsawMesh.uv = jigsawUVVertices;
     }
 
+
     /// <summary>
     /// 设置2D碰撞器
     /// </summary>
@@ -187,24 +189,38 @@ public class JigsawObjBuilder
     {
         if (listVertices == null)
             return null;
-        //获取顶点列表大小
-        int listCount = listVertices.Count;
-        //三角形个数  
-        int trianglesCount = listCount - 1;
-        //三角学顶点数
-        int[] triangles = new int[3 * trianglesCount];
-        //三角形顶点索引,确保按照顺时针方向设置三角形顶点
-        for (int i = 0; i < trianglesCount; i++)
+
+        //简单的图形算法
+        if (CommonConfigure.PuzzlesShape == JigsawStyleEnum.Def
+            || CommonConfigure.PuzzlesShape == JigsawStyleEnum.Smooth
+            || CommonConfigure.PuzzlesShape == JigsawStyleEnum.Triangle
+            || CommonConfigure.PuzzlesShape == JigsawStyleEnum.Trapezoid)
         {
-            triangles[i * 3] = 0;
-            triangles[i * 3 + 1] = i + 1;
-            //判断是否为最后一个三角索引  是的话就引用第二个索引
-            if ((i + 2) > trianglesCount)
-                triangles[i * 3 + 2] = 1;
-            else
-                triangles[i * 3 + 2] = i + 2;
+            //获取顶点列表大小
+            int listCount = listVertices.Count;
+            //三角形个数  
+            int trianglesCount = listCount - 1;
+            //三角学顶点数
+            int[] triangles = new int[3 * trianglesCount];
+            //三角形顶点索引,确保按照顺时针方向设置三角形顶点
+            for (int i = 0; i < trianglesCount; i++)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                //判断是否为最后一个三角索引  是的话就引用第二个索引
+                if ((i + 2) > trianglesCount)
+                    triangles[i * 3 + 2] = 1;
+                else
+                    triangles[i * 3 + 2] = i + 2;
+            }
+            return triangles;
         }
-        return triangles;
+        //复杂的图形算法
+        else
+        {
+            int[] triangles = TriangulationUtil.GetTriangles(listVertices);
+            return triangles;
+        }
     }
 
     /// <summary>

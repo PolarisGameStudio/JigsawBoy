@@ -35,7 +35,7 @@ public class ToastDialog : BaseMonoBehaviour
     /// 设置弹窗持续时间
     /// </summary>
     /// <param name="time"></param>
-    public void setToastTime(int time)
+    public void setToastTime(float time)
     {
         mToastTime = time;
     }

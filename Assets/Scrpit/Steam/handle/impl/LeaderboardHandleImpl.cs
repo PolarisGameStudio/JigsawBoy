@@ -108,6 +108,7 @@ public class LeaderboardHandleImpl : ILeaderboardHandle
         m_SteamLeaderboard.m_SteamLeaderboard = leaderboardId;
         OnLeaderboardScoresDownloadedCallResult = CallResult<LeaderboardScoresDownloaded_t>.Create(OnLeaderboardScoresDownloaded);
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntries(m_SteamLeaderboard, type, startRange, endRange);
+       
         //TODO  必须要延迟才能设置回调
         Thread.Sleep(1000);
         OnLeaderboardScoresDownloadedCallResult.Set(handle);

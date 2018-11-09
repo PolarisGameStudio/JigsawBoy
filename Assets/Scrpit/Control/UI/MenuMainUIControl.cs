@@ -20,6 +20,10 @@ public class MenuMainUIControl : BaseUIControl
     public Button exitBT;
     public Text exitText;
 
+    //创意工坊
+    public Button workshopBT;
+    public Text workshopText;
+
     public Image mLogoTitle1;
     public Image mLogoTitle2;
     public Button mLogoTitleBT1;
@@ -40,7 +44,10 @@ public class MenuMainUIControl : BaseUIControl
         exitBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "ExitBT");
         exitText = CptUtil.getCptFormParentByName<Button, Text>(exitBT, "ExitText");
 
-        mLogoTitle1= CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle1");
+        workshopBT = CptUtil.getCptFormParentByName<Canvas, Button>(mUICanvas, "WorkshopBT");
+        workshopText = CptUtil.getCptFormParentByName<Button, Text>(workshopBT, "WorkshopText");
+
+        mLogoTitle1 = CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle1");
         mLogoTitle2 = CptUtil.getCptFormParentByName<Transform, Image>(transform, "LogoTitle2");
         mLogoTitleBT1 = CptUtil.getCptFormParentByName<Transform, Button>(transform, "LogoTitle1");
         mLogoTitleBT2 = CptUtil.getCptFormParentByName<Transform, Button>(transform, "LogoTitle2");
@@ -49,6 +56,7 @@ public class MenuMainUIControl : BaseUIControl
         customBT.onClick.AddListener(customOnClick);
         settingBT.onClick.AddListener(settingOnClick);
         exitBT.onClick.AddListener(exitOnClick);
+        workshopBT.onClick.AddListener(workshopOnClick);
 
         mLogoTitleBT1.onClick.AddListener(makerOnClick);
         mLogoTitleBT2.onClick.AddListener(makerOnClick);
@@ -79,7 +87,7 @@ public class MenuMainUIControl : BaseUIControl
     /// </summary>
     private void customOnClick()
     {
-        //SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
         //DialogManager.createToastDialog().setToastText(CommonData.getText(27));
         if (mUIMasterControl == null)
             return;
@@ -106,6 +114,16 @@ public class MenuMainUIControl : BaseUIControl
         SystemUtil.exitGame();
     }
 
+    /// <summary>
+    /// 创意工坊
+    /// </summary>
+    private void workshopOnClick()
+    {
+        SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
+        if (mUIMasterControl == null)
+            return;
+        mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuWorkshop);   
+    }
 
     public override void openUI()
     {
@@ -132,6 +150,8 @@ public class MenuMainUIControl : BaseUIControl
             settingText.text = CommonData.getText(3);
         if (startGameText != null)
             exitText.text = CommonData.getText(4);
+        if (workshopText != null)
+            workshopText.text = CommonData.getText(121);
         if (mLogoTitle1 != null) {
             if (CommonConfigure.GameLanguage.Equals(GameLanguageEnum.Chinese))
             {

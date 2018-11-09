@@ -49,6 +49,42 @@ public class CreateJigsawDataUtils
         {
             jigsawBuilder = new TriangleJigsawBuilder();
         }
+        else if (jigsawStyle == JigsawStyleEnum.Trapezoid)
+        {
+            jigsawBuilder = new TrapezoidJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Square)
+        {
+            jigsawBuilder = new SquareJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Heart)
+        {
+            jigsawBuilder = new HeartJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Pentagram)
+        {
+            jigsawBuilder = new PentagramJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Pentagram)
+        {
+            jigsawBuilder = new PentagramJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Bodkin)
+        {
+            jigsawBuilder = new BodkinJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Sawtooth)
+        {
+            jigsawBuilder = new SawtoothJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Shuriken)
+        {
+            jigsawBuilder = new ShurikenJigsawBuilder();
+        }
+        else if (jigsawStyle == JigsawStyleEnum.Cross)
+        {
+            jigsawBuilder = new CrossJigsawBuilder();
+        }
         else
         {
             LogUtil.logError("没有相对于样式的拼图");

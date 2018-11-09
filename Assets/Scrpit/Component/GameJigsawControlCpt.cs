@@ -127,22 +127,24 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             Vector3 movePos = new Vector3(jigsawTransform.position.x, jigsawTransform.position.y, jigsawTransform.position.z);
             Vector3 nowOffset = new Vector3(vec3Offset.x, vec3Offset.y, vec3Offset.z);
-            if (Mathf.Abs(mousePos.x) <= ((moveWithMax / 2f) * moveScale))
-            {
-                movePos.x = mousePos.x;
-            }
-            else
-            {
-                nowOffset.x = 0f;
-            }
-            if (Mathf.Abs(mousePos.y) <= ((moveHighMax / 2f) * moveScale))
-            {
-                movePos.y = mousePos.y;
-            }
-            else
-            {
-                nowOffset.y = 0f;
-            }
+            movePos.x = mousePos.x;
+            movePos.y = mousePos.y;
+            //if (Mathf.Abs(mousePos.x) <= ((moveWithMax / 2f) * moveScale))
+            //{
+            //    movePos.x = mousePos.x;
+            //}
+            //else
+            //{
+            //    nowOffset.x = 0f;
+            //}
+            //if (Mathf.Abs(mousePos.y) <= ((moveHighMax / 2f) * moveScale))
+            //{
+            //    movePos.y = mousePos.y;
+            //}
+            //else
+            //{
+            //    nowOffset.y = 0f;
+            //}
             jigsawTransform.position = Vector3.Lerp(jigsawTransform.position, movePos + nowOffset, 20f * Time.deltaTime);
             // jigsawTransform.position = movePos + nowOffset;
         }

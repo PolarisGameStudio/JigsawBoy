@@ -18,12 +18,12 @@ public class ErrorDisplay : MonoBehaviour
 
     void HandleLog(string logString, string stackTrace, LogType type)
     {
-        mWriteTxt.Add(logString);
-        if (type == LogType.Error || type == LogType.Exception)
-        {
-            Log(logString);
-            Log(stackTrace);
-        }
+        //mWriteTxt.Add(logString);
+        //if (type == LogType.Error || type == LogType.Exception|| type == LogType.Log )
+        //{
+        //    Log(logString);
+        //    Log(stackTrace);
+        //}
     }
 
     //这里我把错误的信息保存起来，用来输出在手机屏幕上

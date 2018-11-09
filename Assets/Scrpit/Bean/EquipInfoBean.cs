@@ -13,4 +13,5 @@ public class EquipInfoBean
 
     public int unlockPoint;//解锁点数
     public string equipImageUrl;//图片地址
+    public string equipImageColor;//图片颜色
 }

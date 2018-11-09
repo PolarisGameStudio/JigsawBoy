@@ -236,12 +236,12 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
             DialogManager.createToastDialog().setToastText(CommonData.getText(72));
             return false;
         }
-        if (!CheckUtil.checkIsNumber(inputHorizontalNumber.text))
+        if (!CheckUtil.CheckIsNumber(inputHorizontalNumber.text))
         {
             DialogManager.createToastDialog().setToastText(CommonData.getText(73));
             return false;
         }
-        if (!CheckUtil.checkIsNumber(inputVerticalNumber.text))
+        if (!CheckUtil.CheckIsNumber(inputVerticalNumber.text))
         {
             DialogManager.createToastDialog().setToastText(CommonData.getText(74));
             return false;

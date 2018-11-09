@@ -44,4 +44,34 @@ public class GeometryUtil
         return circleVertices;
     }
 
+    /// <summary>
+    /// 判断一点是否在三角形内
+    /// </summary>
+    /// <param name="p">一点</param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public static bool VertexIsInTriangle(Vector3 _target, Vector3 _center, Vector3 _left, Vector3 _right)
+    {
+        Vector3 Ctl = _left - _center;
+        Vector3 Ctr = _right - _center;
+        Vector3 Ctt = _target - _center;
+        Vector3 Ltr = _right - _left;
+        Vector3 Ltc = _right - _center;
+        Vector3 Ltt = _left - _target;
+        Vector3 Rtl = _left - _right;
+        Vector3 Rtc = _center - _right;
+        Vector3 Rtt = _target - _right;
+        if
+            (
+          Vector3.Dot(Vector3.Cross(Ctl, Ctr).normalized, Vector3.Cross(Ctl, Ctt).normalized) == -1 ||
+          Vector3.Dot(Vector3.Cross(Ltr, Ltc).normalized, Vector3.Cross(Ltr, Ltt).normalized) == -1 ||
+          Vector3.Dot(Vector3.Cross(Rtc, Rtl).normalized, Vector3.Cross(Rtc, Rtt).normalized) == -1
+           )
+            return false;
+        else
+            return true;
+    }
+
 }

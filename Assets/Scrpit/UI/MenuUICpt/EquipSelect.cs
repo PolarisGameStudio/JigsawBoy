@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using System;
 
 public class EquipSelect : BaseMonoBehaviour
 {
@@ -28,7 +29,7 @@ public class EquipSelect : BaseMonoBehaviour
         defaultEquip.equipName = CommonData.getText(91);
         defaultEquip.equipType = (int)m_CurrentType;
         defaultEquip.equipTypeId = (int)JigsawStyleEnum.Def;
-        defaultEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        defaultEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_def";
         createEquipItem(content, defaultEquip);
 
         EquipInfoBean smoothEquip = new EquipInfoBean();
@@ -36,16 +37,81 @@ public class EquipSelect : BaseMonoBehaviour
         smoothEquip.equipType = (int)m_CurrentType;
         smoothEquip.equipTypeId = (int)JigsawStyleEnum.Smooth;
         smoothEquip.unlockPoint = 998;
-        smoothEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        smoothEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_smooth";
         createEquipItem(content, smoothEquip);
 
         EquipInfoBean triangleEquip = new EquipInfoBean();
         triangleEquip.equipName = CommonData.getText(93);
         triangleEquip.equipType = (int)m_CurrentType;
         triangleEquip.equipTypeId = (int)JigsawStyleEnum.Triangle;
-        triangleEquip.unlockPoint = 998;
-        triangleEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        triangleEquip.unlockPoint = 99;
+        triangleEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, triangleEquip);
+
+        EquipInfoBean trapezoidEquip = new EquipInfoBean();
+        trapezoidEquip.equipName = CommonData.getText(108);
+        trapezoidEquip.equipType = (int)m_CurrentType;
+        trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
+        trapezoidEquip.unlockPoint = 99;
+        trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_trapezoid";
+        createEquipItem(content, trapezoidEquip);
+
+        EquipInfoBean squareEquip = new EquipInfoBean();
+        squareEquip.equipName = CommonData.getText(107);
+        squareEquip.equipType = (int)m_CurrentType;
+        squareEquip.equipTypeId = (int)JigsawStyleEnum.Square;
+        squareEquip.unlockPoint = 199;
+        squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_square";
+        createEquipItem(content, squareEquip);
+
+        EquipInfoBean heartEquip = new EquipInfoBean();
+        heartEquip.equipName = CommonData.getText(109);
+        heartEquip.equipType = (int)m_CurrentType;
+        heartEquip.equipTypeId = (int)JigsawStyleEnum.Heart;
+        heartEquip.unlockPoint = 233;
+        heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_heart";
+        createEquipItem(content, heartEquip);
+
+        EquipInfoBean pentagramEquip = new EquipInfoBean();
+        pentagramEquip.equipName = CommonData.getText(110);
+        pentagramEquip.equipType = (int)m_CurrentType;
+        pentagramEquip.equipTypeId = (int)JigsawStyleEnum.Pentagram;
+        pentagramEquip.unlockPoint = 666;
+        pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_pentagram";
+        createEquipItem(content, pentagramEquip);
+
+        EquipInfoBean traditionalEquip = new EquipInfoBean();
+        traditionalEquip.equipName = CommonData.getText(117);
+        traditionalEquip.equipType = (int)m_CurrentType;
+        traditionalEquip.equipTypeId = (int)JigsawStyleEnum.Bodkin;
+        traditionalEquip.unlockPoint = 199;
+        traditionalEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_bodkin";
+        createEquipItem(content, traditionalEquip);
+
+
+        EquipInfoBean sawtoothEquip = new EquipInfoBean();
+        sawtoothEquip.equipName = CommonData.getText(118);
+        sawtoothEquip.equipType = (int)m_CurrentType;
+        sawtoothEquip.equipTypeId = (int)JigsawStyleEnum.Sawtooth;
+        sawtoothEquip.unlockPoint = 99;
+        sawtoothEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_sawtooth";
+        createEquipItem(content, sawtoothEquip);
+
+        EquipInfoBean shurikenEquip = new EquipInfoBean();
+        shurikenEquip.equipName = CommonData.getText(119);
+        shurikenEquip.equipType = (int)m_CurrentType;
+        shurikenEquip.equipTypeId = (int)JigsawStyleEnum.Shuriken;
+        shurikenEquip.unlockPoint = 99;
+        shurikenEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_shuriken";
+        createEquipItem(content, shurikenEquip);
+
+        EquipInfoBean crossEquip = new EquipInfoBean();
+        crossEquip.equipName = CommonData.getText(120);
+        crossEquip.equipType = (int)m_CurrentType;
+        crossEquip.equipTypeId = (int)JigsawStyleEnum.Cross;
+        crossEquip.unlockPoint = 99;
+        crossEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_cross";
+        createEquipItem(content, crossEquip);
     }
 
     /// <summary>
@@ -59,23 +125,23 @@ public class EquipSelect : BaseMonoBehaviour
         defaultEquip.equipName = CommonData.getText(91);
         defaultEquip.equipType = (int)m_CurrentType;
         defaultEquip.equipTypeId = 0;
-        defaultEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        defaultEquip.equipImageUrl = "Texture/UI/icon_equip_bordershape_def";
         createEquipItem(content, defaultEquip);
 
         EquipInfoBean circleEquip = new EquipInfoBean();
-        circleEquip.equipName = "圆形";
+        circleEquip.equipName = CommonData.getText(94);
         circleEquip.equipType = (int)m_CurrentType;
         circleEquip.equipTypeId = 1;
         circleEquip.unlockPoint = 998;
-        circleEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        circleEquip.equipImageUrl = "Texture/UI/icon_equip_bordershape_circle";
         createEquipItem(content, circleEquip);
 
         EquipInfoBean squareEquip = new EquipInfoBean();
-        squareEquip.equipName = "正方形";
+        squareEquip.equipName = CommonData.getText(95);
         squareEquip.equipType = (int)m_CurrentType;
         squareEquip.equipTypeId = 2;
         squareEquip.unlockPoint = 998;
-        squareEquip.equipImageUrl = "Texture/UI/icon_level_1";
+        squareEquip.equipImageUrl = "Texture/UI/icon_equip_bordershape_square";
         createEquipItem(content, squareEquip);
     }
 
@@ -85,21 +151,8 @@ public class EquipSelect : BaseMonoBehaviour
     public void selectBorderColor(Transform content)
     {
         m_CurrentType = EquipTypeEnum.BorderColor;
-
-        EquipInfoBean defaultEquip = new EquipInfoBean();
-        defaultEquip.equipName = CommonData.getText(91);
-        defaultEquip.equipType = (int)m_CurrentType;
-        defaultEquip.equipTypeId = 0;
-        defaultEquip.equipImageUrl = "Texture/UI/icon_level_1";
-        createEquipItem(content, defaultEquip);
-
-        EquipInfoBean blackEquip = new EquipInfoBean();
-        blackEquip.equipName = "黑色";
-        blackEquip.equipType = (int)m_CurrentType;
-        blackEquip.equipTypeId = 1;
-        blackEquip.unlockPoint = 100;
-        blackEquip.equipImageUrl = "Texture/UI/icon_level_1";
-        createEquipItem(content, blackEquip);
+        string equipImage= "Texture/UI/icon_equip_bordercolor";
+        initColorEquip(content, m_CurrentType, equipImage);
     }
 
     /// <summary>
@@ -108,21 +161,8 @@ public class EquipSelect : BaseMonoBehaviour
     public void selectBackground(Transform content)
     {
         m_CurrentType = EquipTypeEnum.Background;
-
-        EquipInfoBean defaultEquip = new EquipInfoBean();
-        defaultEquip.equipName = CommonData.getText(91);
-        defaultEquip.equipType = (int)m_CurrentType;
-        defaultEquip.equipTypeId = 0;
-        defaultEquip.equipImageUrl = "Texture/UI/icon_level_1";
-        createEquipItem(content, defaultEquip);
-
-        EquipInfoBean blackEquip = new EquipInfoBean();
-        blackEquip.equipName = "黑色";
-        blackEquip.equipType = (int)m_CurrentType;
-        blackEquip.equipTypeId = 1;
-        blackEquip.unlockPoint = 100;
-        blackEquip.equipImageUrl = "Texture/UI/icon_level_1";
-        createEquipItem(content, blackEquip);
+        string equipImage = "Texture/UI/icon_equip_background";
+        initColorEquip(content, m_CurrentType, equipImage);
     }
 
     /// <summary>
@@ -146,6 +186,8 @@ public class EquipSelect : BaseMonoBehaviour
         equipObj.name = data.equipName;
         equipObj.transform.localScale = new Vector3(1, 1, 1);
 
+        //背景
+        Image backgroundImage = CptUtil.getCptFormParentByName<Transform, Image>(equipObj.transform, "Background");
         //设置名字
         Text equipName = CptUtil.getCptFormParentByName<Transform, Text>(equipObj.transform, "EquipName");
         equipName.text = data.equipName;
@@ -153,11 +195,18 @@ public class EquipSelect : BaseMonoBehaviour
         //设置资源图片
         Image equipImage = CptUtil.getCptFormParentByName<Transform, Image>(equipObj.transform, "EquipImage");
         StartCoroutine(ResourcesManager.LoadAsyncDataImage(data.equipImageUrl, equipImage));
+        if (data.equipImageColor != null && data.equipImageColor.Length != 0)
+        {
+            if (data.equipTypeId == 0)
+                data.equipImageColor = "#EFEFEF";
+            ColorUtil.setImageColor(equipImage,data.equipImageColor);
+        }
 
         //获取是否锁定
         ((EquipDSHandle)DataStorageManage.getEquipDSHandle()).getData(data);
         Image equipLock = CptUtil.getCptFormParentByName<Transform, Image>(equipObj.transform, "EquipLock");
         Button equipButton = CptUtil.getCptFormParentByName<Transform, Button>(equipObj.transform, "EquipButton");
+        Image equipButtonImage= CptUtil.getCptFormParentByName<Transform, Image>(equipObj.transform, "EquipButton");
         Text equipButtonText = CptUtil.getCptFormParentByName<Transform, Text>(equipObj.transform, "EquipButtonText");
         if (data.equipTypeId != 0 && data.unlockType == 0)
         {
@@ -184,17 +233,19 @@ public class EquipSelect : BaseMonoBehaviour
             }
             else if (data.equipType == (int)EquipTypeEnum.BorderColor)
             {
-                equipId = CommonConfigure.BorderColor;
+                equipId = (int)CommonConfigure.BorderColor;
             }
-            else if (data.equipType == (int)EquipTypeEnum.BorderColor)
+            else if (data.equipType == (int)EquipTypeEnum.Background)
             {
-                equipId = CommonConfigure.BorderColor;
+                equipId = (int)CommonConfigure.Background;
             }
 
             if (equipId == data.equipTypeId)
             {
                 equipButtonText.text = CommonData.getText(90);
                 equipButton.onClick.RemoveAllListeners();
+                ColorUtil.setImageColor(backgroundImage, "#CCCCCC");
+                ColorUtil.setImageColor(equipButtonImage, "#CCCCCC");
             }
             else
             {
@@ -207,6 +258,28 @@ public class EquipSelect : BaseMonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 初始化颜色选项
+    /// </summary>
+    /// <param name="content"></param>
+    /// <param name="type"></param>
+    /// <param name="equipImage"></param>
+    private void initColorEquip(Transform content,EquipTypeEnum type, string equipImage)
+    {
+        int colorNumber = Enum.GetNames(typeof(EquipColorEnum)).Length;
+        for (int i = 0; i < colorNumber; i++)
+        {
+            EquipInfoBean itemEquip = new EquipInfoBean();
+            itemEquip.equipType = (int)m_CurrentType;
+            itemEquip.equipTypeId = i;
+            itemEquip.unlockPoint = 100;
+            itemEquip.equipImageUrl = equipImage;
+
+            EquipColorEnum colorEnum= (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum),i);
+            EnumUtil.getEquipColor(itemEquip,colorEnum);
+            createEquipItem(content, itemEquip);
+        }
+    }
 
     /// <summary>
     /// 使用装备
@@ -229,9 +302,9 @@ public class EquipSelect : BaseMonoBehaviour
         {
             configureBean.borderColor = (int)data.equipTypeId;
         }
-        else if (data.equipType == (int)EquipTypeEnum.BorderColor)
+        else if (data.equipType == (int)EquipTypeEnum.Background)
         {
-            configureBean.borderColor = (int)data.equipTypeId;
+            configureBean.background = (int)data.equipTypeId;
         }
         DataStorageManage.getGameConfigureDSHandle().saveData(configureBean);
         CommonConfigure.refreshData();

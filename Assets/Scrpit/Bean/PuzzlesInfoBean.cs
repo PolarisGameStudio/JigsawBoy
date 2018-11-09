@@ -13,6 +13,9 @@ public class PuzzlesInfoBean : PuzzlesInfoDetailsBean
     public int unlock_point;//解锁点数
     public int valid;//拼图有效值
 
+    //临时添加
+    public string thumb_file_path;//缩略图地址
+
     public long Id
     {
         get

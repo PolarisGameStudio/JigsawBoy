@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
 
-public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
+public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
 {
 
     public UIMasterControl uiMasterControl;
@@ -65,21 +65,21 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         Texture2D pic2D;
         if (jigsawInfoData.Data_type.Equals((int)JigsawResourcesEnum.Custom))
         {
-            WWW www= ResourcesManager.LoadLocationData(resFilePath);
+            WWW www = ResourcesManager.LoadLocationData(resFilePath);
             pic2D = www.texture;
         }
         else
         {
-             pic2D = ResourcesManager.LoadAssetBundlesTexture2DForBytes(resFilePath, jigsawInfoData.Mark_file_name);
+            pic2D = ResourcesManager.LoadAssetBundlesTexture2DForBytes(resFilePath, jigsawInfoData.Mark_file_name);
         }
-     
+
         if (pic2D == null)
         {
             LogUtil.log("没有源图片");
             return;
         }
         //生成拼图
-        createJigsaw(CommonConfigure.PuzzlesShape,pic2D, horizontalNumber, verticalJigsawNumber);
+        createJigsaw(CommonConfigure.PuzzlesShape, pic2D, horizontalNumber, verticalJigsawNumber);
         //获取图片的高和宽
         if (listJigsawBean != null && listJigsawBean.Count > 0)
         {
@@ -88,9 +88,9 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             picAllHigh = itemJigsawBean.JigsawHigh * verticalJigsawNumber;
         }
         //生成围墙
-        createWall(CommonConfigure.BorderShape, picAllWith, picAllHigh);
+        createWall(CommonConfigure.BorderShape, CommonConfigure.BorderColor, picAllWith, picAllHigh);
         //生成背景
-        createBackground(picAllWith, picAllHigh);
+        createBackground(CommonConfigure.Background, picAllWith, picAllHigh);
         //增加镜头控制
         addCameraControl(picAllWith, picAllHigh);
         //增加拼图控制
@@ -104,7 +104,7 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// 创建拼图
     /// </summary>
     /// <param name="jigsawInfoData"></param>
-    private void createJigsaw(JigsawStyleEnum jigsawStyle,Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
+    private void createJigsaw(JigsawStyleEnum jigsawStyle, Texture2D pic2D, int horizontalNumber, int verticalJigsawNumber)
     {
         //创建拼图数据
         listJigsawBean = CreateJigsawDataUtils.createJigsawDataList(jigsawStyle, horizontalNumber, verticalJigsawNumber, pic2D);
@@ -128,7 +128,6 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
                 containerCpt.startPosition = jigsawPosition;
                 containerCpt.startRotation = containerList[i].transform.rotation;
             }
-
         }
     }
 
@@ -137,14 +136,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="wallWith"></param>
     /// <param name="wallHigh"></param>
-    private void createWall(GameWallEnum gameWallEnum, float picAllWith, float picAllHigh)
+    private void createWall(GameWallEnum gameWallEnum, EquipColorEnum gameWallColor, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成围墙，缺少高和宽");
             return;
         }
-        CreateGameWallUtil.createWall(gameWallEnum, picAllWith, picAllHigh);
+        CreateGameWallUtil.createWall(gameWallEnum, gameWallColor, picAllWith, picAllHigh);
     }
 
     /// <summary>
@@ -152,14 +151,14 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
     /// </summary>
     /// <param name="picAllWith"></param>
     /// <param name="picAllHigh"></param>
-    private void createBackground(float picAllWith, float picAllHigh)
+    private void createBackground(EquipColorEnum backgroundColor, float picAllWith, float picAllHigh)
     {
         if (picAllWith == 0 || picAllHigh == 0)
         {
             LogUtil.log("无法生成背景，缺少高和宽");
             return;
         }
-        CreateGameBackgroundUtil.createBackground(picAllWith, picAllHigh);
+        CreateGameBackgroundUtil.createBackground(backgroundColor, picAllWith, picAllHigh);
     }
 
 
@@ -219,15 +218,16 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
         paramsData.puzzleId = CommonData.SelectPuzzlesInfo.puzzlesInfo.id;
         paramsData.markFileName = CommonData.SelectPuzzlesInfo.puzzlesInfo.mark_file_name;
         PuzzlesProgressBean progressData = DataStorageManage.getPuzzlesProgressDSHandle().getData(paramsData);
-     
+
         TimeBean gameTime = null;
         if (progressData != null)
         {
             gameTime = progressData.gameTime;
             GameUtil.setGameProgress(this, progressData);
         }
-        else {
-            
+        else
+        {
+
         }
         CommonData.IsCheating = false;
         CommonData.GameStatus = 1;
@@ -264,7 +264,8 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             completeTime = gameMainUI.getGameTimer();
         }
 
-        if (!CommonData.IsCheating){
+        if (!CommonData.IsCheating)
+        {
             if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
             {
 
@@ -272,47 +273,50 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
             else
             {
                 //增加PP
-                int addPuzzlesPoint = CommonData.SelectPuzzlesInfo.puzzlesInfo.level * CommonData.SelectPuzzlesInfo.puzzlesInfo.level;
+                int addPuzzlesPoint = (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1) * (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1);
                 DialogManager.createPuzzlesPointAddDialog(addPuzzlesPoint);
             }
             //保存数据
             GameUtil.FinshSaveCompleteData(CommonData.SelectPuzzlesInfo, completeTime);
+
         }
-    
-        //镜头移动
-        cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
-        Tween cameraTW = DOTween
-            .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime)
-            .OnComplete(
-            delegate () {
-                if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+
+        //动画结束后显示排行榜
+        transform.DOScale(new Vector3(1, 1), gameFinshAnimTime).OnComplete(delegate ()
+        {
+            if (CommonData.SelectPuzzlesInfo.puzzlesInfo.data_type.Equals((int)JigsawResourcesEnum.Custom))
+            {
+                SceneUtil.jumpMainScene();
+            }
+            else
+            {
+                int leaderType = 0;
+                if (CommonData.IsCheating)
                 {
-                    SceneUtil.jumpMainScene();
+                    leaderType = 1;
                 }
                 else
                 {
-                    int leaderType = 0;
-                    if (CommonData.IsCheating)
-                    {
-                        leaderType = 1;
-                    }
-                    else
-                    {
-                        //没有作弊 放烟花
-                        //GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
-                        //Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
-                        //gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
-                        //gameFinshCanvas.worldCamera = Camera.main;
-                    }
-                    DialogManager
-                    .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
-                    .setUserScore(completeTime.totalSeconds)
-                    .setCallBack(this)
-                    .setCancelButtonStr(CommonData.getText(21))
-                    .setSubmitButtonStr(CommonData.getText(23));
+                    //没有作弊 放烟花
+                    //GameObject dialogObj = Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Particle/Background/GameFinshParticle"));
+                    //Canvas gameFinshCanvas = dialogObj.GetComponent<Canvas>();
+                    //gameFinshCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                    //gameFinshCanvas.worldCamera = Camera.main;
                 }
-                CommonData.IsCheating = false;
-            });
+                DialogManager
+                .createLeaderBoradDialog(leaderType, CommonData.SelectPuzzlesInfo)
+                .setUserScore(completeTime.totalSeconds)
+                .setCallBack(this)
+                .setCancelButtonStr(CommonData.getText(21))
+                .setSubmitButtonStr(CommonData.getText(23));
+            }
+            CommonData.IsCheating = false;
+        });
+
+        //镜头移动
+        cameraControl.transform.DOMove(cameraControl.startCameraPosition, gameFinshAnimTime);
+        Tween cameraTW = DOTween
+            .To(() => Camera.main.orthographicSize, x => Camera.main.orthographicSize = x, startCameraOrthographicSize, gameFinshAnimTime);
         //图像归位
         int containerListSize = containerList.Count;
         for (int i = 0; i < containerListSize; i++)
@@ -326,11 +330,25 @@ public class GameStartControl : BaseMonoBehaviour ,LeaderBoardDialog.CallBack
 
                 container.transform.DORotate(new Vector3(containerCpt.startRotation.x, containerCpt.startRotation.y), gameFinshAnimTime);
                 container.transform.DOMove(containerCpt.startPosition, gameFinshAnimTime);
-                return;
+                break;
             }
         }
-       
 
+        //设置成就
+        List<PuzzlesCompleteStateBean> listCompleteState = ((PuzzlesCompleteDSHandle)DataStorageManage.getPuzzlesCompleteDSHandle()).getDefAllData();
+        if (listCompleteState != null && listCompleteState.Count != 0)
+        {
+            int completeNumber = 0;
+            foreach (PuzzlesCompleteStateBean itemState in listCompleteState)
+            {
+                if (itemState.completeTime != null && itemState.completeTime.totalSeconds != 0)
+                {
+                    completeNumber++;
+                }
+            }
+            IUserAchievementHandle userAchievement = new UserStatsHandleImpl();
+            userAchievement.userCompleteNumberChange(completeNumber);
+        }
     }
 
     public void cancelOnClick()

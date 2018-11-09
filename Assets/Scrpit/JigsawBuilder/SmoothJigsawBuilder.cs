@@ -26,10 +26,13 @@ public class SmoothJigsawBuilder : BaseJigsawBuilder
     public override void setListVerticesForItem(JigsawBean jigsawItem)
     {
         List<Vector3> listVertices = new List<Vector3>();
-        base.baseSetListVerticesForItem(jigsawItem, listVertices);
+        base.baseSetListVerticesForItem(jigsawItem);
 
         float withX = jigsawItem.JigsawWith / 2f;
         float highY = jigsawItem.JigsawHigh / 2f;
+
+        //添加起始点
+        listVertices.Add(jigsawItem.CenterVector);
         //添加左下角点
         listVertices.Add(new Vector3(-withX, -highY));
         //添加左上角点
@@ -42,12 +45,4 @@ public class SmoothJigsawBuilder : BaseJigsawBuilder
         setListVertices(jigsawItem, listVertices);
     }
 
-    /// <summary>
-    /// 设置UV坐标
-    /// </summary>
-    /// <param name="jigsawItem"></param>
-    public override void setListUVPositionForItem(JigsawBean jigsawItem)
-    {
-        base.baseSetListUVPositionForItem(jigsawItem);
-    }
 }

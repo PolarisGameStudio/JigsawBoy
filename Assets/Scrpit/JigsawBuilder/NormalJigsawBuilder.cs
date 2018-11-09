@@ -56,10 +56,12 @@ public class NomralJigsawBuilder : BaseJigsawBuilder
 
         if (listBulge == null)
             throw new Exception("没有凹凸参数");
-        List<Vector3> listVertices = new List<Vector3>();
-        base.baseSetListVerticesForItem(jigsawItem, listVertices);
+
+        base.baseSetListVerticesForItem(jigsawItem);
 
         //根据凹凸属性生成坐标点
+        List<Vector3> listVertices = new List<Vector3>();
+
         JigsawBulgeEnum leftBulge = listBulge[0];
         JigsawBulgeEnum aboveBulge = listBulge[1];
         JigsawBulgeEnum rightBulge = listBulge[2];
@@ -68,6 +70,8 @@ public class NomralJigsawBuilder : BaseJigsawBuilder
         float withX = jigsawItem.JigsawWith / 2f;
         float highY = jigsawItem.JigsawHigh / 2f;
 
+        //添加起始点
+        listVertices.Add(jigsawItem.CenterVector);
         //添加左下角点
         listVertices.Add(new Vector3(-withX, -highY));
         //添加左边凸出部分坐标点
@@ -101,15 +105,6 @@ public class NomralJigsawBuilder : BaseJigsawBuilder
         listVertices.AddRange(belowVertices);
 
         setListVertices(jigsawItem, listVertices);
-    }
-
-   /// <summary>
-   /// 设置UV坐标
-   /// </summary>
-   /// <param name="jigsawItem"></param>
-    public override void setListUVPositionForItem(JigsawBean jigsawItem)
-    {
-        base.baseSetListUVPositionForItem(jigsawItem);
     }
 
     /// <summary>

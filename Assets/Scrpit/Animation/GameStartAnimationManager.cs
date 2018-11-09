@@ -13,7 +13,7 @@ public class GameStartAnimationManager
     {
         int animInt = DevUtil.getRandomInt(1, 6);
         GameStartAnimationEnum animEnum = (GameStartAnimationEnum)animInt;
-
+     
         BaseGameStartAnimation animation = null;
         if (animEnum.Equals(GameStartAnimationEnum.Closure_Dispersed))
         {

@@ -17,8 +17,6 @@ public class MenuSelectUIControl : BaseUIControl
     public Text titleBarJigsawPointTV;
     public Text titleBarTitleName;
 
-   
-
     private JigsawResourcesEnum currentResType;//当前选择数据类型
 
     private new void Awake()
@@ -62,7 +60,9 @@ public class MenuSelectUIControl : BaseUIControl
     /// <param name="resTypeSelectView"></param>
     public void setJigsawSelectData(JigsawResourcesEnum resourcesEnum)
     {
-        titleBarTitleName.text = EnumUtil.getResTypeName(resourcesEnum);
+        string resName = "";
+        EnumUtil.getResTypeInfoForName(resourcesEnum,out resName);
+        titleBarTitleName.text = resName;
         this.currentResType = resourcesEnum;
         if (jigsawSelectContentSC == null)
             return;
@@ -147,7 +147,5 @@ public class MenuSelectUIControl : BaseUIControl
         StopAllCoroutines();
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }
-
-
 }
 

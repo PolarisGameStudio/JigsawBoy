@@ -30,6 +30,26 @@ public class PuzzlesCompleteDSHandle : BaseDataStorageHandle<PuzzlesCompleteStat
     }
 
     /// <summary>
+    /// 获取除自定义拼图之外的拼图
+    /// </summary>
+    /// <returns></returns>
+    public List<PuzzlesCompleteStateBean> getDefAllData()
+    {
+        List<PuzzlesCompleteStateBean> allData = getAllData();
+        List<PuzzlesCompleteStateBean> allDefData = new List<PuzzlesCompleteStateBean>();
+        if (allData == null)
+            return allDefData;
+        foreach (PuzzlesCompleteStateBean itemData in allData)
+        {
+            if (itemData.puzzleId >= 1)
+            {
+                allDefData.Add(itemData);
+            }
+        }
+        return allDefData;
+    }
+
+    /// <summary>
     /// 通过ID获取完成拼图数据
     /// </summary>
     /// <param name="puzzlesId"></param>

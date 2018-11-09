@@ -179,7 +179,7 @@ public class GameUtil
 
     static IEnumerator delayComplete(BaseMonoBehaviour content, JigsawContainerCpt[] cptList, JigsawContainerCpt tempCpt, float mergeTime)
     {
-        foreach (JigsawContainerCpt itemCpt in cptList )
+        foreach (JigsawContainerCpt itemCpt in cptList)
         {
             Rigidbody2D itemRB = itemCpt.GetComponent<Rigidbody2D>();
             if (itemCpt != null)
@@ -199,8 +199,8 @@ public class GameUtil
         {
             if (mergeTime > 5)
             {
-               tempCpt.transform.position = tempCpt.startPosition;
-               tempCpt.transform.localRotation = tempCpt.startRotation;
+                tempCpt.transform.position = tempCpt.startPosition;
+                tempCpt.transform.localRotation = tempCpt.startRotation;
             }
             JigsawContainerCpt itemCpt = cptList[i];
             itemCpt.isSelect = false;
@@ -232,5 +232,99 @@ public class GameUtil
             timeSpan.Minutes + CommonData.getText(25) + " " +
             timeSpan.Seconds + CommonData.getText(26) + " ";
     }
+
+    /// <summary>
+    /// 根据左边凸点坐标获取 拼图块所有边上的凹凸点坐标
+    /// </summary>
+    /// <param name="leftConcavePositionList">左边凸点坐标</param>
+    /// <param name="outDireciton">输出方向</param>
+    /// <param name="convex">凸点</param>
+    /// <param name="concave">凹点</param>
+    public static void getJigsawPuzzlescCCPositon(List<Vector3> leftConcavePositionList, Direction2DEnum outDireciton, float withX, float highY, out List<Vector3> convex, out List<Vector3> concave)
+    {
+        convex = new List<Vector3>();
+        concave = new List<Vector3>();
+        if (outDireciton == Direction2DEnum.Left)
+        {
+            convex = leftConcavePositionList;
+            for (int i = 0; i < leftConcavePositionList.Count; i++)
+            {
+                Vector3 itemPosition = leftConcavePositionList[i];
+                float differ = Mathf.Abs(itemPosition.x) - withX;
+
+                //设置凹点坐标
+                Vector3 concavePosition = new Vector3();
+                concavePosition.x = itemPosition.x + differ * 2;
+                concavePosition.y = itemPosition.y;
+                concavePosition.z = itemPosition.z;
+                concave.Add(concavePosition);
+            }
+        }
+        else if (outDireciton == Direction2DEnum.Above)
+        {
+            for (int i = 0; i < leftConcavePositionList.Count; i++)
+            {
+                Vector3 itemPosition = leftConcavePositionList[i];
+                //设置凸点坐标
+
+                Vector3 convexPosition = new Vector3();
+                convexPosition.x = itemPosition.y;
+                convexPosition.y = (Mathf.Abs(itemPosition.x) - withX + highY);
+                convexPosition.z = itemPosition.z;
+                convex.Add(convexPosition);
+
+                float differ = Mathf.Abs(convexPosition.y) - highY;
+                //设置凹点坐标
+                Vector3 concavePosition = new Vector3();
+                concavePosition.x = convexPosition.x;
+                concavePosition.y = convexPosition.y - differ * 2;
+                concavePosition.z = convexPosition.z;
+                concave.Add(concavePosition);
+            }
+        }
+        else if (outDireciton == Direction2DEnum.Right)
+        {
+            for (int i = 0; i < leftConcavePositionList.Count; i++)
+            {
+                Vector3 itemPosition = leftConcavePositionList[i];
+                //设置凸点坐标
+                Vector3 convexPosition = new Vector3();
+                convexPosition.x = -itemPosition.x;
+                convexPosition.y = -itemPosition.y;
+                convexPosition.z = itemPosition.z;
+                convex.Add(convexPosition);
+
+                float differ = Mathf.Abs(convexPosition.x) - withX;
+                //设置凹点坐标
+                Vector3 concavePosition = new Vector3();
+                concavePosition.x = convexPosition.x- differ * 2;
+                concavePosition.y = convexPosition.y;
+                concavePosition.z = convexPosition.z;
+                concave.Add(concavePosition);
+            }
+        }
+        else if (outDireciton == Direction2DEnum.Below)
+        {
+            for (int i = 0; i < leftConcavePositionList.Count; i++)
+            {
+                Vector3 itemPosition = leftConcavePositionList[i];
+                //设置凸点坐标
+                Vector3 convexPosition = new Vector3();
+                convexPosition.x = -itemPosition.y;
+                convexPosition.y = - (Mathf.Abs(itemPosition.x) - withX + highY);
+                convexPosition.z = itemPosition.z;
+                convex.Add(convexPosition);
+
+                float differ = Mathf.Abs(convexPosition.y) - highY;
+                //设置凹点坐标
+                Vector3 concavePosition = new Vector3();
+                concavePosition.x = convexPosition.x;
+                concavePosition.y = convexPosition.y + differ * 2;
+                concavePosition.z = convexPosition.z;
+                concave.Add(concavePosition);
+            }
+        }
+    }
+
 }
 

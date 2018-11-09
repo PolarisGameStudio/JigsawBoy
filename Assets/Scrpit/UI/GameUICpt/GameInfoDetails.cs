@@ -21,7 +21,6 @@ public class GameInfoDetails : MonoBehaviour
         string name = selectJigsawInfo.Name;
         string introductionContent = selectJigsawInfo.Introduction_content;
  
-
         string storageArea = selectJigsawInfo.Storage_area;
         string specifications = selectJigsawInfo.Specifications;
         string timeOfCreation = selectJigsawInfo.Time_creation;
@@ -95,7 +94,6 @@ public class GameInfoDetails : MonoBehaviour
         Text titleText = CptUtil.getCptFormParentByName<Transform, Text>(textObj.transform, "GameInfoTextTitle");
         Text contentText = CptUtil.getCptFormParentByName<Transform, Text>(textObj.transform, "GameInfoTextContent");
 
-
         //设置内容
         titleText.text = title;
         contentText.text = content;
@@ -106,7 +104,6 @@ public class GameInfoDetails : MonoBehaviour
             contentText.resizeTextMaxSize = contentTextSize;
         }
 
-
         //设置高度
         RectTransform textTF = textObj.GetComponent<RectTransform>();
         float contentTextHight = contentText.preferredHeight;
@@ -116,6 +113,12 @@ public class GameInfoDetails : MonoBehaviour
         }
         //添加文本
         textObj.transform.parent = transform;
+
+        //设置大小
+        RectTransform rect = textObj.GetComponent<RectTransform>();
+        float itemWith = transform.GetComponent<RectTransform>().rect.width;
+        float itemHight = textObj.GetComponent<RectTransform>().rect.height + 10;
+        rect.sizeDelta = new Vector2(itemWith, itemHight);
     }
 }
 
