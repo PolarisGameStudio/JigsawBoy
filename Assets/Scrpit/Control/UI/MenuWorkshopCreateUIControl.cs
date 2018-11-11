@@ -238,18 +238,43 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             FileUtil.CreateDirectory(customUI.fileSavePath);
             FileUtil.CopyFile(customUI.uploadPath, customUI.fileNamePath, true);
 
-            int thumbWidth = textureWidth/10;
-            int thumbHigh = textureHigh/10;
-            if (thumbWidth <= 0)
+            if (textureWidth <= 1000 && textureHigh<= 1000)
             {
-                thumbWidth = 1;
+                FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", data.texture);
             }
-            if (thumbHigh <= 0)
+            else
             {
-                thumbHigh = 1;
+
+                int thumbWidth = 0;
+                int thumbHigh =0;
+
+                if (textureWidth > textureHigh)
+                {
+                    thumbWidth = 1000;
+                    thumbHigh = (int)(((float)thumbWidth) /(((float)textureWidth / (float)textureHigh)));
+                }
+                else
+                {
+                    thumbHigh = 1000;
+                    thumbWidth = (int)(((float)thumbHigh) / (((float)textureHigh / (float)textureWidth)));
+                }
+           
+                if (thumbWidth <= 0)
+                {
+                    thumbWidth = 1;
+                }
+                if (thumbHigh <= 0)
+                {
+                    thumbHigh = 1;
+                }
+                Texture thumb = TextureUtil.ScaleTexture(data.texture, thumbWidth, thumbHigh);
+                FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", thumb);
             }
-            Texture thumb=  TextureUtil.ScaleTexture(data.texture, thumbWidth, thumbHigh);
-            FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", thumb);
+
+         
+
+         
+           
         }
 
  
