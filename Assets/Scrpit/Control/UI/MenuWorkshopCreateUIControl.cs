@@ -26,6 +26,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
     public Text inputHorizontalNumberTitle;
     public Text inputVerticalNumberTitle;
     public Text uploadLoadingTitle;
+    public Text uploadLoadingProgress;
 
     public GameObject tagsGroup;
     public GameObject tagModel;
@@ -100,15 +101,15 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         tags.Add("food");
         tags.Add("game");
         listTag = new List<Toggle>();
-        for (int i=0;i< tags.Count; i++)
+        for (int i = 0; i < tags.Count; i++)
         {
             GameObject tagObj = Instantiate(tagModel);
             tagObj.name = tags[i];
             tagObj.SetActive(true);
             tagObj.transform.parent = tagsGroup.transform;
             tagObj.transform.localScale = new Vector3(1f, 1f, 1f);
-            Text tagText= CptUtil.getCptFormParentByName<Transform, Text>(tagObj.transform,"Label");
-            tagText.text= tags[i];
+            Text tagText = CptUtil.getCptFormParentByName<Transform, Text>(tagObj.transform, "Label");
+            tagText.text = tags[i];
             listTag.Add(tagObj.GetComponent<Toggle>());
         }
     }
@@ -142,12 +143,12 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         }
         PuzzlesInfoBean infoBean = new PuzzlesInfoBean();
         infoBean.mark_file_name = fileName;
-        infoBean.horizontal_number= Convert.ToInt32(inputHorizontalNumber.text);
+        infoBean.horizontal_number = Convert.ToInt32(inputHorizontalNumber.text);
         infoBean.Vertical_number = Convert.ToInt32(inputVerticalNumber.text);
-        string infoStr=  JsonUtil.ToJson(infoBean);
+        string infoStr = JsonUtil.ToJson(infoBean);
 
         List<string> selectedTags = new List<string>();
-        foreach (  Toggle item in listTag)
+        foreach (Toggle item in listTag)
         {
             if (item.isOn)
             {
@@ -162,7 +163,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         updateData.preview = fileNamePath + "_Thumb";
         updateData.tags = selectedTags;
         loadingBT.gameObject.SetActive(true);
-        SteamWorkshopHandle.CreateWorkshopItem(this, updateData,new UpdateCallBack(this));
+        SteamWorkshopHandle.CreateWorkshopItem(this, updateData, new UpdateCallBack(this));
     }
 
     /// <summary>
@@ -195,7 +196,16 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
 
         public void UpdateProgress(EItemUpdateStatus status, ulong progressBytes, ulong totalBytes)
         {
-         
+            string contentStr = "";
+            if (status == EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile)
+            {
+                contentStr = "PreviewFile:  " + progressBytes + "/" + totalBytes;
+            }
+            else if (status == EItemUpdateStatus.k_EItemUpdateStatusUploadingContent)
+            {
+                contentStr = "Content:  " + progressBytes + "/" + totalBytes;
+            }
+            customUI.uploadLoadingProgress.text = contentStr;
         }
 
         public void UpdateSuccess()
@@ -238,7 +248,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             FileUtil.CreateDirectory(customUI.fileSavePath);
             FileUtil.CopyFile(customUI.uploadPath, customUI.fileNamePath, true);
 
-            if (textureWidth <= 1000 && textureHigh<= 1000)
+            if (textureWidth <= 1000 && textureHigh <= 1000)
             {
                 FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", data.texture);
             }
@@ -246,19 +256,19 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             {
 
                 int thumbWidth = 0;
-                int thumbHigh =0;
+                int thumbHigh = 0;
 
                 if (textureWidth > textureHigh)
                 {
                     thumbWidth = 1000;
-                    thumbHigh = (int)(((float)thumbWidth) /(((float)textureWidth / (float)textureHigh)));
+                    thumbHigh = (int)(((float)thumbWidth) / (((float)textureWidth / (float)textureHigh)));
                 }
                 else
                 {
                     thumbHigh = 1000;
                     thumbWidth = (int)(((float)thumbHigh) / (((float)textureHigh / (float)textureWidth)));
                 }
-           
+
                 if (thumbWidth <= 0)
                 {
                     thumbWidth = 1;
@@ -270,14 +280,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
                 Texture thumb = TextureUtil.ScaleTexture(data.texture, thumbWidth, thumbHigh);
                 FileUtil.ImageSaveLocal(customUI.fileNamePath + "_Thumb", thumb);
             }
-
-         
-
-         
-           
         }
-
- 
     }
 
     /// <summary>
@@ -306,7 +309,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             fileName = null;
         if (fileNamePath != null)
             fileNamePath = null;
-        
+
     }
 
 
@@ -369,8 +372,8 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             return false;
         }
         bool isToggleSelected = false;
-        if(listTag!=null)
-            foreach (Toggle item in  listTag)
+        if (listTag != null)
+            foreach (Toggle item in listTag)
             {
                 if (item.isOn)
                     isToggleSelected = true;

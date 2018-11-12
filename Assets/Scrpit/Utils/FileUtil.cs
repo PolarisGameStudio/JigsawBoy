@@ -67,7 +67,7 @@ public class FileUtil : ScriptableObject
     {
         OpenFileDialog ofd = new OpenFileDialog();   //new一个方法
         ofd.InitialDirectory = "file://" + UnityEngine.Application.dataPath;  //定义打开的默认文件夹位置//定义打开的默认文件夹位置
-        ofd.Filter = "jpg(*.jpg)|*.jpg|png(*.png)|*.png";
+        ofd.Filter = "(*.jpg,*.png,*.jpeg,*.bmp)|*.jpg;*.png;*.jpeg;*.bmp";
         if (ofd.ShowDialog() == DialogResult.OK)
         {
             return ofd.FileName;
