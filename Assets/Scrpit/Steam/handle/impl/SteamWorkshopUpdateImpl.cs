@@ -112,10 +112,11 @@ public class SteamWorkshopUpdateImpl : ISteamWorkshopUpdate
     private void OnSubmitItemCallBack(SubmitItemUpdateResult_t itemResult, bool bIOFailure)
     {
         mIsComplete = true;
+        LogUtil.log("update:"+ (int)itemResult.m_eResult);
         if (bIOFailure || itemResult.m_eResult != EResult.k_EResultOK)
         {
             SteamUGC.DeleteItem(itemResult.m_nPublishedFileId);
-            mContent.StopCoroutine(ProgressCoroutine(mUpdateHandle));
+            mContent.StopCoroutine(ProgressCoroutine(mUpdateHandle, itemResult.m_nPublishedFileId));
             if (this.mUpdateCallBack != null)
                 if(itemResult.m_eResult== EResult.k_EResultLimitExceeded)
                 {
@@ -163,8 +164,7 @@ public class SteamWorkshopUpdateImpl : ISteamWorkshopUpdate
         CallResult<SubmitItemUpdateResult_t> callResult = CallResult<SubmitItemUpdateResult_t>.Create(OnSubmitItemCallBack);
         SteamAPICall_t apiCallBack = SteamUGC.SubmitItemUpdate(mUpdateHandle, null);
         callResult.Set(apiCallBack);
-
-        mContent.StartCoroutine(ProgressCoroutine(mUpdateHandle));
+        mContent.StartCoroutine(ProgressCoroutine(mUpdateHandle,  fileId));
     }
 
     /// <summary>
@@ -172,7 +172,7 @@ public class SteamWorkshopUpdateImpl : ISteamWorkshopUpdate
     /// </summary>
     /// <param name="updateHandle"></param>
     /// <returns></returns>
-    private IEnumerator ProgressCoroutine(UGCUpdateHandle_t updateHandle)
+    private IEnumerator ProgressCoroutine(UGCUpdateHandle_t updateHandle, PublishedFileId_t fileId)
     {
         mIsComplete = false;
         while (!mIsComplete)
@@ -181,16 +181,22 @@ public class SteamWorkshopUpdateImpl : ISteamWorkshopUpdate
             ulong totalBytes;
             EItemUpdateStatus state = SteamUGC.GetItemUpdateProgress(updateHandle, out progressBytes, out totalBytes);
             if (this.mUpdateCallBack != null)
-                if (state == EItemUpdateStatus.k_EItemUpdateStatusInvalid)
+                if (state == EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges)
                 {
                     mIsComplete = true;
                     this.mUpdateCallBack.UpdateSuccess();
+                }
+                else if (state == EItemUpdateStatus.k_EItemUpdateStatusInvalid)
+                {
+                    mIsComplete = true;
+                    this.mUpdateCallBack.UpdateFail(SteamWorkshopUpdateFailEnum.REQUEST_FAIL);
+                    SteamUGC.DeleteItem(fileId);
                 }
                 else
                 {
                     this.mUpdateCallBack.UpdateProgress(state, progressBytes, totalBytes);
                 }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

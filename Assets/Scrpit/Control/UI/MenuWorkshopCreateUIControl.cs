@@ -199,11 +199,23 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
             string contentStr = "";
             if (status == EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile)
             {
-                contentStr = "PreviewFile:  " + progressBytes + "/" + totalBytes;
+                contentStr = "Uploading Preview File";
             }
             else if (status == EItemUpdateStatus.k_EItemUpdateStatusUploadingContent)
             {
-                contentStr = "Content:  " + progressBytes + "/" + totalBytes;
+                contentStr = "Uploading Content:  " + progressBytes + "/" + totalBytes;
+            }
+            else if (status == EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig)
+            {
+                contentStr = "Preparing Config";
+            }
+            else if (status == EItemUpdateStatus.k_EItemUpdateStatusPreparingContent)
+            {
+                contentStr = "Preparing Content";
+            }
+            else if (status == EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges)
+            {
+                contentStr = "Committing Changes";
             }
             customUI.uploadLoadingProgress.text = contentStr;
         }
