@@ -13,6 +13,8 @@ public class CommonConfigure
     public static EnabledEnum IsOpenBGM;
     //是否开启音效
     public static EnabledEnum IsOpenSound;
+    //是否开启即时UI
+    public static EnabledEnum IsOpenTimeUI;
     //屏幕状态
     public static ScreenModeEnum SceenMode;
     //拼图形状
@@ -34,6 +36,7 @@ public class CommonConfigure
         GameLanguage = GameLanguageEnum.English;
         IsOpenBGM = EnabledEnum.ON;
         IsOpenSound = EnabledEnum.ON;
+        IsOpenTimeUI= EnabledEnum.ON;
         SceenMode = ScreenModeEnum.Full;
 
         PuzzlesShape = JigsawStyleEnum.Def;
@@ -49,8 +52,10 @@ public class CommonConfigure
             IsOpenBGM = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenBGM);
             //是否开启音效
             IsOpenSound = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenSound);
+            //是否开启计时UI
+            IsOpenTimeUI = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), configureBean.isOpenTimeUI);
             //屏幕模式
-            SceenMode= (ScreenModeEnum)Enum.ToObject(typeof(ScreenModeEnum), configureBean.screenMode);
+            SceenMode = (ScreenModeEnum)Enum.ToObject(typeof(ScreenModeEnum), configureBean.screenMode);
 
             PuzzlesShape = (JigsawStyleEnum)Enum.ToObject(typeof(JigsawStyleEnum), configureBean.puzzlesShape);
             BorderShape = (GameWallEnum)Enum.ToObject(typeof(GameWallEnum), configureBean.borderShape);

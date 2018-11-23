@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Steamworks;
 
 public class SteamWorkshopHandle
 {
@@ -24,12 +25,12 @@ public class SteamWorkshopHandle
     /// <param name="content"></param>
     /// <param name="pageNumber">页数 初始页为1 每页查询50条数据</param>
     /// <param name="callBack"></param>
-    public static void QueryInstallInfo(BaseMonoBehaviour content, uint pageNumber, ISteamWorkshopQueryInstallInfoCallBack callBack)
+    public static void QueryInstallInfo(BaseMonoBehaviour content, uint pageNumber, EUserUGCList type, ISteamWorkshopQueryInstallInfoCallBack callBack)
     {
         if (SteamManager.Initialized)
         {
             ISteamWorkshopQuery query = new SteamWorkshopQueryImpl(content);
-            query.QueryInstallInfo(pageNumber, callBack);
+            query.QueryInstallInfo(pageNumber, type, callBack);
         }
     }
 }

@@ -32,6 +32,17 @@ public class GameMainUIControl : BaseUIControl
         gameInfoBT.onClick.AddListener(openGameInfo);
         gamePauseBT.onClick.AddListener(openPauseBT);
         gameOIBT.onClick.AddListener(openOI);
+
+
+        CanvasGroup timeUI= gameTimerTF.GetComponent<CanvasGroup>();
+        if (CommonConfigure.IsOpenTimeUI==EnabledEnum.ON)
+        {
+            timeUI.alpha = 1;
+        }
+        else
+        {
+            timeUI.alpha = 0;
+        }
       //  gameMusicBT.onClick.AddListener(openGameMusic);
     }
 

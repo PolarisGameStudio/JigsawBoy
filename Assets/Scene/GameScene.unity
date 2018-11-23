@@ -399,6 +399,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1339065595000552, guid: c48a14e58bb40894fbb87fb3988727f8, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c48a14e58bb40894fbb87fb3988727f8, type: 2}
   m_IsPrefabAsset: 0
@@ -412,6 +416,22 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224558318581262314, guid: c48a14e58bb40894fbb87fb3988727f8,
     type: 2}
   m_PrefabInternal: {fileID: 2407528}
+--- !u!1 &2407531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1339065595000552, guid: c48a14e58bb40894fbb87fb3988727f8,
+    type: 2}
+  m_PrefabInternal: {fileID: 2407528}
+--- !u!225 &2407532
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2407531}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &19159460
 GameObject:
   m_ObjectHideFlags: 0
@@ -4270,27 +4290,27 @@ Prefab:
     - target: {fileID: 224492563207316236, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224492563207316236, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224492563207316236, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -304.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224896606594988580, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: -730.0737
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224139618697603376, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224896606594988580, guid: 8df865289fc91d54293bd8d7d967c265,
         type: 2}
@@ -4480,6 +4500,7 @@ MonoBehaviour:
     data_type: 0
     unlock_point: 0
     valid: 0
+    thumb_file_path: 
   picAllWith: 0
   picAllHigh: 0
   gameFinshAnimTime: 0

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Steamworks;
 
 public interface ISteamWorkshopQuery 
 {
@@ -8,5 +9,5 @@ public interface ISteamWorkshopQuery
     /// </summary>
     /// <param name="pageNumber"></param>
     /// <param name="callBack"></param>
-    void QueryInstallInfo(uint pageNumber, ISteamWorkshopQueryInstallInfoCallBack callBack);
+    void QueryInstallInfo(uint pageNumber, EUserUGCList type , ISteamWorkshopQueryInstallInfoCallBack callBack);
 }

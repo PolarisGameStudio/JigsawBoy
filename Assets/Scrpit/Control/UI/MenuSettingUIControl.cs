@@ -17,6 +17,9 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
     public Text mSoundSelectionTitle;
     public SwitchButton mSoundSelectionSwitch;
 
+    public Text mTimeUISelectionTitle;
+    public SwitchButton mTimeUISelectionSwith;
+
     public Text mScreenModeTitle;
     public Dropdown mScreenModeDropdown;
 
@@ -99,6 +102,8 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
             mSoundSelectionTitle.text = CommonData.getText(30);
         if (mScreenModeTitle != null)
             mScreenModeTitle.text = CommonData.getText(77);
+        if (mTimeUISelectionTitle != null)
+            mTimeUISelectionTitle.text = CommonData.getText(133);
 
         if (mLanguageSelectionDropdown != null)
         {
@@ -117,6 +122,12 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
             mSoundSelectionSwitch.setCallBack(null);
             mSoundSelectionSwitch.setStatus((int)CommonConfigure.IsOpenSound);
             mSoundSelectionSwitch.setCallBack(this);
+        }
+        if (mTimeUISelectionSwith != null)
+        {
+            mTimeUISelectionSwith.setCallBack(null);
+            mTimeUISelectionSwith.setStatus((int)CommonConfigure.IsOpenTimeUI);
+            mTimeUISelectionSwith.setCallBack(this);
         }
 
         List<string> listScreenMode = new List<string>();
@@ -184,6 +195,10 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         else if (view == mSoundSelectionSwitch.gameObject)
         {
             configure.isOpenSound = status;
+        }
+        else if( view== mTimeUISelectionSwith.gameObject)
+        {
+            configure.isOpenTimeUI = status;
         }
         DataStorageManage.getGameConfigureDSHandle().saveData(configure);
         CommonConfigure.refreshData();

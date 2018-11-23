@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Steamworks;
 
 public class MenuWorkshopUIControl : BaseUIControl
 {
@@ -18,9 +19,16 @@ public class MenuWorkshopUIControl : BaseUIControl
     public Button pageNumberSubBt;
     public Text pageNumberText;
 
+    //类型修改
+    public Button subscribedBT;
+    public Button myCreateBT;
+    public Text subscribedText;
+    public Text myCreateText;
+
     public SteamWorkshopSelect installSelect;
 
     public uint currentPage;
+    public EUserUGCList pageType;
 
     private new void Awake()
     {
@@ -30,6 +38,10 @@ public class MenuWorkshopUIControl : BaseUIControl
         pageNumberAddBt.onClick.AddListener(AddPageOnClick);
         pageNumberSubBt.onClick.AddListener(SubPageOnClick);
         workshoCreateBt.onClick.AddListener(CreateOnClick);
+
+        subscribedBT.onClick.AddListener(SubscribedTypeOnClick);
+        myCreateBT.onClick.AddListener(MyCreateTypeOnClick);
+
         refreshUI();
        
     }
@@ -41,7 +53,7 @@ public class MenuWorkshopUIControl : BaseUIControl
 
     public override void loadUIData()
     {
-        GetInstallItemInfo(currentPage);
+        GetInstallItemInfo(currentPage, pageType);
     }
 
     public override void openUI()
@@ -54,13 +66,44 @@ public class MenuWorkshopUIControl : BaseUIControl
     public override void refreshUI()
     {
         if (workshopTitleText != null)
-            workshopTitleText.text = CommonData.getText(122);
+            if (pageType == EUserUGCList.k_EUserUGCList_Published)
+            {
+                workshopTitleText.text = CommonData.getText(132);
+            }
+            else if (pageType == EUserUGCList.k_EUserUGCList_Subscribed)
+            {
+                workshopTitleText.text = CommonData.getText(122);
+            }
         if (pageNumberText != null)
             pageNumberText.text = currentPage + "";
         if (workshopCreateText != null)
             workshopCreateText.text = CommonData.getText(131);
+        if(subscribedText!=null)
+            subscribedText.text= CommonData.getText(122);
+        if (myCreateText != null)
+            myCreateText.text = CommonData.getText(132);
     }
 
+    public void SubscribedTypeOnClick()
+    {
+        currentPage = 1;
+        pageType = EUserUGCList.k_EUserUGCList_Subscribed;
+        refreshUI();
+        loadUIData();
+    }
+
+
+    public void MyCreateTypeOnClick()
+    {
+        currentPage = 1;
+        pageType = EUserUGCList.k_EUserUGCList_Published;
+        refreshUI();
+        loadUIData();
+    }
+
+    /// <summary>
+    /// 创建
+    /// </summary>
     public void CreateOnClick()
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_1);
@@ -99,9 +142,9 @@ public class MenuWorkshopUIControl : BaseUIControl
         }
     }
 
-    public void GetInstallItemInfo(uint page)
+    public void GetInstallItemInfo(uint page, EUserUGCList type)
     {
-        SteamWorkshopHandle.QueryInstallInfo(this, page, new InstallItemListCallBack(this));
+        SteamWorkshopHandle.QueryInstallInfo(this, page, type, new InstallItemListCallBack(this));
     }
 
 
