@@ -25,11 +25,36 @@ public class CommonConfigure
     public static EquipColorEnum BorderColor;
     //背景
     public static EquipColorEnum Background;
+    //音乐大小
+    public static float BGMVolume;
+    //音效大小
+    public static float SoundVolume;
+
 
     static CommonConfigure()
     {
         refreshData();
     }
+
+    public static void saveData()
+    {
+        GameConfigureBean data = new GameConfigureBean();
+        data.gameLanguage = (int)GameLanguage;
+        data.isOpenBGM = (int)IsOpenBGM;
+        data.isOpenSound = (int)IsOpenSound;
+        data.isOpenTimeUI = (int)IsOpenTimeUI;
+        data.screenMode = (int)SceenMode;
+        data.puzzlesShape = (int)PuzzlesShape;
+        data.borderShape = (int)BorderShape;
+        data.borderColor = (int)BorderColor;
+        data.background = (int)Background;
+
+        data.bgmVolume = BGMVolume;
+        data.soundVolume = SoundVolume;
+        DataStorageManage.getGameConfigureDSHandle().saveData(data);
+        
+    }
+
 
     public static void refreshData()
     {
@@ -43,6 +68,9 @@ public class CommonConfigure
         BorderShape = GameWallEnum.Def;
         BorderColor = EquipColorEnum.Def;
         Background = EquipColorEnum.Def;
+
+        SoundVolume = 1f;
+        BGMVolume = 1f;
         GameConfigureBean configureBean = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (configureBean != null)
         {
@@ -61,6 +89,9 @@ public class CommonConfigure
             BorderShape = (GameWallEnum)Enum.ToObject(typeof(GameWallEnum), configureBean.borderShape);
             BorderColor = (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum), configureBean.borderColor);
             Background = (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum), configureBean.background);
+
+            SoundVolume = configureBean.soundVolume;
+            BGMVolume= configureBean.bgmVolume;
         }
     }
 }

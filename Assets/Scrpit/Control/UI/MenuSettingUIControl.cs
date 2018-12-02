@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Steamworks;
+using System;
 
 public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 {
@@ -26,10 +27,14 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
     public Text mScreenResolutionTitle;
     public Dropdown mScreenResolutionDropdown;
 
+    public Slider musicSlider;
+    public Slider soundSlider;
+
+    AudioSourceControl audioSourceControl;
     private new void Awake()
     {
         base.Awake();
-       
+
         //初始化标题栏
         mJigsawSelectTiltebar = CptUtil.getCptFormParentByName<Transform, Transform>(transform, "TitleBar");
         mTitleBarExitBT = CptUtil.getCptFormParentByName<Transform, Button>(mJigsawSelectTiltebar, "ExitBT");
@@ -55,15 +60,38 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
         //mScreenResolutionTitle = CptUtil.getCptFormParentByName<Transform, Text>(transform, "ScreenResolutionTitle");
         //mScreenResolutionDropdown = CptUtil.getCptFormParentByName<Transform, Dropdown>(transform, "ScreenResolutionDropdown");
 
+        musicSlider.onValueChanged.AddListener(musicSliderListener);
+        soundSlider.onValueChanged.AddListener(soundSliderListener);
+
         refreshUI();
     }
 
+    private new void Start()
+    {
+        base.Start();
+        audioSourceControl = Camera.main.GetComponent<AudioSourceControl>();
+    }
+
+    public void musicSliderListener(float size)
+    {
+        CommonConfigure.BGMVolume = size;
+        if (audioSourceControl != null)
+        {
+            audioSourceControl.changeVolume(size);
+        }
+    }
+
+    public void soundSliderListener(float size)
+    {
+        CommonConfigure.SoundVolume = size;
+    }
     /// <summary>
     /// 增加退出按钮监听
     /// </summary>
     public void addExitOnClick()
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_2);
+        CommonConfigure.saveData();
         mUIMasterControl.openUIByTypeAndCloseOther(UIEnum.MenuMainUI);
     }
 
@@ -84,6 +112,9 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
 
     public override void refreshUI()
     {
+        musicSlider.value = CommonConfigure.BGMVolume;
+        soundSlider.value = CommonConfigure.SoundVolume;
+
         List<string>  languageList = new List<string>();
         languageList.Add("中文");
         languageList.Add("English");
@@ -183,24 +214,23 @@ public class MenuSettingUIControl : BaseUIControl ,SwitchButton.CallBack
     public void onSwitchChange(GameObject view, int status)
     {
         SoundUtil.playSoundClip(AudioButtonOnClickEnum.btn_sound_3);
-        GameConfigureBean configure = DataStorageManage.getGameConfigureDSHandle().getData(0);
         if (view == mMusicSelectionSwith.gameObject)
         {
-            configure.isOpenBGM = status;
-            if (configure.isOpenBGM ==0)
+            CommonConfigure.IsOpenBGM= (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), status);
+            if ((int)CommonConfigure.IsOpenBGM == 0)
                 SoundUtil.stopBGMClip();
             else
                 SoundUtil.playBGMClip();
         }
         else if (view == mSoundSelectionSwitch.gameObject)
         {
-            configure.isOpenSound = status;
+            CommonConfigure.IsOpenSound = (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), status);
         }
         else if( view== mTimeUISelectionSwith.gameObject)
         {
-            configure.isOpenTimeUI = status;
+            CommonConfigure.IsOpenTimeUI= (EnabledEnum)Enum.ToObject(typeof(EnabledEnum), status);
         }
-        DataStorageManage.getGameConfigureDSHandle().saveData(configure);
+        CommonConfigure.saveData();
         CommonConfigure.refreshData();
         CommonData.refreshData();
     }

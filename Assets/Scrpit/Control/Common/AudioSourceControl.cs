@@ -15,6 +15,7 @@ public class AudioSourceControl : BaseMonoBehaviour
     public EnabledEnum isOpenAudio;
     //音乐播放点
     public int musicPlayPosition;
+
     private void Awake()
     {
         playWay = AudioPlayWayEnum.Random_Play;
@@ -43,6 +44,11 @@ public class AudioSourceControl : BaseMonoBehaviour
         }
     }
 
+    public void changeVolume(float size)
+    {
+        if (audioSource != null)
+            audioSource.volume = size;
+    }
     /// <summary>
     /// 播放按钮点击音效
     /// </summary>
@@ -76,8 +82,11 @@ public class AudioSourceControl : BaseMonoBehaviour
         }
 
         AudioClip tempClip = ResourcesManager.LoadData<AudioClip>(soundPath);
-        if (tempClip != null)
-            AudioSource.PlayClipAtPoint(tempClip, transform.position);
+        if (tempClip != null) {
+            
+            AudioSource.PlayClipAtPoint(tempClip, transform.position, CommonConfigure.SoundVolume);
+        }
+           
     }
 
     /// <summary>
@@ -94,6 +103,7 @@ public class AudioSourceControl : BaseMonoBehaviour
             aduioClip = ResourcesManager.LoadData<AudioClip>(audioPath);
             audioSource.clip = aduioClip;
             audioSource.loop = false;
+            audioSource.volume = CommonConfigure.BGMVolume;
             audioSource.Play();
         }
     }
@@ -113,6 +123,7 @@ public class AudioSourceControl : BaseMonoBehaviour
             aduioClip = ResourcesManager.LoadData<AudioClip>(audioPath);
             audioSource.clip = aduioClip;
             audioSource.loop = false;
+            audioSource.volume = CommonConfigure.BGMVolume;
             audioSource.Play();
         }
     }
@@ -138,6 +149,7 @@ public class AudioSourceControl : BaseMonoBehaviour
             }
         }
         audioSource.clip = aduioClip;
+        audioSource.volume = CommonConfigure.BGMVolume;
         audioSource.Play();
     }
 

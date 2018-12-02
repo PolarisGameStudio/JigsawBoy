@@ -20,5 +20,8 @@ public class GameConfigureBean
     public int borderColor;
     //背景
     public int background;
+
+    public float soundVolume=1;
+    public float bgmVolume=1;
 }
 
