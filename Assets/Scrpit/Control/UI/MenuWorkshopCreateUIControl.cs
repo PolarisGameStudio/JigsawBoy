@@ -100,6 +100,7 @@ public class MenuWorkshopCreateUIControl : BaseUIControl
         tags.Add("starrysky");
         tags.Add("food");
         tags.Add("game");
+        tags.Add("celebrity");
         listTag = new List<Toggle>();
         for (int i = 0; i < tags.Count; i++)
         {

@@ -149,7 +149,6 @@ public class GameCameraControlCpt : BaseMonoBehaviour
         }
         move = Vector3.Lerp(Vector3.zero, move, 20f * Time.deltaTime);
         gameCamera.transform.Translate(move);
-
     }
 
     /// <summary>

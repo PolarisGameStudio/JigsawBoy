@@ -136,7 +136,7 @@ public class JigsawSelect : BaseMonoBehaviour
         //解锁点数处理
         if (infoBean.unlock_point == 1)
         {
-            infoBean.unlock_point = infoBean.level * infoBean.level;
+            infoBean.unlock_point = infoBean.level;
         }
 
         GameObject itemObj = Instantiate(ResourcesManager.LoadData<GameObject>(JigsawSelectLockItemPath));

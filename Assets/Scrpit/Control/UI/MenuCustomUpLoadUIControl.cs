@@ -83,7 +83,7 @@ public class MenuCustomUpLoadUIControl : BaseUIControl
 
     public override void loadUIData()
     {
-        throw new NotImplementedException();
+
     }
 
     public override void refreshUI()

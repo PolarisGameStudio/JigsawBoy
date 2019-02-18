@@ -56,6 +56,10 @@ public class GameJigsawControlCpt : BaseMonoBehaviour
         {
             onMouseDrag();
         }
+        if(isSelect&& Input.GetMouseButton(1))
+        {
+            rotateObject(RotationDirectionEnum.Clockwise);
+        }
         if (Input.GetKey(KeyCode.Q))
         {
             rotateObject(RotationDirectionEnum.Anticlockwise);

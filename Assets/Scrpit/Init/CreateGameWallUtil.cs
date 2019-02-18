@@ -5,15 +5,18 @@ public class CreateGameWallUtil
 {
     public static Vector3 wallCenter = new Vector3(0, 0, 0);
     //墙厚度
-    public static float wallThick = 1000f;
+    public static float wallThick = 2000f;
     //墙缩放大小
     public static float wallScale = 2f;
+    
 
     public static void createWall(GameWallEnum gameWallEnum, EquipColorEnum gameWallColor, float picAllW, float picAllH)
     {
+        wallScale = 2f;
+
         if (gameWallEnum.Equals(GameWallEnum.Def))
         {
-            createDefWall(gameWallColor, picAllW, picAllH);
+            createDefWall(gameWallColor, picAllW, picAllH,2);
         }
         else if (gameWallEnum.Equals(GameWallEnum.Circle))
         {
@@ -23,6 +26,14 @@ public class CreateGameWallUtil
         {
             createSquareWall(gameWallColor, picAllW, picAllH);
         }
+        else if (gameWallEnum.Equals(GameWallEnum.Def2))
+        {
+            createDefWall(gameWallColor, picAllW, picAllH,4);
+        }
+        else if (gameWallEnum.Equals(GameWallEnum.Def3))
+        {
+            createDefWall(gameWallColor, picAllW, picAllH, 6);
+        }
     }
 
     /// <summary>
@@ -30,8 +41,10 @@ public class CreateGameWallUtil
     /// </summary>
     /// <param name="picAllW"></param>
     /// <param name="picAllH"></param>
-    private static void createDefWall(EquipColorEnum gameWallColor, float picAllW, float picAllH)
+    private static void createDefWall(EquipColorEnum gameWallColor, float picAllW, float picAllH,int size)
     {
+        wallScale = size;
+
         float wallWith = wallScale * picAllW;
         float wallHigh = wallScale * picAllH;
 
@@ -89,19 +102,19 @@ public class CreateGameWallUtil
         }
         GameObject gameWall = new GameObject("GameWall");
 
-        List<Vector3> listPosition = GeometryUtil.getCircleVertices(new Vector3(0, 0), circleR * wallScale* wallThick, circleNumber, true, CircleStartVectorEnum.Above);
+        List<Vector3> listPosition = GeometryUtil.getCircleVertices(new Vector3(0, 0), circleR * wallScale * wallThick, circleNumber, true, CircleStartVectorEnum.Above);
         float angleItem = (float)360 / (float)circleNumber;
         for (int i = 0; i < listPosition.Count; i++)
         {
             Vector3 itemPosition = listPosition[i];
             GameObject itemWall = GameObject.Instantiate(ResourcesManager.LoadData<GameObject>("Prefab/Game/WallGameObj"));
             itemWall.name = "Wall x:" + itemPosition.x + " y:" + itemPosition.y;
-            itemWall.transform.localScale = new Vector3(circleR * wallScale* wallThick, circleR * wallScale* wallThick, 1f);
+            itemWall.transform.localScale = new Vector3(circleR * wallScale * wallThick, circleR * wallScale * wallThick, 1f);
             itemWall.transform.position = itemPosition;
             itemWall.transform.parent = gameWall.transform;
             itemWall.transform.Rotate(new Vector3(0, 0, -i * angleItem), Space.Self);
 
-            itemWall.transform.position += itemWall.transform.up * circleR ;
+            itemWall.transform.position += itemWall.transform.up * circleR;
             setWallColor(gameWallColor, itemWall);
         }
     }

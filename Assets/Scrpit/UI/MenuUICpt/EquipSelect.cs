@@ -36,7 +36,7 @@ public class EquipSelect : BaseMonoBehaviour
         smoothEquip.equipName = CommonData.getText(92);
         smoothEquip.equipType = (int)m_CurrentType;
         smoothEquip.equipTypeId = (int)JigsawStyleEnum.Smooth;
-        smoothEquip.unlockPoint = 998;
+        smoothEquip.unlockPoint = 10;
         smoothEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_smooth";
         createEquipItem(content, smoothEquip);
 
@@ -44,7 +44,7 @@ public class EquipSelect : BaseMonoBehaviour
         triangleEquip.equipName = CommonData.getText(93);
         triangleEquip.equipType = (int)m_CurrentType;
         triangleEquip.equipTypeId = (int)JigsawStyleEnum.Triangle;
-        triangleEquip.unlockPoint = 99;
+        triangleEquip.unlockPoint = 10;
         triangleEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_triangle";
         createEquipItem(content, triangleEquip);
 
@@ -52,7 +52,7 @@ public class EquipSelect : BaseMonoBehaviour
         trapezoidEquip.equipName = CommonData.getText(108);
         trapezoidEquip.equipType = (int)m_CurrentType;
         trapezoidEquip.equipTypeId = (int)JigsawStyleEnum.Trapezoid;
-        trapezoidEquip.unlockPoint = 99;
+        trapezoidEquip.unlockPoint = 10;
         trapezoidEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_trapezoid";
         createEquipItem(content, trapezoidEquip);
 
@@ -60,7 +60,7 @@ public class EquipSelect : BaseMonoBehaviour
         squareEquip.equipName = CommonData.getText(107);
         squareEquip.equipType = (int)m_CurrentType;
         squareEquip.equipTypeId = (int)JigsawStyleEnum.Square;
-        squareEquip.unlockPoint = 199;
+        squareEquip.unlockPoint = 10;
         squareEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_square";
         createEquipItem(content, squareEquip);
 
@@ -68,7 +68,7 @@ public class EquipSelect : BaseMonoBehaviour
         heartEquip.equipName = CommonData.getText(109);
         heartEquip.equipType = (int)m_CurrentType;
         heartEquip.equipTypeId = (int)JigsawStyleEnum.Heart;
-        heartEquip.unlockPoint = 233;
+        heartEquip.unlockPoint = 10;
         heartEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_heart";
         createEquipItem(content, heartEquip);
 
@@ -76,7 +76,7 @@ public class EquipSelect : BaseMonoBehaviour
         pentagramEquip.equipName = CommonData.getText(110);
         pentagramEquip.equipType = (int)m_CurrentType;
         pentagramEquip.equipTypeId = (int)JigsawStyleEnum.Pentagram;
-        pentagramEquip.unlockPoint = 666;
+        pentagramEquip.unlockPoint = 10;
         pentagramEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_pentagram";
         createEquipItem(content, pentagramEquip);
 
@@ -84,7 +84,7 @@ public class EquipSelect : BaseMonoBehaviour
         traditionalEquip.equipName = CommonData.getText(117);
         traditionalEquip.equipType = (int)m_CurrentType;
         traditionalEquip.equipTypeId = (int)JigsawStyleEnum.Bodkin;
-        traditionalEquip.unlockPoint = 199;
+        traditionalEquip.unlockPoint = 10;
         traditionalEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_bodkin";
         createEquipItem(content, traditionalEquip);
 
@@ -93,7 +93,7 @@ public class EquipSelect : BaseMonoBehaviour
         sawtoothEquip.equipName = CommonData.getText(118);
         sawtoothEquip.equipType = (int)m_CurrentType;
         sawtoothEquip.equipTypeId = (int)JigsawStyleEnum.Sawtooth;
-        sawtoothEquip.unlockPoint = 99;
+        sawtoothEquip.unlockPoint =10;
         sawtoothEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_sawtooth";
         createEquipItem(content, sawtoothEquip);
 
@@ -101,7 +101,7 @@ public class EquipSelect : BaseMonoBehaviour
         shurikenEquip.equipName = CommonData.getText(119);
         shurikenEquip.equipType = (int)m_CurrentType;
         shurikenEquip.equipTypeId = (int)JigsawStyleEnum.Shuriken;
-        shurikenEquip.unlockPoint = 99;
+        shurikenEquip.unlockPoint =10;
         shurikenEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_shuriken";
         createEquipItem(content, shurikenEquip);
 
@@ -109,7 +109,7 @@ public class EquipSelect : BaseMonoBehaviour
         crossEquip.equipName = CommonData.getText(120);
         crossEquip.equipType = (int)m_CurrentType;
         crossEquip.equipTypeId = (int)JigsawStyleEnum.Cross;
-        crossEquip.unlockPoint = 99;
+        crossEquip.unlockPoint = 10;
         crossEquip.equipImageUrl = "Texture/UI/icon_equip_puzzlesshape_cross";
         createEquipItem(content, crossEquip);
     }
@@ -132,7 +132,7 @@ public class EquipSelect : BaseMonoBehaviour
         circleEquip.equipName = CommonData.getText(94);
         circleEquip.equipType = (int)m_CurrentType;
         circleEquip.equipTypeId = 1;
-        circleEquip.unlockPoint = 998;
+        circleEquip.unlockPoint = 10;
         circleEquip.equipImageUrl = "Texture/UI/icon_equip_bordershape_circle";
         createEquipItem(content, circleEquip);
 
@@ -140,9 +140,25 @@ public class EquipSelect : BaseMonoBehaviour
         squareEquip.equipName = CommonData.getText(95);
         squareEquip.equipType = (int)m_CurrentType;
         squareEquip.equipTypeId = 2;
-        squareEquip.unlockPoint = 998;
+        squareEquip.unlockPoint = 10;
         squareEquip.equipImageUrl = "Texture/UI/icon_equip_bordershape_square";
         createEquipItem(content, squareEquip);
+
+        EquipInfoBean default2Equip = new EquipInfoBean();
+        default2Equip.equipName = "2x" + CommonData.getText(91);
+        default2Equip.equipType = (int)m_CurrentType;
+        default2Equip.equipTypeId = 3;
+        default2Equip.unlockPoint = 10;
+        default2Equip.equipImageUrl = "Texture/UI/icon_equip_bordershape_def";
+        createEquipItem(content, default2Equip);
+
+        EquipInfoBean default4Equip = new EquipInfoBean();
+        default4Equip.equipName = "3x" + CommonData.getText(91);
+        default4Equip.equipType = (int)m_CurrentType;
+        default4Equip.equipTypeId = 4;
+        default4Equip.unlockPoint = 10;
+        default4Equip.equipImageUrl = "Texture/UI/icon_equip_bordershape_def";
+        createEquipItem(content, default4Equip);
     }
 
     /// <summary>
@@ -272,7 +288,7 @@ public class EquipSelect : BaseMonoBehaviour
             EquipInfoBean itemEquip = new EquipInfoBean();
             itemEquip.equipType = (int)m_CurrentType;
             itemEquip.equipTypeId = i;
-            itemEquip.unlockPoint = 100;
+            itemEquip.unlockPoint = 5;
             itemEquip.equipImageUrl = equipImage;
 
             EquipColorEnum colorEnum= (EquipColorEnum)Enum.ToObject(typeof(EquipColorEnum),i);

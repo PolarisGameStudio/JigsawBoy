@@ -92,9 +92,9 @@ public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
         //生成背景
         createBackground(CommonConfigure.Background, picAllWith, picAllHigh);
         //增加镜头控制
-        addCameraControl(picAllWith, picAllHigh);
+        addCameraControl(picAllWith*CreateGameWallUtil.wallScale/2f, picAllHigh * CreateGameWallUtil.wallScale / 2f);
         //增加拼图控制
-        addJigsawControl(picAllWith, picAllHigh);
+        addJigsawControl(picAllWith * CreateGameWallUtil.wallScale / 2f, picAllHigh * CreateGameWallUtil.wallScale / 2f);
         //启动动画
         startAnim();
     }
@@ -273,7 +273,7 @@ public class GameStartControl : BaseMonoBehaviour, LeaderBoardDialog.CallBack
             else
             {
                 //增加PP
-                int addPuzzlesPoint = (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1) * (CommonData.SelectPuzzlesInfo.puzzlesInfo.level + 1);
+                int addPuzzlesPoint = CommonData.SelectPuzzlesInfo.puzzlesInfo.level *2;
                 DialogManager.createPuzzlesPointAddDialog(addPuzzlesPoint);
             }
             //保存数据

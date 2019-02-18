@@ -13,6 +13,7 @@ public class CreateGameBackgroundUtil
 
     public static void createBackground(EquipColorEnum equipColor, float picAllW, float picAllH)
     {
+        backgroundScale = CreateGameWallUtil.wallScale * 1.5f;
         setPicBackground(equipColor,picAllW, picAllH);
         setBlurBackground(picAllW, picAllH);
         setParticleBackground(picAllW, picAllH);
